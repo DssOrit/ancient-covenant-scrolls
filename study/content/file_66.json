@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_66",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_66",
   "label": "Tehillim (Psalms) — Part 2 — Psalms 21–41",
   "volume": 20,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Psalms 21 through 41 move between royal victory psalms and deep personal lament. Psalm 22 opens with the cry: My El, my El, why have you forsaken me? The speaker is mocked, pierced, his garments divided by lot — yet the psalm ends not in death but in YHWH's deliverance and the declaration that all the ends of the earth shall turn to YHWH. Psalm 23 declares: YHWH is my shepherd, I shall not want. He leads me beside still waters, he restores my soul. Psalm 24 asks: Who shall ascend the hill of YHWH? He who has clean hands and a pure heart. Psalm 34 proclaims: YHWH is near to the brokenhearted. Psalm 37 counsels: do not fret because of evildoers — trust in YHWH and do good.",
   "summary_scholarly": "The ACR reads Psalms 21-41 from the Dead Sea Scrolls witnesses (fragments across 4QPsa-q, 11QPsa) and the Orit Ge'ez. Psalm 22 is critical to understanding the Great Eraser mechanism: the NT appropriates the opening line (My El, my El, why have you forsaken me) as a crucifixion quotation (Matthew 27:46), but the full psalm is a communal lament that resolves in national restoration — 'All the ends of the earth shall remember and turn to YHWH, and all the families of the nations shall worship before you' (22:27). The psalm was never about an individual dying for sins. The NT extracted one verse from its covenantal context and reframed it as prophecy fulfilled. The DSS preserve Psalm 22 as a communal lament of the covenant people under oppression — the suffering is national, the deliverance is YHWH's, and the resolution is that all nations acknowledge YHWH directly.",
   "key_terms": [
-    { "term": "Eli Eli Lama Azavtani", "phonetic": "Eh-LEE Eh-LEE LAH-mah ah-ZAHV-tah-nee", "definition": "My El, my El, why have you forsaken me — the opening cry of Psalm 22. A communal lament of the covenant people under oppression, not a prophecy of individual death. The psalm resolves in YHWH's deliverance and all nations turning to YHWH." },
-    { "term": "Ro'i (Shepherd)", "phonetic": "Roh-EE", "definition": "YHWH is my shepherd (Psalm 23:1). Ro'eh means shepherd, one who tends and guides. YHWH as shepherd is the direct relationship — no intermediary priest, king, or institution between the individual and YHWH." },
-    { "term": "Gey Tzalmavet", "phonetic": "Gay Tzal-MAH-vet", "definition": "Valley of the shadow of death (Psalm 23:4). The Hebrew tzalmavet combines shadow (tzel) and death (mavet). Even through the deepest darkness, the psalmist fears no evil because YHWH is present." }
+    {
+      "term": "Psalm 46 Be Still and Know",
+      "phonetic": "Tehillim 46",
+      "definition": "A Zion psalm of refuge: YHWH is a present help in trouble; the earth may change and mountains fall into the sea, but YHWH of Hosts is with the community. 'Be still and know that I am YHWH' (46:10)."
+    },
+    {
+      "term": "Psalm 51 Create in Me a Clean Heart",
+      "phonetic": "Tehillim 51",
+      "definition": "David's great penitential psalm — attributed to the occasion after Natan confronted him. Contains the deepest covenant repentance language: 'Create in me a clean heart, O YHWH, and renew a right spirit within me.'"
+    },
+    {
+      "term": "Psalm 51 Broken Contrite Heart",
+      "phonetic": "Tehillim 51:17",
+      "definition": "'The sacrifices of YHWH are a broken spirit; a broken and contrite heart, O YHWH, you will not despise.' YHWH values genuine repentance over ritual offering."
+    },
+    {
+      "term": "Psalm 68 Let YHWH Arise",
+      "phonetic": "Tehillim 68",
+      "definition": "Opens with Moshe's wilderness cry from Bamidbar 10:35: 'Let YHWH arise, let his enemies be scattered.' The psalm celebrates YHWH's march from the Kushite south through the wilderness and enthronement on Mount Tzion."
+    },
+    {
+      "term": "Psalm 68 Kush Delegation (68:31)",
+      "phonetic": "Tehillim 68:31",
+      "definition": "'Nobles shall come from Mitzrayim; Kush shall hasten to stretch out her hands to YHWH.' This psalm affirms that the Kushite and Mitzrayim peoples will come and honor YHWH — the covenant is not ethnically restricted to one group."
+    },
+    {
+      "term": "Psalm 72 Royal Psalm for the Poor",
+      "phonetic": "Tehillim 72",
+      "definition": "A royal psalm attributed to Shlomo — prayer for the king who will defend the poor, deliver the needy, and crush the oppressor. 'May he defend the poor of the people, give deliverance to the children of the needy, and crush the oppressor' (72:4)."
+    },
+    {
+      "term": "Maskil",
+      "phonetic": "mas-KEEL",
+      "definition": "A psalm superscription type — 13 psalms are labeled 'maskil,' possibly meaning a contemplative or instructive composition, or a poem requiring skillful performance. Its exact technical meaning is uncertain."
+    },
+    {
+      "term": "Shiggayon",
+      "phonetic": "shig-ah-YOHN",
+      "definition": "A rare superscription type appearing in Psalm 7; its meaning is uncertain — possibly a lament or crying song, or a composition of varying emotional intensity. Also appears in Havaqquq 3:1."
+    },
+    {
+      "term": "Miktam",
+      "phonetic": "mik-TAM",
+      "definition": "A superscription type found in Psalms 16, 56–60; its meaning is uncertain — possibly related to 'gold' suggesting a poem of special value, or a word of uncertain Akkadian or Aramaic origin indicating a specific genre."
+    },
+    {
+      "term": "Leannot",
+      "phonetic": "leh-ah-NOHT",
+      "definition": "Appears in Psalm 22's superscription ('according to the Doe of the Dawn') — a musical direction indicating a specific tune or instrument. Also related to the verb meaning 'to afflict/humble,' giving the word liturgical overtones for Yom Kippur use."
+    }
   ],
   "fill_blank": [
-    { "ref": "22:1", "prompt": "My El, my El, why have you ______ me?", "answer": "forsaken", "source_quote": "My El, my El, why have you forsaken me? Why are you so far from saving me, from the words of my groaning?" },
-    { "ref": "23:1", "prompt": "YHWH is my ______, I shall not want.", "answer": "shepherd", "source_quote": "YHWH is my shepherd, I shall not want." },
-    { "ref": "23:4", "prompt": "Even though I walk through the valley of the shadow of death, I will fear no ______, for you are with me.", "answer": "evil", "source_quote": "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me; your rod and your staff, they comfort me." },
-    { "ref": "24:3-4", "prompt": "Who shall ascend the hill of YHWH? He who has clean ______ and a pure heart.", "answer": "hands", "source_quote": "Who shall ascend the hill of YHWH? And who shall stand in his holy place? He who has clean hands and a pure heart, who does not lift up his soul to what is false." }
+    {
+      "ref": "Psalm 42:1",
+      "prompt": "As a ___ pants for flowing streams, so pants my soul for you, O YHWH.",
+      "answer": "deer",
+      "source_quote": "As a deer pants for flowing streams, so pants my soul for you, O YHWH."
+    },
+    {
+      "ref": "Psalm 46:1",
+      "prompt": "YHWH is our refuge and strength, a very present ___ in trouble.",
+      "answer": "help",
+      "source_quote": "YHWH is our refuge and strength, a very present help in trouble."
+    },
+    {
+      "ref": "Psalm 46:10",
+      "prompt": "'Be ___ and know that I am YHWH. I will be exalted among the nations, I will be exalted in the earth!'",
+      "answer": "still",
+      "source_quote": "Be still, and know that I am YHWH. I will be exalted among the nations, I will be exalted in the earth!"
+    },
+    {
+      "ref": "Psalm 51:4",
+      "prompt": "Against you, you only, have I ___; and done what is evil in your sight, so that you may be justified in your words.",
+      "answer": "sinned",
+      "source_quote": "Against you, you only, have I sinned and done what is evil in your sight."
+    },
+    {
+      "ref": "Psalm 51:10",
+      "prompt": "Create in me a ___ heart, O YHWH, and renew a right spirit within me.",
+      "answer": "clean",
+      "source_quote": "Create in me a clean heart, O YHWH, and renew a right spirit within me."
+    },
+    {
+      "ref": "Psalm 51:17",
+      "prompt": "The sacrifices of YHWH are a broken spirit; a broken and contrite heart, O YHWH, you will not ___.",
+      "answer": "despise",
+      "source_quote": "The sacrifices of YHWH are a broken spirit; a broken and contrite heart, O YHWH, you will not despise."
+    },
+    {
+      "ref": "Psalm 68:1",
+      "prompt": "Let YHWH ___, let his enemies be scattered; let those who hate him flee before him!",
+      "answer": "arise",
+      "source_quote": "Let YHWH arise, let his enemies be scattered; let those who hate him flee before him!"
+    },
+    {
+      "ref": "Psalm 68:5",
+      "prompt": "___ of the fatherless and protector of widows is YHWH in his holy habitation.",
+      "answer": "Father",
+      "source_quote": "Father of the fatherless and protector of widows is YHWH in his holy habitation."
+    },
+    {
+      "ref": "Psalm 68:31",
+      "prompt": "Nobles shall come from Mitzrayim; ___ shall hasten to stretch out her hands to YHWH.",
+      "answer": "Kush",
+      "source_quote": "Nobles shall come from Mitzrayim; Kush shall hasten to stretch out her hands to YHWH."
+    },
+    {
+      "ref": "Psalm 72:4",
+      "prompt": "May he defend the ___ of the people, give deliverance to the children of the needy, and crush the oppressor!",
+      "answer": "poor",
+      "source_quote": "May he defend the poor of the people, give deliverance to the children of the needy, and crush the oppressor!"
+    }
   ],
   "multiple_choice": [
-    { "ref": "22:27", "question": "How does Psalm 22 resolve — what happens after the suffering described?", "options": ["The speaker dies and is buried", "All the ends of the earth shall remember and turn to YHWH", "The enemies are never defeated", "A new king is appointed"], "correct": 1, "source_quote": "All the ends of the earth shall remember and turn to YHWH, and all the families of the nations shall worship before you." },
-    { "ref": "23:1-3", "question": "What does YHWH as shepherd do for the psalmist?", "options": ["He leads him into battle", "He makes him lie down in green pastures and leads him beside still waters — he restores his soul", "He builds a temple for him", "He sends him into exile"], "correct": 1, "source_quote": "He makes me lie down in green pastures. He leads me beside still waters. He restores my soul." },
-    { "ref": "34:18", "question": "Who does YHWH draw near to according to Psalm 34?", "options": ["The wealthy and powerful", "The brokenhearted and those crushed in spirit", "Only the priests", "The kings of the earth"], "correct": 1, "source_quote": "YHWH is near to the brokenhearted and saves the crushed in spirit." }
+    {
+      "ref": "Psalm 42:1",
+      "question": "To what does the psalmist compare the soul's longing for YHWH in Psalm 42:1?",
+      "options": [
+        "A bird searching for its nest",
+        "A deer panting for flowing streams",
+        "A vine reaching for the light",
+        "A tree planted by still waters"
+      ],
+      "correct": 1,
+      "source_quote": "As a deer pants for flowing streams, so pants my soul for you, O YHWH."
+    },
+    {
+      "ref": "Psalm 46:1",
+      "question": "How does Psalm 46 open its description of YHWH?",
+      "options": [
+        "YHWH is a warrior and a king",
+        "YHWH is a shepherd who leads by still waters",
+        "YHWH is our refuge and strength, a very present help in trouble",
+        "YHWH is a consuming fire and a jealous Creator"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH is our refuge and strength, a very present help in trouble."
+    },
+    {
+      "ref": "Psalm 46:10",
+      "question": "What does YHWH say in Psalm 46:10?",
+      "options": [
+        "I am with you always, even to the end",
+        "Be still and know that I am YHWH",
+        "Return to me and I will return to you",
+        "I will not leave you or forsake you"
+      ],
+      "correct": 1,
+      "source_quote": "Be still, and know that I am YHWH."
+    },
+    {
+      "ref": "Psalm 51:4",
+      "question": "In Psalm 51:4, against whom alone does David say he has sinned?",
+      "options": [
+        "Uriyah the Hittite",
+        "The people of Yisra'el",
+        "YHWH alone",
+        "The house of David"
+      ],
+      "correct": 2,
+      "source_quote": "Against you, you only, have I sinned and done what is evil in your sight."
+    },
+    {
+      "ref": "Psalm 51:10",
+      "question": "What does the psalmist ask YHWH to create in Psalm 51:10?",
+      "options": [
+        "A strong kingdom",
+        "A clean heart and a renewed right spirit",
+        "A new covenant written on stone",
+        "A place of refuge from enemies"
+      ],
+      "correct": 1,
+      "source_quote": "Create in me a clean heart, O YHWH, and renew a right spirit within me."
+    },
+    {
+      "ref": "Psalm 51:17",
+      "question": "What does YHWH not despise according to Psalm 51:17?",
+      "options": [
+        "The sacrifice of bulls and goats",
+        "A broken and contrite heart",
+        "The prayer of the righteous",
+        "Fasting and sackcloth"
+      ],
+      "correct": 1,
+      "source_quote": "A broken and contrite heart, O YHWH, you will not despise."
+    },
+    {
+      "ref": "Psalm 68:1",
+      "question": "The opening of Psalm 68 echoes a cry from which earlier covenant text?",
+      "options": [
+        "Bereshit 15 — YHWH's covenant with Avraham",
+        "Devarim 6 — the Shema",
+        "Bamidbar 10:35 — when the ark set out",
+        "Shemot 15 — Moshe's song at the sea"
+      ],
+      "correct": 2,
+      "source_quote": "Let YHWH arise, let his enemies be scattered; let those who hate him flee before him!"
+    },
+    {
+      "ref": "Psalm 68:5",
+      "question": "What two roles does Psalm 68:5 assign to YHWH in the holy habitation?",
+      "options": [
+        "King and warrior",
+        "Shepherd and judge",
+        "Father of the fatherless and protector of widows",
+        "Creator of heaven and earth and judge of the nations"
+      ],
+      "correct": 2,
+      "source_quote": "Father of the fatherless and protector of widows is YHWH in his holy habitation."
+    },
+    {
+      "ref": "Psalm 68:31",
+      "question": "According to Psalm 68:31, which peoples will come and honor YHWH?",
+      "options": [
+        "Babylon and Persia",
+        "Mitzrayim and Kush",
+        "Assyria and Yavan",
+        "Edom and Ammon"
+      ],
+      "correct": 1,
+      "source_quote": "Nobles shall come from Mitzrayim; Kush shall hasten to stretch out her hands to YHWH."
+    },
+    {
+      "ref": "Psalm 72:4",
+      "question": "For what groups does the royal psalm of Psalm 72 pray the king will give deliverance?",
+      "options": [
+        "Warriors and priests",
+        "Kings and nobles of the nations",
+        "The poor and the children of the needy",
+        "The wise and those who fear YHWH"
+      ],
+      "correct": 2,
+      "source_quote": "May he defend the poor of the people, give deliverance to the children of the needy, and crush the oppressor!"
+    }
   ],
   "faq": [
     {
-      "question": "Was Psalm 22 written as a prophecy of crucifixion?",
-      "answer": "No. Psalm 22 is a communal lament — the covenant people crying out under oppression. The NT extracted the opening line ('My El, my El, why have you forsaken me') and placed it in the mouth of a dying figure (Matthew 27:46), retroactively framing the entire psalm as prophecy fulfilled. But the psalm itself resolves in national restoration: 'All the ends of the earth shall remember and turn to YHWH' (22:27). The suffering described is national. The deliverance is YHWH's own act. There is no substitutionary atonement theology in the psalm. The DSS preserve Psalm 22 as part of the covenant community's liturgical collection — it is a prayer of the people, not a prediction about one person. The appropriation of this psalm is one of the clearest examples of the Great Eraser mechanism: taking a Hebrew text out of its covenantal context and reframing it to serve a different theological system."
+      "question": "What is the spiritual crisis at the heart of Psalm 42–43?",
+      "answer": "Psalms 42–43 (originally one psalm) express the crisis of a Levite separated from YHWH's Temple, mocked by enemies asking 'Where is your Creator?' The refrain repeats three times: 'Why are you cast down, O my soul? Hope in YHWH; for I shall again praise him.' The psalm models holding onto covenant trust even when the felt experience is desolation."
     },
     {
-      "question": "Why does YHWH as shepherd matter for understanding the Great Eraser?",
-      "answer": "Psalm 23 declares YHWH is my shepherd — direct, personal, no intermediary. Every Great Eraser system inserts an intermediary between the individual and YHWH. The Rabbinical system interposes the Oral Torah and rabbinic authority. Roman Christianity interposes the church, the pope, and a mediating divine figure. Colonial religion imposed plantation Christianity with slave masters as spiritual authorities. Academic systems interpose credentialed scholars who determine what counts as scripture. Psalm 23 says none of this: YHWH is my shepherd. The relationship is direct. The covenant person walks through the valley of the shadow of death — exile, slavery, persecution — and YHWH is present without any institutional mediation. The psalm is the covenant in one sentence."
+      "question": "What is the message of Psalm 46 and why is 'Be still' important?",
+      "answer": "Psalm 46 is a song of absolute confidence in YHWH's protection even when the earth shakes and kingdoms fall. 'Be still and know that I am YHWH' is not a command to passive silence — the Hebrew word means to let go of striving and contention, to cease from one's own anxious activity. The 'knowing' follows from the stillness: when you stop grasping, you recognize who YHWH is."
     },
     {
-      "question": "What do the DSS fragments of Psalms 21-41 show about textual transmission?",
-      "answer": "Multiple Qumran fragments preserve portions of Psalms 21-41, with some variant readings against the Masoretic. The DSS manuscripts are 800-1,000 years older than the oldest complete Masoretic Psalter. Where variants exist, the DSS and Orit Ge'ez readings are given priority in the ACR as the older witnesses. The Masoretic is not the baseline — it is one late editorial tradition."
+      "question": "What makes Psalm 51 the premier penitential psalm?",
+      "answer": "Psalm 51 moves through the complete arc of genuine repentance: acknowledgment of sin (vv.1-5), appeal to YHWH's covenant loyalty and compassion (v.1), request for inner transformation (vv.10-12), commitment to restored worship (vv.13-17), and the recognition that YHWH values a broken and contrite heart over ritual sacrifice alone. It became the liturgical standard for communal confession."
+    },
+    {
+      "question": "Why does Psalm 51:4 say 'against you alone have I sinned' when David wronged Uriyah?",
+      "answer": "The statement acknowledges that all sin is ultimately a violation of YHWH's covenant standards. While Uriyah was wronged (and Batsheva, and the people), the fundamental wrong is against YHWH's Torah. The 'alone' also expresses the theological reality that only YHWH has the authority to judge and forgive at the deepest level — human courts can punish but cannot restore the covenant relationship."
+    },
+    {
+      "question": "What is Psalm 68 and why is the Kush reference significant?",
+      "answer": "Psalm 68 is a great processional hymn celebrating YHWH's march from the wilderness to Mount Tzion. It describes YHWH coming from the south — from the region of Sinai, Teiman, Bashan — in the tradition of Devarim 33 and Shofetim 5. Verse 31 specifically names Mitzrayim and Kush as peoples who will hasten to honor YHWH. This is the Hebrew psalm corpus confirming that YHWH's covenant community and worship include the Kushite peoples."
+    },
+    {
+      "question": "What does Psalm 72 pray for the king and why is justice for the poor central?",
+      "answer": "Psalm 72 sets the standard for covenant kingship: the king who fulfills his role defends the poor, delivers the needy, and crushes the oppressor. The prayer is not for the king's military glory or wealth but for the king's just governance of the vulnerable. This is the Hebrew royal ideal — power measured by protection of the least powerful. YHWH's kingship embodies this same standard."
+    },
+    {
+      "question": "What is a Maskil psalm and why are they significant?",
+      "answer": "Thirteen psalms carry the superscription 'Maskil' — a word possibly meaning a contemplative, instructive, or skillfully crafted composition. These include Psalms 32, 42, 44, 45, 52-55, 74, 78, 88, 89, and 142. They tend to be reflective and intellectually engaged rather than straightforward praise or lament. The exact performance or liturgical distinction they signal is uncertain."
+    },
+    {
+      "question": "How does Psalm 46 respond to the experience of cosmic chaos?",
+      "answer": "Psalm 46 deliberately uses the most extreme chaos imagery — mountains falling into the sea, waters roaring and foaming, the earth tottering — and declares that even in the midst of this, YHWH is a present refuge. The city of YHWH (Tzion) has a river that gladdens it; YHWH is in its midst and will not be moved. The confidence is not denial of the chaos but trust in YHWH's presence within it."
+    },
+    {
+      "question": "What does Psalm 51:10's request for a 'clean heart' imply about inner transformation?",
+      "answer": "The word 'create' (bara) in 'create in me a clean heart' is the same word used for YHWH's creation of the heavens and earth in Bereshit 1. It is exclusively used of divine action — humans cannot bara, only YHWH can. The psalmist is acknowledging that inner transformation is YHWH's work, not human resolve. The request is for a creative act — a new inner reality that the person cannot manufacture by willpower."
+    },
+    {
+      "question": "Why does Psalm 68 describe YHWH marching from the south?",
+      "answer": "The ancient Hebrew memory consistently associated YHWH's presence with the south — Sinai, Teiman, Paran, the wilderness regions tied to the Exodus and covenant formation. This southward orientation in YHWH's march (Ps.68, Devarim 33, Shofetim 5, Havaqquq 3) reflects the actual geography of the covenant community's origin story: out of Mitzrayim and through the southern wilderness regions of Kush and Sinai."
     }
   ]
 }

@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_72",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_72",
   "label": "Tehillim (Psalms) — Part 8 — Psalms 120–150",
   "volume": 20,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Psalms 120 through 150 include the Songs of Ascent (120-134) — pilgrim songs sung going up to Yerushalayim — and the final Halleluyah psalms. Psalm 121: I lift up my eyes to the hills — from where does my help come? My help comes from YHWH, who made heaven and earth. Psalm 127: Unless YHWH builds the house, those who build it labor in vain. Psalm 137 is the exile lament: By the rivers of Babylon — there we sat down and wept when we remembered Tziyon. How shall we sing YHWH's song in a foreign land? Psalm 150 closes the entire Psalter: Let everything that has breath praise YAH. Halleluyah.",
   "summary_scholarly": "The ACR reads Psalms 120-150 from DSS witnesses (11QPsa, 4QPs fragments) and the Orit Ge'ez. The Songs of Ascent (Shir HaMa'alot, Psalms 120-134) are pilgrimage psalms — they accompany the physical ascent to Yerushalayim. Psalm 137 is the definitive exile psalm: 'By the rivers of Babylon, there we sat down and wept when we remembered Tziyon.' The question 'How shall we sing YHWH's song in a foreign land?' is not rhetorical — it is the central identity question of every displaced covenant community. The Beta Israel sang YHWH's songs in Ethiopia. Enslaved Africans encoded covenant memory in spirituals on plantations. The Qumran community preserved YHWH's songs in caves. Psalm 137 is the ongoing condition of every scattered Israelite community that remembers Tziyon. The 11QPsa arrangement differs significantly from the Masoretic in this section — the closing psalms appear in a different order, demonstrating that the Psalter's final shape was not fixed when the DSS were sealed.",
   "key_terms": [
-    { "term": "Shir HaMa'alot (Song of Ascent)", "phonetic": "Sheer hah-Mah-ah-LOT", "definition": "The superscription of Psalms 120-134 — songs sung by pilgrims ascending to Yerushalayim. Ma'alot means steps, ascent. The physical journey up to the temple mount accompanied by these songs." },
-    { "term": "Naharot Bavel (Rivers of Babylon)", "phonetic": "Nah-hah-ROT Bah-VEL", "definition": "Psalm 137:1: 'By the rivers of Babylon — there we sat down and wept when we remembered Tziyon.' The rivers are the Euphrates and its canals. The exiles sat, wept, and hung their lyres on the willows. The song could not be sung in a foreign land." },
-    { "term": "Halleluyah", "phonetic": "Hah-leh-loo-YAH", "definition": "Praise YAH — a direct command to praise YHWH by his shortened name. The closing psalms (146-150) each begin and end with Halleluyah. The Psalter ends with praise, not lament." }
+    {
+      "term": "364-Day Covenant Calendar",
+      "phonetic": "lu'akh shnat 364",
+      "definition": "The solar covenant calendar used by the Qumran community and preserved in the Book of Chanokh: 364 days, divided into four seasons of 91 days each (13 weeks × 4), giving exactly 52 Shabbatot per year. Every festival falls on the same day of the week every year — Shavu'ot always on the first day of the third month."
+    },
+    {
+      "term": "Songs of Sabbath Sacrifice (4QShirShabb)",
+      "phonetic": "Shirot Olat HaShabbat",
+      "definition": "A Qumran liturgical collection (4Q400-407, 11Q17) containing 13 songs, one for each Shabbat of the first quarter of the year. Each song describes the angelic worship in the heavenly temple. The cycle mirrors the 13 Shabbatot of one quarter of the 364-day calendar."
+    },
+    {
+      "term": "Hallel Psalms (Ps.113-118)",
+      "phonetic": "hal-LEL",
+      "definition": "A fixed liturgical collection sung at the three pilgrimage festivals (Pesach, Shavu'ot, Sukkot) and at Khanukkah. Egyptian Hallel (Ps.113-118) was sung before and after the Passover meal. These psalms function as the Psalter's festival liturgy."
+    },
+    {
+      "term": "Psalms of Ascent (Ps.120-134)",
+      "phonetic": "Shir HaMa'alot",
+      "definition": "15 psalms (Ps.120-134) each headed 'A Song of Ascents' (Shir HaMa'alot). Traditionally sung by pilgrims traveling to Yerushalayim for the three annual festivals. They form a coherent mini-collection: beginning in exile (Ps.120), arriving at Zion (Ps.122), and trusting YHWH's protection (Ps.121, 125, 127)."
+    },
+    {
+      "term": "New Moon Psalm (Ps.81)",
+      "phonetic": "Rosh Khodesh",
+      "definition": "Psalm 81 is associated with New Moon celebration: 'Blow the trumpet at the new moon, at the full moon, on our feast day.' It calls for covenantal remembrance at the appointed time, connecting lunar calendar markers to covenant worship."
+    },
+    {
+      "term": "4QCalendrical Document (4Q320-330)",
+      "phonetic": "Mishmaret / Mishmarot",
+      "definition": "A set of Qumran calendar texts (4Q320-330) organizing the rotation of priestly courses (Mishmarot) according to the 364-day calendar. They synchronize Shabbatot, months, and festival dates with the specific priestly course serving in the Temple — connecting calendar discipline to covenant worship."
+    },
+    {
+      "term": "Sukkot Psalms (Ps.113-118; 120-134)",
+      "phonetic": "Hag HaSukkot",
+      "definition": "The Festival of Sukkot (Tabernacles) had the most extensive psalm liturgy: the full Egyptian Hallel was sung, and the Psalms of Ascent (Ps.120-134) were traditionally associated with the fifteen steps of the Temple and the water-drawing ceremony. Ps.118 was the great processional psalm for Sukkot."
+    },
+    {
+      "term": "Morning and Evening Tamid Psalms",
+      "phonetic": "Tamid / korban ha-tamid",
+      "definition": "The daily Tamid offering (morning and evening) was accompanied by specific psalm assignments: Sunday — Ps.24, Monday — Ps.48, Tuesday — Ps.82, Wednesday — Ps.94, Thursday — Ps.81, Friday — Ps.93, Shabbat — Ps.92. This calendar-psalm mapping appears in the Mishnah (Tamid 7:4) and likely reflects earlier Temple practice."
+    },
+    {
+      "term": "Psalm 92 (Shabbat Psalm)",
+      "phonetic": "Miz-MOR shir le-YOM ha-sha-BAT",
+      "definition": "Psalm 92 is the only Shabbat-designated psalm in the Psalter: 'A Psalm, a song for the Shabbat day.' It celebrates YHWH's covenant faithfulness and the flourishing of the righteous — a weekly covenant renewal song for the day of rest that crowns the 364-day calendar cycle."
+    },
+    {
+      "term": "Covenant Calendar — Shavu'ot Fixed Date",
+      "phonetic": "Shavu'ot / Khag HaBikkurim",
+      "definition": "In the 364-day covenant calendar, Shavu'ot (the Festival of Weeks) always falls on the 15th of the third month — always a Sunday. This fixed date, documented in Yovelim (Book of Jubilees) and the Qumran texts, was the primary point of contention between the Qumran community and the Jerusalem Temple establishment, which used a lunar calendar that placed Shavu'ot on a shifting date."
+    }
   ],
   "fill_blank": [
-    { "ref": "137:1", "prompt": "By the rivers of ______, there we sat down and wept, when we remembered Tziyon.", "answer": "Babylon", "source_quote": "By the rivers of Babylon, there we sat down and wept, when we remembered Tziyon." },
-    { "ref": "137:4", "prompt": "How shall we sing YHWH's song in a ______ land?", "answer": "foreign", "source_quote": "How shall we sing YHWH's song in a foreign land?" },
-    { "ref": "121:1-2", "prompt": "I lift up my eyes to the hills — from where does my help come? My help comes from ______, who made heaven and earth.", "answer": "YHWH", "source_quote": "I lift up my eyes to the hills — from where does my help come? My help comes from YHWH, who made heaven and earth." },
-    { "ref": "150:6", "prompt": "Let everything that has ______ praise YAH. Halleluyah.", "answer": "breath", "source_quote": "Let everything that has breath praise YAH. Halleluyah." }
+    {
+      "ref": "Psalm 92:1",
+      "prompt": "It is ___ to give thanks to YHWH, to sing praises to your name, O Most High.",
+      "answer": "good",
+      "source_quote": "It is good to give thanks to YHWH, to sing praises to your name, O Most High."
+    },
+    {
+      "ref": "Psalm 92:2",
+      "prompt": "To declare your steadfast love in the morning, and your ___ by night.",
+      "answer": "faithfulness",
+      "source_quote": "To declare your steadfast love in the morning, and your faithfulness by night."
+    },
+    {
+      "ref": "Psalm 81:3",
+      "prompt": "Blow the trumpet at the new moon, at the full moon, on our ___ day.",
+      "answer": "feast",
+      "source_quote": "Blow the trumpet at the new moon, at the full moon, on our feast day."
+    },
+    {
+      "ref": "Psalm 118:24",
+      "prompt": "This is the day that YHWH has made; let us ___ and be glad in it.",
+      "answer": "rejoice",
+      "source_quote": "This is the day that YHWH has made; let us rejoice and be glad in it."
+    },
+    {
+      "ref": "Psalm 122:1",
+      "prompt": "I was glad when they said to me, 'Let us go to the house of ___!'",
+      "answer": "YHWH",
+      "source_quote": "I was glad when they said to me, 'Let us go to the house of YHWH!'"
+    },
+    {
+      "ref": "Psalm 134:1",
+      "prompt": "Come, bless YHWH, all you servants of YHWH, who stand by night in the ___ of YHWH!",
+      "answer": "house",
+      "source_quote": "Come, bless YHWH, all you servants of YHWH, who stand by night in the house of YHWH!"
+    },
+    {
+      "ref": "Psalm 24:1",
+      "prompt": "The earth is YHWH's and the ___ thereof, the world and those who dwell therein.",
+      "answer": "fullness",
+      "source_quote": "The earth is YHWH's and the fullness thereof, the world and those who dwell therein."
+    },
+    {
+      "ref": "Psalm 93:1",
+      "prompt": "YHWH reigns; he is robed in ___; YHWH is robed; he has put on strength as his belt.",
+      "answer": "majesty",
+      "source_quote": "YHWH reigns; he is robed in majesty; YHWH is robed; he has put on strength as his belt."
+    },
+    {
+      "ref": "Psalm 113:1",
+      "prompt": "Hallelu-Yah! Praise, O servants of YHWH, praise the ___ of YHWH!",
+      "answer": "name",
+      "source_quote": "Hallelu-Yah! Praise, O servants of YHWH, praise the name of YHWH!"
+    },
+    {
+      "ref": "Psalm 136:1",
+      "prompt": "Give thanks to YHWH, for he is good, for his steadfast love endures ___.",
+      "answer": "forever",
+      "source_quote": "Give thanks to YHWH, for he is good, for his steadfast love endures forever."
+    }
   ],
   "multiple_choice": [
-    { "ref": "137:1-4", "question": "What do the exiles do by the rivers of Babylon?", "options": ["They celebrate their new home", "They sit down and weep when they remember Tziyon — they cannot sing YHWH's song in a foreign land", "They build a new temple", "They forget Yerushalayim"], "correct": 1, "source_quote": "By the rivers of Babylon, there we sat down and wept, when we remembered Tziyon. On the willows there we hung up our lyres. For there our captors required of us songs... How shall we sing YHWH's song in a foreign land?" },
-    { "ref": "127:1", "question": "What does Psalm 127 say about building a house?", "options": ["Only priests may build", "Unless YHWH builds the house, those who build it labor in vain", "The house must be built of cedar", "Building is forbidden on Shabbat only"], "correct": 1, "source_quote": "Unless YHWH builds the house, those who build it labor in vain. Unless YHWH watches over the city, the watchman stays awake in vain." },
-    { "ref": "121:1-2", "question": "Where does the psalmist's help come from in Psalm 121?", "options": ["From the mountains themselves", "From YHWH, who made heaven and earth", "From the king in Yerushalayim", "From the priests in the temple"], "correct": 1, "source_quote": "My help comes from YHWH, who made heaven and earth." }
+    {
+      "ref": "Psalm 92",
+      "question": "What makes Psalm 92 unique in the Psalter regarding the covenant calendar?",
+      "options": [
+        "It is the only psalm written by Moshe",
+        "It is the only psalm explicitly designated for Shabbat",
+        "It is the only psalm associated with Yom Kippur",
+        "It is the only psalm that describes the Passover Seder"
+      ],
+      "correct": 1,
+      "source_quote": "A Psalm, a song for the Shabbat day."
+    },
+    {
+      "ref": "Psalms of Ascent",
+      "question": "How many psalms make up the Psalms of Ascent collection?",
+      "options": [
+        "Seven psalms (Ps.120-126)",
+        "Ten psalms (Ps.125-134)",
+        "Fifteen psalms (Ps.120-134)",
+        "Twelve psalms (Ps.120-131)"
+      ],
+      "correct": 2,
+      "source_quote": "A Song of Ascents."
+    },
+    {
+      "ref": "Hallel Psalms",
+      "question": "Which psalm collection was sung before and after the Passover meal?",
+      "options": [
+        "The Psalms of Ascent (Ps.120-134)",
+        "The Great Hallel (Ps.136)",
+        "The Egyptian Hallel (Ps.113-118)",
+        "The Hallelu-Yah Psalms (Ps.146-150)"
+      ],
+      "correct": 2,
+      "source_quote": "The Egyptian Hallel (Ps.113-118) was sung before and after the Passover meal."
+    },
+    {
+      "ref": "Tamid Psalm assignment",
+      "question": "According to Temple practice preserved in the Mishnah, which psalm was assigned to Shabbat?",
+      "options": [
+        "Psalm 24",
+        "Psalm 93",
+        "Psalm 92",
+        "Psalm 81"
+      ],
+      "correct": 2,
+      "source_quote": "A Psalm, a song for the Shabbat day."
+    },
+    {
+      "ref": "364-day calendar",
+      "question": "In the 364-day covenant calendar, on what date does Shavu'ot always fall?",
+      "options": [
+        "The 6th of Sivan (always a Thursday)",
+        "The 15th of the third month (always a Sunday)",
+        "The 50th day after Pesach (variable day)",
+        "The first day of the fourth month"
+      ],
+      "correct": 1,
+      "source_quote": "In the 364-day covenant calendar, Shavu'ot always falls on the 15th of the third month — always a Sunday."
+    },
+    {
+      "ref": "Songs of Sabbath Sacrifice",
+      "question": "How many songs are in the Songs of Sabbath Sacrifice cycle, and what do they correspond to?",
+      "options": [
+        "52 songs, one for each Shabbat of the year",
+        "7 songs, one for each day of creation",
+        "13 songs, one for each Shabbat of the first quarter of the year",
+        "4 songs, one for each festival of the year"
+      ],
+      "correct": 2,
+      "source_quote": "13 songs, one for each Shabbat of the first quarter of the year."
+    },
+    {
+      "ref": "Psalm 122:1",
+      "question": "With what emotion does Psalm 122 describe going to the house of YHWH?",
+      "options": [
+        "Fear and trembling",
+        "Gladness",
+        "Mourning and fasting",
+        "Reverent silence"
+      ],
+      "correct": 1,
+      "source_quote": "I was glad when they said to me, 'Let us go to the house of YHWH!'"
+    },
+    {
+      "ref": "Psalm 136",
+      "question": "What is distinctive about the structure of Psalm 136?",
+      "options": [
+        "It is an alphabetic acrostic with 22 verses",
+        "Every verse ends with 'for his steadfast love endures forever'",
+        "It is the longest psalm in the Psalter",
+        "It has no superscription and no attribution"
+      ],
+      "correct": 1,
+      "source_quote": "Give thanks to YHWH, for he is good, for his steadfast love endures forever."
+    },
+    {
+      "ref": "4QCalendrical Document",
+      "question": "What do the Qumran Mishmarot texts (4Q320-330) organize?",
+      "options": [
+        "The order of priestly courses according to the 364-day calendar",
+        "The order of psalm singing for each Shabbat",
+        "The distribution of tithe offerings to the Levites",
+        "The sequence of covenant renewal ceremonies"
+      ],
+      "correct": 0,
+      "source_quote": "A set of Qumran calendar texts organizing the rotation of priestly courses according to the 364-day calendar."
+    },
+    {
+      "ref": "Psalm 81",
+      "question": "What instrument does Psalm 81 command to be blown at the New Moon?",
+      "options": [
+        "Lyre",
+        "Harp",
+        "Trumpet (shofar)",
+        "Flute"
+      ],
+      "correct": 2,
+      "source_quote": "Blow the trumpet at the new moon, at the full moon, on our feast day."
+    }
   ],
   "faq": [
     {
-      "question": "What does Psalm 137 reveal about exile and memory?",
-      "answer": "Psalm 137 is the exile psalm: 'By the rivers of Babylon, there we sat down and wept, when we remembered Tziyon.' The question 'How shall we sing YHWH's song in a foreign land?' is the fundamental question of every displaced covenant community across every era. The Babylonian exile (586 BCE) was the first major displacement, but the pattern repeats: the Roman exile (70 CE), the scattering across Africa, the transatlantic slave trade, the forced dispersions across every continent. In each case the question is the same — how do you maintain covenant identity when you are removed from the covenant land? The Great Eraser operates precisely in this space. When a people is displaced, the erasure of their songs, their language, their names, and their memory becomes possible. Psalm 137:5 answers: 'If I forget you, O Yerushalayim, let my right hand forget its skill.' Memory is resistance. Forgetting is the erasure. The psalm commands: do not forget."
+      "question": "How does the 364-day covenant calendar connect to psalm worship?",
+      "answer": "The 364-day covenant calendar (preserved in Chanokh and Yovelim, and practiced at Qumran) provided an exact framework for liturgical psalm use. Because 364 = 52 × 7, every festival and Shabbat fell on the same weekday every year — Shabbat always on the seventh day, Shavu'ot always on the 15th of the third month (Sunday). This allowed fixed psalm assignments: Ps.92 always for Shabbat, Ps.24 always for Sunday Tamid, specific Hallel psalms always for the same festivals. Calendar discipline and worship were inseparable."
     },
     {
-      "question": "How shall we sing YHWH's song in a foreign land — who has answered this question?",
-      "answer": "Three communities answered this question across three continents without coordinating with each other. The Beta Israel in Ethiopia sang YHWH's songs in Ge'ez for over a thousand years — maintaining Shabbat, kashrut, and pilgrimage to their own Tziyon. Enslaved Africans on American plantations encoded covenant memory in spirituals: 'Go Down, Moses' is the Exodus. 'Swing Low, Sweet Chariot' carries Eliyahu's chariot. 'Didn't My Lord Deliver Daniel' names Daniyel. The Qumran community at the Dead Sea preserved the songs physically — sealing the Psalms Scroll (11QPsa) in caves where it waited 1,900 years. Each community found its own way to sing YHWH's song in exile. None of them forgot Yerushalayim."
+      "question": "What are the Psalms of Ascent and why were they sung on pilgrimage?",
+      "answer": "The 15 Psalms of Ascent (Shir HaMa'alot, Ps.120-134) were traditionally sung by pilgrims traveling to Yerushalayim for the three annual festivals (Pesach, Shavu'ot, Sukkot). They move from lament in exile (Ps.120) through the journey to arrival at Tzion (Ps.122) and confident covenant trust (Ps.121, 125, 127). The Hebrew word ma'alot means 'steps' or 'ascents' — both the physical ascent to the mountain city and a spiritual progression."
     },
     {
-      "question": "Why does 11QPsa arrange the closing psalms differently than the Masoretic?",
-      "answer": "The Great Psalms Scroll (11QPsa) from Qumran Cave 11 presents Psalms 101-150 in a different sequence than the Masoretic text and includes additional compositions — Psalms 151, 154, 155, a prose piece about Dawid's writings, and other texts. This proves the Psalter was not yet fixed in the Masoretic form when the Qumran community sealed their scrolls (c. 68 CE). The Masoretic arrangement was standardized by the Ben Asher family in Tiberias between 850-950 CE — 800 years later. The DSS arrangement is older. The Great Eraser mechanism depends on treating the Masoretic as the original and only text. The 11QPsa demonstrates that the Masoretic is one editorial tradition, not the original."
+      "question": "What are the Egyptian Hallel psalms and when were they used?",
+      "answer": "The Egyptian Hallel (Ps.113-118) is a fixed liturgical collection recounting YHWH's redemption of Yisra'el from Mitzrayim (Ps.113-114) and offering praise for covenant deliverance (Ps.115-118). It was sung at the three pilgrimage festivals and at the Passover Seder — Ps.113-114 before the meal, Ps.115-118 after. Ps.118 ends: 'This is the day that YHWH has made; let us rejoice and be glad in it.'"
+    },
+    {
+      "question": "What are the Songs of Sabbath Sacrifice and what do they reveal about Qumran worship?",
+      "answer": "The Songs of Sabbath Sacrifice (4Q400-407, 11Q17) are 13 liturgical songs, one for each Shabbat of the first calendar quarter. Each song describes the angelic worship in the heavenly temple — the angelic priests offering sacrifice alongside the earthly community. They reveal that the Qumran community understood their Shabbat worship as a participation in heavenly liturgy: the earthly priests and the angelic priests worshipping YHWH in synchronized covenant rhythm."
+    },
+    {
+      "question": "Why was Shavu'ot's fixed date in the 364-day calendar so important?",
+      "answer": "In the 364-day covenant calendar, Shavu'ot always falls on the 15th of the third month (always Sunday) — the fixed covenant anniversary of the giving of Torah at Sinai. This fixed date was the central point of contention between the Qumran community and the Jerusalem Temple establishment: the Temple used a lunar calendar that placed Shavu'ot on a different, variable date. Getting this date wrong, the Qumran community believed, invalidated the entire covenant renewal ceremony — it was not a minor liturgical dispute but a question of covenant obedience."
+    },
+    {
+      "question": "How were psalms assigned to the daily Tamid offering?",
+      "answer": "Each day of the week had a specific psalm assigned to the morning Tamid offering: Sunday — Ps.24 (YHWH's ownership of the earth), Monday — Ps.48 (YHWH's city), Tuesday — Ps.82 (divine council judgment), Wednesday — Ps.94 (YHWH as judge), Thursday — Ps.81 (covenant call with trumpet), Friday — Ps.93 (YHWH reigns), Shabbat — Ps.92 (the Shabbat song). This weekly psalm cycle embedded the entire theology of creation, covenant, justice, and worship into daily temple rhythm."
+    },
+    {
+      "question": "What is Psalm 136 and why does it repeat the same phrase 26 times?",
+      "answer": "Psalm 136 is called the Great Hallel — 26 verses, each ending with the refrain 'for his steadfast love endures forever' (ki le'olam khasdo). The structure is antiphonal: a leader recites YHWH's acts (creation, the Exodus, the conquest), and the congregation responds with the covenant affirmation. The 26-fold repetition creates a covenant liturgy of pure steadfast-love theology: YHWH's character is the reason behind every act from creation to redemption."
+    },
+    {
+      "question": "How does Psalm 24 function as the Sunday Tamid psalm?",
+      "answer": "Psalm 24 opens: 'The earth is YHWH's and the fullness thereof, the world and those who dwell therein — for he has founded it upon the seas and established it upon the rivers.' As the first-day Tamid psalm, it sets the week's worship foundation: everything that follows in the week's work and worship belongs to YHWH who created and owns it. The psalm then asks who may ascend YHWH's mountain — and answers with covenant moral requirements, not ritual status."
+    },
+    {
+      "question": "Why is Psalm 92 specifically designated as the Shabbat psalm?",
+      "answer": "Psalm 92 is titled 'A Psalm, a song for the Shabbat day' — the only psalm with this designation. Its content matches: it celebrates YHWH's covenant faithfulness that is 'proclaimed in the morning and at night' (the two daily Tamid offerings), and it declares the flourishing of the righteous against the apparent prosperity of the wicked — a Shabbat meditation on the difference between the world as it appears and the covenant reality that will prevail. Shabbat rest is not idleness but covenant confidence."
+    },
+    {
+      "question": "How did the Qumran community understand their calendar worship as cosmic participation?",
+      "answer": "The Qumran community understood the 364-day calendar as the actual structure of creation — built into the cosmos by YHWH (documented in Chanokh 72-82). Keeping the correct calendar was not a preference; it was covenant obedience. Their worship, organized by the calendar, was understood as synchronizing with the heavenly liturgy described in the Songs of Sabbath Sacrifice: the earthly priestly community and the angelic priestly community worshipping together in the same rhythm, at the same appointed times, honoring YHWH who set both the calendar and the covenant."
     }
   ]
 }

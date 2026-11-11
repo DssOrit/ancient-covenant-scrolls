@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_63",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_63",
   "label": "The Twelve — Part 4 — Havakuk, Tzefanyah, Khagai, Zekhariyahu 1–8",
   "volume": 19,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Havakuk cries out: How long shall I cry for help and you will not hear? YHWH answers: I am raising up the Kasdim — that bitter and hasty nation. Havakuk asks: Why do you look on traitors in silence when the wicked swallows up the man more righteous than he? YHWH says: Write the vision — make it plain on tablets so he may run who reads it. The righteous shall live by his faithfulness. Woe to him who builds a town with blood. Tzefanyah proclaims the Day of YHWH — a day of wrath, distress, ruin, darkness, and trumpet blast. YHWH will leave in your midst a people humble and lowly who take refuge in the name of YHWH. Khagai commands: Build the house of YHWH! The glory of this latter house shall be greater than the former. Zekhariyahu sees visions — horsemen among the myrtle trees, a man with a measuring line, the high priest Yehoshua standing before the angel of YHWH with the adversary at his right hand. Not by might nor by power but by my ruach, says YHWH.",
   "summary_scholarly": "The ACR reads from the Minor Prophets Scroll (4QXII, 8HevXIIgr) and the Orit Ge'ez. Havakuk 2:4 — 'the righteous shall live by his faithfulness (emunah)' — is among the most consequential verses in the entire canon. Sha'ul/Paul cites it in Romans 1:17 and Galatians 3:11, translating emunah as pistis (faith) and building the Protestant doctrine of sola fide upon it. The Pesher Habakkuk (1QpHab) at Qumran interprets Havakuk line-by-line, applying every verse to the community's historical situation — the Teacher of Righteousness, the Wicked Priest, the Liar, and the Kittim (Romans). The 1QpHab interpretation of 2:4 specifically reads: 'its interpretation concerns all those who observe the Torah in the house of Yehudah, whom The Creator will deliver from the house of judgment on account of their toil and their faithfulness to the Teacher of Righteousness.' Emunah at Qumran is faithfulness — covenant loyalty demonstrated through Torah observance — not abstract doctrinal belief.",
   "key_terms": [
-    { "term": "Havakuk", "phonetic": "Hah-vah-KOOK", "definition": "Prophet who questions YHWH about justice — why do the wicked prosper and the righteous suffer? YHWH's answer includes the defining principle: the righteous shall live by his faithfulness (emunah). Anglicized as Habakkuk." },
-    { "term": "Emunah (Faithfulness)", "phonetic": "Eh-moo-NAH", "definition": "Havakuk 2:4: 'the righteous shall live by his emunah.' Emunah means faithfulness, steadfastness, loyalty — from the root alef-mem-nun (amen). It is not abstract belief (the Greek pistis) but demonstrated covenant fidelity. The Pesher Habakkuk at Qumran defines it as faithfulness to the Teacher of Righteousness through Torah observance." },
-    { "term": "Pesher Habakkuk (1QpHab)", "phonetic": "PEH-sher", "definition": "A Qumran commentary on Havakuk found in Cave 1. It applies every verse of the prophet to the community's historical situation — identifying the Teacher of Righteousness, the Wicked Priest, and the Kittim (Romans). It is the most complete pesher (line-by-line interpretation) found at Qumran." },
-    { "term": "Tzefanyah", "phonetic": "Tseh-fahn-YAH", "definition": "Prophet who proclaims the Day of YHWH in vivid cosmic terms. He is identified as a descendant of Chizkiyahu (likely King Chizkiyahu/Hezekiah). He prophesies that YHWH will leave a humble remnant. Anglicized as Zephaniah." }
+    {
+      "term": "Zekharyah's Night Visions",
+      "phonetic": "Zekharyah 1–6",
+      "definition": "A series of eight symbolic night visions received by the prophet Zekharyah, covering cosmic forces, priestly restoration, Temple rebuilding, and YHWH's global governance."
+    },
+    {
+      "term": "Horseman Among Myrtles (ch.1)",
+      "phonetic": "Zekharyah 1:8-11",
+      "definition": "The first vision: a man riding a red horse among myrtle trees in a ravine, with other horses reporting that all the earth is at rest. The horseman is YHWH's patrol of the earth."
+    },
+    {
+      "term": "Yehoshua and the Adversary (ch.3)",
+      "phonetic": "Zekharyah 3:1-5",
+      "definition": "High priest Yehoshua stands before the angel of YHWH while the adversary (ha-satan — the accuser role) stands to accuse him. YHWH rebukes the adversary and removes Yehoshua's filthy garments, clothing him in clean vestments."
+    },
+    {
+      "term": "Tzemakh/Branch (3:8, 6:12)",
+      "phonetic": "TSEH-makh",
+      "definition": "YHWH's word through Zekharyah: 'Behold, the man whose name is Branch: he will branch out from his place, and he shall build the temple of YHWH.' Ancient source text; NT writers borrowed the Branch/shoot imagery from Zekharyah."
+    },
+    {
+      "term": "Lampstand and Olive Trees (ch.4)",
+      "phonetic": "Zekharyah 4:2-6",
+      "definition": "The fifth vision: a golden lampstand with seven lamps fed by two olive trees on either side — representing Zeruvavel and Yehoshua, sustained directly by YHWH's spirit, not human effort."
+    },
+    {
+      "term": "Not by Might Nor Power (4:6)",
+      "phonetic": "Zekharyah 4:6",
+      "definition": "'Not by might, nor by power, but by my Spirit, says YHWH of Hosts.' YHWH's answer to Zeruvavel about how the Temple will be completed — divine spirit, not human resources."
+    },
+    {
+      "term": "Flying Scroll (ch.5)",
+      "phonetic": "Zekharyah 5:1-4",
+      "definition": "The sixth vision: a flying scroll 20 cubits by 10 cubits representing the curse going out over all the land against those who steal and swear falsely — YHWH's law inscribed and enforceable."
+    },
+    {
+      "term": "Woman in Basket (ch.5)",
+      "phonetic": "Zekharyah 5:5-11",
+      "definition": "The seventh vision: wickedness personified as a woman inside an ephah (measuring basket), covered with a lead disc and carried to the land of Shinar (Babylon) — wickedness removed from the land."
+    },
+    {
+      "term": "Four Chariots (ch.6)",
+      "phonetic": "Zekharyah 6:1-8",
+      "definition": "The eighth and final night vision: four chariots with horses of different colors emerging from between two bronze mountains — YHWH's four spirits of heaven patrolling the earth; the black horses bring YHWH's spirit to rest in the north (Babylon)."
+    },
+    {
+      "term": "Zeruvavel's Plumb Line",
+      "phonetic": "Zekharyah 4:9-10",
+      "definition": "'The hands of Zeruvavel have laid the foundation of this house; his hands shall also complete it.' YHWH declares that the governor who started the Temple will finish it, and the plumb line in his hand is the proof."
+    }
   ],
   "fill_blank": [
-    { "ref": "Havakuk 2:4", "prompt": "The righteous shall live by his ______.", "answer": "faithfulness", "source_quote": "Behold, his soul is puffed up — it is not upright within him. But the righteous shall live by his faithfulness." },
-    { "ref": "Zekhariyahu 4:6", "prompt": "Not by might, nor by power, but by my ______, says YHWH of hosts.", "answer": "ruach", "source_quote": "Not by might, nor by power, but by my ruach, says YHWH of hosts." },
-    { "ref": "Havakuk 2:2", "prompt": "Write the vision — make it plain on ______ so he may run who reads it.", "answer": "tablets", "source_quote": "And YHWH answered me: Write the vision — make it plain on tablets, so he may run who reads it." }
+    {
+      "ref": "Zekharyah 1:3",
+      "prompt": "Return to me, says YHWH of Hosts, and I will ___ to you, says YHWH of Hosts.",
+      "answer": "return",
+      "source_quote": "Return to me, says YHWH of Hosts, and I will return to you, says YHWH of Hosts."
+    },
+    {
+      "ref": "Zekharyah 2:5",
+      "prompt": "YHWH declared he would be a ___ of fire all around Yerushalayim, and he will be the glory in her midst.",
+      "answer": "wall",
+      "source_quote": "I will be to her a wall of fire all around, declares YHWH, and I will be the glory in her midst."
+    },
+    {
+      "ref": "Zekharyah 3:1",
+      "prompt": "Then he showed me ___ the high priest standing before the angel of YHWH, and the adversary standing at his right hand to accuse him.",
+      "answer": "Yehoshua",
+      "source_quote": "Then he showed me Yehoshua the high priest standing before the angel of YHWH, and the adversary standing at his right hand to accuse him."
+    },
+    {
+      "ref": "Zekharyah 3:2",
+      "prompt": "And YHWH said to the adversary, 'YHWH ___ you, O adversary! YHWH who has chosen Yerushalayim rebukes you!'",
+      "answer": "rebuke",
+      "source_quote": "YHWH rebuke you, O adversary! YHWH who has chosen Yerushalayim rebukes you!"
+    },
+    {
+      "ref": "Zekharyah 3:8",
+      "prompt": "Hear now, O Yehoshua the high priest, you and your friends who sit before you: behold, I will bring my servant the ___.",
+      "answer": "Branch",
+      "source_quote": "Hear now, O Yehoshua the high priest, you and your friends who sit before you: behold, I will bring my servant the Branch."
+    },
+    {
+      "ref": "Zekharyah 4:6",
+      "prompt": "'Not by might, nor by power, but by my ___, says YHWH of Hosts.'",
+      "answer": "Spirit",
+      "source_quote": "Not by might, nor by power, but by my Spirit, says YHWH of Hosts."
+    },
+    {
+      "ref": "Zekharyah 4:9",
+      "prompt": "The hands of ___ have laid the foundation of this house; his hands shall also complete it.",
+      "answer": "Zeruvavel",
+      "source_quote": "The hands of Zeruvavel have laid the foundation of this house; his hands shall also complete it."
+    },
+    {
+      "ref": "Zekharyah 5:3",
+      "prompt": "He said to me, 'This is the ___ that goes out over the face of the whole land. Everyone who steals shall be cleaned out according to what is on one side, and everyone who swears falsely shall be cleaned out.'",
+      "answer": "curse",
+      "source_quote": "This is the curse that goes out over the face of the whole land."
+    },
+    {
+      "ref": "Zekharyah 6:12",
+      "prompt": "And say to him, 'Thus says YHWH of Hosts, Behold, the man whose name is ___: he will branch out from his place, and he shall build the temple of YHWH.'",
+      "answer": "Branch",
+      "source_quote": "Behold, the man whose name is Branch: he will branch out from his place, and he shall build the temple of YHWH."
+    },
+    {
+      "ref": "Zekharyah 7:9",
+      "prompt": "'Render true judgments, show ___ and mercy to one another, do not oppress the widow, the fatherless, the sojourner, or the poor, and let none of you devise evil against another.'",
+      "answer": "kindness",
+      "source_quote": "Render true judgments, show kindness and mercy to one another."
+    }
   ],
   "multiple_choice": [
-    { "ref": "Havakuk 2:4", "question": "How does the Pesher Habakkuk at Qumran interpret 'the righteous shall live by his faithfulness'?", "options": ["As abstract belief in a creed", "As faithfulness to the Teacher of Righteousness through Torah observance", "As faith in the coming Messiah", "As confidence in the Roman empire"], "correct": 1, "source_quote": "Its interpretation concerns all those who observe the Torah in the house of Yehudah, whom The Creator will deliver from the house of judgment on account of their toil and their faithfulness to the Teacher of Righteousness." },
-    { "ref": "Tzefanyah 3:12", "question": "What kind of people does YHWH say he will leave in the midst of Yisra'EL?", "options": ["The wealthy and powerful", "A people humble and lowly who take refuge in the name of YHWH", "The priests and Levites only", "The kings and princes"], "correct": 1, "source_quote": "I will leave in your midst a people humble and lowly, and they shall take refuge in the name of YHWH." },
-    { "ref": "Zekhariyahu 4:6", "question": "By what does YHWH say his purposes will be accomplished?", "options": ["By military might", "By human wisdom", "By his ruach — not by might nor by power", "By angelic intervention"], "correct": 2, "source_quote": "Not by might, nor by power, but by my ruach, says YHWH of hosts." }
+    {
+      "ref": "Zekharyah 1:8-11",
+      "question": "What did the horsemen report to the angel of YHWH in the first night vision?",
+      "options": [
+        "The nations were preparing for war",
+        "Yisra'el's enemies were gathering",
+        "The earth was at rest and quiet",
+        "The Temple was rebuilt and consecrated"
+      ],
+      "correct": 2,
+      "source_quote": "We have patrolled the earth, and behold, all the earth remains at rest."
+    },
+    {
+      "ref": "Zekharyah 2:5",
+      "question": "What does YHWH promise to be for Yerushalayim in Zekharyah 2:5?",
+      "options": [
+        "A strong military fortress",
+        "A wall of fire around it and glory within it",
+        "A permanent king on its throne",
+        "A river of living water"
+      ],
+      "correct": 1,
+      "source_quote": "I will be to her a wall of fire all around, and I will be the glory in her midst."
+    },
+    {
+      "ref": "Zekharyah 3:1-2",
+      "question": "In the fourth vision, what happens when the adversary tries to accuse Yehoshua the high priest?",
+      "options": [
+        "YHWH listens and removes Yehoshua from service",
+        "Yehoshua is vindicated by his own righteousness",
+        "YHWH rebukes the adversary and removes Yehoshua's filthy garments",
+        "The adversary succeeds and Yehoshua is sent into exile"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH rebuke you, O adversary! YHWH who has chosen Yerushalayim rebukes you!"
+    },
+    {
+      "ref": "Zekharyah 3:8",
+      "question": "What is the title YHWH uses for the coming figure in Zekharyah 3:8?",
+      "options": [
+        "The Anointed King",
+        "The Prince of Peace",
+        "The Branch — my servant",
+        "The Shepherd of Yisra'el"
+      ],
+      "correct": 2,
+      "source_quote": "Behold, I will bring my servant the Branch."
+    },
+    {
+      "ref": "Zekharyah 4:6",
+      "question": "By what means will the Temple rebuilding be completed according to Zekharyah 4:6?",
+      "options": [
+        "By Persian imperial funding",
+        "By military conquest of the surrounding nations",
+        "By might and power of Zeruvavel's army",
+        "By YHWH's Spirit, not by human might or power"
+      ],
+      "correct": 3,
+      "source_quote": "Not by might, nor by power, but by my Spirit, says YHWH of Hosts."
+    },
+    {
+      "ref": "Zekharyah 4:9",
+      "question": "Who does YHWH promise will both begin and complete the Temple in Zekharyah 4:9?",
+      "options": [
+        "Yehoshua the high priest",
+        "The Persian king Daryavesh",
+        "Zeruvavel the governor",
+        "Ezra the scribe"
+      ],
+      "correct": 2,
+      "source_quote": "The hands of Zeruvavel have laid the foundation of this house; his hands shall also complete it."
+    },
+    {
+      "ref": "Zekharyah 5:1-4",
+      "question": "What does the flying scroll in the sixth vision represent?",
+      "options": [
+        "A decree from the Persian king",
+        "The Torah being restored to the land",
+        "The curse going out against thieves and those who swear falsely",
+        "A message of comfort to the exiles"
+      ],
+      "correct": 2,
+      "source_quote": "This is the curse that goes out over the face of the whole land."
+    },
+    {
+      "ref": "Zekharyah 5:5-11",
+      "question": "Where are the two women in the seventh vision carrying the basket with the woman inside?",
+      "options": [
+        "To Yerushalayim, to place her in the Temple",
+        "To the land of Shinar (Babylon)",
+        "To Mount Tzion",
+        "To the wilderness"
+      ],
+      "correct": 1,
+      "source_quote": "To build a house for it in the land of Shinar."
+    },
+    {
+      "ref": "Zekharyah 6:1-8",
+      "question": "What do the four chariots in the eighth vision represent?",
+      "options": [
+        "The four kingdoms that will rule the earth",
+        "The four winds of heaven going out from YHWH's presence",
+        "The four armies of Yisra'el's enemies",
+        "The four seasons of the covenant calendar"
+      ],
+      "correct": 1,
+      "source_quote": "These are going out to the four winds of heaven, after presenting themselves before the Creator of all the earth."
+    },
+    {
+      "ref": "Zekharyah 7:9",
+      "question": "In Zekharyah 7:9, what does YHWH say the previous generations failed to do that brought judgment?",
+      "options": [
+        "They failed to bring sacrifices to the Temple",
+        "They failed to render true judgments and show kindness and mercy",
+        "They failed to observe the festival calendar",
+        "They failed to restore the walls of Yerushalayim"
+      ],
+      "correct": 1,
+      "source_quote": "Render true judgments, show kindness and mercy to one another."
+    }
   ],
   "faq": [
     {
-      "question": "How did the Great Eraser transform emunah (faithfulness) into sola fide (faith alone)?",
-      "answer": "Havakuk 2:4 in Hebrew reads: ve-tsaddiq be-emunato yichyeh — the righteous shall live by his faithfulness (emunah). Emunah is from the root alef-mem-nun — the same root as amen, meaning steadfast, reliable, faithful. It describes demonstrated covenant loyalty — not abstract intellectual belief. The Pesher Habakkuk (1QpHab 8:1-3) at Qumran interprets this verse specifically as 'those who observe the Torah in the house of Yehudah' whose 'toil and faithfulness to the Teacher of Righteousness' brings deliverance. Emunah at Qumran is active Torah observance — covenant faithfulness lived out in practice. Sha'ul/Paul translated emunah into Greek as pistis (Romans 1:17, Galatians 3:11). Martin Luther then used this Greek translation to construct sola fide — justification by faith alone, apart from works of the law. The Hebrew emunah became the Greek pistis became the Latin fides became the Protestant 'faith alone.' At each translation layer, the meaning shifted further from the original: demonstrated covenant loyalty became abstract doctrinal belief. The Qumran community — the oldest interpreters of this verse — understood emunah as Torah observance. The Great Eraser built an entire theological system (sola fide) on a mistranslation of a Hebrew word whose meaning is documented at Qumran."
+      "question": "What is the overall structure of Zekharyah's night visions in chapters 1–6?",
+      "answer": "The eight night visions form a structured arc: visions 1 (patrol report) and 8 (four chariots) frame the whole as YHWH's cosmic governance of the earth. The middle visions address specific realities: the removal of Yerushalayim's shame, the rebuilding of the city, the cleansing of the high priest, the completion of the Temple, the removal of wickedness, and the crowning of the Branch."
     },
     {
-      "question": "What does the Pesher Habakkuk reveal about how the covenant community read the prophets?",
-      "answer": "The Pesher Habakkuk (1QpHab) is a line-by-line commentary on the prophet Havakuk, applying each verse to the Qumran community's historical situation. The Teacher of Righteousness is the authoritative interpreter. The Wicked Priest is the corrupt institutional leader. The Kittim are the Romans. The method — called pesher — reads the prophetic text as written about the community's own time, not merely about the prophet's historical context. This interpretive method is preserved in at least fifteen pesharim found at Qumran. The pesher method proves that the covenant community understood the prophets as speaking to every generation — not as historical curiosities but as living words that apply to the current situation. The Great Eraser locked the prophets into historical-critical frameworks that treat them as ancient literature rather than living covenant address. The Qumran method — reading the prophet as speaking to your own community's situation — is the covenant reading method the ACR restores."
+      "question": "Who is 'the adversary' (ha-satan) in Zekharyah 3:1 and what role does the figure play?",
+      "answer": "In Zekharyah 3:1, ha-satan means 'the adversary' or 'the accuser' — a prosecutorial role within YHWH's council. The figure stands to accuse Yehoshua the high priest. YHWH rebukes the adversary and chooses to restore Yehoshua rather than prosecute him. This is not an independent evil deity — it is a legal functionary in YHWH's council who is overruled by YHWH's decision to restore."
     },
     {
-      "question": "Why does Tzefanyah describe the Day of YHWH as specifically preserving a humble remnant?",
-      "answer": "Tzefanyah 1:14-18 describes the Day of YHWH in the most vivid cosmic terms in the prophetic literature — wrath, distress, ruin, darkness, trumpet blast, battle cry. But Tzefanyah 3:12 immediately identifies who survives: 'I will leave in your midst a people humble and lowly, and they shall take refuge in the name of YHWH.' The remnant is not the powerful, the wealthy, the institutionally connected. It is the anawim — the humble poor, the lowly, those who have nothing to rely on except YHWH's name. The Damascus Document at Qumran describes the covenant community in the same terms — a small remnant preserved through the Period of Wrath, defined by humility and Torah observance rather than institutional power. The pattern: YHWH's judgment strips away institutional religion, political power, and economic security — and what remains is the humble remnant that trusted in his name."
+      "question": "What does Zekharyah 4:6 mean by 'not by might nor by power but by my Spirit'?",
+      "answer": "YHWH is addressing the apparent impossibility of completing the Temple given the small, weak returned community with limited resources. The word is that the work will not succeed through human military strength or earthly resources, but through YHWH's direct spirit at work. The great mountain of obstacles will become a plain before Zeruvavel."
+    },
+    {
+      "question": "What is the 'Branch' figure announced in Zekharyah 3:8 and 6:12?",
+      "answer": "The Branch (Tzemakh) is YHWH's promised figure who will rebuild the Temple and sit on a throne as both priest and king — a unified role. This ancient Hebrew covenant figure's title and function became a source text that NT writers borrowed extensively to construct their invented figure. The original Zekharyah texts describe a human governor-priest figure in the post-exile period."
+    },
+    {
+      "question": "What is the significance of YHWH removing Yehoshua's filthy garments in chapter 3?",
+      "answer": "Yehoshua represents the entire priestly community returning from exile — their filthy garments represent the defilement and shame of the exile period. YHWH's act of removing them and replacing them with clean vestments is a declaration of restoration: the priestly function is renewed, the people's representative is cleansed, and Temple service can legitimately resume."
+    },
+    {
+      "question": "What does the flying scroll vision in Zekharyah 5 communicate?",
+      "answer": "The flying scroll is enormous — 20 cubits by 10 cubits, the same dimensions as the porch of Shlomo's Temple. It is YHWH's curse written large and going out automatically against two specific sins: theft and false swearing. It enters the homes of the guilty and consumes them. The covenant community's integrity is enforced by YHWH's own standing decree."
+    },
+    {
+      "question": "What does the woman in the basket vision (chapter 5) mean?",
+      "answer": "The woman labeled 'wickedness' is placed in a measuring basket and transported to the land of Shinar (Babylon) — the place of origin of organized apostasy. The vision declares that the spiritual pollution of commerce and false dealing is being removed from the land of Yisra'el and relocated to its natural home. The land can be clean again."
+    },
+    {
+      "question": "How do the four chariots in Zekharyah 6 complete the vision sequence?",
+      "answer": "The four chariots are YHWH's four spirits of heaven going out to patrol all the earth — corresponding to the four winds. They are YHWH's executive agents enforcing the divine will globally. The black horses going north bring YHWH's spirit to rest in the north, the direction of Babylon — YHWH's judgment on the empire is complete. The vision sequence closes with YHWH's governance of the whole earth confirmed."
+    },
+    {
+      "question": "What social message does Zekharyah deliver in chapters 7–8 alongside the visions?",
+      "answer": "In chapters 7–8, YHWH addresses a delegation asking about fasting. YHWH's response is that the fasting practiced in exile was not for YHWH's benefit — it was self-focused. The real requirement is the same as always: render true judgments, show kindness and mercy, do not oppress the widow or fatherless, and do not devise evil. Fasting without justice is hollow."
+    },
+    {
+      "question": "Why is Zekharyah important for understanding how NT writers constructed their narratives?",
+      "answer": "Zekharyah is one of the most heavily borrowed books in the NT. The Branch/Tzemakh, the king coming on a donkey (9:9), the thirty pieces of silver (11:12-13), the pierced one (12:10), the shepherd struck and the flock scattered (13:7) — all ancient Zekharyah texts. The NT did not originate these images; it borrowed them from Zekharyah and applied them to the invented figure. Zekharyah is the source, the NT is the borrower."
     }
   ]
 }

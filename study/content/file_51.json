@@ -1,38 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_51",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_51",
   "label": "Yirmeyahu (Jeremiah) — Part 5 — Chapters 32–39",
   "volume": 17,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "While Yerushalayim is under Babylonian siege, YHWH tells Yirmeyahu to buy a field in Anatot — a sign that houses and fields and vineyards shall again be bought in this land. YHWH promises to gather the people from all the countries where he has driven them and bring them back. Yirmeyahu speaks against Tsidqiyahu the king. The officials throw Yirmeyahu into the cistern of Malkiyahu — he sinks in the mud. Ebed-Melek the Cushite, a court official, goes to the king and says: These men have done evil by putting the prophet in the cistern. Ebed-Melek takes thirty men, pulls Yirmeyahu out with ropes and rags. YHWH promises Ebed-Melek: I will deliver you on that day — you shall not be given into the hand of the men you fear — because you have put your trust in me.",
   "summary_scholarly": "The ACR reads from the DSS Jeremiah manuscripts (4QJer-a through 4QJer-e) and the Orit Ge'ez. Ebed-Melek the Cushite (chapters 38-39) is among the most significant figures in the prophetic literature — an African court official who rescues the prophet of YHWH and receives a personal divine promise of protection. His identity is textually confirmed: 'Ebed-Melek the Cushite' — Cushite meaning from the land of Cush (Nubia/Ethiopia). He operates at the highest level of the Judean royal court during the final siege. YHWH's specific promise to him (39:15-18) makes Ebed-Melek one of the few individuals in the prophetic corpus to receive a named, personal covenant guarantee. The field purchase at Anatot (chapter 32) is YHWH's sign of future restoration — performed during the destruction itself.",
   "key_terms": [
-    { "term": "Ebed-Melek", "phonetic": "EH-bed MEH-lek", "definition": "A Cushite (Ethiopian/Nubian) court official serving in the royal court of Yehudah. He rescued Yirmeyahu from the cistern where the officials had thrown him to die (38:7-13). YHWH personally promised him deliverance during the coming destruction (39:15-18). His name means 'servant of the king.'" },
-    { "term": "Cushite (Kushi)", "phonetic": "Koo-SHEE", "definition": "From the land of Cush — the region south of Mitsrayim encompassing Nubia, modern Sudan, and Ethiopia. Ebed-Melek is identified as a Cushite — textually confirmed African identity at the apex of Judean political life." },
-    { "term": "Field at Anatot", "phonetic": "Ah-nah-TOT", "definition": "During the Babylonian siege, YHWH commands Yirmeyahu to buy a field at Anatot (32:6-15). The purchase is a prophetic sign: houses, fields, and vineyards shall again be bought in this land. Restoration is promised in the midst of destruction." },
-    { "term": "Tsidqiyahu", "phonetic": "Tsid-qi-YAH-hoo", "definition": "Last king of Yehudah. He reigns during the Babylonian siege and is captured when Yerushalayim falls. His sons are killed before his eyes, then his eyes are put out. He is taken in chains to Babylon. Anglicized as Zedekiah." }
+    {
+      "term": "Yirmeyahu Buys a Field",
+      "phonetic": "ch.32",
+      "definition": "While imprisoned during the Babylonian siege, Yirmeyahu buys his cousin Khanamel's field at Anatot as a sign: 'Houses and fields and vineyards shall again be bought in this land.' The act of purchase during a siege is a prophetic act of hope."
+    },
+    {
+      "term": "Deeds and Counterdeeds",
+      "phonetic": "ch.32",
+      "definition": "Yirmeyahu has two copies of the field purchase deed — one sealed, one open — stored in an earthen jar as a sign that records will survive: land transactions will resume in Yehudah after the exile."
+    },
+    {
+      "term": "Branch Prophecy Repeated",
+      "phonetic": "ch.33",
+      "definition": "Yirmeyahu 33:15-16 repeats and expands the Righteous Branch promise from 23:5-6; both Yehudah and Yerushalayim will be saved; the city itself is named 'YHWH Our Righteousness.'"
+    },
+    {
+      "term": "Covenant as Sure as Night and Day",
+      "phonetic": "33:19-26",
+      "definition": "YHWH declares the Davidic covenant and the Levitical covenant as sure as his covenant with day and night — 'as long as night and day continue, so the seed of David will have a descendant to reign.'"
+    },
+    {
+      "term": "Tzidkiyahu",
+      "phonetic": "tsid-ki-YA-hu",
+      "definition": "The last king of Yehudah; Yirmeyahu repeatedly counsels him to surrender to Babylon; Tzidkiyahu wavers, fears his own nobles, and fails to act on YHWH's word; his eyes are gouged out after he watches his sons killed."
+    },
+    {
+      "term": "Yirmeyahu in the Cistern",
+      "phonetic": "ch.38",
+      "definition": "The nobles have Yirmeyahu thrown into a muddy cistern to die; Eved-Melekh, an Ethiopian official in the king's house, intervenes with the king's permission, pulls Yirmeyahu out with ropes and rags."
+    },
+    {
+      "term": "Eved-Melekh",
+      "phonetic": "E-ved-ME-lekh",
+      "definition": "An Ethiopian (Kushite) eunuch in King Tzidkiyahu's court who rescued Yirmeyahu from the cistern; YHWH later promises Eved-Melekh specifically: 'I will deliver you in that day; you shall not be given into the hand of the men of whom you are afraid.'"
+    },
+    {
+      "term": "Yerushalayim Falls",
+      "phonetic": "ch.39",
+      "definition": "Yirmeyahu 39 records the fall of Yerushalayim: Babylonian commanders enter the middle gate; Tzidkiyahu flees and is captured; his sons are killed before his eyes; his eyes are gouged out; he is taken to Babylon."
+    },
+    {
+      "term": "Tziyon's Lament",
+      "phonetic": "ch.37-39",
+      "definition": "The narrative of the final siege captures the desperate situation of a city under siege, with Yirmeyahu counseling surrender while nobles accuse him of weakening morale; the city falls after the siege breaks into the city."
+    },
+    {
+      "term": "Covenant of Day and Night",
+      "phonetic": "33:20",
+      "definition": "Yirmeyahu 33:20 — YHWH's covenant with David and the Levites is as unbreakable as the covenant with day and night: 'If you can break my covenant with the day and my covenant with the night, so that day and night will not come at their appointed time...' — only then can YHWH's covenant be broken."
+    }
   ],
   "fill_blank": [
-    { "ref": "38:7", "prompt": "When ______ the Cushite, a court official in the king's house, heard that they had put Yirmeyahu into the cistern.", "answer": "Ebed-Melek", "source_quote": "When Ebed-Melek the Cushite, a court official in the king's house, heard that they had put Yirmeyahu into the cistern." },
-    { "ref": "32:15", "prompt": "Houses and fields and ______ shall again be bought in this land.", "answer": "vineyards", "source_quote": "For thus says YHWH of hosts, the Creator of Yisra'EL: Houses and fields and vineyards shall again be bought in this land." },
-    { "ref": "39:18", "prompt": "I will surely deliver you, and you shall not fall by the sword — because you have put your ______ in me, declares YHWH.", "answer": "trust", "source_quote": "I will surely deliver you, and you shall not fall by the sword, but you shall have your life as a prize of war, because you have put your trust in me, declares YHWH." }
+    {
+      "ref": "Yirmeyahu 32:15",
+      "prompt": "YHWH declares: 'Houses and _____ and vineyards shall again be bought in this land.' This is why Yirmeyahu bought the field during the siege.",
+      "answer": "fields",
+      "source_quote": "For thus says YHWH of Hosts, the Creator of Yisra'el: Houses and fields and vineyards shall again be bought in this land."
+    },
+    {
+      "ref": "Yirmeyahu 32:17",
+      "prompt": "Yirmeyahu prays: 'Ah, Creator YHWH! It is you who have made the heavens and the earth by your great power and by your outstretched arm! Nothing is too _____ for you.'",
+      "answer": "hard",
+      "source_quote": "Ah, Creator YHWH! It is you who have made the heavens and the earth by your great power and by your outstretched arm! Nothing is too hard for you."
+    },
+    {
+      "ref": "Yirmeyahu 33:3",
+      "prompt": "YHWH promises: 'Call to me and I will _____ you, and will tell you great and hidden things that you have not known.'",
+      "answer": "answer",
+      "source_quote": "Call to me and I will answer you, and will tell you great and hidden things that you have not known."
+    },
+    {
+      "ref": "Yirmeyahu 33:15",
+      "prompt": "'In those days and at that time I will cause a righteous _____ to spring up for David, and he shall execute justice and righteousness in the land.'",
+      "answer": "Branch",
+      "source_quote": "In those days and at that time I will cause a righteous Branch to spring up for David, and he shall execute justice and righteousness in the land."
+    },
+    {
+      "ref": "Yirmeyahu 33:20-21",
+      "prompt": "YHWH says: 'If you can break my covenant with the _____ and my covenant with the night, so that they will not come at their appointed time, then also my covenant with David my servant may be broken.'",
+      "answer": "day",
+      "source_quote": "If you can break my covenant with the day and my covenant with the night, so that day and night will not come at their appointed time, then also my covenant with David my servant can be broken."
+    },
+    {
+      "ref": "Yirmeyahu 38:6",
+      "prompt": "The nobles threw Yirmeyahu into the _____ of Malkiyahu the king's son in the court of the guard; there was no water in it, only mud.",
+      "answer": "cistern",
+      "source_quote": "So they took Yirmeyahu and cast him into the cistern of Malkiyahu, the king's son, which was in the court of the guard, letting Yirmeyahu down by ropes. There was no water in the cistern, but only mud, and Yirmeyahu sank in the mud."
+    },
+    {
+      "ref": "Yirmeyahu 38:7-8",
+      "prompt": "_____, a Kushite in the king's service, heard that they had put Yirmeyahu into the cistern and went to King Tzidkiyahu to report it.",
+      "answer": "Eved-Melekh",
+      "source_quote": "When Eved-Melekh the Ethiopian, a eunuch who was in the king's house, heard that they had put Yirmeyahu into the cistern — the king was sitting in the Benjamin Gate — Eved-Melekh went from the king's house and said to the king."
+    },
+    {
+      "ref": "Yirmeyahu 39:4-5",
+      "prompt": "When Tzidkiyahu and all the soldiers saw the Babylonians, they fled by night; the Babylonians pursued and _____ Tzidkiyahu in the plains of Yericho.",
+      "answer": "overtook",
+      "source_quote": "When Tzidkiyahu king of Yehudah and all the soldiers saw them, they fled, going out of the city at night by way of the king's garden through the gate between the two walls; and they went toward the Arabah. But the Chaldean army pursued them and overtook Tzidkiyahu in the plains of Jericho."
+    },
+    {
+      "ref": "Yirmeyahu 39:9",
+      "prompt": "Nebuzaradan, captain of the guard, carried into exile to Babylon the people who remained, those who had deserted to him, and the people who _____ remained.",
+      "answer": "remained",
+      "source_quote": "Nebuzaradan the captain of the guard carried into exile to Babylon the rest of the people who were left in the city, those who had deserted to him, and the people who remained."
+    },
+    {
+      "ref": "Yirmeyahu 32:40",
+      "prompt": "YHWH promises: 'I will make with them an everlasting covenant, that I will not turn away from doing good to them. And I will put the _____ of me in their hearts.'",
+      "answer": "fear",
+      "source_quote": "I will make with them an everlasting covenant, that I will not turn away from doing good to them. And I will put the fear of me in their hearts, that they may not turn from me."
+    }
   ],
   "multiple_choice": [
-    { "ref": "38:7-13", "question": "Who rescued Yirmeyahu from the cistern?", "options": ["King Tsidqiyahu", "Barukh the scribe", "Ebed-Melek the Cushite", "The temple priests"], "correct": 2, "source_quote": "Ebed-Melek the Cushite, a court official, took thirty men with him and pulled Yirmeyahu up with ropes from the cistern." },
-    { "ref": "39:15-18", "question": "What did YHWH promise Ebed-Melek?", "options": ["A kingdom", "Personal deliverance because he trusted in YHWH", "The priesthood", "A throne in Babylon"], "correct": 1, "source_quote": "I will deliver you on that day — you shall not be given into the hand of the men you fear — because you have put your trust in me." },
-    { "ref": "32:6-15", "question": "Why did YHWH command Yirmeyahu to buy a field during the siege?", "options": ["As an investment", "As a sign that restoration would come — fields would again be bought in the land", "To hide his wealth", "To give to the Babylonians"], "correct": 1, "source_quote": "Houses and fields and vineyards shall again be bought in this land." }
+    {
+      "ref": "Yirmeyahu 32:1-15",
+      "question": "Why did Yirmeyahu buy his cousin Khanamel's field during the Babylonian siege?",
+      "options": [
+        "As a sign that land would again be purchased in Yehudah after the exile — a prophetic act of hope",
+        "To secure his family's inheritance before the fall of the city",
+        "To demonstrate that the siege would fail",
+        "Because YHWH commanded him to invest in the land's economy"
+      ],
+      "correct": 0,
+      "source_quote": "For thus says YHWH of Hosts, the Creator of Yisra'el: Houses and fields and vineyards shall again be bought in this land."
+    },
+    {
+      "ref": "Yirmeyahu 32:14",
+      "question": "How were the deeds of Yirmeyahu's field purchase stored as a sign?",
+      "options": [
+        "In an earthen jar so they would last a long time",
+        "Under the Temple altar",
+        "In the king's treasury",
+        "Given to Barukh to carry to Babylon"
+      ],
+      "correct": 0,
+      "source_quote": "And I charged Barukh in their presence: Thus says YHWH of Hosts, the Creator of Yisra'el: Take these deeds, both this sealed deed of purchase and this open deed, and put them in an earthen vessel, that they may last for a long time."
+    },
+    {
+      "ref": "Yirmeyahu 33:20-21",
+      "question": "YHWH declares his covenant with David as permanent as what?",
+      "options": [
+        "His covenant with day and night",
+        "His covenant with the mountains",
+        "His covenant with the sea",
+        "His covenant at Sinai"
+      ],
+      "correct": 0,
+      "source_quote": "If you can break my covenant with the day and my covenant with the night, so that day and night will not come at their appointed time, then also my covenant with David my servant can be broken."
+    },
+    {
+      "ref": "Yirmeyahu 38:1-6",
+      "question": "What charge did the nobles bring against Yirmeyahu to justify throwing him in the cistern?",
+      "options": [
+        "He is weakening the hands of the soldiers by telling them to surrender to Babylon",
+        "He is prophesying lies against the king",
+        "He is a traitor working for Babylon",
+        "He has desecrated the Temple by entering it"
+      ],
+      "correct": 0,
+      "source_quote": "And they said to the king, Let this man be put to death, for he is weakening the hands of the soldiers who are left in this city, and the hands of all the people, by speaking such words to them."
+    },
+    {
+      "ref": "Yirmeyahu 38:7-13",
+      "question": "Who rescued Yirmeyahu from the cistern and what was his background?",
+      "options": [
+        "Eved-Melekh, an Ethiopian (Kushite) eunuch in King Tzidkiyahu's service",
+        "Barukh ben Neriyah, Yirmeyahu's scribe",
+        "King Tzidkiyahu himself after a change of heart",
+        "A group of elders from Yehudah"
+      ],
+      "correct": 0,
+      "source_quote": "When Eved-Melekh the Ethiopian, a eunuch who was in the king's house, heard that they had put Yirmeyahu into the cistern."
+    },
+    {
+      "ref": "Yirmeyahu 39:1-7",
+      "question": "What happened to King Tzidkiyahu when the Babylonians captured him?",
+      "options": [
+        "His sons were killed before his eyes, then his eyes were gouged out, and he was taken to Babylon in chains",
+        "He was executed immediately by Nebuchadnezzar",
+        "He was allowed to remain in Yerushalayim as a puppet king",
+        "He escaped to Mitzrayim"
+      ],
+      "correct": 0,
+      "source_quote": "The king of Babylon slaughtered the sons of Tzidkiyahu at Riblah before his eyes, and the king of Babylon slaughtered all the nobles of Yehudah. He put out the eyes of Tzidkiyahu and bound him in chains to take him to Babylon."
+    },
+    {
+      "ref": "Yirmeyahu 39:11-12",
+      "question": "What instructions did Nebuchadnezzar give concerning Yirmeyahu?",
+      "options": [
+        "Take him, look after him well, and do him no harm but deal with him as he tells you",
+        "Release him as a prisoner of war",
+        "Bring him to Babylon as an honored advisor",
+        "Let him prophesy in the ruins of Yerushalayim"
+      ],
+      "correct": 0,
+      "source_quote": "Nebuchadnezzar king of Babylon gave command concerning Yirmeyahu through Nebuzaradan, the captain of the guard: Take him, look after him well, and do him no harm, but deal with him as he tells you."
+    },
+    {
+      "ref": "Yirmeyahu 32:27",
+      "question": "YHWH answers Yirmeyahu's prayer in 32:27 with what declaration about himself?",
+      "options": [
+        "Behold, I am YHWH, the Creator of all flesh. Is anything too hard for me?",
+        "I am the Creator of the beginning and the end",
+        "I am the Creator who keeps covenant to a thousand generations",
+        "I am the Creator who searches hearts and minds"
+      ],
+      "correct": 0,
+      "source_quote": "Behold, I am YHWH, the Creator of all flesh. Is anything too hard for me?"
+    },
+    {
+      "ref": "Yirmeyahu 33:3",
+      "question": "What does YHWH promise if Yirmeyahu calls to him in Yirmeyahu 33:3?",
+      "options": [
+        "I will answer you and tell you great and hidden things that you have not known",
+        "I will show you the future of Yehudah and Babylon",
+        "I will deliver you from your imprisonment",
+        "I will send you a vision of my throne"
+      ],
+      "correct": 0,
+      "source_quote": "Call to me and I will answer you, and will tell you great and hidden things that you have not known."
+    },
+    {
+      "ref": "Yirmeyahu 39:16-18",
+      "question": "What specific promise did YHWH make to Eved-Melekh after his rescue of Yirmeyahu?",
+      "options": [
+        "He would not be given into the hands of those he feared; he would escape with his life as a prize of war",
+        "He would be made an officer in Babylon",
+        "His family would be protected in Yerushalayim",
+        "He would receive land in the restored Yehudah"
+      ],
+      "correct": 0,
+      "source_quote": "But I will deliver you on that day, declares YHWH, and you shall not be given into the hand of the men of whom you are afraid. For I will surely save you, and you shall not fall by the sword, but you shall have your life as a prize of war."
+    }
   ],
   "faq": [
     {
-      "question": "What does Ebed-Melek the Cushite prove about African presence in the covenant community?",
-      "answer": "Ebed-Melek is documented in Yirmeyahu 38-39, confirmed in Qumran fragments. He is identified as 'the Cushite' — from the land of Cush, the region encompassing Nubia and Ethiopia. He is not a slave or a marginal figure. He is a court official (saris) serving in the royal palace of Yehudah during the final siege of Yerushalayim — the most critical moment in the kingdom's history. He has enough political authority to approach King Tsidqiyahu directly and to command thirty men for the rescue operation. He is named, he is high-status, he is African, and he is integrated at the apex of Judean political life in the 6th century BCE. YHWH personally guarantees his survival during the coming destruction (39:15-18). No European figure in the entire prophetic corpus receives a comparable named personal promise. The Great Eraser systematically minimizes Ebed-Melek — footnoting, de-emphasizing, or ignoring the African man who saved the prophet of YHWH."
+      "question": "Why did Yirmeyahu buy a field during the siege?",
+      "answer": "Buying a field during a siege is an absurd act by any calculation — the city is about to fall. That is precisely the sign's power: YHWH instructed Yirmeyahu to make the purchase as a prophetic declaration that the exile is not the end. Deeds are signed, witnesses gathered, and the records stored in an earthen jar — 'for thus says YHWH: houses and fields and vineyards shall again be bought in this land.'"
     },
     {
-      "question": "How does the cistern rescue parallel the covenant pattern?",
-      "answer": "Yirmeyahu is thrown into a cistern — a pit of mud and water — by the officials of his own people (38:6). He sinks into the mud and is left to die. An African man — Ebed-Melek the Cushite — defies the officials, goes to the king, obtains permission, and physically pulls the prophet out with ropes and rags placed under his arms to prevent injury (38:11-13). The pattern: the covenant prophet is betrayed by his own institutional leadership. The rescue comes from Africa. Yosef was thrown into a pit by his brothers. Moshe was drawn from the water by the daughter of Pharaoh. Yirmeyahu was pulled from the cistern by an African court official. The covenant narrative repeatedly documents that when the institutional community fails, the preservation comes through African agency. This is in the primary text."
+      "question": "What is the Covenant of Day and Night in Yirmeyahu 33?",
+      "answer": "In Yirmeyahu 33:20-26, YHWH grounds the Davidic covenant and the Levitical covenant in the reliability of the natural order. If the cycle of day and night could be broken, only then could YHWH's covenant with David be broken. No human failure breaks it because YHWH's covenant is as embedded in creation as the rotation of the earth."
     },
     {
-      "question": "Why does Yirmeyahu buy a field during the destruction?",
-      "answer": "Yerushalayim is under siege. The Babylonian army surrounds the city. Yirmeyahu is in prison. And YHWH commands him to buy a field at Anatot — sign the deed, seal it, have it witnessed (32:6-15). The purchase is absurd by any material calculation: the land is about to fall to Babylon. But the prophetic sign is exactly this: 'houses and fields and vineyards shall again be bought in this land.' The covenant promise of restoration is made during the destruction — not after it. YHWH does not wait until the situation improves to promise restoration. The promise is spoken into the worst moment. For the covenant people in every generation of exile — scattered, displaced, apparently destroyed — the field purchase is the sign: YHWH promises restoration while the destruction is still happening. The dead deed in the sealed jar is the evidence of what YHWH will do."
+      "question": "Who was Eved-Melekh and why is he significant?",
+      "answer": "Eved-Melekh (meaning 'Servant of the King') was an Ethiopian (Kushite) eunuch in King Tzidkiyahu's court. When the nobles threw Yirmeyahu in a muddy cistern to die, Eved-Melekh intervened: he got permission from the king, took men and rags, and pulled Yirmeyahu out with ropes before he died. YHWH specifically promised Eved-Melekh deliverance on the day of Yerushalayim's fall because he trusted in YHWH."
+    },
+    {
+      "question": "Why did Tzidkiyahu fail to follow YHWH's word through Yirmeyahu?",
+      "answer": "Tzidkiyahu consulted Yirmeyahu privately, believed YHWH's word enough to ask again and again, but was paralyzed by fear of his own nobles and of the Judahites who had already defected to Babylon. He could not act against the political pressure. Yirmeyahu pleads with him directly in 38:20: 'Please obey the voice of YHWH in what I say to you, and it will go well with you and your life will be spared.' Tzidkiyahu chose the nobles' fear over YHWH's word."
+    },
+    {
+      "question": "What is the significance of Yerushalayim's fall in chapter 39?",
+      "answer": "Yirmeyahu 39 records the fulfillment of everything Yirmeyahu had been prophesying for decades: Babylonian commanders enter the city, Tzidkiyahu flees, is caught, watches his sons executed, has his eyes put out, and is led to Babylon in chains. The Temple is burned, the walls broken down, and the people exiled. The prophecy of the boiling pot from the north (chapter 1) has arrived."
+    },
+    {
+      "question": "What does Yirmeyahu 32:17 pray and what does YHWH answer?",
+      "answer": "Yirmeyahu's prayer in 32:17 begins with the act of creation — 'you made the heavens and the earth... nothing is too hard for you' — and then struggles with the apparent contradiction: YHWH commanded him to buy a field, but YHWH also said the city will fall. YHWH's answer (32:27): 'Behold, I am YHWH, the Creator of all flesh. Is anything too hard for me?' The question is rhetorical — YHWH can both judge and restore."
+    },
+    {
+      "question": "What is the significance of the two deed copies in Yirmeyahu 32?",
+      "answer": "One deed was sealed (private record) and one open (public record), both stored in an earthen jar for safekeeping during the exile. The careful legal protocol — weighing silver, signing witnesses, following the customary deed procedures — during a siege makes the sign more powerful. Yirmeyahu follows the full legal process for a land purchase that he will never be able to use, because the land purchase points beyond his own life to future restoration."
+    },
+    {
+      "question": "How did the nobles' accusation against Yirmeyahu in Yirmeyahu 38:4 reveal their own situation?",
+      "answer": "The nobles charge Yirmeyahu with 'weakening the hands of the soldiers' by telling them to surrender — a capital offense. The irony is that the city's situation is already desperate, and Yirmeyahu's counsel to surrender is YHWH's word for how to save lives. The nobles silence the prophet because his truth exposes their failed resistance; they are more afraid of his words than of Babylon's armies."
+    },
+    {
+      "question": "What does the rescue of Yirmeyahu by an Ethiopian official reveal?",
+      "answer": "Eved-Melekh the Kushite acts when no Yehudite stands up for Yirmeyahu. His intervention is recorded in detail — the rags under the ropes, the careful plan — because YHWH honors it specifically with an individual promise of deliverance. This is a repeated pattern in Yirmeyahu: an outsider (here, an Ethiopian) recognizes and honors YHWH's word when YHWH's own people reject it."
+    },
+    {
+      "question": "What is the theological statement of Yirmeyahu 33:3?",
+      "answer": "'Call to me and I will answer you, and will tell you great and hidden things that you have not known.' Given to Yirmeyahu while he is imprisoned during the siege, this promise reaffirms that prayer still works even when the city is falling. YHWH is accessible and responsive; there are things still to be revealed even in the darkest moment. The 'hidden things' (betzurot) refers to things inaccessible to human knowledge — YHWH alone can reveal them."
+    },
+    {
+      "question": "Why is the Righteous Branch prophecy in Yirmeyahu 33 significant alongside chapter 23?",
+      "answer": "Yirmeyahu 33:15-16 repeats the Righteous Branch promise from 23:5-6 with a twist: in 23, the Branch is named 'YHWH Our Righteousness'; in 33:16, the city of Yerushalayim itself is called by that name. This expands the promise: not only a coming Davidic ruler but the city and community itself will embody YHWH's righteousness. The covenant promise permeates the whole restored community."
     }
   ]
 }

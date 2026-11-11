@@ -1,33 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_56",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_56",
   "label": "Yehezkel (Ezekiel) — Part 3 — Chapters 20–24",
   "volume": 18,
-  "content_version": 1,
+  "content_version": 3,
   "summary_plain": "The elders of Yisra'EL come to inquire of YHWH. YHWH responds by recounting the full history of Yisra'EL's rebellion — from Mitsrayim through the wilderness to the land. In Mitsrayim they would not cast away their idols. In the wilderness they rejected YHWH's statutes. In the land they sacrificed on every high hill. YHWH declares: I will be king over you with a mighty hand and an outstretched arm and with wrath poured out. The sword of YHWH is sharpened and polished — it is given for slaughter. YHWH sets the cooking pot on the fire — Yerushalayim is the pot, the people are the meat, and the rust cannot be cleaned out. On the day Yerushalayim falls, YHWH takes Yehezkel's wife — the delight of his eyes — and commands him not to mourn, as a sign to the people.",
   "summary_scholarly": "The ACR reads from the DSS Ezekiel fragments (4QEzek-a, 4QEzek-b, 4QEzek-c) and the Orit Ge'ez. Chapter 20 is the most comprehensive recounting of Yisra'EL's rebellion history in the prophetic literature — more detailed than the historical psalms (78, 105, 106). YHWH reviews three stages of rebellion: in Mitsrayim, in the wilderness, in the land — each time the people reject YHWH's statutes. Chapter 22 catalogs the specific charges: bloodshed, idol worship, sexual violations, oppression of the stranger, desecration of the Shabbat. Chapter 24 introduces the cooking pot parable — Yerushalayim is corroded metal that cannot be cleansed. The death of Yehezkel's wife (24:15-27) is a prophetic sign-act: the prophet's personal grief becomes the vehicle for YHWH's message.",
   "key_terms": [
-    { "term": "History of Rebellion (Chapter 20)", "phonetic": "", "definition": "YHWH recounts Yisra'EL's rebellion in three stages: in Mitsrayim they kept their idols, in the wilderness they rejected the statutes, in the land they sacrificed on high places. Each stage follows the same pattern: YHWH acts, the people rebel, YHWH relents for the sake of his name." },
-    { "term": "Cooking Pot (Sir)", "phonetic": "SEER", "definition": "Chapter 24: Yerushalayim is a cooking pot set on fire. The meat is boiled. The rust (filth) in the pot cannot be cleaned out — it has been heated empty until the copper glows. The corrosion is permanent. The pot itself must be destroyed." },
-    { "term": "Delight of His Eyes", "phonetic": "", "definition": "YHWH tells Yehezkel: I am about to take from you the delight of your eyes (24:16). His wife dies, and YHWH commands him not to mourn — no weeping, no tears, no mourning bread. The prophet's personal loss becomes YHWH's sign to the people about the coming loss of the Temple." }
+    {
+      "term": "History of Rebellion (Chapter 20)",
+      "phonetic": "",
+      "definition": "Yehezkel 20: the elders of Yisra'el come to inquire of YHWH. Instead of answering their question, YHWH delivers a sweeping historical indictment — Yisra'el rebelled in Mitsrayim, in the wilderness, and in the land. Each generation profaned the Shabbat and followed the idols of the nations. Each time YHWH acted 'for the sake of my Name' rather than destroying them completely."
+    },
+    {
+      "term": "Cooking Pot (Sir)",
+      "phonetic": "seer",
+      "definition": "Yehezkel 24:3-14: Yehezkel uses the parable of a cooking pot set on fire. Yerushalayim is the pot, her people are the meat. The 'rusty pot' cannot be cleaned — the city is so corrupted that only the fire of siege and destruction can purge it. YHWH declares: 'I will not hold back; I will not relent.'"
+    },
+    {
+      "term": "Delight of His Eyes",
+      "phonetic": "machmad einav",
+      "definition": "Yehezkel 24:16-27: YHWH tells Yehezkel that his wife — 'the delight of your eyes' — will die suddenly. Yehezkel is commanded not to mourn publicly. This is a sign-act: the Temple ('the delight of their eyes') is about to be destroyed. The covenant community too will be unable to mourn — struck silent by the magnitude of the loss."
+    },
+    {
+      "term": "For the Name's Sake (L'ma'an Shemi)",
+      "phonetic": "l'ma-AN shmi",
+      "definition": "Recurring phrase in Yehezkel 20: despite Yisra'el's total covenant failure across generations, YHWH restrained complete destruction for the sake of his own Name among the nations. If he destroyed Yisra'el in front of the nations, the nations would conclude YHWH could not deliver what he promised. The covenant community's preservation is tied to YHWH's own honor and faithfulness, not to their merit."
+    },
+    {
+      "term": "City of Blood (Ir HaDamim)",
+      "phonetic": "eer ha-da-MEEM",
+      "definition": "Yehezkel 22: Yerushalayim is called the 'city of blood' — a formal legal accusation. The indictment lists: murder, idol worship, extortion, bribery, contempt for parents, violation of the covenant calendar, adultery, and sexual violence. All social and covenant structures have broken down. The city has 'forgotten' YHWH."
+    },
+    {
+      "term": "Oholah and Oholivah",
+      "phonetic": "oh-ho-LAH, oh-ho-lee-VAH",
+      "definition": "Yehezkel 23: a parable of two sisters — Oholah (Samaria/northern kingdom) and Oholivah (Yerushalayim/southern kingdom). Both 'played the harlot' by forming political and military alliances with Mitsrayim and Ashur rather than trusting YHWH alone. The language is intentionally stark. Oholah was destroyed by Ashur. Oholivah repeated the same behavior with Babylon."
+    },
+    {
+      "term": "Stand in the Breach (La'amod BaFeretz)",
+      "phonetic": "la-ah-MOD ba-FEH-rets",
+      "definition": "Yehezkel 22:30 — YHWH declares: 'I sought for a man among them who should build up the wall and stand in the breach before me for the land, that I should not destroy it, but I found none.' The covenant intercessor — the role Avraham played at Sedom, Moshe played in the wilderness — was absent from Yerushalayim. No one stood in the gap. This absence made destruction inevitable."
+    },
+    {
+      "term": "Sign-Act (Ot)",
+      "phonetic": "oht",
+      "definition": "Yehezkel is commanded repeatedly to perform physical actions that embody his message — lying on his side for 390 days, shaving his head, packing exile luggage, and refusing to mourn his wife's death. These sign-acts are not illustrations; they are covenant communication at the level of the body. The prophet's own life becomes the message."
+    },
+    {
+      "term": "Prophets and Princes Indicted",
+      "phonetic": "",
+      "definition": "Yehezkel 22:25-29: YHWH's indictment covers every leadership class — princes (like roaring lions), priests (who violate Torah and profane the covenant), prophets (who prophesy lies and divine for personal gain), and the people of the land (who extort the poor). The corruption is total: not one class has remained covenant-faithful."
+    },
+    {
+      "term": "YHWH Acts for His Name",
+      "phonetic": "",
+      "definition": "The theological center of Yehezkel 20: YHWH's actions in history — including restraining judgment — are grounded in covenant faithfulness to his own declared character, not in Yisra'el's merit. 'I acted for the sake of my Name, that it should not be profaned in the sight of the nations among whom they lived.' This is not favoritism; it is covenant accountability at the level of YHWH's own self-consistency."
+    }
   ],
   "fill_blank": [
-    { "ref": "20:33", "prompt": "As I live, declares YHWH, surely with a mighty hand and an outstretched arm and with wrath poured out I will be ______ over you.", "answer": "king", "source_quote": "As I live, declares YHWH, surely with a mighty hand and an outstretched arm and with wrath poured out I will be king over you." },
-    { "ref": "24:16", "prompt": "Son of man, behold, I am about to take from you the delight of your ______.", "answer": "eyes", "source_quote": "Son of man, behold, I am about to take from you the delight of your eyes with a stroke — yet you shall not mourn nor weep, nor shall your tears run down." },
-    { "ref": "22:30", "prompt": "I sought for a man among them who should build up the wall and stand in the ______ before me for the land, that I should not destroy it — but I found none.", "answer": "breach", "source_quote": "And I sought for a man among them who should build up the wall and stand in the breach before me for the land, that I should not destroy it — but I found none." }
+    {
+      "ref": "Yehezkel 22:30",
+      "prompt": "YHWH said: 'I sought for a man among them who should ___ in the breach before me for the land, that I should not destroy it, but I found none.'",
+      "answer": "stand",
+      "source_quote": "I sought for a man among them who should build up the wall and stand in the breach before me for the land, that I should not destroy it, but I found none. — Yehezkel 22:30"
+    },
+    {
+      "ref": "Yehezkel 24:16",
+      "prompt": "YHWH said to Yehezkel: 'Son of man, behold, I am about to take from you the ___ of your eyes with a stroke; yet you shall not mourn or weep.'",
+      "answer": "delight",
+      "source_quote": "Son of man, behold, I am about to take the delight of your eyes away from you at a stroke. — Yehezkel 24:16"
+    },
+    {
+      "ref": "Yehezkel 20:33",
+      "prompt": "'As I live, declares YHWH, surely with a mighty hand and an outstretched arm and with wrath poured out I will ___ over you.'",
+      "answer": "be king",
+      "source_quote": "As I live, declares the Lord YHWH, surely with a mighty hand and an outstretched arm and with wrath poured out I will be king over you. — Yehezkel 20:33"
+    },
+    {
+      "ref": "Yehezkel 20:9",
+      "prompt": "YHWH did not destroy Yisra'el in Mitsrayim 'for the sake of my ___, that it should not be profaned in the sight of the nations.'",
+      "answer": "Name",
+      "source_quote": "But I acted for the sake of my name, that it should not be profaned in the sight of the nations among whom they lived. — Yehezkel 20:9"
+    },
+    {
+      "ref": "Yehezkel 23:4",
+      "prompt": "The two sisters' names were ___ (representing Samaria) and Oholivah (representing Yerushalayim).",
+      "answer": "Oholah",
+      "source_quote": "Oholah was the name of the elder and Oholivah the name of her sister. — Yehezkel 23:4"
+    },
+    {
+      "ref": "Yehezkel 22:4",
+      "prompt": "YHWH said to Yerushalayim: 'You have become guilty by the blood that you have shed, and defiled by the ___ that you have made.'",
+      "answer": "idols",
+      "source_quote": "You have become guilty by the blood that you have shed, and defiled by the idols that you have made. — Yehezkel 22:4"
+    },
+    {
+      "ref": "Yehezkel 24:11",
+      "prompt": "After emptying the cooking pot, YHWH commands it set empty on the coals 'that its ___ may be burned out.'",
+      "answer": "corrosion / rust",
+      "source_quote": "Set it empty upon the coals, that it may become hot, and its copper may burn, that its uncleanness may be melted in it, its corrosion consumed. — Yehezkel 24:11"
+    },
+    {
+      "ref": "Yehezkel 20:12",
+      "prompt": "'Moreover, I gave them my ___ to be a sign between me and them, that they might know that I am YHWH who sanctifies them.'",
+      "answer": "Shabbatot",
+      "source_quote": "Moreover, I gave them my Sabbaths, as a sign between me and them, that they might know that I am YHWH who sanctifies them. — Yehezkel 20:12"
+    },
+    {
+      "ref": "Yehezkel 22:25",
+      "prompt": "The prophets in Yerushalayim were 'like a roaring ___ tearing the prey; they have devoured human lives; they have taken treasure and precious things.'",
+      "answer": "lion",
+      "source_quote": "Its princes in its midst are like a roaring lion tearing the prey. — Yehezkel 22:25"
+    },
+    {
+      "ref": "Yehezkel 24:14",
+      "prompt": "YHWH declares: 'I am YHWH. I have spoken; it shall come to pass; I will do it. I will not go ___, nor will I spare; nor will I relent.'",
+      "answer": "back",
+      "source_quote": "I YHWH have spoken; it shall come to pass; I will do it. I will not go back; I will not spare; I will not relent. — Yehezkel 24:14"
+    }
   ],
   "multiple_choice": [
-    { "ref": "20:5-8", "question": "According to YHWH's recounting in chapter 20, when did Yisra'EL's rebellion begin?", "options": ["In the wilderness after Sinai", "In the land of Kena'an", "In Mitsrayim — they would not cast away their idols", "During the Babylonian exile"], "correct": 2, "source_quote": "On the day when I chose Yisra'EL, I swore to the offspring of the house of Ya'aqov — I made myself known to them in the land of Mitsrayim. But they rebelled against me and would not listen — they did not cast away the detestable things their eyes feasted on." },
-    { "ref": "22:30", "question": "What did YHWH seek and fail to find?", "options": ["A prophet to send to Babylon", "A man to stand in the breach for the land", "A righteous king to replace Tsidqiyahu", "A priest to cleanse the Temple"], "correct": 1, "source_quote": "I sought for a man among them who should build up the wall and stand in the breach before me for the land, that I should not destroy it — but I found none." },
-    { "ref": "24:15-27", "question": "Why was Yehezkel commanded not to mourn when his wife died?", "options": ["Because mourning was forbidden in Babylon", "As a prophetic sign — the people would lose the Temple and be unable to mourn normally", "Because YHWH would resurrect her", "Because she was unfaithful"], "correct": 1, "source_quote": "Speak to the house of Yisra'EL: Behold, I will profane my sanctuary, the pride of your power, the delight of your eyes — and your sons and daughters whom you left behind shall fall by the sword." }
+    {
+      "ref": "Yehezkel 20:5-8",
+      "question": "According to YHWH's recounting in chapter 20, when did Yisra'el's rebellion begin?",
+      "options": [
+        "In the wilderness at Sinai",
+        "In Mitsrayim before the Exodus, when they did not cast away the idols of Mitsrayim",
+        "Under the Judges when they began to serve the Ba'alim",
+        "Under Shelomoh when the high places were built"
+      ],
+      "correct": 1,
+      "source_quote": "But they rebelled against me and were not willing to listen to me. Every one of them did not cast away the detestable things their eyes feasted on, nor did they forsake the idols of Egypt. — Yehezkel 20:8"
+    },
+    {
+      "ref": "Yehezkel 22:30",
+      "question": "What did YHWH seek and fail to find in Yerushalayim?",
+      "options": [
+        "A prophet willing to speak his words without fear",
+        "A king in the line of David who would keep the covenant fully",
+        "A man who would stand in the breach to intercede for the land",
+        "A priest who had not violated the Torah of YHWH"
+      ],
+      "correct": 2,
+      "source_quote": "I sought for a man among them who should build up the wall and stand in the breach before me for the land, that I should not destroy it, but I found none. — Yehezkel 22:30"
+    },
+    {
+      "ref": "Yehezkel 24:15-27",
+      "question": "Why was Yehezkel commanded not to mourn when his wife died?",
+      "options": [
+        "Mourning would show weakness unfitting for a prophet of YHWH",
+        "His silence was a sign-act — just as he could not mourn, the people would be struck too dumb to mourn when the Temple fell",
+        "A covenant prophet does not mourn personal losses during a siege",
+        "YHWH was testing Yehezkel's total surrender to prophetic duty"
+      ],
+      "correct": 1,
+      "source_quote": "You shall not mourn or weep, nor shall your tears run down. — Yehezkel 24:16"
+    },
+    {
+      "ref": "Yehezkel 20:9",
+      "question": "Why did YHWH not destroy Yisra'el in Mitsrayim despite their rebellion?",
+      "options": [
+        "Because of the covenant made with Avraham, Yitzhaq, and Ya'aqov which could not be voided",
+        "For the sake of his Name, that it should not be profaned in the sight of the nations",
+        "Because Moshe interceded and YHWH relented",
+        "Because the time for judgment had not yet come"
+      ],
+      "correct": 1,
+      "source_quote": "But I acted for the sake of my name, that it should not be profaned in the sight of the nations among whom they lived. — Yehezkel 20:9"
+    },
+    {
+      "ref": "Yehezkel 23",
+      "question": "What do the two sisters Oholah and Oholivah represent?",
+      "options": [
+        "The priesthood and the kingship — the two institutions that failed the covenant",
+        "Samaria (northern kingdom) and Yerushalayim (southern kingdom), both of which pursued foreign alliances instead of trusting YHWH",
+        "The first generation in the wilderness and the second generation who entered the land",
+        "The prophets of YHWH and the false prophets who opposed them"
+      ],
+      "correct": 1,
+      "source_quote": "Oholah was the name of the elder and Oholivah the name of her sister. — Yehezkel 23:4"
+    },
+    {
+      "ref": "Yehezkel 22:25-29",
+      "question": "Which groups are indicted in Yehezkel's total indictment of Yerushalayim in chapter 22?",
+      "options": [
+        "Only the priests and false prophets",
+        "The princes, priests, prophets, and people of the land — every leadership class",
+        "Only the royal family and military commanders",
+        "The merchants and foreign traders who corrupted the city's worship"
+      ],
+      "correct": 1,
+      "source_quote": "Her princes in its midst are like a roaring lion tearing the prey. — Yehezkel 22:25"
+    },
+    {
+      "ref": "Yehezkel 20:12",
+      "question": "What did YHWH declare about the Shabbat in his historical indictment?",
+      "options": [
+        "The Shabbat was given as a sign between YHWH and Yisra'el to show YHWH sanctifies them, but Yisra'el profaned it",
+        "The Shabbat was given only for the wilderness period and later expanded to cover all generations",
+        "The Shabbat was the commandment Yisra'el kept faithfully even when they broke all others",
+        "The Shabbat violation was the first and therefore worst of Yisra'el's sins"
+      ],
+      "correct": 0,
+      "source_quote": "Moreover, I gave them my Sabbaths, as a sign between me and them, that they might know that I am YHWH who sanctifies them. — Yehezkel 20:12"
+    },
+    {
+      "ref": "Yehezkel 24:3-14",
+      "question": "What does the cooking pot parable represent?",
+      "options": [
+        "The refining process by which YHWH would purify a remnant from Yerushalayim",
+        "The siege of Yerushalayim — the city is the pot, the people the meat, and the fire the destruction that cannot be stopped",
+        "The covenant sacrifice that Yisra'el should have brought but refused",
+        "The corruption of the Temple's sacrificial system under corrupt priests"
+      ],
+      "correct": 1,
+      "source_quote": "Woe to the bloody city, to the pot whose corrosion is in it. — Yehezkel 24:6"
+    },
+    {
+      "ref": "Yehezkel 20:33",
+      "question": "What does YHWH declare will happen when he regathers the exiles?",
+      "options": [
+        "He will restore them immediately to the land without condition",
+        "He will be king over them with mighty hand and outstretched arm — and purge out the rebels from among them",
+        "He will rebuild the Temple first and then gather the people",
+        "He will give them a new covenant that replaces the old one completely"
+      ],
+      "correct": 1,
+      "source_quote": "As I live, declares the Lord YHWH, surely with a mighty hand and an outstretched arm and with wrath poured out I will be king over you. — Yehezkel 20:33"
+    },
+    {
+      "ref": "Yehezkel 22:4",
+      "question": "What is the charge in YHWH's indictment that Yerushalayim is called a 'city of blood'?",
+      "options": [
+        "The city carried out illegal executions of innocent prophets",
+        "She became guilty through bloodshed and defiled through idols — bringing the day of judgment near",
+        "The kings of Yerushalayim carried out human sacrifice on the high places",
+        "The city's warriors had shed enemy blood in violation of covenant warfare rules"
+      ],
+      "correct": 1,
+      "source_quote": "You have become guilty by the blood that you have shed, and defiled by the idols that you have made. — Yehezkel 22:4"
+    }
   ],
   "faq": [
     {
-      "question": "What does 'I sought for a man to stand in the breach but found none' (22:30) mean for the Great Eraser's impact?",
-      "answer": "YHWH searched for someone to stand in the breach — to repair the wall, to intercede, to confront the corruption — and found no one. The charges in chapter 22 are specific: the princes shed blood, the priests violate Torah, the prophets whitewash, the people oppress the stranger and wrong the poor. Every level of leadership failed. The Great Eraser operates the same way in every generation: it removes the covenant people's ability to produce leaders who stand in the breach. The Slave Bible removed the prophetic texts that teach confrontation of power. European theological seminaries trained pastors in institutional compliance, not prophetic resistance. The educational systems that should produce breach-standers instead produce gatekeepers who protect the wall's cracks with whitewash. When YHWH searches for someone to stand in the breach and finds none, the judgment falls. The restoration of the breach-stander tradition — through direct access to the covenant texts in their oldest recoverable form — is the purpose of the ACR."
+      "question": "What does 'I sought for a man to stand in the breach but found none' mean?",
+      "answer": "In covenant tradition, an intercessor stands between YHWH's just anger and a people who deserve destruction, arguing on covenant grounds for mercy. Avraham did this for Sedom. Moshe did this repeatedly in the wilderness. When no one steps into that role — when every leader is corrupt and no one is willing to bear the weight of the people's accountability — the destruction can no longer be held back. YHWH's search is not figurative; it is a formal declaration that the conditions for mercy are absent. The 'breach' is the gap in the covenant wall. No one is there."
     },
     {
       "question": "Why does YHWH recount the full rebellion history when the elders come to inquire?",
-      "answer": "The elders come to Yehezkel seeking a word from YHWH (20:1). YHWH refuses to be inquired of by them — instead he recounts the entire history of rebellion from Mitsrayim through the wilderness to the land. The pattern is: YHWH chose them, they rebelled, YHWH relented for the sake of his name, they rebelled again. Three complete cycles. The point is that the current destruction is not arbitrary — it is the culmination of a documented pattern. But YHWH concludes with restoration: 'I will bring you into the wilderness of the peoples and enter into judgment with you face to face' (20:35). The history lesson serves the future: the covenant people must know their own pattern of rebellion to break it. The institutions that control covenant education — from the Rabbinate to the seminaries — have no interest in teaching this pattern because they are often the false prophets plastering walls with whitewash."
+      "answer": "The elders come to ask YHWH for a word — presumably about the siege or exile or future. YHWH refuses the question entirely and returns instead to the beginning: Mitsrayim. The message is that the present crisis is not new; it is the culmination of a covenant failure that began before Yisra'el entered the land. The historical recitation is not punishment — it is diagnosis. You cannot understand the exile if you treat it as an isolated catastrophe. It is the final consequence of a pattern that began in Mitsrayim and repeated itself in every generation."
+    },
+    {
+      "question": "What does 'for the sake of my Name' mean as YHWH's reason for not destroying Yisra'el?",
+      "answer": "YHWH's Name is not a label — it is his covenant character publicly declared to the nations. When he swore to bring Yisra'el out of Mitsrayim, the nations saw it. If he then destroyed them in the wilderness, the nations would conclude that YHWH is not able to do what he promised, or that his covenant is unreliable. Preserving Yisra'el is therefore an act of YHWH's self-consistency — his Name is at stake in what he does with this people. This is not because Yisra'el deserves it. It is because YHWH does not break his word, and his word is known to the nations."
+    },
+    {
+      "question": "What is the significance of the Shabbat as a sign in Yehezkel 20?",
+      "answer": "YHWH gave the Shabbat as a sign — not merely a rest day but a covenant marker between himself and Yisra'el: 'that they might know that I am YHWH who sanctifies them.' In the rebellion history of chapter 20, Yisra'el profaned the Shabbat in the wilderness — and YHWH says he 'withheld his hand' from full destruction. Shabbat observance is explicitly covenant identity: keeping it declares YHWH as Creator and sovereign. Profaning it declares the opposite. The Shabbat is the enacted weekly covenant sign that Yisra'el repeatedly refused."
+    },
+    {
+      "question": "What does the Oholah and Oholivah parable reveal about covenant faithfulness?",
+      "answer": "Both sisters are described as 'playing the harlot' from their youth — from the time they were YHWH's. The language exposes a theological reality: forming alliance with Mitsrayim or Ashur or Babylon was not merely bad foreign policy. It was covenant adultery. The covenant demanded exclusive trust in YHWH for security. Every time Yisra'el or Yehudah negotiated military alliances with great powers, they were saying: YHWH's protection is not sufficient. The parable is deliberately stark because the covenant violation it describes is total — not a lapse but a pattern of pursuing what YHWH forbade."
+    },
+    {
+      "question": "Why did YHWH command Yehezkel not to mourn his wife's death?",
+      "answer": "Yehezkel's wife — 'the delight of his eyes' — died the same day YHWH announced the siege would begin. YHWH commanded Yehezkel to perform no public mourning: no weeping, no head-covering, no mourning bread. The sign-act was for the people: when the Temple — their 'delight of their eyes' — is destroyed, they too will be unable to mourn properly. They will be too stunned, too scattered, too stripped of community structure for the mourning rites to function. The prophet's silent grief is the people's silent grief in advance."
+    },
+    {
+      "question": "What does the total indictment of all leadership classes in chapter 22 reveal?",
+      "answer": "Yehezkel 22 indicts every leadership class without exception: princes, priests, prophets, and common people. This is not incidental — it describes total systemic failure. Reform requires faithful leaders. If every leadership class is corrupt simultaneously, there is no internal source of renewal. This is why Yehezkel's earlier warning about the absence of an intercessor (22:30) is so devastating: the corruption is not concentrated in one place that could be removed; it has permeated every institution. Only external catastrophe — the siege and exile — can break the system and create conditions for covenant renewal."
+    },
+    {
+      "question": "What does the cooking pot parable add to the siege prophecy?",
+      "answer": "The cooking pot image in chapter 24 is not about cooking — it is about what happens to a corroded vessel. The pot represents Yerushalayim. The corrosion represents accumulated covenant guilt that cannot be scrubbed out. YHWH commands the pot to be heated until the corrosion burns off — the fire is the siege, and the burning is the destruction of the city. The parable's force is in its irreversibility: once the pot is too corroded to clean, the only remedy is the fire. YHWH is not expressing grief here — he is describing a material process of purging that cannot be stopped because the corrosion is too deep."
+    },
+    {
+      "question": "How does YHWH's regathering prophecy in chapter 20 describe the future?",
+      "answer": "Yehezkel 20:33-38 describes YHWH gathering the scattered exiles 'from the countries where you are scattered' and bringing them into 'the wilderness of the peoples' — a wilderness judgment parallel to Sinai. There YHWH will 'enter into judgment' with them, purging out the rebels and those who have transgressed the covenant. What comes out of this second wilderness is a purified remnant, not the whole people indiscriminately. The regathering is not unconditional restoration — it includes a sifting. Those who persist in rebellion do not enter the land the second time any more than the generation that died in the first wilderness did."
+    },
+    {
+      "question": "What covenant principle does the Shabbat violation represent in the larger argument of Yehezkel 20?",
+      "answer": "Each stage of Yisra'el's rebellion history in chapter 20 includes a Shabbat violation. This is not coincidental. The Shabbat is the enacted weekly declaration that YHWH is Creator and sovereign — the sign of the covenant at the most fundamental level. Breaking the Shabbat is therefore covenant apostasy at the structural level, not merely one commandment among many. Yehezkel is not simply cataloguing sins; he is showing that the core of covenant identity — the weekly acknowledgment of YHWH's lordship — was abandoned in every generation. Everything else followed from that."
     }
   ]
 }

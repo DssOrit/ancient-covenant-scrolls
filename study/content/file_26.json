@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_26",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_26",
   "label": "Shemu'el Aleph (1 Samuel) — Part 1 — Chapters 1–10",
   "volume": 12,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Chanah prays at Shiloh for a son and vows to give him to YHWH. Shemu'el is born and dedicated to the service of YHWH at the Mishkan. The boy Shemu'el hears YHWH calling his name at night. The Philistines capture the Ark — Eli's sons Chofni and Pinchas are killed. The Ark is returned. The people demand a king like the nations. YHWH tells Shemu'el: they have not rejected you — they have rejected me from being king over them. Sha'ul son of Kish from Binyamin is anointed as the first king.",
   "summary_scholarly": "The ACR reads from the Dead Sea Scrolls witnesses (4QSam-a, 4QSam-b, 4QSam-c) and the Orit Ge'ez. The DSS Samuel manuscripts are among the most significant textual finds at Qumran — 4QSam-a preserves readings that differ substantially from the Masoretic and often agree with the Septuagint, confirming the Masoretic as a later editorial tradition. The demand for a king (ch 8) is YHWH's direct assessment: they have rejected YHWH as king. Monarchy is presented as a concession to human weakness, not YHWH's original design.",
   "key_terms": [
-    { "term": "Shemu'el", "phonetic": "Sheh-moo-EL", "definition": "Prophet, priest, and judge. Born to Chanah after her prayer at Shiloh. His name means 'heard by El.' He anoints both Sha'ul and Dawid as kings. Anglicized as Samuel." },
-    { "term": "Chanah", "phonetic": "Khah-NAH", "definition": "Mother of Shemu'el. She prays at the Mishkan in Shiloh while weeping, and vows: if YHWH gives her a son, she will dedicate him to YHWH's service all his days. Her prayer-song (ch 2) is one of the oldest hymns in the Hebrew canon." },
-    { "term": "Sha'ul", "phonetic": "Shah-OOL", "definition": "First king of Yisra'EL, from the tribe of Binyamin. Anointed by Shemu'el at YHWH's command. Anglicized as Saul." },
-    { "term": "Ark of the Covenant", "phonetic": "", "definition": "The gold-covered chest containing the tablets of the Torah, housed in the Mishkan. Captured by the Philistines (ch 4-6) but returned after YHWH strikes the Philistines with plagues." }
+    {
+      "term": "Khannah",
+      "phonetic": "khan-NAH",
+      "definition": "The mother of Shemu'el, barren and deeply distressed. She prays silently at Shilo with such intensity that Eli the priest thinks she is drunk. She vows: 'YHWH of Hosts, if you will look on the affliction of your servant and give her a son, I will give him to YHWH all the days of his life.' YHWH hears; Shemu'el is born; she gives him to Eli at Shilo."
+    },
+    {
+      "term": "Khannah's Prayer (The Magnificat Source)",
+      "phonetic": "tefillat Khannah",
+      "definition": "1 Shemu'el 2: Khannah's prayer of thanksgiving — the original. It opens: 'My heart exults in YHWH; my strength is lifted in YHWH.' It announces: YHWH kills and makes alive, casts down and raises up, lifts the poor from the dust. The prayer of Miryam of the NT literary construct borrows its structure directly from this earlier prayer by Khannah — Khannah is the source."
+    },
+    {
+      "term": "Eli and His Sons",
+      "phonetic": "Eli ve-vanav",
+      "definition": "Eli was the high priest at Shilo. His sons Khofni and Pinkhas treated the offerings of YHWH with contempt — taking meat by force before it was offered, sleeping with women who served at the Tent door. Eli rebuked them but did not remove them. YHWH sent a man of YHWH and then Shemu'el to announce judgment: Eli's house would be cut off."
+    },
+    {
+      "term": "Shemu'el's Call",
+      "phonetic": "kri'at Shemu'el",
+      "definition": "1 Shemu'el 3: the boy Shemu'el hears his name called at night three times and runs to Eli each time, thinking it was Eli calling. After the third time, Eli understands: 'Go lie down, and if he calls you, say: Speak, YHWH, for your servant is listening.' The word the YHWH gives is judgment against Eli's house — Shemu'el must deliver it to the man who raised him."
+    },
+    {
+      "term": "Ark Captured",
+      "phonetic": "shevu ha-aron",
+      "definition": "1 Shemu'el 4: Yisra'el brings the Ark of the Covenant to battle against the Philistines, thinking its presence guarantees victory. The Philistines win, Khofni and Pinkhas are killed, the Ark is captured. Eli falls off his seat at the news and breaks his neck. His daughter-in-law, dying in childbirth, names the child Ikavod — 'the glory has departed from Yisra'el.'"
+    },
+    {
+      "term": "Ikavod",
+      "phonetic": "i-kha-VOD",
+      "definition": "'Where is the glory?' or 'No glory' — the name given by Eli's dying daughter-in-law when she hears the Ark is captured and her husband Pinkhas is dead. 'The glory has departed from Yisra'el.' The name marks the low point of Eli's era: the covenant presence (the Ark) is in Philistine hands, the priestly family is destroyed, and a dying woman names the moment for all of Yisra'el."
+    },
+    {
+      "term": "Ark Among the Philistines",
+      "phonetic": "ha-aron be-Plishtim",
+      "definition": "1 Shemu'el 5-6: the Philistines place the Ark in Dagon's temple and find their statue fallen before it twice — the second time shattered at the threshold. YHWH strikes the Philistine cities with plagues. After seven months, they send the Ark back on a cart pulled by nursing cows with their calves shut away — if the cows go toward Bet-Shemesh without their calves, it was YHWH's hand."
+    },
+    {
+      "term": "Sha'ul ben Kish",
+      "phonetic": "sha-UL ben Kish",
+      "definition": "The first king of Yisra'el, from the tribe of Binyamin. He is introduced while searching for his father's lost donkeys and encounters Shemu'el, who anoints him in private. At the public selection at Mitspah by lot, Sha'ul is chosen but found hiding among the baggage. His physical description: head and shoulders taller than any in Yisra'el."
+    },
+    {
+      "term": "YHWH's Warning Against Kingship",
+      "phonetic": "azharot ha-melukha",
+      "definition": "1 Shemu'el 8: when the elders ask Shemu'el for a king, YHWH tells him: 'They have not rejected you; they have rejected me from being king over them.' Shemu'el warns the people exactly what a king will do — take their sons for his army, their daughters for his household, their fields and vineyards and flocks. 'You will cry out because of your king, but YHWH will not answer you in that day.'"
+    },
+    {
+      "term": "Covenant of Mizpah / Ebenezer",
+      "phonetic": "mitzpah / even ha-ezer",
+      "definition": "1 Shemu'el 7: Shemu'el assembles Yisra'el at Mitspah, they confess sin, fast and pour water before YHWH. The Philistines attack; YHWH thunders over them and they are thrown into confusion. After the victory Shemu'el sets up a stone named 'Ebenezer' — 'Stone of Help' — saying: 'Till now YHWH has helped us.' Covenant return produces covenant victory."
+    }
   ],
   "fill_blank": [
-    { "ref": "3:4", "prompt": "Then YHWH called: Shemu'el! Shemu'el! And he said: Here I ______.", "answer": "am", "source_quote": "Then YHWH called: Shemu'el! Shemu'el! And he said: Here I am." },
-    { "ref": "8:7", "prompt": "YHWH said to Shemu'el: They have not rejected you, but they have rejected ______ from being king over them.", "answer": "me", "source_quote": "And YHWH said to Shemu'el: Obey the voice of the people in all that they say to you, for they have not rejected you, but they have rejected me from being king over them." },
-    { "ref": "1:11", "prompt": "And she vowed a vow and said: O YHWH of hosts, if you will look on the affliction of your servant and give to your servant a ______.", "answer": "son", "source_quote": "And she vowed a vow and said: O YHWH of hosts, if you will indeed look on the affliction of your servant and remember me and give to your servant a son, then I will give him to YHWH all the days of his life." }
+    {
+      "ref": "1 Shemu'el 1:11",
+      "prompt": "Khannah vowed: 'If you give me a son, I will give him to YHWH all the ___ of his life.'",
+      "answer": "days",
+      "source_quote": "I will give him to YHWH all the days of his life. — 1 Shemu'el 1:11"
+    },
+    {
+      "ref": "1 Shemu'el 2:1",
+      "prompt": "Khannah's prayer opens: 'My heart exults in ___; my strength is lifted in YHWH.'",
+      "answer": "YHWH",
+      "source_quote": "My heart exults in YHWH; my horn is exalted in YHWH. — 1 Shemu'el 2:1"
+    },
+    {
+      "ref": "1 Shemu'el 3:9",
+      "prompt": "Eli told Shemu'el: 'If YHWH calls, say: Speak, YHWH, for your ___ is listening.'",
+      "answer": "servant",
+      "source_quote": "Speak, YHWH, for your servant is listening. — 1 Shemu'el 3:9"
+    },
+    {
+      "ref": "1 Shemu'el 4:21",
+      "prompt": "Eli's dying daughter-in-law named her son Ikavod, saying: 'The ___ has departed from Yisra'el.'",
+      "answer": "glory",
+      "source_quote": "The glory has departed from Israel. — 1 Shemu'el 4:21-22"
+    },
+    {
+      "ref": "1 Shemu'el 8:7",
+      "prompt": "YHWH told Shemu'el: 'They have not rejected you; they have rejected ___ from being king over them.'",
+      "answer": "me / YHWH",
+      "source_quote": "They have not rejected you, but they have rejected me from being king over them. — 1 Shemu'el 8:7"
+    },
+    {
+      "ref": "1 Shemu'el 7:12",
+      "prompt": "After the Philistine defeat at Mitspah, Shemu'el set up a stone named Ebenezer — 'Stone of ___.'",
+      "answer": "Help",
+      "source_quote": "Till now YHWH has helped us. — 1 Shemu'el 7:12"
+    },
+    {
+      "ref": "1 Shemu'el 5",
+      "prompt": "The Philistines placed the Ark in Dagon's temple and found their statue ___ before it both mornings.",
+      "answer": "fallen / prostrate",
+      "source_quote": "The image of Dagon had fallen face downward on the ground before the ark of YHWH. — 1 Shemu'el 5:3-4"
+    },
+    {
+      "ref": "1 Shemu'el 9",
+      "prompt": "Sha'ul was from the tribe of Binyamin and was described as ___ and shoulders taller than any man in Yisra'el.",
+      "answer": "head",
+      "source_quote": "There was not a man among the people of Israel more handsome than he; from his shoulders upward he was taller than any of the people. — 1 Shemu'el 9:2"
+    },
+    {
+      "ref": "1 Shemu'el 3",
+      "prompt": "YHWH called Shemu'el's name ___ times before Eli understood it was YHWH calling the boy.",
+      "answer": "three",
+      "source_quote": "YHWH called Samuel again the third time... and Eli perceived that YHWH was calling the boy. — 1 Shemu'el 3:8"
+    },
+    {
+      "ref": "1 Shemu'el 1",
+      "prompt": "Eli initially thought Khannah was ___ when he saw her lips moving in silent prayer.",
+      "answer": "drunk / intoxicated",
+      "source_quote": "Eli took her to be a drunken woman. — 1 Shemu'el 1:13"
+    }
   ],
   "multiple_choice": [
-    { "ref": "8:7", "question": "What did YHWH say when the people demanded a king?", "options": ["He approved immediately", "They have rejected me from being king over them", "He refused to allow it", "He punished them with a plague"], "correct": 1, "source_quote": "They have not rejected you, but they have rejected me from being king over them." },
-    { "ref": "3:1-10", "question": "How did Shemu'el first hear YHWH's voice?", "options": ["Through a burning bush", "YHWH called his name at night while he slept in the Mishkan", "Through a prophet", "Through thunder on a mountain"], "correct": 1, "source_quote": "YHWH called Shemu'el, and he said: Here I am." },
-    { "ref": "9:1-2", "question": "From which tribe was Sha'ul?", "options": ["Yehudah", "Levi", "Binyamin", "Efrayim"], "correct": 2, "source_quote": "There was a man of Binyamin whose name was Kish... and he had a son whose name was Sha'ul." }
+    {
+      "ref": "1 Shemu'el 1:11",
+      "question": "What was the content of Khannah's vow at Shilo?",
+      "options": [
+        "She would fast every year on the anniversary of the vow",
+        "She would give her son to YHWH all the days of his life and no razor would touch his head",
+        "She would bring ten offerings yearly if she conceived",
+        "She would name her son after Eli the priest if she was given a child"
+      ],
+      "correct": 1,
+      "source_quote": "If you give to your servant a male child, then I will give him to YHWH all the days of his life. — 1 Shemu'el 1:11"
+    },
+    {
+      "ref": "1 Shemu'el 3",
+      "question": "How many times did YHWH call Shemu'el's name before he understood it was YHWH?",
+      "options": [
+        "Once",
+        "Twice",
+        "Three times",
+        "Four times"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH called Samuel again the third time... Eli perceived that YHWH was calling the boy. — 1 Shemu'el 3:8"
+    },
+    {
+      "ref": "1 Shemu'el 4",
+      "question": "What was the name given to Eli's grandson born the day the Ark was captured?",
+      "options": [
+        "Pinkhas",
+        "Khofni",
+        "Ikavod",
+        "Shemu'el"
+      ],
+      "correct": 2,
+      "source_quote": "She named the child Ichabod, saying: The glory has departed from Israel. — 1 Shemu'el 4:21"
+    },
+    {
+      "ref": "1 Shemu'el 5",
+      "question": "What happened to the statue of Dagon when the Ark was placed in Dagon's temple?",
+      "options": [
+        "It glowed with light and the priests fled",
+        "It fell face down before the Ark both times it was stood back up",
+        "It shattered immediately on the first night",
+        "Nothing happened, which emboldened the Philistines"
+      ],
+      "correct": 1,
+      "source_quote": "Dagon had fallen face downward on the ground before the ark of YHWH. — 1 Shemu'el 5:4"
+    },
+    {
+      "ref": "1 Shemu'el 8:7",
+      "question": "What did YHWH say about the people's demand for a king?",
+      "options": [
+        "He approved it as the next covenant stage",
+        "He said they had not rejected Shemu'el but had rejected YHWH from being their king",
+        "He said the demand proved they were ready for the promised land's blessings",
+        "He told Shemu'el to refuse the request and lead them himself"
+      ],
+      "correct": 1,
+      "source_quote": "They have not rejected you, but they have rejected me from being king over them. — 1 Shemu'el 8:7"
+    },
+    {
+      "ref": "1 Shemu'el 7:12",
+      "question": "What did Shemu'el name the stone he set up after YHWH's victory over the Philistines at Mitspah?",
+      "options": [
+        "Mizpah — the watchtower",
+        "Ebenezer — the Stone of Help",
+        "Ramah — the high place",
+        "En Hakkore — the spring of the caller"
+      ],
+      "correct": 1,
+      "source_quote": "Samuel called its name Ebenezer; for he said, Till now YHWH has helped us. — 1 Shemu'el 7:12"
+    },
+    {
+      "ref": "1 Shemu'el 10",
+      "question": "Where was Sha'ul found when he was to be presented as king at Mitspah?",
+      "options": [
+        "Standing at the city gate greeting the crowd",
+        "Hiding among the baggage",
+        "On his knees in prayer at the city altar",
+        "At the house of a seer in the city"
+      ],
+      "correct": 1,
+      "source_quote": "Behold, he has hidden himself among the baggage. — 1 Shemu'el 10:22"
+    },
+    {
+      "ref": "1 Shemu'el 2",
+      "question": "What was the specific sin of Eli's sons Khofni and Pinkhas?",
+      "options": [
+        "They accepted bribes to give favorable oracles",
+        "They took the meat by force before it was offered and lay with the women serving at the Tent",
+        "They sold the Ark's access to Philistine traders",
+        "They refused to offer sacrifices when the people came"
+      ],
+      "correct": 1,
+      "source_quote": "They would take the meat for themselves by force... and they lay with the women who served at the entrance to the tent of meeting. — 1 Shemu'el 2:16-22"
+    },
+    {
+      "ref": "1 Shemu'el 6",
+      "question": "How did the Philistines test whether the Ark's plagues were YHWH's hand?",
+      "options": [
+        "They asked Shemu'el to come and interpret the events",
+        "They sent the Ark on a cart drawn by nursing cows separated from their calves — if the cows went toward Bet-Shemesh, it was YHWH",
+        "They consulted their priests about the Dagon oracle",
+        "They offered the Ark back at a border crossing and waited for Yisra'el to respond"
+      ],
+      "correct": 1,
+      "source_quote": "If it goes up to Beth-shemesh, it is YHWH who has done us this great harm. — 1 Shemu'el 6:9"
+    },
+    {
+      "ref": "1 Shemu'el 2:2",
+      "question": "Khannah's prayer declares what about YHWH?",
+      "options": [
+        "That YHWH gives children to the barren and that is his only act",
+        "That there is none holy as YHWH — there is no rock like our Creator",
+        "That YHWH fights battles and that is the sign of his kingship",
+        "That YHWH blesses the wealthy and raises them higher"
+      ],
+      "correct": 1,
+      "source_quote": "There is none holy like YHWH; there is none besides you; there is no rock like our Creator. — 1 Shemu'el 2:2"
+    }
   ],
   "faq": [
     {
-      "question": "Why are the DSS Samuel manuscripts so significant?",
-      "answer": "4QSam-a is one of the most important Dead Sea Scrolls manuscripts. It preserves readings that differ substantially from the Masoretic and often agree with the Septuagint — confirming that the Masoretic Samuel is a later editorial tradition, not the original text. Emanuel Tov's Textual Criticism of the Hebrew Bible (Fortress Press, 2012) documents these variants in detail. The three-witness method — DSS, Orit Ge'ez, Septuagint — recovers readings the Masoretic altered. The Masoretic Text was assembled by the Ben Asher family 1,200 years after the oldest DSS manuscripts. It is the youngest witness. Western scholarship made it the primary one."
+      "question": "Why is Khannah's prayer theologically significant?",
+      "answer": "Khannah's prayer is the first great covenant hymn in the narrative books — a psalm before Tehillim. It opens with personal gratitude but immediately becomes universal covenant theology: YHWH kills and makes alive, casts down and raises up, lifts the poor from the dust, the needy from the ash heap, to seat them with princes. The prayer is not merely about a barren woman receiving a son; it is a declaration that YHWH's power works through reversals — the unexpected, the marginalized, the apparently defeated. This prayer will echo through Yisra'el's covenant history (and is the source from which the NT construct's 'Magnificat' drew)."
     },
     {
-      "question": "What does the demand for a king reveal about YHWH's governance?",
-      "answer": "YHWH tells Shemu'el: 'They have not rejected you — they have rejected me from being king over them' (8:7). YHWH's original design was theocracy — direct divine governance without a human king. Yovelim 15 provides the framework: every nation was assigned to angelic governors, but Yisra'EL was kept under YHWH's direct jurisdiction. The demand for a king 'like the nations' (8:5) is the covenant people asking to be governed like other nations — asking to leave YHWH's direct jurisdiction. Monarchy was a concession, not the covenant ideal. The Qumran community's return to direct covenant governance — no king, no temple institution, just the covenant texts and YHWH — was a return to the pre-monarchic framework."
+      "question": "What does Shemu'el's call reveal about YHWH's pattern of choosing spokespersons?",
+      "answer": "Shemu'el is a child sleeping in the Temple when YHWH first calls him. He does not know what a divine call sounds or feels like. He needs Eli — the man whose house he is called to judge — to teach him how to respond. YHWH's pattern is consistent: the called person is the last to understand the calling. Mosheh argued at the burning bush; Gid'on hid in a winepress; Shemu'el ran to the wrong person three times. The commissioning of a spokesperson always begins in the gap between YHWH's choice and the human's self-understanding. YHWH does not wait for the person to feel ready."
     },
     {
-      "question": "How does Chanah's prayer connect to the covenant people's experience?",
-      "answer": "Chanah prays from affliction — barren, provoked by her rival, weeping at the Mishkan. She makes no offering. She brings no sacrifice. She speaks directly to YHWH from her grief. Eli the priest sees her lips moving without sound and accuses her of drunkenness (1:13-14). The institutional priest misreads the genuine prayer. Chanah corrects him: 'I am a woman deeply troubled — I have been pouring out my soul before YHWH.' YHWH hears her directly — not through the priest, not through the institution. Her son Shemu'el becomes the prophet who dismantles the corrupt priestly institution (Eli's house) and anoints the kings. The pattern: YHWH responds to the individual who cries out directly, bypassing the institutional system."
+      "question": "What does the capture of the Ark teach about covenant presumption?",
+      "answer": "Yisra'el brought the Ark to battle thinking its physical presence guaranteed victory. The Philistines were terrified when they heard it arrived — 'YHWH has come into the camp.' But Yisra'el lost anyway. YHWH is not a battle talisman carried for automatic victory. His presence at the Ark does not compel him to protect an army whose priests were sinning (Khofni and Pinkhas were there). Covenant is not mechanical — the right object in the right place does not substitute for covenant fidelity. The Ark's capture is YHWH refusing to protect his own symbol from an enemy in order to judge his own unfaithful people."
+    },
+    {
+      "question": "What is the significance of the Dagon collapse before the Ark?",
+      "answer": "The Philistines placed the Ark in Dagon's temple as war tribute — the captured deity of the defeated people placed before the victor's deity. Instead, Dagon fell prostrate before the Ark twice. The second time his head and hands broke off on the threshold — the threshold where worshippers' feet crossed. The priests avoided stepping on the threshold afterward. YHWH did not need Yisra'el's army to demonstrate his superiority over Dagon; he demonstrated it alone, in the enemy's own temple, at night. The Ark's presence was not defeated — it was the Philistines' punishment. The captured deity was actually the captor."
+    },
+    {
+      "question": "How does YHWH's speech about the king in 1 Shemu'el 8 frame the entire monarchy?",
+      "answer": "YHWH's response to the king demand is explicit: 'They have rejected me from being king over them.' The monarchy is granted as a concession, not a blessing. YHWH then instructs Shemu'el to tell the people exactly what a king will do — take their sons for chariots and horsemen, their daughters for perfumers and cooks, their fields and vineyards, their flocks. 'You will be his slaves.' This is not prophecy — it is structural description of what monarchy means. The people insist anyway: 'We will have a king over us that we may be like all the nations.' The desire to be like the nations is itself the problem — Yisra'el's covenant identity is specifically different from the nations. YHWH grants the demand as a judgment they will live with."
+    },
+    {
+      "question": "Who was Khannah's prayer addressed to and why does that matter?",
+      "answer": "Khannah calls YHWH 'YHWH of Hosts' — Tsvaot. This is one of the earliest uses of this title in the covenant literature. 'Hosts' refers to the heavenly armies under YHWH's command. Khannah, a barren woman in personal anguish, invokes the Commander of all cosmic forces in her private prayer. The title matters: she is not calling on a local deity or a household guardian. She is addressing the Creator of the universe for a personal, intimate need. The prayer's theological range — from personal grief to cosmic sovereignty — is deliberate. YHWH who commands armies is also YHWH who opens wombs. The prayer holds both without tension."
+    },
+    {
+      "question": "What does Sha'ul hiding among the baggage reveal about his character?",
+      "answer": "At the moment of YHWH's public designation, Sha'ul hides. The lot falls on him, the people cannot find him, and YHWH must tell them where he is — hiding among the equipment. This beginning echoes how his story ends: a man chosen for greatness who consistently retreats at the decisive moment. His initial humility (he said earlier: 'Am I not a Benjaminite, from the smallest tribe?') turns into a repeated pattern of flight from accountability and responsibility. The same quality that makes him seem humble at the start becomes evasion and cowardice under pressure. The baggage hiding at Mitspah is the first marker of a character that never fully becomes what YHWH calls it to be."
+    },
+    {
+      "question": "What does Eli's failure with his sons reveal about priestly covenant responsibility?",
+      "answer": "Eli knew what his sons were doing. He rebuked them. But he did not remove them. YHWH's judgment is specific: 'You honor your sons more than you honor me.' The covenant failure is not ignorance — it is prioritizing family loyalty over covenant fidelity. The same man who correctly identifies YHWH calling the child Shemu'el failed to manage his own house. The judgment against Eli's house (every male will die young, there will be no old man in his house) is severe precisely because his covenant responsibility was highest. The priest who stewards the meeting place between YHWH and Yisra'el bears the heaviest accountability for what that meeting place becomes."
+    },
+    {
+      "question": "How did the Ark return from Philistine territory?",
+      "answer": "The Philistines were afflicted with plagues for seven months while the Ark was among them. Their priests designed a test: a new cart, two nursing cows that had never been yoked, with their calves shut away. If the cows went directly to Bet-Shemesh without returning to their calves, it was YHWH's hand. The cows went straight to Bet-Shemesh. The Ark returned on a Philistine cart, with golden guilt offerings for the plague (five golden tumors and five golden mice). What began as the capture of a defeated deity ended as the Ark's triumphant return, with the Philistines sending tribute. YHWH's reputation among the Philistines outlasted his people's unfaithfulness."
+    },
+    {
+      "question": "What does the Ebenezer stone at Mitspah mark?",
+      "answer": "The stone Shemu'el sets up after the Philistine defeat marks a covenant turning point. 'Ebenezer' — the Stone of Help — was also the name of the place where the Ark was captured in 1 Shemu'el 4:1. By naming the new stone Ebenezer, Shemu'el reclaims the name from defeat: the same location that bore the memory of covenant failure now bears the memory of covenant restoration. 'Till now YHWH has helped us' means: from the beginning, through the wilderness, through the conquest, through the judges, through Eli's failure — YHWH has consistently been the helping stone. The monument is both backward-looking gratitude and forward-looking covenant claim."
     }
   ]
 }

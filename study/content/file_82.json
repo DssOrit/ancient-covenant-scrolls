@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_82",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_82",
   "label": "Eikha (Lamentations) — Complete",
   "volume": 27,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Eikha mourns the destruction of Yerushalayim and the Temple. The city that was full of people sits alone. She weeps bitterly in the night. Her children have gone into exile. YHWH has done what he purposed — he has torn down without pity. Yet Eikha also declares: the steadfast love of YHWH never ceases, his mercies never come to an end — they are new every morning. Great is your faithfulness. The text is an acrostic — each chapter follows the Hebrew alphabet.",
   "summary_scholarly": "Eikha is preserved in DSS fragments (4QLam, 5QLam-a, 5QLam-b) and in the Orit Ge'ez. The acrostic structure follows the 22 letters of the Hebrew alphabet. Eikha 4:8 contains a phenotypic statement using the shachar root: 'their visage is darker than blackness' — describing a change from the normal dark complexion as catastrophe, confirming that dark complexion was the healthy baseline condition of the covenant people.",
   "key_terms": [
-    { "term": "Eikha", "phonetic": "Ay-KHAH", "definition": "Hebrew for 'How!' — the first word of the book. The cry of lament over the destroyed city. Anglicized as Lamentations." },
-    { "term": "Acrostic Structure", "phonetic": "", "definition": "Each chapter follows the Hebrew alphabet — 22 verses per chapter (chapter 3 has 66 verses, three per letter). The structure imposes order on grief." },
-    { "term": "Steadfast Love (Chesed)", "phonetic": "KHEH-sed", "definition": "YHWH's covenant loyalty. Eikha 3:22-23: 'The steadfast love of YHWH never ceases, his mercies never come to an end — they are new every morning.'" }
+    {
+      "term": "Eikha",
+      "phonetic": "EI-khah",
+      "definition": "Hebrew title for Lamentations, taken from the opening word meaning 'How!' or 'Alas!'; five poems mourning the destruction of Yerushalayim by Babylon in 586 BCE. Traditionally attributed to Yirmeyahu."
+    },
+    {
+      "term": "How Lonely Sits the City",
+      "phonetic": "EI-khah ya-sh-VAH va-DAD ha-ir",
+      "definition": "The opening cry of Eikha 1:1: 'How lonely sits the city that was full of people! How like a widow has she become, she who was great among the nations!' — the defining lament of Yerushalayim's fall."
+    },
+    {
+      "term": "Is It Nothing to You",
+      "phonetic": "lo a-LE-khem kol o-ve-REI de-REKH",
+      "definition": "Eikha 1:12: 'Is it nothing to you, all you who pass by? Look and see if there is any sorrow like my sorrow' — Tzion personified as a mourning woman calling to passers-by to witness her suffering."
+    },
+    {
+      "term": "Eikha 3 Mercies of YHWH",
+      "phonetic": "kha-S-dei YHWH ki lo ta-M-nu",
+      "definition": "Eikha 3:22-23: 'It is of the mercies of YHWH that we are not consumed; because his compassions do not fail, they are new every morning' — the theological center of hope within the book's grief."
+    },
+    {
+      "term": "Great Is Your Faithfulness",
+      "phonetic": "ra-BAH e-mu-na-TE-kha",
+      "definition": "Eikha 3:23: 'Great is your faithfulness' — a declaration of YHWH's covenant reliability spoken in the depths of destruction; this ancient text is the source that modern hymns (such as 'Great Is Thy Faithfulness') borrowed from."
+    },
+    {
+      "term": "Acrostic Structure",
+      "phonetic": "a-크-ROS-tik",
+      "definition": "Eikha's formal structure: poems 1, 2, 4, and 5 each have 22 stanzas (one per Hebrew letter); poem 3 has 66 stanzas (three per letter, the entire alphabet three times); poem 5 has 22 lines but no alphabetic acrostic. The formal structure gives shape to grief."
+    },
+    {
+      "term": "Yirmeyahu Attribution",
+      "phonetic": "iy-ye-ru-miy-AH-hu",
+      "definition": "The traditional attribution of Eikha to Yirmeyahu the prophet; supported by 2 Divrei HaYamim 35:25 which says Yirmeyahu composed laments for Yoshiyahu. Modern scholarship debates direct authorship; what is clear is that the voice reflects deep prophetic immersion in Yerushalayim's trauma."
+    },
+    {
+      "term": "Daughter of Tzion (Bat-Tzion)",
+      "phonetic": "bat-tzi-YON",
+      "definition": "The personification of Yerushalayim/Yehudah as a woman — Bat-Tzion — who mourns, weeps, and calls for compassion. This literary figure runs through Eikha and connects to the broader prophetic use of Tzion-as-woman in Yesha'yahu and Mikhah."
+    },
+    {
+      "term": "Bat-Tzion",
+      "phonetic": "bat-tzi-YON",
+      "definition": "Hebrew: Daughter of Tzion; the personified Yerushalayim mourning her destruction; central figure in Eikha's first and second poems who both laments her state and acknowledges YHWH's righteousness in the punishment."
+    },
+    {
+      "term": "Destruction of Yerushalayim",
+      "phonetic": "khur-BAN Ye-ru-sha-LA-yim",
+      "definition": "The event at the center of Eikha: Babylon's destruction of Yerushalayim in 586 BCE — the Temple burned, the walls broken, the people killed or exiled. Known in later Hebrew tradition as the Ninth of Av (Tish'ah be-Av), still observed as a fast day."
+    }
   ],
   "fill_blank": [
-    { "ref": "3:22-23", "prompt": "The steadfast love of YHWH never ceases, his mercies never come to an end — they are new every ______.", "answer": "morning", "source_quote": "The steadfast love of YHWH never ceases, his mercies never come to an end — they are new every morning. Great is your faithfulness." },
-    { "ref": "1:1", "prompt": "How lonely sits the city that was full of ______!", "answer": "people", "source_quote": "How lonely sits the city that was full of people! How like a widow has she become, she who was great among the nations!" },
-    { "ref": "3:24", "prompt": "YHWH is my portion, says my soul, therefore I will ______ in him.", "answer": "hope", "source_quote": "YHWH is my portion, says my soul, therefore I will hope in him." }
+    {
+      "ref": "Eikha 1:1",
+      "prompt": "How ___ sits the city that was full of people! How like a widow has she become.",
+      "answer": "lonely",
+      "source_quote": "How lonely sits the city that was full of people! How like a widow has she become — Eikha 1:1."
+    },
+    {
+      "ref": "Eikha 1:2",
+      "prompt": "She weeps bitterly in the night, with tears on her ___; among all her lovers she has none to comfort her.",
+      "answer": "cheeks",
+      "source_quote": "She weeps bitterly in the night, with tears on her cheeks — Eikha 1:2."
+    },
+    {
+      "ref": "Eikha 1:12",
+      "prompt": "Is it nothing to you, all you who pass by? Look and see if there is any ___ like my sorrow.",
+      "answer": "sorrow",
+      "source_quote": "Look and see if there is any sorrow like my sorrow — Eikha 1:12."
+    },
+    {
+      "ref": "Eikha 2:1",
+      "prompt": "How the ___ has covered the daughter of Tzion with his anger! He has cast down from heaven to earth the splendor of Yisra'el.",
+      "answer": "Creator",
+      "source_quote": "How YHWH in his anger has set the daughter of Tzion under a cloud — Eikha 2:1."
+    },
+    {
+      "ref": "Eikha 3:22",
+      "prompt": "It is of the mercies of YHWH that we are not ___; because his compassions do not fail.",
+      "answer": "consumed",
+      "source_quote": "It is of the mercies of YHWH that we are not consumed; because his compassions do not fail — Eikha 3:22."
+    },
+    {
+      "ref": "Eikha 3:23",
+      "prompt": "They are new every morning; great is your ___.",
+      "answer": "faithfulness",
+      "source_quote": "They are new every morning; great is your faithfulness — Eikha 3:23."
+    },
+    {
+      "ref": "Eikha 3:24",
+      "prompt": "'YHWH is my ___,' says my soul, 'therefore I will hope in him.'",
+      "answer": "portion",
+      "source_quote": "YHWH is my portion, says my soul, therefore I will hope in him — Eikha 3:24."
+    },
+    {
+      "ref": "Eikha 3:40",
+      "prompt": "Let us test and examine our ways, and return to ___.",
+      "answer": "YHWH",
+      "source_quote": "Let us test and examine our ways, and return to YHWH — Eikha 3:40."
+    },
+    {
+      "ref": "Eikha 5:1",
+      "prompt": "Remember, O YHWH, what has ___ to us; look, and see our disgrace!",
+      "answer": "befallen",
+      "source_quote": "Remember, O YHWH, what has befallen us; look, and see our disgrace — Eikha 5:1."
+    },
+    {
+      "ref": "Eikha 5:21",
+      "prompt": "Restore us to yourself, O YHWH, that we may be ___! Renew our days as of old.",
+      "answer": "restored",
+      "source_quote": "Restore us to yourself, O YHWH, that we may be restored! Renew our days as of old — Eikha 5:21."
+    }
   ],
   "multiple_choice": [
-    { "ref": "3:22", "question": "What does Eikha say about YHWH's steadfast love?", "options": ["It has ended", "It never ceases — his mercies are new every morning", "It is only for the priests", "It depends on obedience"], "correct": 1, "source_quote": "The steadfast love of YHWH never ceases, his mercies never come to an end — they are new every morning." },
-    { "ref": "1:1", "question": "What literary structure does Eikha follow?", "options": ["Chronological narrative", "Hebrew alphabetic acrostic", "Question-and-answer format", "Genealogical lists"], "correct": 1, "source_quote": "Each chapter follows the 22 letters of the Hebrew alphabet." },
-    { "ref": "4:8", "question": "What does Eikha 4:8 describe as a change from the normal state?", "options": ["Hair turning gray", "Visage becoming darker than blackness", "Eyes growing dim", "Hands trembling"], "correct": 1, "source_quote": "Their visage is blacker than coal — they are not recognized in the streets." }
+    {
+      "ref": "Eikha 1:1",
+      "question": "What is the opening word of Eikha and what does it mean?",
+      "options": [
+        "Barukh — blessed",
+        "Eikha — How! / Alas!",
+        "Shema — Hear!",
+        "Khazak — Be strong!"
+      ],
+      "correct": 1,
+      "source_quote": "Eikha — How lonely sits the city — Eikha 1:1."
+    },
+    {
+      "ref": "Eikha acrostic",
+      "question": "How many stanzas does poem 3 (chapter 3) have in Eikha?",
+      "options": [
+        "22 stanzas",
+        "44 stanzas",
+        "66 stanzas",
+        "33 stanzas"
+      ],
+      "correct": 2,
+      "source_quote": "Eikha 3 has 66 stanzas — three stanzas per Hebrew letter, the entire alphabet three times."
+    },
+    {
+      "ref": "Eikha 3:22-23",
+      "question": "What declaration does Eikha 3:22-23 make in the midst of destruction?",
+      "options": [
+        "YHWH has abandoned his covenant",
+        "The mercies of YHWH do not fail; they are new every morning",
+        "The temple will be rebuilt in three days",
+        "Babylon will be judged for this destruction"
+      ],
+      "correct": 1,
+      "source_quote": "It is of the mercies of YHWH that we are not consumed; because his compassions do not fail, they are new every morning — Eikha 3:22-23."
+    },
+    {
+      "ref": "Eikha 3:23 source",
+      "question": "The modern hymn 'Great Is Thy Faithfulness' borrowed its central declaration from what ancient text?",
+      "options": [
+        "Tehillim 23",
+        "Yesha'yahu 40",
+        "Eikha 3:23",
+        "Devarim 32"
+      ],
+      "correct": 2,
+      "source_quote": "Great is your faithfulness — Eikha 3:23. This ancient text is the source."
+    },
+    {
+      "ref": "Eikha 1:12",
+      "question": "In Eikha 1:12, who calls to passers-by to witness her suffering?",
+      "options": [
+        "Yirmeyahu the prophet",
+        "Tzion/Yerushalayim personified as Bat-Tzion",
+        "The survivors of the siege",
+        "The exiles in Babylon"
+      ],
+      "correct": 1,
+      "source_quote": "Is it nothing to you, all you who pass by? Look and see if there is any sorrow like my sorrow — Eikha 1:12; Tzion speaks as the mourning woman."
+    },
+    {
+      "ref": "Eikha 5",
+      "question": "How does poem 5 (chapter 5) differ structurally from poems 1-4?",
+      "options": [
+        "It is in prose, not poetry",
+        "It has 22 lines but no alphabetic acrostic",
+        "It is written in Aramaic",
+        "It has only 10 lines"
+      ],
+      "correct": 1,
+      "source_quote": "Eikha 5 has 22 lines (matching the Hebrew alphabet in number) but no alphabetic acrostic pattern."
+    },
+    {
+      "ref": "Eikha attribution",
+      "question": "To whom is Eikha traditionally attributed?",
+      "options": [
+        "David the king",
+        "Ezra the scribe",
+        "Yirmeyahu the prophet",
+        "Ezekiel/Yehezkel"
+      ],
+      "correct": 2,
+      "source_quote": "Traditional attribution: Yirmeyahu, supported by 2 Divrei HaYamim 35:25 which says Yirmeyahu composed laments."
+    },
+    {
+      "ref": "Eikha 3:24",
+      "question": "What does the speaker declare YHWH to be in Eikha 3:24?",
+      "options": [
+        "Their shield and defender",
+        "Their portion",
+        "Their redeemer",
+        "Their light"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH is my portion, says my soul, therefore I will hope in him — Eikha 3:24."
+    },
+    {
+      "ref": "Eikha 5:21",
+      "question": "What does Eikha 5:21 ask YHWH to do?",
+      "options": [
+        "Destroy Babylon in return",
+        "Restore them and renew their days as of old",
+        "Send a new prophet",
+        "Give them a new covenant"
+      ],
+      "correct": 1,
+      "source_quote": "Restore us to yourself, O YHWH, that we may be restored! Renew our days as of old — Eikha 5:21."
+    },
+    {
+      "ref": "Eikha 586 BCE",
+      "question": "What event is the subject of Eikha's mourning?",
+      "options": [
+        "The death of Yoshiyahu at Megiddo",
+        "The destruction of Yerushalayim by Babylon in 586 BCE",
+        "The Assyrian siege of Yerushalayim in Khizkiyahu's time",
+        "The split of the kingdom after Shlomo"
+      ],
+      "correct": 1,
+      "source_quote": "Eikha mourns the destruction of Yerushalayim and the Temple by Babylon in 586 BCE."
+    }
   ],
   "faq": [
     {
-      "question": "What does Eikha 4:8 reveal about the covenant people's normal phenotype?",
-      "answer": "Eikha 4:8 uses the shachar root in a reversal construction: 'their visage is darker than blackness (shachar) — they are not recognized in the streets.' The text describes maximum darkness as a change from a previously lighter appearance — but the key is that the change is toward DEEPER darkness, not toward lightness. The normal state was already dark. The catastrophe produced a darkening beyond the normal dark baseline. This confirms that shachar operates as the maximum-darkness end of a phenotypic spectrum, and that the covenant people's baseline complexion was dark enough that an intensification beyond it was described as visually unrecognizable. Shir HaShirim 1:5 uses shacharah as a straightforward self-description. Eikha 4:8 uses the comparative form as deterioration. Both confirm the root's phenotypic application is direct, physical, and not metaphorical."
+      "question": "What is the structure of Eikha and why does the acrostic form matter?",
+      "answer": "Eikha has five poems: poems 1, 2, and 4 each have 22 stanzas, one per Hebrew letter; poem 3 has 66 stanzas, three per letter; poem 5 has 22 lines but no acrostic pattern. The acrostic form — expressing grief from aleph to tav, the whole alphabet — signals that the lament is total and complete. The form itself is theological: grief is given structure and boundary rather than dissolving into formless wailing. The alphabet contains the suffering."
     },
     {
-      "question": "Why does Eikha lament with such grief and yet affirm YHWH's faithfulness?",
-      "answer": "Eikha 3:22-23 is embedded within the deepest lament: the city destroyed, children in exile, the people scattered. Yet within this grief: 'the steadfast love of YHWH never ceases, his mercies are new every morning. Great is your faithfulness.' The covenant people have always held destruction and hope together. The Damascus Document (CD) at Qumran describes the Period of Wrath — the current age of suffering — as bounded. The covenant obligation of YHWH is not nullified by the catastrophe. The lament acknowledges what happened. The affirmation declares that the covenant survives what happened."
+      "question": "Who is Bat-Tzion (Daughter of Tzion) and how does she function in Eikha?",
+      "answer": "Bat-Tzion is Yerushalayim/Yehudah personified as a woman — a mourning mother, a widow, a woman in labor. She speaks in Eikha 1 and 2, calling passers-by to witness her suffering (1:12) and directing the community toward YHWH. This literary figure runs through the prophetic tradition (Yesha'yahu, Mikhah, Zekharyah) and represents not just the city but the covenant people collectively. Her mourning is both personal and communal."
     },
     {
-      "question": "How does Eikha connect to the covenant people's experience across history?",
-      "answer": "Eikha mourns the Babylonian destruction (586 BCE). But the pattern it describes — the city that was full sits alone, the children gone into exile, the faithful scattered, the enemies in triumph — has recurred. The Roman destruction (70 CE). The medieval persecutions. The Trans-Atlantic slave trade. Psalm 83:4 describes the same coordinated assault: 'let the name of Yisra'EL be remembered no more.' Eikha is not a one-time lament. It is the covenant people's vocabulary for every instance of the same pattern. The text gives words to the grief. The covenant gives a framework for the restoration that follows."
+      "question": "What is the theological significance of Eikha 3:22-23 in the middle of such grief?",
+      "answer": "Eikha 3:22-23 — 'It is of the mercies of YHWH that we are not consumed; because his compassions do not fail, they are new every morning; great is your faithfulness' — is not a denial of the grief but an affirmation of covenant reality within the grief. The destruction is real; YHWH's judgment was real; and yet YHWH's hesed persists. The book does not end with resolution — it ends with questions and pleas — but this central declaration keeps covenant hope alive inside the ruins."
+    },
+    {
+      "question": "Does Eikha affirm or question YHWH's justice in the destruction?",
+      "answer": "Both. Eikha repeatedly acknowledges YHWH's righteousness in bringing the destruction (1:18: 'YHWH is in the right, for I have rebelled against his word'); the people's covenant failure is acknowledged. At the same time, the book cries out at the severity of the suffering, calls YHWH to remember, and ends with the anguished question of 5:22: 'Or have you utterly rejected us? Are you exceedingly angry with us?' Both the acknowledgment of guilt and the cry for restoration are held together."
+    },
+    {
+      "question": "What is the significance of the destruction of Yerushalayim (586 BCE) in the Hebrew tradition?",
+      "answer": "The destruction of Yerushalayim and the First Temple by Babylon in 586 BCE — called the Khurban — is the defining catastrophe of the pre-exilic Hebrew tradition. It ended the Davidic kingdom, destroyed the Temple, killed or exiled the population, and raised the acute theological question: has YHWH abandoned his covenant? Eikha, Yirmeyahu, Yehezkel, and multiple psalms all grapple with this event. The later tradition (and eventually the Qumran community) understood itself as living in the shadow of this unresolved catastrophe."
+    },
+    {
+      "question": "What does Eikha 5:21 reveal about the book's theological position?",
+      "answer": "'Restore us to yourself, O YHWH, that we may be restored! Renew our days as of old' — the final plea turns everything toward YHWH. It is not a demand but a recognition: restoration is not something the people can achieve on their own but something that only comes from YHWH's initiative. The Hebrew grammar is theologically precise: 'Restore us to yourself' (return us) — only by being turned back toward YHWH is restoration possible. The book ends with this plea, not with its fulfillment."
+    },
+    {
+      "question": "What connection does Eikha have to the annual fast of Tish'ah be-Av?",
+      "answer": "Tish'ah be-Av (the Ninth of Av) became the annual fast commemorating the destruction of Yerushalayim and the Temple. Eikha is read publicly at this fast in Jewish communities. The event's weight extended in tradition to include the destruction of the Second Temple as well (70 CE). The book of Eikha is thus the liturgical text of communal memory for covenant catastrophe — keeping the loss alive so its theological implications are not forgotten."
+    },
+    {
+      "question": "How does Eikha 3:40 respond to the destruction?",
+      "answer": "'Let us test and examine our ways, and return to YHWH' — this is the communal call within the lament. Rather than pure grief or blame of YHWH, the book also calls for honest self-examination and return. This response — examine, turn back, appeal — is consistent with the broader prophetic tradition (Yirmeyahu, Hoshea, Yoel) that covenant restoration begins with honest reckoning."
+    },
+    {
+      "question": "Who speaks in the different sections of Eikha?",
+      "answer": "Eikha has multiple voices: Bat-Tzion/Yerushalayim personified speaks in 1:9c, 1:11c-16, 1:18-22; a third-person narrator describes her state in 1:1-11; in ch.3, an individual 'I' (possibly representing the community or Yirmeyahu himself) speaks the central meditation; ch.4 returns to description of the siege; ch.5 is a communal 'we' prayer. The multiple voices reflect both individual and communal dimensions of the catastrophe."
+    },
+    {
+      "question": "What does the acrostic form breaking down in Eikha 5 signal?",
+      "answer": "Poem 5 (ch.5) has 22 lines — matching the alphabet — but abandons the acrostic order. This may signal that at the extreme point of desolation, even the form that gave structure to grief breaks down. The prayer of ch.5 is the most raw and direct ('Remember, O YHWH, what has befallen us') and ends with the unresolved question about whether YHWH has finally rejected them (5:22). The loss of acrostic order at the end mirrors the loss of all structure in the community."
     }
   ]
 }

@@ -1,38 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_49",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_49",
   "label": "Yirmeyahu (Jeremiah) — Part 3 — Chapters 16–23",
   "volume": 17,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "YHWH tells Yirmeyahu: Do not take a wife or have children in this place — for those born here will die of deadly diseases. YHWH will hurl the people from this land into a land they have not known. But the days are coming when they will no longer say 'as YHWH lives who brought up the people from Mitsrayim' but 'as YHWH lives who brought up the people from the land of the north and from all lands.' Woe to the shepherds who destroy and scatter the sheep of my pasture. I will raise up for Dawid a righteous Branch — he shall reign as king and deal wisely, and execute justice and righteousness in the land. His name: YHWH Tsidqenu — YHWH is our righteousness.",
   "summary_scholarly": "The ACR reads from the DSS Jeremiah manuscripts (4QJer-a through 4QJer-e) and the Orit Ge'ez. The false shepherds oracle (chapter 23) is a direct indictment of covenant leadership that scatters rather than gathers the people. The righteous Branch (Tsemah Tsaddiq) of 23:5 is the Davidic messianic expectation — a mortal king who executes justice. The Qumran community's messianic expectation, documented in 4Q174 (Florilegium) and 4Q252, describes this Branch as a human descendant of Dawid — not a divine figure. The second exodus prophecy (16:14-15) declares that YHWH's future ingathering will surpass the Mitsrayim exodus as the defining redemptive act.",
   "key_terms": [
-    { "term": "Tsemah Tsaddiq (Righteous Branch)", "phonetic": "TSEH-makh Tsah-DEEQ", "definition": "YHWH promises to raise up for Dawid a righteous Branch who will reign as king and execute justice (23:5). The Qumran texts (4Q174, 4Q252) read this as a mortal Davidic descendant. His name: YHWH Tsidqenu — YHWH is our righteousness." },
-    { "term": "False Shepherds", "phonetic": "", "definition": "YHWH condemns the shepherds (leaders) who destroy and scatter the sheep of his pasture (23:1-2). The indictment is against covenant leadership that fails its charge — prophets who prophesy lies, priests who lead astray, kings who exploit." },
-    { "term": "Second Exodus", "phonetic": "", "definition": "YHWH declares that the future ingathering will replace the Mitsrayim exodus as the primary redemptive reference: 'As YHWH lives who brought up the people from the land of the north and from all the lands where he had driven them' (16:15). The future ingathering surpasses the past." },
-    { "term": "YHWH Tsidqenu", "phonetic": "YHWH Tsid-KEH-noo", "definition": "The name of the righteous Branch: 'YHWH is our righteousness' (23:6). The king's name contains the Name of YHWH — the king carries the covenant identity in his very name." }
+    {
+      "term": "Potter's Wheel",
+      "phonetic": "ch.18",
+      "definition": "YHWH sends Yirmeyahu to the potter's house; seeing the potter reshape a marred vessel, he receives the word: YHWH can reshape any nation including Yisra'el — the clay does not dictate its own form."
+    },
+    {
+      "term": "Smashed Jar",
+      "phonetic": "ch.19",
+      "definition": "Yirmeyahu smashes a potter's jar at the Tofet gate before the elders as a sign: 'So will I break this people and this city, as one breaks a potter's vessel, so that it can never be mended.'"
+    },
+    {
+      "term": "Pashkhur",
+      "phonetic": "ch.20",
+      "definition": "The priest Pashkhur, who oversees the Temple, beats Yirmeyahu and puts him in stocks after the smashed-jar prophecy; YHWH renames him 'Terror on Every Side' and declares he will die in Babylon."
+    },
+    {
+      "term": "Yirmeyahu's Lament",
+      "phonetic": "ch.20:7-18",
+      "definition": "Yirmeyahu's most extreme confession: he accuses YHWH of enticing him, says he is a laughingstock, then swings to trust, then curses the day he was born and the man who brought news of his birth."
+    },
+    {
+      "term": "The Righteous Branch",
+      "phonetic": "ch.23:5-6",
+      "definition": "Yirmeyahu 23:5-6 — YHWH will raise up for David a righteous Branch (Tsemakh Tzaddik) who will reign wisely and execute justice; his name will be 'YHWH Our Righteousness' (YHWH Tzidqenu)."
+    },
+    {
+      "term": "'YHWH Our Righteousness'",
+      "phonetic": "YHWH Tzid-QE-nu",
+      "definition": "The name of the coming Davidic leader in Yirmeyahu 23:6 — 'YHWH Our Righteousness'; a declaration that YHWH's own character of righteousness will be embodied in and enacted through this ruler."
+    },
+    {
+      "term": "False Prophets",
+      "phonetic": "ch.23",
+      "definition": "Yirmeyahu 23 contains a sustained attack on false prophets: they speak visions from their own hearts, not YHWH's mouth; they say 'Peace' when YHWH has not sent them; they steal words from one another."
+    },
+    {
+      "term": "Vision vs. Dream",
+      "phonetic": "ch.23:25-32",
+      "definition": "YHWH distinguishes in Yirmeyahu 23 between prophets who claim dreams as his word and the genuine prophet who has YHWH's word. 'What has straw in common with wheat, declares YHWH.'"
+    },
+    {
+      "term": "New Covenant Foreshadowed",
+      "phonetic": "chs 16-23",
+      "definition": "Throughout Yirmeyahu 16-23, YHWH hints at a future restoration beyond the coming disaster; the full New Covenant promise comes in chapter 31, but the groundwork is laid here."
+    },
+    {
+      "term": "Valley of Ben-Hinnom",
+      "phonetic": "ch.19:2-6",
+      "definition": "The Tofet in the Valley of Ben-Hinnom (south of Yerushalayim) where the people burned their children to Molokh; Yirmeyahu smashed the jar there; YHWH declares it will be called the Valley of Slaughter."
+    }
   ],
   "fill_blank": [
-    { "ref": "23:5", "prompt": "I will raise up for Dawid a righteous ______, and he shall reign as king and deal wisely.", "answer": "Branch", "source_quote": "Behold, the days are coming, declares YHWH, when I will raise up for Dawid a righteous Branch, and he shall reign as king and deal wisely, and shall execute justice and righteousness in the land." },
-    { "ref": "23:1", "prompt": "Woe to the ______ who destroy and scatter the sheep of my pasture, declares YHWH.", "answer": "shepherds", "source_quote": "Woe to the shepherds who destroy and scatter the sheep of my pasture, declares YHWH." },
-    { "ref": "16:15", "prompt": "As YHWH lives who brought up the people of Yisra'EL from the land of the ______ and from all the lands where he had driven them.", "answer": "north", "source_quote": "As YHWH lives who brought up the people of Yisra'EL out of the land of the north and out of all the lands where he had driven them." }
+    {
+      "ref": "Yirmeyahu 18:4",
+      "prompt": "At the potter's house: 'the vessel he was making of clay was _____ in the potter's hand, and he reworked it into another vessel.'",
+      "answer": "spoiled",
+      "source_quote": "And the vessel he was making of clay was spoiled in the potter's hand, and he reworked it into another vessel, as it seemed good to the potter to do."
+    },
+    {
+      "ref": "Yirmeyahu 19:11",
+      "prompt": "YHWH says: 'So will I break this people and this city, as one breaks a _____ vessel, so that it can never be mended.'",
+      "answer": "potter's",
+      "source_quote": "And shall say to them, Thus says YHWH of Hosts: So will I break this people and this city, as one breaks a potter's vessel, so that it can never be mended."
+    },
+    {
+      "ref": "Yirmeyahu 20:7",
+      "prompt": "Yirmeyahu's extreme confession: 'O YHWH, you have _____ me, and I was enticed; you are stronger than I, and you have prevailed.'",
+      "answer": "deceived",
+      "source_quote": "O YHWH, you have deceived me, and I was deceived; you are stronger than I, and you have prevailed. I have become a laughingstock all the day; everyone mocks me."
+    },
+    {
+      "ref": "Yirmeyahu 23:5",
+      "prompt": "'Behold, the days are coming, declares YHWH, when I will raise up for David a righteous _____ and he shall reign as king and deal wisely.'",
+      "answer": "Branch",
+      "source_quote": "Behold, the days are coming, declares YHWH, when I will raise up for David a righteous Branch, and he shall reign as king and deal wisely, and shall execute justice and righteousness in the land."
+    },
+    {
+      "ref": "Yirmeyahu 23:6",
+      "prompt": "The name of the coming Davidic leader: 'And this is the name by which he will be called: YHWH _____ Righteousness.'",
+      "answer": "Our",
+      "source_quote": "In his days Yehudah will be saved, and Yisra'el will dwell securely. And this is the name by which he will be called: YHWH Our Righteousness."
+    },
+    {
+      "ref": "Yirmeyahu 23:16",
+      "prompt": "YHWH warns about false prophets: 'They speak _____ from their own minds and not from the mouth of YHWH.'",
+      "answer": "visions",
+      "source_quote": "Do not listen to the words of the prophets who prophesy to you, filling you with vain hopes. They speak visions of their own minds, not from the mouth of YHWH."
+    },
+    {
+      "ref": "Yirmeyahu 23:29",
+      "prompt": "'Is not my word like _____', declares YHWH, 'and like a hammer that breaks the rock in pieces?'",
+      "answer": "fire",
+      "source_quote": "Is not my word like fire, declares YHWH, and like a hammer that breaks the rock in pieces?"
+    },
+    {
+      "ref": "Yirmeyahu 20:14",
+      "prompt": "Yirmeyahu curses the day of his birth: '_____ the day on which I was born!'",
+      "answer": "Cursed",
+      "source_quote": "Cursed be the day on which I was born! The day when my mother bore me, let it not be blessed!"
+    },
+    {
+      "ref": "Yirmeyahu 16:2",
+      "prompt": "YHWH commands Yirmeyahu: 'You shall not take a wife, nor shall you have sons or daughters in this _____.'",
+      "answer": "place",
+      "source_quote": "You shall not take a wife, nor shall you have sons or daughters in this place."
+    },
+    {
+      "ref": "Yirmeyahu 23:24",
+      "prompt": "YHWH asks: 'Can a man hide himself in secret places so that I cannot see him? Do I not _____ heaven and earth, declares YHWH.'",
+      "answer": "fill",
+      "source_quote": "Can a man hide himself in secret places so that I cannot see him? declares YHWH. Do I not fill heaven and earth? declares YHWH."
+    }
   ],
   "multiple_choice": [
-    { "ref": "23:5-6", "question": "What is the name of the righteous Branch?", "options": ["Immanuel", "YHWH Tsidqenu — YHWH is our righteousness", "Shelomoh", "Mashiah"], "correct": 1, "source_quote": "And this is the name by which he will be called: YHWH Tsidqenu — YHWH is our righteousness." },
-    { "ref": "23:1-2", "question": "Who does YHWH condemn for scattering the sheep?", "options": ["The foreign nations", "The false shepherds — the leaders of the covenant people", "The Babylonians", "The Philistines"], "correct": 1, "source_quote": "Woe to the shepherds who destroy and scatter the sheep of my pasture." },
-    { "ref": "16:14-15", "question": "What will the second exodus replace as the primary redemptive reference?", "options": ["The creation account", "The Mitsrayim exodus", "The covenant with Avraham", "The building of the Temple"], "correct": 1, "source_quote": "They shall no longer say: As YHWH lives who brought up the people from Mitsrayim — but: As YHWH lives who brought up the people from the land of the north." }
+    {
+      "ref": "Yirmeyahu 18:1-10",
+      "question": "What lesson does the potter's workshop teach about YHWH and the nations?",
+      "options": [
+        "YHWH can reshape any nation as a potter reshapes clay — the clay does not dictate its own form",
+        "The nations are permanently fixed in their destiny",
+        "Only Yisra'el can be remolded by YHWH",
+        "The potter's skill depends on the quality of the clay"
+      ],
+      "correct": 0,
+      "source_quote": "O house of Yisra'el, can I not do with you as this potter has done? declares YHWH. Behold, like the clay in the potter's hand, so are you in my hand."
+    },
+    {
+      "ref": "Yirmeyahu 19:1-6",
+      "question": "Where did Yirmeyahu smash the potter's jar as a prophetic sign?",
+      "options": [
+        "At the entrance of the Potsherd Gate near the Valley of Ben-Hinnom",
+        "In the Temple court before all the priests",
+        "At the city gate of Yerushalayim",
+        "At the Babylonian envoy's lodging"
+      ],
+      "correct": 0,
+      "source_quote": "And go out to the Valley of the Son of Hinnom at the entry of the Potsherd Gate, and proclaim there the words that I tell you."
+    },
+    {
+      "ref": "Yirmeyahu 20:1-3",
+      "question": "After the smashed-jar prophecy, what did the priest Pashkhur do to Yirmeyahu?",
+      "options": [
+        "Beat him and put him in stocks overnight in the Temple",
+        "Had him imprisoned in the palace dungeon",
+        "Expelled him from Yerushalayim",
+        "Brought him before the king for judgment"
+      ],
+      "correct": 0,
+      "source_quote": "Then Pashkhur the priest, the son of Immer, who was chief officer in the house of YHWH, heard Yirmeyahu prophesying these things. Then Pashkhur beat Yirmeyahu the prophet, and put him in the stocks."
+    },
+    {
+      "ref": "Yirmeyahu 23:5-6",
+      "question": "What is the name given to the coming Davidic leader in Yirmeyahu 23:6?",
+      "options": [
+        "YHWH Our Righteousness",
+        "Branch of Yishai",
+        "Prince of Peace",
+        "Mighty Warrior"
+      ],
+      "correct": 0,
+      "source_quote": "In his days Yehudah will be saved, and Yisra'el will dwell securely. And this is the name by which he will be called: YHWH Our Righteousness."
+    },
+    {
+      "ref": "Yirmeyahu 20:7",
+      "question": "In his extreme confession in Yirmeyahu 20:7, what does Yirmeyahu accuse YHWH of?",
+      "options": [
+        "Deceiving him and enticing him into a prophetic calling he cannot escape",
+        "Abandoning him in his hour of need",
+        "Giving him a false prophecy about Babylon",
+        "Failing to protect him from Pashkhur"
+      ],
+      "correct": 0,
+      "source_quote": "O YHWH, you have deceived me, and I was deceived; you are stronger than I, and you have prevailed. I have become a laughingstock all the day."
+    },
+    {
+      "ref": "Yirmeyahu 23:25-28",
+      "question": "In Yirmeyahu 23, what does YHWH say straw has in common with wheat, as a comparison to dreams vs. YHWH's word?",
+      "options": [
+        "Nothing — just as straw has nothing in common with wheat, dreams have nothing in common with YHWH's genuine word",
+        "Both come from the same source but serve different purposes",
+        "Both are given by YHWH but for different audiences",
+        "One sustains while the other perishes"
+      ],
+      "correct": 0,
+      "source_quote": "What has straw in common with wheat? declares YHWH. Is not my word like fire, declares YHWH?"
+    },
+    {
+      "ref": "Yirmeyahu 16:1-4",
+      "question": "Why did YHWH forbid Yirmeyahu to marry and have children?",
+      "options": [
+        "As a sign that the coming disaster would take sons and daughters in this place",
+        "Because prophets were required to be celibate",
+        "To preserve Yirmeyahu's time for prophetic work",
+        "Because no woman would marry a prophet"
+      ],
+      "correct": 0,
+      "source_quote": "For thus says YHWH concerning the sons and daughters who are born in this place, and concerning the mothers who bore them and the fathers who fathered them in this land: They shall die of deadly diseases."
+    },
+    {
+      "ref": "Yirmeyahu 19:3",
+      "question": "What phrase does YHWH say will cause ears of everyone who hears it to tingle?",
+      "options": [
+        "I am bringing disaster on this place, the ears of everyone who hears of it will tingle",
+        "The Temple will be burned and its stones scattered",
+        "Yerushalayim will become a heap of ruins",
+        "The covenant is broken beyond repair"
+      ],
+      "correct": 0,
+      "source_quote": "And say, Hear the word of YHWH, O kings of Yehudah and inhabitants of Yerushalayim. Thus says YHWH of Hosts, the Creator of Yisra'el: Behold, I am bringing such disaster upon this place that the ears of everyone who hears of it will tingle."
+    },
+    {
+      "ref": "Yirmeyahu 23:11",
+      "question": "What does Yirmeyahu 23:11 say about the priests and prophets together?",
+      "options": [
+        "Both prophet and priest are ungodly; even in my house I have found their evil",
+        "The priests are righteous but the prophets are corrupt",
+        "The prophets speak truth but the priests have corrupted the Temple",
+        "Both have been faithful but the people reject them"
+      ],
+      "correct": 0,
+      "source_quote": "Both prophet and priest are ungodly; even in my house I have found their evil, declares YHWH."
+    },
+    {
+      "ref": "Yirmeyahu 20:11",
+      "question": "After his extreme lament, Yirmeyahu swings to trust in Yirmeyahu 20:11, saying YHWH is with him as what?",
+      "options": [
+        "A dread warrior; therefore his persecutors will stumble",
+        "A strong shield defending him",
+        "A consuming fire burning his enemies",
+        "A rock on which he stands"
+      ],
+      "correct": 0,
+      "source_quote": "But YHWH is with me as a dread warrior; therefore my persecutors will stumble; they will not overcome me."
+    }
   ],
   "faq": [
     {
-      "question": "How does the false shepherds oracle apply to institutional erasure?",
-      "answer": "Yirmeyahu 23:1-2: 'Woe to the shepherds who destroy and scatter the sheep of my pasture. You have scattered my flock and driven them away and you have not attended to them.' The false shepherds are not foreign enemies — they are the covenant community's own leaders. The indictment is against internal leadership that fails to protect, teach, and gather. The Great Eraser operates through false shepherds in every era: religious leaders who substitute institutional authority for the written Torah, scholars who control access to the primary texts, translators who replace YHWH with 'LORD' 7,000+ times. The scattering of the covenant people is not only geographic — it is epistemic. When the people's own leaders deny them access to their own texts, their own Name, their own identity, the shepherds are doing the scattering."
+      "question": "What is the theological significance of the potter's workshop in Yirmeyahu 18?",
+      "answer": "The potter's workshop gives YHWH an answer to Yirmeyahu's theodicy questions: sovereignty. YHWH can reshape a nation as a potter reshapes clay. If YHWH announces disaster against a nation and that nation turns from evil, YHWH will relent; if he announces good and the nation does evil, he will reverse his announced good. The clay cannot dictate to the potter."
     },
     {
-      "question": "Is the righteous Branch a divine figure in the DSS?",
-      "answer": "No. The Qumran texts interpret the righteous Branch (Tsemah Tsaddiq) of Yirmeyahu 23:5 as a mortal Davidic descendant. 4Q174 (Florilegium) quotes 2 Shmu'el 7:11-14 — 'I will raise up your offspring after you' — and interprets this as 'the Branch of David who shall arise with the Interpreter of the Torah.' 4Q252 (Commentary on Genesis) identifies the Branch with the scepter of Bereshit 49:10 — a human ruler from the tribe of Yehudah. The Qumran community expected a mortal king who would execute justice and righteousness — not a divine incarnation. The title YHWH Tsidqenu means the king carries YHWH's name, not that the king is YHWH. Human kings in the ancient Near East regularly bore theophoric names — names containing the divine name — without being identified as divine."
+      "question": "Why did YHWH rename Pashkhur 'Terror on Every Side'?",
+      "answer": "After Pashkhur beat Yirmeyahu and put him in stocks, YHWH renamed him Magor-Missaviv (Terror on Every Side), declaring that he would see his friends fall by the sword and be carried to Babylon where he would die. The irony is sharp: Pashkhur silenced the prophet warning of terror; now his new name is terror itself."
     },
     {
-      "question": "What does the second exodus prophecy mean for scattered covenant people?",
-      "answer": "Yirmeyahu 16:14-15 declares that YHWH's future ingathering will be so significant that it will replace the Mitsrayim exodus as the defining act of redemption. 'They shall no longer say: As YHWH lives who brought up the people from Mitsrayim — but: As YHWH lives who brought up the people from the land of the north and from all the lands where he had driven them.' The phrase 'all the lands where he had driven them' encompasses every place the covenant people have been scattered — not just Babylon, not just the ancient Near East, but all the lands. The Afro-Asiatic diaspora, the transatlantic scattering, every place the covenant people were taken in ships and by force — all of it is within the scope of this prophecy. The future ingathering is not a metaphor. It is the covenant promise that exceeds even the exodus from Mitsrayim."
+      "question": "What is the Righteous Branch prophecy in Yirmeyahu 23?",
+      "answer": "Yirmeyahu 23:5-6 promises that YHWH will raise up a righteous Branch from David's line who will rule with wisdom and execute justice and righteousness. His name, 'YHWH Our Righteousness,' makes YHWH's own character the source and content of this ruler's reign. This is specifically a Davidic covenant promise within Yirmeyahu's condemnation of faithless kings."
+    },
+    {
+      "question": "What is the difference between true and false prophecy according to Yirmeyahu 23?",
+      "answer": "In Yirmeyahu 23, false prophets speak from their own hearts ('visions of their own minds'), tell people there will be peace, have no standing in YHWH's council (the heavenly assembly), and steal words from one another. The true prophet has stood in YHWH's council and heard his actual word — which is like fire and like a hammer breaking rock, not smooth and comforting."
+    },
+    {
+      "question": "Why is Yirmeyahu's extreme confession in chapter 20 preserved in the text?",
+      "answer": "Yirmeyahu 20:7-18 records a prophet accusing YHWH of deception, being overcome by YHWH's power, and cursing the day he was born. Its preservation is itself a statement about the Hebrew prophetic tradition: authentic covenant relationship with YHWH includes raw argument and complaint. Yirmeyahu does not suppress the darkness of prophetic suffering — he records it as part of the witness."
+    },
+    {
+      "question": "What is the Valley of Ben-Hinnom and why was it condemned?",
+      "answer": "The Valley of Ben-Hinnom (Ge-Hinnom) south of Yerushalayim contained the Tofet, where people burned their children to Molokh. Yirmeyahu condemned it repeatedly (19:2-6; 7:30-34): YHWH declares he will rename it the Valley of Slaughter because so many will die there in the coming disaster. Its name was later contracted to Gehenna — an ancient Hebrew site of condemnation."
+    },
+    {
+      "question": "What did YHWH mean by forbidding Yirmeyahu to mourn or enter a house of mourning?",
+      "answer": "In Yirmeyahu 16:5-7, YHWH forbids Yirmeyahu from entering houses of mourning or feasting — both normal social obligations. The sign's meaning: in the coming disaster, there will be so many dead that normal mourning will be impossible. Yirmeyahu's abstention from mourning is itself a prophetic act enacting the future where mourning rites will be overwhelmed."
+    },
+    {
+      "question": "How does YHWH respond to Yirmeyahu's accusation of deception in chapter 20?",
+      "answer": "YHWH does not directly refute the accusation. After Yirmeyahu's extreme lament (20:7-13) YHWH swings through Yirmeyahu to a declaration of trust (20:11-13) before the final plunge into cursing his birth (20:14-18). The text preserves the oscillation without resolution — this is the authentic record of prophetic struggle, not a tidy theological statement."
+    },
+    {
+      "question": "What is the pastoral significance of Yirmeyahu 23:24 — 'Do I not fill heaven and earth?'",
+      "answer": "YHWH's question — 'Can a man hide in secret places so I cannot see him? Do I not fill heaven and earth?' — confronts false prophets who prophesy in secret or claim YHWH said things he did not say. No hiding from YHWH is possible; his omnipresence is the foundation of prophetic accountability. It also grounds Yirmeyahu's confidence: the same YHWH who fills heaven and earth is with him."
+    },
+    {
+      "question": "What does the Righteous Branch prophecy contribute to the messianic tradition?",
+      "answer": "Yirmeyahu 23:5-6 and the parallel in 33:15-16 contribute a specific emphasis to the Davidic tradition: the coming ruler's most defining characteristic is righteousness and justice, not military conquest. His name is YHWH's own righteousness. This locates the messianic hope firmly in YHWH's covenant character, not in human power — consistent with the Psalmic and Yesha'yahu strands of the tradition."
+    },
+    {
+      "question": "Why does Yirmeyahu 20:20 say the man who brought news of his birth should be like the cities YHWH overthrew?",
+      "answer": "In 20:16, Yirmeyahu extends his curse to the man who told his father 'A son is born.' He wishes that man to become like the cities YHWH overthrew without pity. This is not literal but rhetorical — the full force of prophetic suffering. The life given to him has been a life of unrelenting opposition, ridicule, and suffering for delivering YHWH's word."
     }
   ]
 }

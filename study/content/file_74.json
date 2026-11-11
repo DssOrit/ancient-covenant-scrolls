@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_74",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_74",
   "label": "Mishlei (Proverbs) — Part 1 — Chapters 1–10",
   "volume": 22,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Mishlei — the Proverbs of Shelomoh son of Dawid, king of Yisra'EL. The fear of YHWH is the beginning of knowledge. Wisdom cries out in the streets. YHWH by wisdom founded the earth. Trust in YHWH with all your heart and lean not on your own understanding. Chapters 8-9 present Wisdom as a person — she was with YHWH before creation, when he marked out the foundations of the earth, she was beside him as a master craftsman.",
   "summary_scholarly": "The ACR reads from DSS Proverbs fragments (4QProv-a, 4QProv-b) and the Orit Ge'ez. The personification of Wisdom (Chokmah) in chapters 1-9 has parallels in the Egyptian wisdom tradition — particularly the Instructions of Ptahhotep (c. 2400 BCE) and the Instructions of Amenemope (c. 1200 BCE). The Hebrew wisdom tradition emerges from the same Afro-Asiatic intellectual matrix as the Egyptian tradition. Mishlei 22:17-24:22 corresponds closely to the Instructions of Amenemope — both texts draw from the same ancient African wisdom framework.",
   "key_terms": [
-    { "term": "Mishlei", "phonetic": "Mish-LAY", "definition": "Hebrew for 'Proverbs' — wisdom sayings attributed to Shelomoh. The Hebrew root mashal means comparison, analogy, or parable." },
-    { "term": "Chokmah", "phonetic": "Khokh-MAH", "definition": "Wisdom — personified in chapters 1-9 as a woman who cries out in the streets and was with YHWH before creation. She is not a separate deity — she is YHWH's attribute given voice." },
-    { "term": "Fear of YHWH", "phonetic": "", "definition": "'The fear of YHWH is the beginning of knowledge' (1:7). Yir'at YHWH — not terror but awe, reverence, recognition of who YHWH is. This is the foundation of the entire wisdom tradition." }
+    {
+      "term": "Mishlei",
+      "phonetic": "mish-LAY",
+      "definition": "Hebrew title for the book of Proverbs, meaning sayings or parables; a collection of wisdom literature attributed primarily to Shlomo ben David."
+    },
+    {
+      "term": "Fear of YHWH Beginning of Wisdom",
+      "phonetic": "yir-AT YHWH",
+      "definition": "The foundational principle of Mishlei (1:7 and 9:10): reverence for YHWH is the starting point of all true wisdom and knowledge."
+    },
+    {
+      "term": "Lady Wisdom",
+      "phonetic": "Khokh-MAH",
+      "definition": "Wisdom personified as a woman calling in the streets in Mishlei chs 1-9; she represents YHWH's own creative and guiding principle, present before creation."
+    },
+    {
+      "term": "Wisdom as Creator's Craftsman",
+      "phonetic": "a-MON",
+      "definition": "In Mishlei 8:30, Wisdom declares she was beside YHWH as a craftsman/architect at creation; this ancient text is the source the NT later re-shaped into Logos theology."
+    },
+    {
+      "term": "Trust in YHWH Not Your Own Understanding",
+      "phonetic": "ba-TAKH el-YHWH",
+      "definition": "Mishlei 3:5-6 urges total reliance on YHWH rather than human reasoning as the path that makes ways straight."
+    },
+    {
+      "term": "Seven Things YHWH Hates",
+      "phonetic": "she-VA to-e-VOT",
+      "definition": "The list in Mishlei 6:16-19: haughty eyes, a lying tongue, hands that shed innocent blood, a heart devising wicked plans, feet running to evil, a false witness, one who sows discord among brothers."
+    },
+    {
+      "term": "The Strange Woman",
+      "phonetic": "i-SHAH za-RAH",
+      "definition": "The seductive figure contrasted with Lady Wisdom in Mishlei chs 5-7; represents the path of unfaithfulness and destruction, contrasted with Wisdom's invitation to life."
+    },
+    {
+      "term": "Shlomo",
+      "phonetic": "Shlo-MO",
+      "definition": "Primary attributed author of Mishlei (1:1; 10:1; 25:1 — the last section noted as copied by Khizkiyahu's men); the book also contains collections from Agur (ch.30) and Lemuel (ch.31)."
+    },
+    {
+      "term": "Mashal",
+      "phonetic": "ma-SHAL",
+      "definition": "The Hebrew word for proverb or parable; root means both 'to compare' and 'to rule'; the basic literary unit of Mishlei, typically in two-line parallel or contrasting form."
+    },
+    {
+      "term": "Wisdom Literature",
+      "phonetic": "khokh-MAH sif-RUT",
+      "definition": "The genre including Mishlei, Kohelet, Iyov, Ben Sira, and 4QInstruction; characterized by observation of creation, ethical instruction, and the fear-of-YHWH foundation."
+    }
   ],
   "fill_blank": [
-    { "ref": "1:7", "prompt": "The fear of YHWH is the beginning of ______.", "answer": "knowledge", "source_quote": "The fear of YHWH is the beginning of knowledge — fools despise wisdom and instruction." },
-    { "ref": "3:5", "prompt": "Trust in YHWH with all your heart, and do not lean on your own ______.", "answer": "understanding", "source_quote": "Trust in YHWH with all your heart, and do not lean on your own understanding." },
-    { "ref": "8:30", "prompt": "Then I was beside him, like a master ______.", "answer": "craftsman", "source_quote": "Then I was beside him, like a master craftsman, and I was daily his delight, rejoicing before him always." }
+    {
+      "ref": "Mishlei 1:7",
+      "prompt": "The ___ of YHWH is the beginning of wisdom; fools despise wisdom and instruction.",
+      "answer": "fear",
+      "source_quote": "The fear of YHWH is the beginning of wisdom; fools despise wisdom and instruction."
+    },
+    {
+      "ref": "Mishlei 3:5",
+      "prompt": "Trust in YHWH with all your heart, and do not lean on your own ___.",
+      "answer": "understanding",
+      "source_quote": "Trust in YHWH with all your heart, and do not lean on your own understanding."
+    },
+    {
+      "ref": "Mishlei 3:6",
+      "prompt": "In all your ways acknowledge him, and he will make ___ your paths.",
+      "answer": "straight",
+      "source_quote": "In all your ways acknowledge him, and he will make straight your paths."
+    },
+    {
+      "ref": "Mishlei 1:20",
+      "prompt": "Wisdom cries aloud in the ___; in the markets she raises her voice.",
+      "answer": "street",
+      "source_quote": "Wisdom cries aloud in the street; in the markets she raises her voice."
+    },
+    {
+      "ref": "Mishlei 8:30",
+      "prompt": "Then I was beside him, like a ___; I was daily his delight.",
+      "answer": "craftsman",
+      "source_quote": "Then I was beside him, like a craftsman; I was daily his delight."
+    },
+    {
+      "ref": "Mishlei 9:10",
+      "prompt": "The fear of YHWH is the beginning of wisdom, and knowledge of the ___ is understanding.",
+      "answer": "Holy One",
+      "source_quote": "The fear of YHWH is the beginning of wisdom, and knowledge of the Holy One is understanding."
+    },
+    {
+      "ref": "Mishlei 6:16",
+      "prompt": "There are six things that YHWH hates, ___ that are an abomination to him.",
+      "answer": "seven",
+      "source_quote": "There are six things that YHWH hates, seven that are an abomination to him."
+    },
+    {
+      "ref": "Mishlei 4:7",
+      "prompt": "Wisdom is the principal thing; therefore get wisdom, and with all your getting get ___.",
+      "answer": "understanding",
+      "source_quote": "Wisdom is the principal thing; therefore get wisdom, and with all your getting get understanding."
+    },
+    {
+      "ref": "Mishlei 2:6",
+      "prompt": "For YHWH gives ___; from his mouth come knowledge and understanding.",
+      "answer": "wisdom",
+      "source_quote": "For YHWH gives wisdom; from his mouth come knowledge and understanding."
+    },
+    {
+      "ref": "Mishlei 9:1",
+      "prompt": "Wisdom has built her house; she has hewn her ___ pillars.",
+      "answer": "seven",
+      "source_quote": "Wisdom has built her house; she has hewn her seven pillars."
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:7", "question": "What does Mishlei say is the beginning of knowledge?", "options": ["Studying the Torah", "The fear of YHWH", "Reading the prophets", "Consulting the priests"], "correct": 1, "source_quote": "The fear of YHWH is the beginning of knowledge." },
-    { "ref": "8:22-30", "question": "What does Wisdom say about her presence at creation?", "options": ["She was created last", "She was with YHWH before the earth was made — beside him as a master craftsman", "She came after the flood", "She was found by Shelomoh"], "correct": 1, "source_quote": "YHWH possessed me at the beginning of his work — before his acts of old. I was beside him, like a master craftsman." },
-    { "ref": "3:5-6", "question": "What does Mishlei say about trusting in YHWH?", "options": ["Trust only when you understand", "Trust with all your heart — do not lean on your own understanding", "Trust but verify", "Trust the priests"], "correct": 1, "source_quote": "Trust in YHWH with all your heart, and do not lean on your own understanding." }
+    {
+      "ref": "Mishlei 1:7",
+      "question": "According to Mishlei 1:7, what is the beginning of wisdom?",
+      "options": [
+        "Knowledge of creation",
+        "The fear of YHWH",
+        "Study of Torah",
+        "Counsel of elders"
+      ],
+      "correct": 1,
+      "source_quote": "The fear of YHWH is the beginning of wisdom."
+    },
+    {
+      "ref": "Mishlei 8:30",
+      "question": "In Mishlei 8:30, what role does Wisdom declare she had at creation?",
+      "options": [
+        "A witness watching",
+        "A servant obeying",
+        "A craftsman beside YHWH",
+        "A student learning"
+      ],
+      "correct": 2,
+      "source_quote": "Then I was beside him, like a craftsman; I was daily his delight."
+    },
+    {
+      "ref": "Mishlei 3:5",
+      "question": "What does Mishlei 3:5 say not to lean on?",
+      "options": [
+        "The counsel of friends",
+        "Your own understanding",
+        "The wisdom of elders",
+        "Past experience"
+      ],
+      "correct": 1,
+      "source_quote": "Do not lean on your own understanding."
+    },
+    {
+      "ref": "Mishlei 6:16",
+      "question": "How many things does YHWH hate according to Mishlei 6:16?",
+      "options": [
+        "Three",
+        "Five",
+        "Six/Seven",
+        "Ten"
+      ],
+      "correct": 2,
+      "source_quote": "There are six things that YHWH hates, seven that are an abomination to him."
+    },
+    {
+      "ref": "Mishlei 9:1",
+      "question": "In Mishlei 9:1, how many pillars does Wisdom's house have?",
+      "options": [
+        "Three",
+        "Five",
+        "Seven",
+        "Twelve"
+      ],
+      "correct": 2,
+      "source_quote": "Wisdom has built her house; she has hewn her seven pillars."
+    },
+    {
+      "ref": "Mishlei 4:23",
+      "question": "According to Mishlei 4:23, what should be guarded above all else?",
+      "options": [
+        "Your words",
+        "Your actions",
+        "Your heart",
+        "Your wealth"
+      ],
+      "correct": 2,
+      "source_quote": "Keep your heart with all vigilance, for from it flow the springs of life."
+    },
+    {
+      "ref": "Mishlei 8:22",
+      "question": "According to Mishlei 8:22, when did YHWH possess Wisdom?",
+      "options": [
+        "After creation was complete",
+        "At the beginning of his work, the first of his acts",
+        "When humanity was formed",
+        "During the flood"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH possessed me at the beginning of his work, the first of his acts of old."
+    },
+    {
+      "ref": "Mishlei 11:14",
+      "question": "According to Mishlei 11:14, in an abundance of what is there safety?",
+      "options": [
+        "Wealth",
+        "Weapons",
+        "Counselors",
+        "Prayers"
+      ],
+      "correct": 2,
+      "source_quote": "In an abundance of counselors there is safety."
+    },
+    {
+      "ref": "Mishlei 2:6",
+      "question": "According to Mishlei 2:6, where does wisdom come from?",
+      "options": [
+        "From experience and age",
+        "From YHWH",
+        "From study alone",
+        "From the righteous"
+      ],
+      "correct": 1,
+      "source_quote": "For YHWH gives wisdom; from his mouth come knowledge and understanding."
+    },
+    {
+      "ref": "Mishlei 1:20-21",
+      "question": "In Mishlei 1:20-21, where does Wisdom cry aloud?",
+      "options": [
+        "In the Temple courts",
+        "In the streets and markets",
+        "In the wilderness",
+        "On the mountaintop"
+      ],
+      "correct": 1,
+      "source_quote": "Wisdom cries aloud in the street; in the markets she raises her voice."
+    }
   ],
   "faq": [
     {
-      "question": "How does Mishlei connect to the Egyptian wisdom tradition?",
-      "answer": "Mishlei 22:17-24:22 corresponds closely to the Egyptian Instructions of Amenemope (c. 1200 BCE). Both texts contain wisdom sayings on honesty, treatment of the poor, self-control, and humility in a parallel sequence. The Instructions of Ptahhotep (c. 2400 BCE) — the oldest surviving wisdom text on earth — belong to the same Afro-Asiatic intellectual tradition. Acts 7:22 states Moshe was 'learned in all the wisdom of the Egyptians.' The Hebrew wisdom tradition did not arrive from nowhere — it emerges from the same African intellectual matrix that produced the world's oldest wisdom literature, medical texts, and mathematical documents. Hebrew Chokmah and Egyptian Ma'at are cognate concepts from the same ancestral tradition."
+      "question": "What does the Hebrew word mashal mean and why is it significant for Mishlei?",
+      "answer": "Mashal means a comparison, proverb, or parable — it comes from a root meaning both 'to compare' and 'to rule.' Mishlei is built from these short wisdom statements, mostly in two-line forms where the second line parallels, contrasts, or completes the first. The form itself teaches: wisdom is built by noticing how things relate."
     },
     {
-      "question": "What does 'fear of YHWH' mean in the covenant framework?",
-      "answer": "Yir'at YHWH — the fear of YHWH — is not terror. It is awe, recognition, proper orientation toward who YHWH is. It is the beginning (reshit) of knowledge (1:7) and the beginning of wisdom (9:10). Everything in the wisdom tradition flows from this single orientation. The Hodayot (1QH) at Qumran use similar language: covenant identity begins with YHWH's direct selection (Bachar — to choose). Knowledge begins with recognizing who is choosing. Every institutional system documented in the Great Eraser research — Rabbinical, Roman Christian, colonial, academic — placed itself between the individual and YHWH. Mishlei says: start with YHWH directly. That is the beginning of knowledge."
+      "question": "Who are the different authors attributed sections in Mishlei?",
+      "answer": "Mishlei is not a single-author book. Sections are attributed to Shlomo ben David (1:1; 10:1; 25:1 — the last noted as copied by Khizkiyahu's men), Agur son of Yaqeh (ch.30), and King Lemuel — words his mother taught him (31:1). The diversity reflects how Hebrew wisdom traditions were gathered and preserved across generations."
     },
     {
-      "question": "Why does Wisdom cry out in the streets?",
-      "answer": "Chokmah — Wisdom personified — does not sit in a temple or an academy waiting to be sought. She cries out in the public square, at the city gates, at the entrance of the city (1:20-21, 8:1-3). Wisdom is publicly available. She is not behind institutional walls or paywalls. The Dead Sea Scrolls were sealed in caves for 1,900 years and are now publicly accessible at deadseascrolls.org.il. The Orit Ge'ez manuscripts are being digitized at nli.org.il. The Bowen map is at the Library of Congress. Wisdom cries out — the primary sources exist. They require only that someone goes to them directly."
+      "question": "What is the significance of Wisdom being described as a craftsman beside YHWH at creation in Mishlei 8:30?",
+      "answer": "Mishlei 8:22-31 is the original text — written centuries before the NT. It presents Wisdom (Khokhmah) as YHWH's companion and craftsman at creation, present and delighting before him. The NT Logos theology (John 1) is a re-shaping of this ancient Hebrew wisdom tradition; the direction runs from Mishlei to NT, not the other way."
+    },
+    {
+      "question": "What are the two women of Mishlei chapters 1-9 and what do they represent?",
+      "answer": "Lady Wisdom (Khokhmah) and the Strange Woman (Ishah Zarah / Dame Folly) are the two contrasting figures. Wisdom calls from the heights and city gates, inviting the simple to life and understanding. The Strange Woman seduces with smooth words toward paths of death. This contrast structures chs 1-9 as a father's instruction to a son choosing between two ways."
+    },
+    {
+      "question": "What is the relationship between the fear of YHWH and practical wisdom in Mishlei?",
+      "answer": "The fear of YHWH is not terror but reverent awe and covenant accountability — the starting orientation that makes all other wisdom possible. Mishlei 1:7 and 9:10 both declare it 'the beginning.' This is not piety added onto practical wisdom — it IS the foundation. Without this orientation, what looks like wisdom is just cleverness that leads to destruction."
+    },
+    {
+      "question": "What does Mishlei say about the power of words?",
+      "answer": "Mishlei gives unusual weight to speech. Mishlei 18:21: 'Death and life are in the power of the tongue.' 12:18: 'There is one whose rash words are like sword thrusts, but the tongue of the wise brings healing.' 15:1: 'A soft answer turns away wrath, but a harsh word stirs up anger.' The power to build or destroy through language is a central wisdom concern."
+    },
+    {
+      "question": "What does Mishlei say about the purpose of discipline and correction?",
+      "answer": "Mishlei frames discipline (musar) as an act of love. 3:11-12: 'Do not despise YHWH's discipline... for YHWH reproves the one he loves, as a father the son in whom he delights.' 13:24: 'Whoever spares the rod hates his son, but he who loves him is diligent to discipline him.' The goal is life and wisdom, not punishment for its own sake."
+    },
+    {
+      "question": "What does Mishlei 8:22-31 teach about the nature of wisdom in creation?",
+      "answer": "Wisdom in Mishlei 8 declares she was established before the mountains, before the hills, before the earth. She was beside YHWH as a craftsman and was his delight. This positions wisdom not as a human invention but as a property of creation itself — woven into the fabric of reality that YHWH made. To walk in wisdom is to align with the structure of creation."
+    },
+    {
+      "question": "What evidence from Qumran confirms Mishlei's place in the Hebrew covenant tradition?",
+      "answer": "Fragments of Mishlei were found at Qumran (4QProva and 4QProvb — 4Q102 and 4Q103), confirming the book was part of the community's library. The Qumran community also produced 4QInstruction (4Q415-418), a wisdom text building on Mishlei's foundation while adding eschatological dimensions — demonstrating Mishlei's continuing influence in the pre-Rabbinic covenant tradition."
+    },
+    {
+      "question": "How does the structure of Lady Wisdom's invitation in Mishlei 9:1-6 work?",
+      "answer": "Lady Wisdom has built her house with seven pillars, prepared a feast, and sends out her servant-women to call from the highest places of the city: 'Come, eat of my bread and drink of the wine I have mixed. Leave your simple ways, and live, and walk in the way of insight.' The seven pillars, the feast, and the public invitation from the heights contrast directly with Dame Folly's stolen water and hidden bread (9:17) — life versus death as a banquet choice."
     }
   ]
 }

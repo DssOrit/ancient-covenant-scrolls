@@ -1,38 +1,301 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_55",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_55",
   "label": "Yehezkel (Ezekiel) — Part 2 — Chapters 12–19",
   "volume": 18,
-  "content_version": 1,
+  "content_version": 3,
   "summary_plain": "Yehezkel acts out the exile — digging through a wall at night, carrying baggage on his shoulder, covering his face. YHWH condemns the false prophets who plaster over cracked walls and say 'Peace' when there is no peace. The elders of Yisra'EL come to inquire of YHWH, but YHWH says they have set up idols in their hearts. YHWH declares the principle of individual accountability: the soul that sins, it shall die. The father shall not bear the guilt of the son, nor the son bear the guilt of the father. The righteousness of the righteous shall be upon himself, and the wickedness of the wicked upon himself. YHWH tells the parable of the vine — Yerushalayim is a useless vine, good for nothing except burning. The foundling child parable: YHWH found Yisra'EL as an abandoned infant, raised her, adorned her — and she played the harlot.",
   "summary_scholarly": "The ACR reads from the DSS Ezekiel fragments (4QEzek-a, 4QEzek-b, 4QEzek-c) and the Orit Ge'ez. Chapter 14 establishes a principle that directly contradicts inherited guilt theology: the soul that sins, it shall die — fathers do not bear the guilt of sons nor sons of fathers. Chapter 18 expands this into the most comprehensive statement of individual moral responsibility in the Hebrew canon. The false prophets of chapter 13 are condemned for daubing walls with whitewash — saying 'shalom, shalom' when there is no shalom. The foundling child parable in chapter 16 is the longest allegory in the prophetic literature — describing YHWH's relationship with Yerushalayim from infancy to adultery.",
   "key_terms": [
-    { "term": "Individual Accountability (Nefesh HaChotet)", "phonetic": "NEH-fesh Hah-kho-TEIT", "definition": "The soul that sins, it shall die (18:4, 18:20). The father shall not bear the guilt of the son. The son shall not bear the guilt of the father. Each person is responsible for their own righteousness or wickedness before YHWH. This directly contradicts the doctrine of inherited original sin." },
-    { "term": "False Prophets (Nevi'ei Sheker)", "phonetic": "Neh-vee-AY SHEH-ker", "definition": "Chapter 13: prophets who prophesy from their own hearts and have seen nothing. They plaster over cracked walls with whitewash. They say 'Shalom' when there is no shalom. YHWH declares: my hand will be against them." },
-    { "term": "Vine Parable", "phonetic": "", "definition": "Chapter 15: Yerushalayim is compared to a vine branch. Unlike other trees whose wood has use, the vine is worthless if it bears no fruit — it is only good for fuel. Yerushalayim has become a useless vine, set apart for burning." },
-    { "term": "Foundling Child", "phonetic": "", "definition": "Chapter 16: YHWH describes Yerushalayim as an infant abandoned in an open field, unwashed, with the cord uncut. YHWH passes by, says 'Live!' — raises her, clothes her, adorns her with jewels. But she uses her beauty to play the harlot with every passing nation." }
+    {
+      "term": "Sign-Act of Exile (Ezekiel 12)",
+      "phonetic": "ye-khe-ze-KEL",
+      "definition": "YHWH commanded Yehezkel to perform a sign-act of exile: dig through the wall of his house at night, carry baggage on his shoulder, cover his face, and go out in the dark. This acted out the exile of the prince of Yerushalayim (Zidqiyahu) who would flee by night, be captured, and be blinded."
+    },
+    {
+      "term": "False Prophets (Ezekiel 13)",
+      "phonetic": "nevi'ey shaqer",
+      "definition": "YHWH condemns the prophets who speak from their own hearts — 'Peace' when there is no peace. They are like men who plaster a cracked wall with whitewash: the wall will fall in the storm. YHWH also condemns women who sew magic bands and practice divination, hunting souls like birds."
+    },
+    {
+      "term": "YHWH Will Not Answer Idolaters (Ezekiel 14)",
+      "phonetic": "elilim / gilulim",
+      "definition": "When elders of Yisra'el came to inquire of YHWH, YHWH told Yehezkel: these men have set up idols in their hearts. YHWH will not answer such inquirers — he will set his face against them. Even if Noakh, Dani'el, and Iyov were in the land, they would save only themselves by their righteousness."
+    },
+    {
+      "term": "The Vine That Became Firewood (Ezekiel 15)",
+      "phonetic": "gefen / etz",
+      "definition": "YHWH asks: what use is a vine's wood compared to any tree of the forest? None — it is too weak for any tool. Even before it was burned, its middle was charred. So YHWH will make Yerushalayim like this useless vine: set as a sign of desolation because of unfaithfulness."
+    },
+    {
+      "term": "Yerushalayim the Unfaithful (Ezekiel 16)",
+      "phonetic": "zona / kalah",
+      "definition": "YHWH tells the full history of Yerushalayim as a metaphor: she was an abandoned infant from Kena'an — YHWH found her, washed her, clothed her, and made covenant with her. She used YHWH's gifts to make shrines for other gods, giving her children as sacrifices. She was worse than her sisters Samaria and Sodom. Yet YHWH will remember his covenant and restore her."
+    },
+    {
+      "term": "Two Eagles and the Vine (Ezekiel 17)",
+      "phonetic": "nimshal / mashol",
+      "definition": "A riddle-parable: a great eagle (Nebukhadnetzar) took the top of a cedar (Yehoiakhin) to Babylon. The land was planted with a vine that grew but then turned to a second great eagle (Egypt), stretching its roots toward it. The vine will be pulled up: Zidqiyahu broke covenant with Nebukhadnetzar by seeking Egypt's help."
+    },
+    {
+      "term": "YHWH's Covenant Principle — Ezekiel 18",
+      "phonetic": "nefesh ha-khoteh hi tamut",
+      "definition": "YHWH's answer to the proverb 'The fathers eat sour grapes and the children's teeth are set on edge.' YHWH declares: each person dies for their own sin. A righteous father does not carry a wicked son's guilt; a wicked father does not condemn a righteous son. YHWH has no pleasure in the death of the wicked — he calls for repentance."
+    },
+    {
+      "term": "Individual Accountability (Ezekiel 18:20-32)",
+      "phonetic": "nefesh / kheshbon ha-nefesh",
+      "definition": "The soul that sins shall die — not the father for the son nor the son for the father. A wicked person who turns from all their sin and keeps YHWH's statutes will live. YHWH's question is not whether one has sinned but whether one turns and lives. YHWH does not desire the death of anyone — he wants all to repent and live."
+    },
+    {
+      "term": "Lament Over the Lions of Yisra'el (Ezekiel 19)",
+      "phonetic": "qi-NAH",
+      "definition": "A lament (qinah) over the princes of Yisra'el, using the metaphor of a lioness and her cubs: one cub was taken in a pit to Mitzrayim (Yehoakhaz); another was taken to Babylon (Yehoiakhin). The vine-stalk was once planted near water, its branches mighty enough for rulers' scepters — but now plucked up in fury, cast down, dried by the east wind, and no strong branch remains."
+    },
+    {
+      "term": "'I Have No Pleasure in the Death of the Wicked' (Ezekiel 18:23)",
+      "phonetic": "lo khefetz be-mot ha-rashah",
+      "definition": "YHWH's direct declaration: 'Have I any pleasure in the death of the wicked, declares the Sovereign YHWH, and not rather that he should turn from his way and live?' This is the foundation of YHWH's covenant appeal across the entire prophetic corpus — judgment is not YHWH's desire; it is the consequence of unrepented rejection of the covenant."
+    }
   ],
   "fill_blank": [
-    { "ref": "18:4", "prompt": "The soul that ______, it shall die.", "answer": "sins", "source_quote": "Behold, all souls are mine — the soul of the father as well as the soul of the son is mine. The soul that sins, it shall die." },
-    { "ref": "18:20", "prompt": "The son shall not bear the guilt of the ______, nor the ______ bear the guilt of the son.", "answer": "father", "source_quote": "The son shall not bear the guilt of the father, and the father shall not bear the guilt of the son. The righteousness of the righteous shall be upon himself, and the wickedness of the wicked shall be upon himself." },
-    { "ref": "13:10", "prompt": "They have misled my people, saying ______ when there is no ______.", "answer": "Shalom", "source_quote": "Because they have misled my people, saying Shalom when there is no shalom — and when the people build a wall, behold, they plaster it with whitewash." }
+    {
+      "ref": "Ezekiel 12:3",
+      "prompt": "Prepare yourself an exile's ___, and go into exile by day in their sight.",
+      "answer": "baggage",
+      "source_quote": "Prepare yourself an exile's baggage, and go into exile by day in their sight."
+    },
+    {
+      "ref": "Ezekiel 13:10",
+      "prompt": "Because, yes, because they have misled my people, saying 'Peace,' when there is no ___.",
+      "answer": "peace",
+      "source_quote": "Because they have misled my people, saying 'Peace,' when there is no peace."
+    },
+    {
+      "ref": "Ezekiel 14:14",
+      "prompt": "Even if these three men, Noakh, Dani'el, and Iyov, were in it, they would deliver only themselves by their ___ righteousness.",
+      "answer": "own",
+      "source_quote": "They would deliver only themselves by their own righteousness."
+    },
+    {
+      "ref": "Ezekiel 16:8",
+      "prompt": "I spread the corner of my garment over you and covered your nakedness; I made my vow to you and entered into a ___ with you, declares the Sovereign YHWH.",
+      "answer": "covenant",
+      "source_quote": "I made my vow to you and entered into a covenant with you, declares the Sovereign YHWH."
+    },
+    {
+      "ref": "Ezekiel 16:60",
+      "prompt": "Yet I will remember my ___ with you in the days of your youth, and I will establish for you an everlasting covenant.",
+      "answer": "covenant",
+      "source_quote": "Yet I will remember my covenant with you in the days of your youth, and I will establish for you an everlasting covenant."
+    },
+    {
+      "ref": "Ezekiel 17:2",
+      "prompt": "Son of man, propound a ___ and speak a parable to the house of Yisra'el.",
+      "answer": "riddle",
+      "source_quote": "Propound a riddle and speak a parable to the house of Yisra'el."
+    },
+    {
+      "ref": "Ezekiel 18:2",
+      "prompt": "The fathers have eaten ___ grapes, and the children's teeth are set on edge.",
+      "answer": "sour",
+      "source_quote": "The fathers have eaten sour grapes, and the children's teeth are set on edge."
+    },
+    {
+      "ref": "Ezekiel 18:20",
+      "prompt": "The ___ who sins shall die. The son shall not suffer for the iniquity of the father.",
+      "answer": "soul",
+      "source_quote": "The soul who sins shall die."
+    },
+    {
+      "ref": "Ezekiel 18:23",
+      "prompt": "Have I any pleasure in the ___ of the wicked, declares the Sovereign YHWH, and not rather that he should turn from his way and live?",
+      "answer": "death",
+      "source_quote": "Have I any pleasure in the death of the wicked?"
+    },
+    {
+      "ref": "Ezekiel 18:32",
+      "prompt": "For I have no pleasure in the ___ of anyone who dies, declares the Sovereign YHWH; so turn, and live.",
+      "answer": "death",
+      "source_quote": "I have no pleasure in the death of anyone who dies; so turn, and live."
+    }
   ],
   "multiple_choice": [
-    { "ref": "18:20", "question": "According to Yehezkel 18, who bears the guilt of sin?", "options": ["All humanity inherits Adam's guilt", "The individual soul that sins", "The nation collectively", "The priesthood on behalf of the people"], "correct": 1, "source_quote": "The soul that sins, it shall die. The son shall not bear the guilt of the father, and the father shall not bear the guilt of the son." },
-    { "ref": "16:4-6", "question": "How does YHWH describe Yerushalayim's origin in the foundling child parable?", "options": ["As a royal princess from birth", "As an abandoned infant in an open field with the cord uncut", "As a mighty warrior nation", "As a prosperous trading city"], "correct": 1, "source_quote": "On the day you were born your cord was not cut, nor were you washed with water — you were cast out in the open field. And I passed by you and saw you wallowing in your blood, and I said to you: Live!" },
-    { "ref": "13:10", "question": "What does YHWH condemn the false prophets for doing?", "options": ["Worshipping other gods openly", "Saying Shalom when there is no shalom and plastering walls with whitewash", "Refusing to prophesy", "Demanding payment for prophecy"], "correct": 1, "source_quote": "They have misled my people, saying Shalom when there is no shalom — and when the people build a wall, behold, they plaster it with whitewash." }
+    {
+      "ref": "Ezekiel 12",
+      "question": "What did Yehezkel's night sign-act of carrying baggage through a hole in the wall represent?",
+      "options": [
+        "The transfer of Temple treasures to Babylon",
+        "The flight and capture of Zidqiyahu the prince of Yerushalayim",
+        "The rebuilding of Yerushalayim after the exile",
+        "The return of the exiles from Babylon"
+      ],
+      "correct": 1,
+      "source_quote": "He shall carry his baggage on his shoulder in the dark... this oracle concerns the prince in Yerushalayim."
+    },
+    {
+      "ref": "Ezekiel 13:10",
+      "question": "What metaphor does YHWH use for the false prophets who say 'Peace' when there is no peace?",
+      "options": [
+        "Blind shepherds who scatter the flock",
+        "Men plastering a cracked wall with whitewash",
+        "Merchants selling inferior grain",
+        "Priests who have profaned YHWH's sanctuary"
+      ],
+      "correct": 1,
+      "source_quote": "It is like a wall plastered with whitewash. It will fall."
+    },
+    {
+      "ref": "Ezekiel 14:14",
+      "question": "If YHWH were to bring judgment on a land where Noakh, Dani'el, and Iyov lived, what would happen?",
+      "options": [
+        "The entire land would be spared for their sake",
+        "The land would receive only half of the judgment",
+        "Only those three men would be saved by their righteousness",
+        "All the righteous would be gathered to Yerushalayim"
+      ],
+      "correct": 2,
+      "source_quote": "They would deliver only themselves by their own righteousness."
+    },
+    {
+      "ref": "Ezekiel 15",
+      "question": "What does YHWH say about the wood of a vine compared to any tree of the forest?",
+      "options": [
+        "It is the strongest and most valuable wood",
+        "It burns slower than other woods",
+        "It is useless for any purpose and even more worthless after being burned",
+        "It is chosen for Temple construction because of its beauty"
+      ],
+      "correct": 2,
+      "source_quote": "It is not useful for any work. When it was whole it was not used for any work. How much less, when fire has consumed it!"
+    },
+    {
+      "ref": "Ezekiel 16:8",
+      "question": "In the metaphor of Ezekiel 16, what did YHWH do when he found Yerushalayim as an abandoned infant?",
+      "options": [
+        "He built walls around her to protect her from enemies",
+        "He made a covenant with her, clothed her, and adorned her with his gifts",
+        "He sent his servant Moshe to teach her the Torah",
+        "He planted her in the land of Kena'an as a chosen vine"
+      ],
+      "correct": 1,
+      "source_quote": "I spread the corner of my garment over you and covered your nakedness; I made my vow to you and entered into a covenant with you."
+    },
+    {
+      "ref": "Ezekiel 18:20",
+      "question": "What does YHWH declare about individual accountability in Ezekiel 18?",
+      "options": [
+        "Children inherit the guilt of their fathers until the third and fourth generation",
+        "A righteous man's righteousness covers his whole family",
+        "The soul that sins shall die — the son shall not suffer for the father's iniquity",
+        "Repentance only cleanses sins committed in youth"
+      ],
+      "correct": 2,
+      "source_quote": "The soul who sins shall die. The son shall not suffer for the iniquity of the father."
+    },
+    {
+      "ref": "Ezekiel 18:23",
+      "question": "What does YHWH say he desires rather than the death of the wicked?",
+      "options": [
+        "That they be punished until they submit",
+        "That they turn from their way and live",
+        "That they be exiled until the appointed time",
+        "That they make sacrifice at the Temple to atone"
+      ],
+      "correct": 1,
+      "source_quote": "Have I any pleasure in the death of the wicked? And not rather that he should turn from his way and live?"
+    },
+    {
+      "ref": "Ezekiel 17",
+      "question": "In the riddle of the two eagles and the vine, who do the two eagles represent?",
+      "options": [
+        "YHWH and the covenant angel",
+        "David and Shlomo",
+        "Nebukhadnetzar and Pharaoh of Mitzrayim",
+        "Assyria and Babylon"
+      ],
+      "correct": 2,
+      "source_quote": "The first great eagle is the king of Babylon; the second is the king of Mitzrayim."
+    },
+    {
+      "ref": "Ezekiel 19",
+      "question": "What literary form does Ezekiel 19 use to lament the princes of Yisra'el?",
+      "options": [
+        "A vision of the chariot (merkavah)",
+        "A covenant lawsuit (rib)",
+        "A lament (qinah) using the metaphor of a lioness and her cubs",
+        "A wisdom riddle about vines and trees"
+      ],
+      "correct": 2,
+      "source_quote": "And you, raise a lamentation for the princes of Yisra'el."
+    },
+    {
+      "ref": "Ezekiel 18:32",
+      "question": "What is YHWH's direct appeal at the end of Ezekiel 18?",
+      "options": [
+        "Gather at the Temple and bring the required offerings",
+        "Return to Babylon and submit to Nebukhadnetzar",
+        "Turn, and live — YHWH has no pleasure in the death of anyone",
+        "Wait in the land until YHWH's appointed time of restoration"
+      ],
+      "correct": 2,
+      "source_quote": "So turn, and live."
+    },
+    {
+      "ref": "Ezekiel 16:60",
+      "question": "Despite Yerushalayim's unfaithfulness throughout Ezekiel 16, what does YHWH promise at the chapter's end?",
+      "options": [
+        "That Yerushalayim will never be rebuilt",
+        "That a new city will replace Yerushalayim",
+        "That YHWH will remember his covenant from her youth and establish an everlasting covenant",
+        "That Yerushalayim's sister cities will be restored before her"
+      ],
+      "correct": 2,
+      "source_quote": "Yet I will remember my covenant with you in the days of your youth, and I will establish for you an everlasting covenant."
+    }
   ],
   "faq": [
     {
-      "question": "How does Yehezkel 18 dismantle the doctrine of original sin?",
-      "answer": "Yehezkel 18 states the principle with unmistakable clarity: 'The soul that sins, it shall die. The son shall not bear the guilt of the father, and the father shall not bear the guilt of the son' (18:20). This is a direct, explicit rejection of inherited guilt. Augustine of Hippo (354-430 CE) constructed the doctrine of original sin — that all humanity inherits Adam's guilt through biological transmission, and that every human is born guilty before they commit any act. This became foundational Roman Catholic and Protestant theology. But the Hebrew prophetic tradition states the opposite: guilt is individual, not inherited. Each soul answers for its own actions. The doctrine of original sin was necessary for Roman Christianity because it created the problem that only the Church's sacramental system could solve — inherited guilt requires institutional baptism for removal. Remove original sin and the entire sacramental economy collapses. Yehezkel 18 removes it. The Great Eraser built an entire theological system on a premise the prophets explicitly rejected."
+      "question": "What is the 'sour grapes' proverb in Ezekiel 18 and why does YHWH reject it?",
+      "answer": "The proverb 'The fathers eat sour grapes and the children's teeth are set on edge' was a popular saying in exile suggesting that the current generation was suffering for their ancestors' sins — that the exile was not their fault. YHWH rejects this proverb in Ezekiel 18 and declares a new covenant principle of individual accountability: each person dies for their own sin, each person can repent and live for their own righteousness. The exiles were responsible for their own standing before YHWH — they could not hide behind inherited guilt, but they also could not be crushed by it."
     },
     {
-      "question": "What does the foundling child parable (chapter 16) reveal about covenant identity?",
-      "answer": "YHWH describes Yerushalayim's origin: 'Your father was an Amorite and your mother a Hittite' (16:3). The infant is abandoned in the field — unwashed, cord uncut, no one to care for her. YHWH passes by and says: Live! He raises her, enters into covenant with her, clothes her with embroidered cloth, adorns her with gold and silver. Covenant identity does not begin with inherent superiority — it begins with YHWH's sovereign choice to raise up the abandoned. The covenant people were not chosen because they were great (Devarim 7:7). They were chosen because YHWH said 'Live' over what was discarded. This foundational humility is systematically erased by every institution that claims covenant status as ethnic superiority or theological exclusivity. The Qumran community understood election as Bachar — YHWH's direct choice — not as institutional membership or bloodline privilege."
+      "question": "What does YHWH mean by 'I have no pleasure in the death of the wicked'?",
+      "answer": "YHWH's declaration in Ezekiel 18:23 and 32 is the theological heart of the chapter: judgment is not YHWH's desire. The covenant purpose was always life — 'turn, and live.' When YHWH brings judgment, it is the consequence of unrepented covenant violation, not because YHWH enjoys destruction. This declaration drives the entire prophetic call to repentance: YHWH sends prophets specifically because he wants the people to turn. The exile was not the end of YHWH's covenant desire — it was the painful consequence of the nation refusing to turn."
     },
     {
-      "question": "How do the false prophets of Yehezkel 13 operate today?",
-      "answer": "The false prophets prophesy from their own hearts and have seen nothing (13:2). They plaster cracked walls with whitewash — covering structural failure with cosmetic repair. They say 'Shalom, shalom' when there is no shalom. The pattern is permanent: in every generation, institutional religious figures tell the covenant people what they want to hear rather than what YHWH says. Prosperity gospel preachers declare blessing over structural oppression. Institutional chaplains baptize systems of domination. Religious leaders offer therapeutic comfort instead of prophetic confrontation. The whitewash covers the crack but does not repair it. When the storm comes — and YHWH says it will come — the wall falls and the whitewash is exposed. The pattern Yehezkel describes is not ancient history. It is the permanent diagnostic for identifying false prophetic speech."
+      "question": "How does the metaphor of Yerushalayim as an unfaithful wife in Ezekiel 16 work?",
+      "answer": "In Ezekiel 16, YHWH traces Yerushalayim's full history as a covenant marriage: she was an abandoned Kena'anite infant — no father, no mother, left in her blood. YHWH found her, washed her, made covenant with her, clothed and adorned her with his own gifts. She used those gifts — the gold, fine linen, food, and beauty YHWH gave her — to make shrines for Baal and sacrifice her children. The metaphor makes the betrayal visceral: not just religious violation but covenant betrayal of the most intimate kind. Yet YHWH ends by promising to remember the original covenant and restore what was broken."
+    },
+    {
+      "question": "What does the parable of the false prophets and the plastered wall teach?",
+      "answer": "In Ezekiel 13, YHWH compares the false prophets to people who plaster a wall that is cracking — they say 'Peace' (the wall looks fine) when the wall is structurally unsound. When the storm comes, the plastered wall will fall and the plaster-layers will be held responsible. The lesson: a prophetic message that makes people feel safe when the covenant is broken is not kindness — it is a catastrophic disservice. True prophecy diagnoses the actual problem, even when the diagnosis is terrifying. The false prophets gave the nation a false sense of security that left them unprepared for YHWH's judgment."
+    },
+    {
+      "question": "What is the sign-act of exile in Ezekiel 12 and who does it represent?",
+      "answer": "YHWH commanded Yehezkel to perform a sign-act in front of the people: dig through the wall at night, carry baggage on his shoulder, cover his face so as not to see the land, and go out in the dark. This acted out the future fate of Zidqiyahu the prince of Yerushalayim, who would flee by night when Yerushalayim fell — but would be captured, blinded, and taken to Babylon where he would die without seeing the land again. The sign-acts were not mere visual aids but enacted prophecy — the action itself was part of the prophetic word."
+    },
+    {
+      "question": "What does the vine metaphor in Ezekiel 15 say about Yerushalayim?",
+      "answer": "In Ezekiel 15, YHWH uses a pointed analogy: a vine's wood is weaker and more useless than any tree in the forest — you cannot make a tool, a peg, or a beam from it. Its only use is as fuel. Even the charred middle of a burned vine is useless. YHWH declares that Yerushalayim has become like this vine: not destroyed by YHWH's whim but by its own uselessness as a covenant community. A covenant people that does not fulfill its covenant purpose is like a vine that cannot produce fruit — it has no other function and will be consumed."
+    },
+    {
+      "question": "How does YHWH respond to idolaters who come to him for inquiry in Ezekiel 14?",
+      "answer": "In Ezekiel 14, when elders of Yisra'el come to inquire of YHWH while still carrying idols in their hearts, YHWH declares he will not answer them — he will set his face against them. YHWH's presence and guidance are covenant gifts for those in covenant relationship. Coming to YHWH while simultaneously maintaining idolatrous attachments is a contradiction that YHWH will not enable. The passage also makes clear that even the most righteous figures (Noakh, Dani'el, Iyov) cannot cover for an idolatrous community — each person's covenant standing is their own."
+    },
+    {
+      "question": "What is the lament in Ezekiel 19 about and what does it reveal about the Davidic line?",
+      "answer": "Ezekiel 19 is a funeral lament (qinah) over the princes of Yisra'el, using the metaphor of a lioness (Yisra'el) and her cubs (her kings): one cub was trapped and taken to Mitzrayim (Yehoakhaz), another was caged and taken to Babylon (Yehoiakhin or Zidqiyahu). The lament then shifts to a vine-stalk — once mighty, its branches became rulers' scepters, but now plucked up and dried. This is YHWH's own mourning over the end of the monarchy: the Davidic kingship that had been YHWH's covenant instrument was being destroyed by the people's rebellion against YHWH's covenant."
+    },
+    {
+      "question": "Why does Ezekiel 16 say Yerushalayim was 'worse than Sodom'?",
+      "answer": "In Ezekiel 16:48-50, YHWH compares Yerushalayim unfavorably to her sisters Sodom and Samaria. The indictment of Sodom here is specific: 'She and her daughters had pride, excess of food, and prosperous ease, but did not aid the poor and needy. They were haughty and did an abomination before me.' Yerushalayim, with all YHWH's covenant gifts and direct knowledge of YHWH's covenant, exceeded Sodom's covenant violation. The comparison is not to minimize Sodom's sin but to intensify the indictment of Yerushalayim, which had every covenantal advantage and squandered it."
+    },
+    {
+      "question": "How does Ezekiel 17's riddle of the two eagles connect to covenant faithfulness?",
+      "answer": "The two-eagles riddle in Ezekiel 17 is a parable about covenant loyalty: Nebukhadnetzar (the first eagle) made a covenant with Zidqiyahu's predecessor, taking the top of Judah's cedar (Yehoiakhin) to Babylon but planting a vine (Zidqiyahu) to reign. Zidqiyahu then broke that covenant by turning to the second eagle (Pharaoh/Mitzrayim) for military support. YHWH's point: even a covenant made with a foreign king is a binding covenant. Breaking a sworn oath — even under political pressure — is a covenant violation that brings judgment. Zidqiyahu's political calculation cost him everything."
     }
   ]
 }

@@ -1,38 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_50",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_50",
   "label": "Yirmeyahu (Jeremiah) — Part 4 — Chapters 24–31",
   "volume": 17,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "YHWH shows Yirmeyahu two baskets of figs — good figs and bad figs. The good figs are those sent into exile whom YHWH will watch over and bring back. YHWH says: You will seek me and find me when you seek me with all your heart. I will be found by you and restore your fortunes and gather you from all the nations and all the places where I have driven you. Rachel weeps for her children and refuses to be comforted — but YHWH says there is hope for your future. Behold, the days are coming when I will make a new covenant with the house of Yisra'EL and the house of Yehudah — not like the covenant I made with their fathers. I will put my Torah within them, and I will write it on their hearts.",
   "summary_scholarly": "The ACR reads from the DSS Jeremiah manuscripts (4QJer-a through 4QJer-e) and the Orit Ge'ez. Yirmeyahu 31:31-34 is the defining covenant passage in the entire prophetic literature — the new covenant (berit hadashah). The DSS preserve this concept in the Damascus Document (CD), which describes the Qumran community as 'those who entered the new covenant in the land of Damascus.' The new covenant is not a replacement of the Torah — it is the Torah written on hearts instead of tablets. The mechanism changes (internal instead of external), but the content remains the Torah. No institutional mediation is required — 'they shall all know me, from the least to the greatest.'",
   "key_terms": [
-    { "term": "Berit Hadashah (New Covenant)", "phonetic": "Beh-REET Hah-dah-SHAH", "definition": "YHWH declares in 31:31-34: I will make a new covenant — not like the covenant with the fathers. I will put my Torah within them and write it on their hearts. I will be their Creator, they shall be my people. They shall all know me. The content is the Torah — the mechanism is internalized." },
-    { "term": "Good Figs / Bad Figs", "phonetic": "", "definition": "YHWH shows Yirmeyahu two baskets of figs (chapter 24). The good figs are the exiles whom YHWH will watch over and restore. The bad figs are those who remain and refuse correction. The exile is not punishment alone — it is refinement." },
-    { "term": "Rachel Weeping", "phonetic": "", "definition": "Rachel weeps for her children and refuses to be comforted because they are no more (31:15). YHWH responds: 'There is hope for your future — your children shall come back to their own country' (31:17). The mourning is acknowledged; the restoration is promised." },
-    { "term": "Torah on Hearts", "phonetic": "", "definition": "The new covenant's defining feature: 'I will put my Torah within them, and I will write it on their hearts' (31:33). The Torah is not abolished — it is internalized. No stone tablets, no institutional gatekeeper, no mediating priesthood required." }
+    {
+      "term": "Two Baskets of Figs",
+      "phonetic": "ch.24",
+      "definition": "YHWH shows Yirmeyahu two baskets of figs: good figs (the exiles carried to Babylon — YHWH will watch over them and restore them) and bad figs (those left in Yehudah and those who fled to Mitzrayim — they will be destroyed)."
+    },
+    {
+      "term": "Letter to the Exiles",
+      "phonetic": "ch.29",
+      "definition": "Yirmeyahu's letter to the Babylonian exiles: 'Seek the peace of the city where I have sent you into exile, and pray to YHWH on its behalf, for in its peace you will have peace.'"
+    },
+    {
+      "term": "'Seek the Peace of the City'",
+      "phonetic": "29:7",
+      "definition": "Yirmeyahu 29:7 — the exiles are to settle, plant gardens, multiply, and seek the shalom of their place of exile; the vision for exile is active presence and flourishing, not isolation."
+    },
+    {
+      "term": "Book of Consolation",
+      "phonetic": "chs 30-31",
+      "definition": "Yirmeyahu 30-31 is the Book of Consolation: promises of restoration after the disaster, addressing both Yisra'el and Yehudah; it ends with the New Covenant declaration."
+    },
+    {
+      "term": "New Covenant",
+      "phonetic": "31:31-34",
+      "definition": "Yirmeyahu 31:31-34 — YHWH will make a new (khadasha) covenant with the house of Yisra'el and Yehudah; not like the Sinai covenant which they broke; he will write his Torah on their hearts; they shall all know him."
+    },
+    {
+      "term": "'Torah Written on Hearts'",
+      "phonetic": "31:33",
+      "definition": "The New Covenant promise in Yirmeyahu 31:33: 'I will put my Torah within them, and I will write it on their hearts.' The covenant law becomes internalized — no need for external mediation because all will know YHWH directly."
+    },
+    {
+      "term": "'Rachel Weeping'",
+      "phonetic": "31:15",
+      "definition": "Yirmeyahu 31:15 — 'Rachel is weeping for her children; she refuses to be comforted because they are no more.' Rachel, the ancestral mother of Efrayim (northern tribes), weeps for the exiled northern kingdom; YHWH promises: Refrain from weeping, they will return."
+    },
+    {
+      "term": "The Yoke of Babylon",
+      "phonetic": "chs 27-28",
+      "definition": "Yirmeyahu wears a wooden yoke symbolizing submission to Babylon; he confronts the false prophet Khananiyah who breaks the wooden yoke; YHWH replaces it with an iron yoke — the exile will not be short."
+    },
+    {
+      "term": "Return Promise",
+      "phonetic": "chs 30-31",
+      "definition": "YHWH's repeated promise in the Book of Consolation: the exiles will return from every land where they were driven; Yerushalayim will be rebuilt; the covenant community will be restored on their land."
+    },
+    {
+      "term": "'I Know the Plans I Have for You'",
+      "phonetic": "29:11",
+      "definition": "Yirmeyahu 29:11 — 'For I know the plans I have for you, declares YHWH, plans for welfare and not for evil, to give you a future and a hope.' Given in the context of YHWH telling the exiles the exile will last 70 years."
+    }
   ],
   "fill_blank": [
-    { "ref": "31:33", "prompt": "I will put my Torah within them, and I will write it on their ______.", "answer": "hearts", "source_quote": "I will put my Torah within them, and I will write it on their hearts. And I will be their Creator, and they shall be my people." },
-    { "ref": "29:13", "prompt": "You will seek me and ______ me, when you seek me with all your heart.", "answer": "find", "source_quote": "You will seek me and find me, when you seek me with all your heart." },
-    { "ref": "31:34", "prompt": "They shall all ______ me, from the least of them to the greatest, declares YHWH.", "answer": "know", "source_quote": "And no longer shall each one teach his neighbor, saying: Know YHWH — for they shall all know me, from the least of them to the greatest." }
+    {
+      "ref": "Yirmeyahu 24:5-6",
+      "prompt": "YHWH says of the good figs: 'Like these good figs, so I will regard as good the exiles from Yehudah, whom I have sent away from this place to the land of the _____.'",
+      "answer": "Chaldeans",
+      "source_quote": "Like these good figs, so I will regard as good the exiles from Yehudah, whom I have sent away from this place to the land of the Chaldeans."
+    },
+    {
+      "ref": "Yirmeyahu 29:5-6",
+      "prompt": "YHWH commands the exiles: 'Build houses and live in them; plant _____ and eat their produce. Take wives and have sons and daughters.'",
+      "answer": "gardens",
+      "source_quote": "Build houses and live in them; plant gardens and eat their produce. Take wives and have sons and daughters."
+    },
+    {
+      "ref": "Yirmeyahu 29:7",
+      "prompt": "'Seek the _____ of the city where I have sent you into exile, and pray to YHWH on its behalf, for in its peace you will have peace.'",
+      "answer": "peace",
+      "source_quote": "But seek the peace of the city where I have sent you into exile, and pray to YHWH on its behalf, for in its peace you will have peace."
+    },
+    {
+      "ref": "Yirmeyahu 29:11",
+      "prompt": "'For I know the _____ I have for you, declares YHWH, plans for welfare and not for evil, to give you a future and a hope.'",
+      "answer": "plans",
+      "source_quote": "For I know the plans I have for you, declares YHWH, plans for welfare and not for evil, to give you a future and a hope."
+    },
+    {
+      "ref": "Yirmeyahu 31:15",
+      "prompt": "'Rachel is _____ for her children; she refuses to be comforted, because they are no more.' YHWH responds: they will come back.",
+      "answer": "weeping",
+      "source_quote": "A voice is heard in Ramah, lamentation and bitter weeping. Rachel is weeping for her children; she refuses to be comforted for her children, because they are no more."
+    },
+    {
+      "ref": "Yirmeyahu 31:31",
+      "prompt": "'Behold, the days are coming, declares YHWH, when I will make a _____ covenant with the house of Yisra'el and the house of Yehudah.'",
+      "answer": "new",
+      "source_quote": "Behold, the days are coming, declares YHWH, when I will make a new covenant with the house of Yisra'el and the house of Yehudah."
+    },
+    {
+      "ref": "Yirmeyahu 31:33",
+      "prompt": "'I will put my Torah within them, and I will write it on their _____. And I will be their Creator, and they shall be my people.'",
+      "answer": "hearts",
+      "source_quote": "For this is the covenant that I will make with the house of Yisra'el after those days, declares YHWH: I will put my Torah within them, and I will write it on their hearts. And I will be their Creator, and they shall be my people."
+    },
+    {
+      "ref": "Yirmeyahu 31:34",
+      "prompt": "'And no longer shall each one teach his neighbor and each his brother, saying, Know YHWH, for they shall all _____ me, from the least of them to the greatest.'",
+      "answer": "know",
+      "source_quote": "And no longer shall each one teach his neighbor and each his brother, saying, Know YHWH, for they shall all know me, from the least of them to the greatest."
+    },
+    {
+      "ref": "Yirmeyahu 28:13",
+      "prompt": "After Khananiyah broke the wooden yoke, YHWH told Yirmeyahu: 'You have broken wooden bars, but you have made in their place bars of _____.'",
+      "answer": "iron",
+      "source_quote": "You have broken wooden bars, but you have made in their place bars of iron. For thus says YHWH of Hosts, the Creator of Yisra'el: I have put upon the neck of all these nations an iron yoke to serve Nebuchadnezzar king of Babylon."
+    },
+    {
+      "ref": "Yirmeyahu 30:7",
+      "prompt": "'Alas! That day is so great there is none like it; it is a time of _____ for Ya'akov. Yet he shall be saved out of it.'",
+      "answer": "distress",
+      "source_quote": "Alas! That day is so great there is none like it; it is a time of distress for Ya'akov; yet he shall be saved out of it."
+    }
   ],
   "multiple_choice": [
-    { "ref": "31:31-33", "question": "What is the new covenant that YHWH promises?", "options": ["A new temple and priesthood", "The Torah written on hearts — all shall know YHWH directly", "A new set of laws replacing the Torah", "A covenant through an institutional church"], "correct": 1, "source_quote": "I will put my Torah within them, and I will write it on their hearts — they shall all know me, from the least to the greatest." },
-    { "ref": "31:15", "question": "Who weeps for her children?", "options": ["Miriam", "Sarah", "Rachel", "Hagar"], "correct": 2, "source_quote": "A voice is heard in Ramah — lamentation and bitter weeping. Rachel is weeping for her children — she refuses to be comforted because they are no more." },
-    { "ref": "29:13", "question": "When does YHWH say he will be found?", "options": ["When the Temple is rebuilt", "When you seek me with all your heart", "When the priesthood is restored", "When the sacrifices resume"], "correct": 1, "source_quote": "You will seek me and find me, when you seek me with all your heart." }
+    {
+      "ref": "Yirmeyahu 24:1-10",
+      "question": "In the two baskets of figs vision, who do the good figs represent?",
+      "options": [
+        "The exiles already carried to Babylon whom YHWH will restore",
+        "Those who remained in Yerushalayim during the siege",
+        "The prophets who stayed faithful to YHWH's word",
+        "Those who fled to Mitzrayim"
+      ],
+      "correct": 0,
+      "source_quote": "Like these good figs, so I will regard as good the exiles from Yehudah, whom I have sent away from this place to the land of the Chaldeans."
+    },
+    {
+      "ref": "Yirmeyahu 29:10",
+      "question": "According to Yirmeyahu 29:10, how long will YHWH give the exile before restoring the people to their land?",
+      "options": [
+        "Seventy years",
+        "Forty years",
+        "Fifty years",
+        "One generation (25 years)"
+      ],
+      "correct": 0,
+      "source_quote": "For thus says YHWH: When seventy years are completed for Babylon, I will visit you, and I will fulfill to you my promise and bring you back to this place."
+    },
+    {
+      "ref": "Yirmeyahu 31:31-34",
+      "question": "What specifically is new about the New Covenant YHWH promises in Yirmeyahu 31?",
+      "options": [
+        "Torah written on hearts instead of stone, so all know YHWH directly without external teaching",
+        "It requires no sacrifice",
+        "It applies to foreign nations instead of Yisra'el",
+        "It is conditional on perfect obedience"
+      ],
+      "correct": 0,
+      "source_quote": "I will put my Torah within them, and I will write it on their hearts. And I will be their Creator, and they shall be my people."
+    },
+    {
+      "ref": "Yirmeyahu 31:15",
+      "question": "Who is Rachel weeping for in Yirmeyahu 31:15?",
+      "options": [
+        "Her children — the exiled northern tribes of Yisra'el (Efrayim/Yosef)",
+        "The dead in Yerushalayim during the Babylonian siege",
+        "The exiles from Yehudah in Babylon",
+        "All the tribes of Yisra'el"
+      ],
+      "correct": 0,
+      "source_quote": "Rachel is weeping for her children; she refuses to be comforted for her children, because they are no more."
+    },
+    {
+      "ref": "Yirmeyahu 28:1-16",
+      "question": "What did the false prophet Khananiyah do to Yirmeyahu's wooden yoke, and what was the consequence?",
+      "options": [
+        "He broke it; Yirmeyahu declared YHWH had replaced it with an iron yoke and Khananiyah would die that year",
+        "He threw it in the Temple fire; YHWH said the exile would be extended",
+        "He hid it; the exile was shortened",
+        "He repaired it; Khananiyah was vindicated"
+      ],
+      "correct": 0,
+      "source_quote": "And Khananiyah the prophet took the yoke-bars from the neck of Yirmeyahu the prophet and broke them. Then YHWH said to Yirmeyahu: Go, tell Khananiyah, Thus says YHWH: You have broken bars of wood, but you have made in their place bars of iron."
+    },
+    {
+      "ref": "Yirmeyahu 29:13",
+      "question": "What promise accompanies 'I know the plans I have for you' in Yirmeyahu 29?",
+      "options": [
+        "You will seek me and find me when you search for me with all your heart",
+        "I will bring you out of Babylon within your generation",
+        "I will restore the Temple in Yerushalayim",
+        "I will punish Babylon for what it did to you"
+      ],
+      "correct": 0,
+      "source_quote": "You will seek me and find me, when you seek me with all your heart."
+    },
+    {
+      "ref": "Yirmeyahu 31:35-36",
+      "question": "What does YHWH compare the permanence of the New Covenant to in Yirmeyahu 31:35-36?",
+      "options": [
+        "The fixed order of sun, moon, and stars — only if these cease will Yisra'el cease",
+        "The mountains and hills which endure forever",
+        "The covenant given at Sinai",
+        "The waters of the sea which never overflow the land"
+      ],
+      "correct": 0,
+      "source_quote": "If this fixed order departs from before me, declares YHWH, then shall the offspring of Yisra'el cease from being a nation before me forever."
+    },
+    {
+      "ref": "Yirmeyahu 30:11",
+      "question": "In the Book of Consolation, YHWH declares he will make a full end of all the nations but not of Yisra'el; what will he do to Yisra'el instead?",
+      "options": [
+        "Discipline Yisra'el in just measure, but will not make a full end",
+        "Restore Yisra'el without any discipline",
+        "Scatter Yisra'el further among the nations",
+        "Build a wall around Yisra'el to protect them from nations"
+      ],
+      "correct": 0,
+      "source_quote": "For I am with you, declares YHWH, to save you; for I will make a full end of all the nations among whom I scattered you, but of you I will not make a full end. I will discipline you in just measure."
+    },
+    {
+      "ref": "Yirmeyahu 31:3",
+      "question": "What does YHWH declare about his love for Yisra'el in Yirmeyahu 31:3?",
+      "options": [
+        "I have loved you with an everlasting love; therefore I have continued my faithfulness to you",
+        "My love for you depends on your obedience",
+        "I have loved you as a father loves his firstborn",
+        "My love endures to a thousand generations"
+      ],
+      "correct": 0,
+      "source_quote": "I have loved you with an everlasting love; therefore I have continued my faithfulness to you."
+    },
+    {
+      "ref": "Yirmeyahu 31:9",
+      "question": "In the restoration prophecy of Yirmeyahu 31:9, YHWH says 'I am a father to Yisra'el, and Efrayim is' what?",
+      "options": [
+        "My firstborn",
+        "My youngest son",
+        "My chosen servant",
+        "My royal heir"
+      ],
+      "correct": 0,
+      "source_quote": "For I am a father to Yisra'el, and Efrayim is my firstborn."
+    }
   ],
   "faq": [
     {
-      "question": "Does the new covenant of Yirmeyahu 31:31 replace the Torah?",
-      "answer": "No. The text is explicit: 'I will put my Torah within them, and I will write it on their hearts' (31:33). The content of the new covenant is the Torah — the same Torah given at Sinai. What changes is the mechanism: external tablets become internal inscription. Stone becomes heart. The new covenant does not introduce new content — it internalizes the existing content. Roman Christianity reinterpreted 'new covenant' as the replacement of the Torah with a new dispensation mediated by the Church. This reading contradicts the text itself, which says the Torah is the content of the new covenant. The Damascus Document (CD 6:19, 8:21, 19:33-34) at Qumran describes the community as 'those who entered the new covenant in the land of Damascus' — and their practice was meticulous Torah observance. The oldest interpreters of the new covenant practiced Torah. The institution that claimed the new covenant abolished Torah."
+      "question": "What is the theological significance of the two baskets of figs in Yirmeyahu 24?",
+      "answer": "The vision overturns the natural assumption: those exiled to Babylon (the apparently punished) are the good figs YHWH watches over for restoration; those left in Yehudah and those who fled to Mitzrayim (the apparently preserved) are the bad figs headed for destruction. YHWH's favor is not tied to physical location or apparent safety."
     },
     {
-      "question": "What does 'they shall all know me' mean for institutional authority?",
-      "answer": "Yirmeyahu 31:34: 'No longer shall each one teach his neighbor and each his brother, saying: Know YHWH — for they shall all know me, from the least of them to the greatest, declares YHWH.' This is the elimination of institutional mediation. In the new covenant, knowledge of YHWH is direct — from the least to the greatest, without hierarchy, without a priestly class controlling access, without an ordained ministry dispensing approved interpretation. The Roman Church built an institutional hierarchy — pope, cardinals, bishops, priests — as the required mediator between YHWH and his people. The Rabbinical tradition built a parallel hierarchy of Torah authority — the oral Torah transmitted through an unbroken chain. Both systems contradict the plain text of Yirmeyahu 31:34: they shall ALL know me. No intermediary. No gatekeeper. Direct knowledge, written on the heart."
+      "question": "What does the Letter to the Exiles teach about faithful life in a foreign land?",
+      "answer": "Yirmeyahu 29 is the most direct prophetic instruction on diaspora life in the Hebrew corpus. YHWH commands: settle down, build, plant, multiply, and seek the shalom of the city where you are sent. This is active, engaged presence — not isolation or waiting for rescue. The 70-year timeline is realistic: build lives, not temporary camps."
     },
     {
-      "question": "How does the new covenant connect to the Great Eraser?",
-      "answer": "The new covenant of Yirmeyahu 31:31-34 is the most systematically misappropriated passage in the covenant literature. The Roman Church took the Hebrew term berit hadashah (new covenant), translated it into Greek as kaine diatheke, applied it to a collection of Greek texts written decades to centuries after the events they describe, and called it the 'New Testament.' They then declared the original Hebrew covenant the 'Old Testament' — linguistically demoting the primary text to secondary status. The actual new covenant described by Yirmeyahu is Torah written on hearts, direct knowledge of YHWH without institutional mediation. The Roman appropriation replaced Torah with Church doctrine, replaced direct knowledge with sacramental mediation, and replaced the covenant people with a universal 'Church' that systematically erased the African identity of the original community. The term 'new covenant' was stolen, redefined, and weaponized against the people to whom it was promised."
+      "question": "What is the New Covenant in Yirmeyahu 31:31-34?",
+      "answer": "The New Covenant differs from Sinai in its mode: Torah written on hearts, not stone. The relationship is internalized — 'I will be their Creator, they shall be my people' — without requiring external teaching because all will know YHWH directly, 'from the least to the greatest.' YHWH will forgive iniquity and remember sin no more. This is the most explicit New Covenant text in the pre-Rabbinic corpus."
+    },
+    {
+      "question": "Why is 'Rachel weeping for her children' significant in Yirmeyahu 31?",
+      "answer": "Rachel was the ancestral mother of Efrayim and Menashsheh — the northern tribes. By placing her weeping at Ramah (a staging point for deportees), Yirmeyahu gives voice to the grief of the entire northern exile. But the text does not end with grief: YHWH commands 'Restrain your voice from weeping... they shall come back from the land of the enemy' (31:16-17). The lament is real; so is the promise."
+    },
+    {
+      "question": "What does the Yoke of Babylon sign in chapters 27-28 mean?",
+      "answer": "YHWH commands Yirmeyahu to wear a wooden yoke as a sign that all nations must submit to Nebuchadnezzar — YHWH's instrument. When Khananiyah the false prophet breaks the wooden yoke claiming YHWH will break Babylon's power within two years, Yirmeyahu responds: you have made it iron. YHWH then tells Yirmeyahu: Khananiyah will die that year because he has spoken rebellion. He died two months later."
+    },
+    {
+      "question": "What is the 70-year exile in context?",
+      "answer": "Yirmeyahu 29:10 sets the exile at seventy years before YHWH restores the people. This is not a prediction about an individual's lifetime but a generational span: those deported will largely die in Babylon; their children and grandchildren will return. The 70-year figure frames the exile as real but bounded, and grounds the community's hope in something specific rather than vague."
+    },
+    {
+      "question": "What does 'I know the plans I have for you' mean in its original context?",
+      "answer": "Yirmeyahu 29:11 — 'For I know the plans I have for you, plans for welfare (shalom) and not for evil, to give you a future and a hope' — is not a general prosperity promise. It is YHWH's specific word to the Babylonian exiles being told they will be there for 70 years. The welfare and future are real, but they come after a long, difficult exile — not as an immediate escape from hardship."
+    },
+    {
+      "question": "How permanent is the New Covenant according to Yirmeyahu 31:35-37?",
+      "answer": "YHWH says the New Covenant is as permanent as the fixed order of the cosmos: 'If the sun, moon, and stars cease their fixed order, then the offspring of Yisra'el will cease to be a nation before me.' YHWH anchors the covenant's reliability to creation itself. No human failure can break this covenant the way Sinai was broken — YHWH himself writes Torah on the heart."
+    },
+    {
+      "question": "What does the Book of Consolation say about YHWH healing the incurable wound?",
+      "answer": "Yirmeyahu 30:12-17 addresses the people as having an incurable wound, an injury that no one can heal. The nations say their wound is punishment from YHWH for their sins. YHWH agrees that it is punishment — but then declares: I will restore your health and heal your wounds. The one who inflicts is also the one who heals."
+    },
+    {
+      "question": "Why does YHWH call Efrayim his firstborn in Yirmeyahu 31:9?",
+      "answer": "In the restoration poem of Yirmeyahu 31:7-9, YHWH gathers the remnant of Yisra'el including 'the blind and the lame, the pregnant woman and she who is in labor' — the vulnerable who cannot travel quickly. YHWH leads them back with weeping and consolations, by rivers of water on a straight path. Calling Efrayim (the northern kingdom) his firstborn re-establishes the full covenant family, not just Yehudah."
+    },
+    {
+      "question": "What does Yirmeyahu 31:34 mean when it says 'no longer shall each one teach his neighbor'?",
+      "answer": "The New Covenant will make external instruction about knowing YHWH unnecessary because every member of the covenant community will know him directly — internalized Torah. This is not abolishing teaching but describing the transformed condition: YHWH's direct relationship with each person makes him known from within rather than transmitted only through external teachers. It describes a community where covenant knowledge is as natural as breathing."
     }
   ]
 }

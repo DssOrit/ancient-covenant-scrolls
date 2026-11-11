@@ -1,32 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_70",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_70",
   "label": "Tehillim (Psalms) — Part 6 — Psalms 107–118",
   "volume": 20,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Psalms 107 through 118 move from thanksgiving to the great Hallel. Psalm 107 opens: Give thanks to YHWH, for he is good, for his steadfast love endures forever. Psalm 110 declares: YHWH says to my master, sit at my right hand. Psalm 113 begins the Egyptian Hallel — YHWH raises the poor from the dust. Psalm 118 is the climax: the stone the builders rejected has become the cornerstone. This is YHWH's doing — it is marvelous in our eyes. Open to me the gates of righteousness, that I may enter and give thanks to YHWH.",
   "summary_scholarly": "The ACR reads Psalms 107-118 from DSS witnesses and the Orit Ge'ez. Psalm 118:22-23 — the stone the builders rejected has become the cornerstone — is among the most appropriated verses in all scripture. The NT applies it to its central figure (Matthew 21:42, Acts 4:11, 1 Peter 2:7). In its original covenantal context, the rejected stone is Yisra'EL itself — the nation rejected by the imperial powers (the builders) that becomes the cornerstone of YHWH's order. The DSS community at Qumran understood themselves as the rejected community that would be vindicated. Psalm 110:1 — 'YHWH says to my master (la-adoni)' — uses adoni (my master, a human title) not Adonai (a divine title). The NT's use of this verse to argue for a divine messiah sitting at YHWH's right hand depends on the Greek translation (Kyrios), which obscures the Hebrew distinction between YHWH and the human king.",
   "key_terms": [
-    { "term": "Even Ma'asu HaBonim (The Rejected Stone)", "phonetic": "EH-ven mah-AH-soo hah-boh-NEEM", "definition": "Psalm 118:22: 'The stone the builders rejected has become the cornerstone.' In the covenant context, this is Yisra'EL — the nation rejected by empires that becomes the foundation of YHWH's order. The NT reapplied this to an individual figure." },
-    { "term": "Hallel", "phonetic": "Hah-LEL", "definition": "Psalms 113-118 form the Egyptian Hallel, sung during Pesach, Sukkot, and Shavuot. Hallel means praise — from the same root as Halleluyah (Praise YAH). These psalms celebrate YHWH's deliverance from Mitzrayim and ongoing faithfulness." },
-    { "term": "Adoni vs. Adonai", "phonetic": "Ah-doh-NEE vs. Ah-doh-NAI", "definition": "Psalm 110:1 uses adoni — 'my master' — a title for a human superior, not a divine title. Adonai is reserved for YHWH. The Greek Septuagint rendered both as Kyrios (Lord), erasing the Hebrew distinction the text itself preserves." }
+    {
+      "term": "Songs of Ascent (Ps.120-134)",
+      "phonetic": "shir ha-ma-ah-LOT",
+      "definition": "Fifteen pilgrim psalms sung during the journey to Yerushalayim for the three annual festivals. They are compact, communal, and focused on YHWH's protection and the joy of approaching YHWH's house."
+    },
+    {
+      "term": "Psalm 121 My Help from YHWH",
+      "phonetic": "Tehillim 121",
+      "definition": "'I lift my eyes to the mountains — where does my help come from? My help comes from YHWH, maker of heaven and earth.' YHWH is the keeper who neither slumbers nor sleeps, protecting day and night."
+    },
+    {
+      "term": "Psalm 126 Like Those Who Dream",
+      "phonetic": "Tehillim 126",
+      "definition": "'When YHWH restored the fortunes of Tzion, we were like those who dream.' A Song of Ascent celebrating the return from exile — stunned disbelief at restoration, followed by continued petition for full recovery."
+    },
+    {
+      "term": "Psalm 137 By the Rivers of Babylon",
+      "phonetic": "Tehillim 137",
+      "definition": "The great lament of exile: 'By the rivers of Babylon, there we sat and wept when we remembered Tzion.' The harps hang on the willows; the captors demand songs; the psalmist swears never to forget Yerushalayim."
+    },
+    {
+      "term": "Psalm 139 Where Shall I Go",
+      "phonetic": "Tehillim 139",
+      "definition": "YHWH's omnipresence: 'Where shall I go from your Spirit? Where shall I flee from your presence?' — ascending to heaven, making a bed in Sheol, taking the wings of the morning — YHWH is in every place."
+    },
+    {
+      "term": "Knit Together in My Mother's Womb (139:13)",
+      "phonetic": "Tehillim 139:13",
+      "definition": "'For you formed my inward parts; you knitted me together in my mother's womb. I praise you, for I am fearfully and wonderfully made.' YHWH's intimate creative involvement with each person before birth."
+    },
+    {
+      "term": "Final Hallel (Ps.146-150)",
+      "phonetic": "hal-LEL",
+      "definition": "Five closing psalms of Tehillim (Ps.146-150), each opening and closing with 'Hallelu-Yah' (Praise YHWH). They form the Psalter's grand doxological climax — praise escalating from individual to universal."
+    },
+    {
+      "term": "Halleluyah",
+      "phonetic": "hal-leh-loo-YAH",
+      "definition": "The combined call: 'Hallelu' (praise, plural imperative) + 'Yah' (the shortened divine name). The concentrated form of praise that opens and closes each of the five final psalms and recurs throughout Book V."
+    },
+    {
+      "term": "Tzion as YHWH's dwelling",
+      "phonetic": "tzee-YOHN",
+      "definition": "Throughout the Songs of Ascent and Book V, Tzion is YHWH's chosen dwelling — the city the community ascends toward, mourns in exile, and celebrates at restoration. 'YHWH has chosen Tzion; he has desired it for his dwelling place' (Ps.132:13)."
+    },
+    {
+      "term": "Covenant Memory in Tehillim",
+      "phonetic": "beh-REET",
+      "definition": "The Psalter as a whole preserves covenant memory: the Exodus (Ps.78, 105, 106, 114, 136), the wilderness (Ps.95), the Davidic covenant (Ps.89, 132), and the promise of restoration (Ps.126). Communal singing of these psalms was itself the act of remembering."
+    }
   ],
   "fill_blank": [
-    { "ref": "118:22", "prompt": "The stone the ______ rejected has become the cornerstone.", "answer": "builders", "source_quote": "The stone the builders rejected has become the cornerstone." },
-    { "ref": "118:23", "prompt": "This is YHWH's doing — it is ______ in our eyes.", "answer": "marvelous", "source_quote": "This is YHWH's doing — it is marvelous in our eyes." },
-    { "ref": "107:1", "prompt": "Give thanks to YHWH, for he is good, for his steadfast love endures ______.", "answer": "forever", "source_quote": "Give thanks to YHWH, for he is good, for his steadfast love endures forever." }
+    {
+      "ref": "Psalm 121:1-2",
+      "prompt": "I lift my ___ to the mountains. Where does my help come from? My help comes from YHWH, maker of heaven and earth.",
+      "answer": "eyes",
+      "source_quote": "I lift my eyes to the mountains. Where does my help come from? My help comes from YHWH, maker of heaven and earth."
+    },
+    {
+      "ref": "Psalm 121:4",
+      "prompt": "Behold, he who keeps Yisra'el will neither ___ nor sleep.",
+      "answer": "slumber",
+      "source_quote": "Behold, he who keeps Yisra'el will neither slumber nor sleep."
+    },
+    {
+      "ref": "Psalm 122:1",
+      "prompt": "I was glad when they said to me, 'Let us go to the ___ of YHWH!'",
+      "answer": "house",
+      "source_quote": "I was glad when they said to me, Let us go to the house of YHWH!"
+    },
+    {
+      "ref": "Psalm 126:1",
+      "prompt": "When YHWH restored the fortunes of Tzion, we were like those who ___.",
+      "answer": "dream",
+      "source_quote": "When YHWH restored the fortunes of Tzion, we were like those who dream."
+    },
+    {
+      "ref": "Psalm 137:1",
+      "prompt": "By the rivers of ___, there we sat and wept when we remembered Tzion.",
+      "answer": "Babylon",
+      "source_quote": "By the rivers of Babylon, there we sat and wept when we remembered Tzion."
+    },
+    {
+      "ref": "Psalm 137:5",
+      "prompt": "If I forget you, O Yerushalayim, let my right hand forget its ___!",
+      "answer": "skill",
+      "source_quote": "If I forget you, O Yerushalayim, let my right hand forget its skill!"
+    },
+    {
+      "ref": "Psalm 139:7",
+      "prompt": "Where shall I go from your ___? Where shall I flee from your presence?",
+      "answer": "Spirit",
+      "source_quote": "Where shall I go from your Spirit? Where shall I flee from your presence?"
+    },
+    {
+      "ref": "Psalm 139:13",
+      "prompt": "For you formed my inward parts; you ___ me together in my mother's womb.",
+      "answer": "knitted",
+      "source_quote": "For you formed my inward parts; you knitted me together in my mother's womb."
+    },
+    {
+      "ref": "Psalm 150:6",
+      "prompt": "Let everything that has ___ praise YHWH! Hallelu-Yah!",
+      "answer": "breath",
+      "source_quote": "Let everything that has breath praise YHWH! Hallelu-Yah!"
+    },
+    {
+      "ref": "Psalm 148:13",
+      "prompt": "Let them praise the name of YHWH, for his name alone is ___; his majesty is above earth and heaven.",
+      "answer": "exalted",
+      "source_quote": "Let them praise the name of YHWH, for his name alone is exalted; his majesty is above earth and heaven."
+    }
   ],
   "multiple_choice": [
-    { "ref": "118:22-23", "question": "What does Psalm 118 say about the rejected stone?", "options": ["It was destroyed by the builders", "The stone the builders rejected has become the cornerstone — this is YHWH's doing", "The stone was replaced with a better one", "The builders repented and used it"], "correct": 1, "source_quote": "The stone the builders rejected has become the cornerstone. This is YHWH's doing — it is marvelous in our eyes." },
-    { "ref": "110:1", "question": "What does Psalm 110:1 say in the Hebrew?", "options": ["YHWH says to YHWH, sit at my right hand", "YHWH says to adoni (my master — a human title), sit at my right hand", "YHWH says to the angel, sit at my right hand", "YHWH says to Elohim, sit at my right hand"], "correct": 1, "source_quote": "YHWH says to my master: Sit at my right hand, until I make your enemies your footstool." }
+    {
+      "ref": "Psalm 121:1-2",
+      "question": "Where does the psalmist declare help comes from in Psalm 121?",
+      "options": [
+        "From the mountains of Yisra'el",
+        "From YHWH, maker of heaven and earth",
+        "From the armies of Yehudah",
+        "From the Temple in Yerushalayim"
+      ],
+      "correct": 1,
+      "source_quote": "My help comes from YHWH, maker of heaven and earth."
+    },
+    {
+      "ref": "Psalm 121:4",
+      "question": "What does Psalm 121:4 declare about YHWH who keeps Yisra'el?",
+      "options": [
+        "YHWH is a warrior who fights for them",
+        "YHWH neither slumbers nor sleeps",
+        "YHWH goes ahead of them into battle",
+        "YHWH watches from his holy mountain"
+      ],
+      "correct": 1,
+      "source_quote": "He who keeps Yisra'el will neither slumber nor sleep."
+    },
+    {
+      "ref": "Psalm 122:1",
+      "question": "What prompted the psalmist's gladness in Psalm 122:1?",
+      "options": [
+        "Receiving word of victory in battle",
+        "Hearing the people say 'Let us go to the house of YHWH'",
+        "Seeing the walls of Yerushalayim completed",
+        "Receiving the Torah from Moshe"
+      ],
+      "correct": 1,
+      "source_quote": "I was glad when they said to me, Let us go to the house of YHWH!"
+    },
+    {
+      "ref": "Psalm 126:1",
+      "question": "To what does Psalm 126 compare the experience of restoration from exile?",
+      "options": [
+        "Waking from a long sleep",
+        "Being like those who dream",
+        "Returning home after a long journey",
+        "Rain falling on dry ground"
+      ],
+      "correct": 1,
+      "source_quote": "When YHWH restored the fortunes of Tzion, we were like those who dream."
+    },
+    {
+      "ref": "Psalm 137:1",
+      "question": "Where does Psalm 137 describe the exiles sitting and weeping?",
+      "options": [
+        "On the walls of Yerushalayim",
+        "At the gates of Babylon",
+        "By the rivers of Babylon",
+        "In the wilderness of Sinai"
+      ],
+      "correct": 2,
+      "source_quote": "By the rivers of Babylon, there we sat and wept when we remembered Tzion."
+    },
+    {
+      "ref": "Psalm 137:5",
+      "question": "What oath does the psalmist make regarding Yerushalayim in Psalm 137:5?",
+      "options": [
+        "Let my eyes be blinded if I forget Yerushalayim",
+        "Let my right hand forget its skill if I forget Yerushalayim",
+        "Let my voice be silenced until Yerushalayim is restored",
+        "Let me dwell in sackcloth until I return to Yerushalayim"
+      ],
+      "correct": 1,
+      "source_quote": "If I forget you, O Yerushalayim, let my right hand forget its skill!"
+    },
+    {
+      "ref": "Psalm 139:7",
+      "question": "What does Psalm 139:7 affirm about YHWH's presence?",
+      "options": [
+        "YHWH is present only in the Temple",
+        "YHWH can be found by those who seek with all their heart",
+        "There is nowhere to go from YHWH's Spirit or flee from YHWH's presence",
+        "YHWH dwells on Mount Tzion and comes down to the earth"
+      ],
+      "correct": 2,
+      "source_quote": "Where shall I go from your Spirit? Where shall I flee from your presence?"
+    },
+    {
+      "ref": "Psalm 139:13",
+      "question": "What does Psalm 139:13 say YHWH did before the psalmist was born?",
+      "options": [
+        "YHWH planned all the psalmist's days in a book",
+        "YHWH called the psalmist to prophesy from birth",
+        "YHWH formed the inward parts and knitted the psalmist together in the womb",
+        "YHWH wrote the psalmist's name in the book of life"
+      ],
+      "correct": 2,
+      "source_quote": "You formed my inward parts; you knitted me together in my mother's womb."
+    },
+    {
+      "ref": "Psalm 150:6",
+      "question": "Who does the closing verse of Psalm 150 — and of the entire Psalter — call to praise YHWH?",
+      "options": [
+        "All Yisra'el and the nations",
+        "Every king and ruler on earth",
+        "Everything that has breath",
+        "All the angels in heaven"
+      ],
+      "correct": 2,
+      "source_quote": "Let everything that has breath praise YHWH! Hallelu-Yah!"
+    },
+    {
+      "ref": "Psalm 148:13",
+      "question": "Why does Psalm 148 call heaven and earth to praise YHWH according to 148:13?",
+      "options": [
+        "Because YHWH has chosen Yisra'el above all nations",
+        "Because YHWH's name alone is exalted above earth and heaven",
+        "Because YHWH has forgiven all iniquity",
+        "Because YHWH has established the covenant forever"
+      ],
+      "correct": 1,
+      "source_quote": "Let them praise the name of YHWH, for his name alone is exalted; his majesty is above earth and heaven."
+    }
   ],
   "faq": [
     {
-      "question": "Who is the rejected stone in Psalm 118:22?",
-      "answer": "In the covenant context, the rejected stone is Yisra'EL itself — the nation despised and rejected by the empires (the builders of world order) that becomes the cornerstone of YHWH's order. The NT appropriated this verse and applied it to an individual (Matthew 21:42, Acts 4:11). This is a textbook Great Eraser operation: taking a national-covenantal image (Yisra'EL as the rejected cornerstone) and reassigning it to an individual figure, thereby stripping the original people of their own text. The DSS community at Qumran understood themselves as the rejected remnant — the people cast aside by the Temple establishment and by Rome — who would be vindicated by YHWH. The stone is national. The rejection is real. The cornerstone is still Yisra'EL."
+      "question": "What are the Songs of Ascent and what made them suitable for pilgrimage use?",
+      "answer": "Psalms 120-134 each carry the superscription 'A Song of Ascents' — pilgrim songs for the journey to Yerushalayim at the three annual festivals. Their compact length (most are 3-8 verses), memorable refrains, communal language ('we,' 'our'), and themes of protection, blessing, and arrival made them ideal for communal singing on the road. They form a complete arc from exile or distance (Ps.120) to arrival at the house of YHWH (Ps.122) to blessing (Ps.133-134)."
     },
     {
-      "question": "Why does the Hebrew distinction between adoni and Adonai matter in Psalm 110?",
-      "answer": "Psalm 110:1 reads: 'YHWH says to adoni (my master).' The Hebrew adoni is a human title — used for kings, military commanders, husbands. It is not a divine title. Adonai (with the long vowel) is reserved for YHWH. The Greek Septuagint translated both as Kyrios — Lord — erasing the distinction. The NT then uses the Greek to argue that Psalm 110 describes a divine figure at YHWH's right hand (Matthew 22:44, Hebrews 1:13). The argument only works in Greek. In Hebrew, the psalm describes YHWH addressing a human king — the Davidic ruler — with a human title. The Great Eraser operates through translation: the original Hebrew preserves a clear distinction, the Greek flattens it, and the theological system built on the Greek cannot survive contact with the Hebrew original."
+      "question": "What question does Psalm 121 ask and how does it answer itself?",
+      "answer": "Psalm 121 opens: 'I lift my eyes to the mountains — where does my help come from?' The mountains could refer to the destination (Yerushalayim) or to the pagan hill-shrines that pilgrims passed. The psalm immediately answers its own question: 'My help comes from YHWH, maker of heaven and earth' — not from the mountains themselves or anything associated with them. The rest of the psalm develops YHWH as keeper who never sleeps, protecting every coming and going."
+    },
+    {
+      "question": "What is the emotional experience of Psalm 126 and what does it teach about restoration?",
+      "answer": "Psalm 126 opens with the community's stunned gratitude at restoration from exile — 'we were like those who dream.' The first half (vv.1-3) is pure joy and disbelief. The second half (vv.4-6) shifts to petition: 'Restore our fortunes like streams in the Negev.' Full restoration has not yet come; some are still in exile. The psalm teaches that partial restoration is the basis for continued hope, not complacency — 'those who sow in tears shall reap with shouts of joy.'"
+    },
+    {
+      "question": "Why is Psalm 137 one of the most emotionally complex psalms in Tehillim?",
+      "answer": "Psalm 137 holds irresolvable tensions: deep covenant love for Yerushalayim alongside anguished exile, the impossibility of singing YHWH's songs in a foreign land, and at the end, raw imprecatory language asking for Babylon's destruction. It is completely honest — no spiritual resolution offered, no comfort manufactured. It is the voice of the community in its most broken state, and its inclusion in the Psalter validates that such grief has a place in YHWH's presence."
+    },
+    {
+      "question": "What does Psalm 139 teach about YHWH's omnipresence?",
+      "answer": "Psalm 139 moves through every conceivable location — heaven, Sheol, the wings of dawn, the uttermost sea — and declares YHWH's hand is there. Even darkness is not dark to YHWH. This is not primarily an abstract theological statement but an intimate recognition: the psalmist cannot escape YHWH's presence because YHWH formed the psalmist's inward parts before birth. The omnipresence is not threatening but covenantally intimate — the Creator-God knows the creature from before the first breath."
+    },
+    {
+      "question": "What does 'knitted together in my mother's womb' (Ps.139:13) contribute to Hebrew anthropology?",
+      "answer": "Psalm 139:13 uses the word 'knitted' or 'woven' — a craft image of YHWH's active, skilled work in forming each person before birth. This establishes personhood as a divine creative act, not an accident of biology. The psalmist responds: 'I praise you, for I am fearfully and wonderfully made.' Hebrew anthropology here sees each person as YHWH's intentional craftsmanship — giving dignity to every life as a direct divine work."
+    },
+    {
+      "question": "How do Psalms 146-150 close the Psalter?",
+      "answer": "The five final psalms (the Final Hallel) each open and close with 'Hallelu-Yah' — forming a doxological frame for the entire collection. The scope of praise escalates: Ps.146 is personal, Ps.147 is communal (Yerushalayim), Ps.148 is cosmic (all creation), Ps.149 is Israel worshipping and honoring YHWH, and Ps.150 is universal — 'Let everything that has breath praise YHWH.' The Psalter ends at the widest possible scope: not just Yisra'el, not just humanity, but every breathing creature."
+    },
+    {
+      "question": "What does Psalm 150's closing verse mean as the Psalter's final word?",
+      "answer": "'Let everything that has breath praise YHWH! Hallelu-Yah!' The Hebrew 'everything that has breath' (kol ha-neshamah) means every breathing creature without exception. After 150 psalms of lament, royal aspiration, historical grief, covenant thanksgiving, and wisdom reflection, the Psalter ends with the most inclusive possible call. All the complexity of covenant relationship — the doubts, the cries, the celebrations — arrives finally at universal praise. The breath YHWH gave at creation is returned as praise."
+    },
+    {
+      "question": "Why does Psalm 137 refuse to sing in Babylon?",
+      "answer": "The captors asked the exiles to sing songs of Tzion for entertainment. The refusal is not mere stubbornness — singing YHWH's covenant songs as entertainment for Babylon would be a desecration of the relationship those songs represented. The songs belonged to YHWH's worship, not to the amusement of the oppressor. The psalmist's choice to hang the harp on the willows rather than profane YHWH's songs is an act of covenant loyalty in humiliation."
+    },
+    {
+      "question": "How do the Songs of Ascent function as a community practice?",
+      "answer": "The Songs of Ascent were group songs for the communal journey — not personal devotions but communal liturgy sung together by families and communities walking toward Yerushalayim. This communal, embodied practice of walking and singing together reinforced covenant identity: we are YHWH's people ascending to YHWH's house. The physical act of pilgrimage and the verbal act of praise became inseparable in this collection."
     }
   ]
 }

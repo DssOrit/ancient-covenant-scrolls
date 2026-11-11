@@ -1,37 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_48",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_48",
   "label": "Yirmeyahu (Jeremiah) — Part 2 — Chapters 8–15",
   "volume": 17,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "The harvest is past, the summer is ended, and we are not saved. Is there no balm in Gil'ad? Is there no healer there? Yirmeyahu weeps for his people — O that my head were waters and my eyes a fountain of tears, that I might weep day and night for the slain of the daughter of my people. YHWH says: Let not the wise boast in wisdom, let not the mighty boast in might, let not the rich boast in riches — but let him who boasts boast in this: that he understands and knows me. The heart is deceitful above all things and desperately sick — who can understand it? I, YHWH, search the heart.",
   "summary_scholarly": "The ACR reads from the DSS Jeremiah manuscripts (4QJer-a through 4QJer-e) and the Orit Ge'ez. The shorter Qumran Jeremiah (4QJer-b) is the primary authority — the Masoretic contains later additions. Yirmeyahu's weeping (8:18-9:1) earns him the designation 'weeping prophet' — but the tears are not sentimental. They are the response of a covenant prophet watching his people choose destruction. The 'balm in Gil'ad' passage (8:22) asks whether healing exists for the covenant community. The broken cisterns metaphor from Part 1 continues: the people have abandoned living water for dead storage, and the prophet mourns the consequence.",
   "key_terms": [
-    { "term": "Balm in Gil'ad", "phonetic": "Gil-AHD", "definition": "Yirmeyahu asks: 'Is there no balm in Gil'ad? Is there no healer there? Why then has the health of the daughter of my people not been restored?' (8:22). Gil'ad was known for its medicinal resin. The question is rhetorical — healing exists, but the people refuse it." },
-    { "term": "Weeping Prophet", "phonetic": "", "definition": "Yirmeyahu cries: 'O that my head were waters and my eyes a fountain of tears, that I might weep day and night for the slain of the daughter of my people' (9:1). The prophet's grief is not weakness — it is covenant faithfulness in the face of national destruction." },
-    { "term": "Heart (Lev)", "phonetic": "LEV", "definition": "YHWH declares: 'The heart is deceitful above all things and desperately sick — who can understand it? I, YHWH, search the heart' (17:9-10). The diagnosis is internal. The corruption is not primarily in institutions but in the human heart itself." }
+    {
+      "term": "Lying Pen of the Scribes",
+      "phonetic": "8:8",
+      "definition": "Yirmeyahu 8:8 — 'How can you say, We are wise, and the Torah of YHWH is with us? But behold, the lying pen of the scribes has made it into a lie.' The scribes have falsified YHWH's word."
+    },
+    {
+      "term": "'The Harvest Is Past'",
+      "phonetic": "8:20",
+      "definition": "Yirmeyahu 8:20 — 'The harvest is past, the summer is ended, and we are not saved.' A lament over Yehudah's desperate situation; the seasons have passed without deliverance."
+    },
+    {
+      "term": "Yirmeyahu's Confessions",
+      "phonetic": "chs 11-20",
+      "definition": "Personal laments embedded in the book where Yirmeyahu argues with YHWH: 'Why does the way of the wicked prosper?' (12:1); he curses the day of his birth (20:14); these are the most intimate prophetic self-disclosures in the Hebrew corpus."
+    },
+    {
+      "term": "Linen Belt Parable",
+      "phonetic": "ch.13",
+      "definition": "YHWH commands Yirmeyahu to buy a linen belt, wear it, then hide it at the Euphrates; when retrieved it is ruined. The sign: Yehudah's pride will be ruined as the belt was ruined — good for nothing."
+    },
+    {
+      "term": "'Is There No Balm in Gilad?'",
+      "phonetic": "8:22",
+      "definition": "Yirmeyahu 8:22 — 'Is there no balm in Gilad? Is there no physician there? Why then has the health of the daughter of my people not been restored?' Gilad was known for medicinal balm; the question mourns Israel's spiritual unwoundedness."
+    },
+    {
+      "term": "Covenant Broken",
+      "phonetic": "chs 11-12",
+      "definition": "YHWH announces in Yirmeyahu 11 that the people have broken the covenant made with their ancestors at the Exodus; judgment is the consequence; Yirmeyahu himself is not to intercede for them."
+    },
+    {
+      "term": "YHWH's Anger",
+      "phonetic": "chs 10-12",
+      "definition": "Yirmeyahu's ministry is saturated with YHWH's anger over Yisra'el's unfaithfulness; yet even in judgment YHWH mourns: 'My heart is broken' (8:18-21) — the anger is inseparable from grief over what has been destroyed."
+    },
+    {
+      "term": "The Foe from the North",
+      "phonetic": "chs 8-10",
+      "definition": "The northern threat recurs in chapters 8-10: an invading army from the north will make Yehudah's cities desolate; the sound of horses and chariots is coming."
+    },
+    {
+      "term": "Weeping Prophet",
+      "phonetic": "chs 8-9",
+      "definition": "Yirmeyahu is called the weeping prophet because of passages like 8:18-9:1: 'My joy is gone; grief is upon me; my heart is sick... Oh that my head were waters and my eyes a fountain of tears.'"
+    },
+    {
+      "term": "YHWH the Potter",
+      "phonetic": "ch.18",
+      "definition": "YHWH sends Yirmeyahu to the potter's house; seeing the potter reshape a marred vessel, Yirmeyahu receives the word: YHWH can reshape Yisra'el as a potter shapes clay."
+    }
   ],
   "fill_blank": [
-    { "ref": "8:22", "prompt": "Is there no ______ in Gil'ad? Is there no healer there?", "answer": "balm", "source_quote": "Is there no balm in Gil'ad? Is there no healer there? Why then has the health of the daughter of my people not been restored?" },
-    { "ref": "9:23", "prompt": "Let him who boasts boast in this: that he understands and ______ me.", "answer": "knows", "source_quote": "Let him who boasts boast in this: that he understands and knows me, that I am YHWH who practices steadfast love, justice, and righteousness in the earth." },
-    { "ref": "9:1", "prompt": "O that my head were waters and my eyes a fountain of ______, that I might weep day and night.", "answer": "tears", "source_quote": "O that my head were waters and my eyes a fountain of tears, that I might weep day and night for the slain of the daughter of my people." }
+    {
+      "ref": "Yirmeyahu 8:8",
+      "prompt": "'How can you say, We are wise? But behold, the _____ pen of the scribes has made it into a lie.'",
+      "answer": "lying",
+      "source_quote": "How can you say, We are wise, and the Torah of YHWH is with us? But behold, the lying pen of the scribes has made it into a lie."
+    },
+    {
+      "ref": "Yirmeyahu 8:20",
+      "prompt": "'The harvest is past, the summer is ended, and we are not _____.' A lament over Yehudah's crisis.",
+      "answer": "saved",
+      "source_quote": "The harvest is past, the summer is ended, and we are not saved."
+    },
+    {
+      "ref": "Yirmeyahu 8:22",
+      "prompt": "'Is there no _____ in Gilad? Is there no physician there? Why then has the health of the daughter of my people not been restored?'",
+      "answer": "balm",
+      "source_quote": "Is there no balm in Gilad? Is there no physician there? Why then has the health of the daughter of my people not been restored?"
+    },
+    {
+      "ref": "Yirmeyahu 9:1",
+      "prompt": "Yirmeyahu laments: 'Oh that my head were _____ and my eyes a fountain of tears, that I might weep day and night for the slain of the daughter of my people!'",
+      "answer": "waters",
+      "source_quote": "Oh that my head were waters, and my eyes a fountain of tears, that I might weep day and night for the slain of the daughter of my people!"
+    },
+    {
+      "ref": "Yirmeyahu 11:4",
+      "prompt": "YHWH reminds them of his covenant command: 'Obey my voice, and do all that I command you. So shall you be my people, and I will be your _____.'",
+      "answer": "Creator",
+      "source_quote": "Obey my voice, and do all that I command you. So shall you be my people, and I will be your Creator, that I may confirm the oath that I swore to your fathers."
+    },
+    {
+      "ref": "Yirmeyahu 12:1",
+      "prompt": "Yirmeyahu's first confession: 'Righteous are you, O YHWH, when I complain to you; yet I would plead my case before you. Why does the way of the _____ prosper?'",
+      "answer": "wicked",
+      "source_quote": "Righteous are you, O YHWH, when I complain to you; yet I would plead my case before you. Why does the way of the wicked prosper?"
+    },
+    {
+      "ref": "Yirmeyahu 13:23",
+      "prompt": "'Can the _____ change his skin or the leopard his spots? Then also you can do good who are accustomed to do evil.'",
+      "answer": "Ethiopian",
+      "source_quote": "Can the Ethiopian change his skin or the leopard his spots? Then also you can do good who are accustomed to do evil."
+    },
+    {
+      "ref": "Yirmeyahu 10:23",
+      "prompt": "Yirmeyahu prays: 'I know, O YHWH, that the way of man is not in himself, that it is not in man who walks to _____ his steps.'",
+      "answer": "direct",
+      "source_quote": "I know, O YHWH, that the way of man is not in himself, that it is not in man who walks to direct his steps."
+    },
+    {
+      "ref": "Yirmeyahu 15:16",
+      "prompt": "Yirmeyahu confesses: 'Your words were found, and I ate them, and your words became to me a joy and the _____ of my heart, for I am called by your name.'",
+      "answer": "delight",
+      "source_quote": "Your words were found, and I ate them, and your words became to me a joy and the delight of my heart, for I am called by your name, O YHWH, Creator of Hosts."
+    },
+    {
+      "ref": "Yirmeyahu 9:23-24",
+      "prompt": "YHWH declares: 'Let not the wise man boast in his wisdom, let not the mighty man boast in his might, let not the rich man boast in his riches, but let him who boasts boast in this: that he understands and _____ me.'",
+      "answer": "knows",
+      "source_quote": "But let him who boasts boast in this, that he understands and knows me, that I am YHWH who practices steadfast love, justice, and righteousness in the earth."
+    }
   ],
   "multiple_choice": [
-    { "ref": "8:22", "question": "What does Yirmeyahu ask about Gil'ad?", "options": ["Is there no king in Gil'ad?", "Is there no balm in Gil'ad?", "Is there no prophet in Gil'ad?", "Is there no temple in Gil'ad?"], "correct": 1, "source_quote": "Is there no balm in Gil'ad? Is there no healer there?" },
-    { "ref": "9:23-24", "question": "In what should a person boast, according to YHWH?", "options": ["In wisdom, might, or riches", "In understanding and knowing YHWH", "In military victories", "In the number of sacrifices offered"], "correct": 1, "source_quote": "Let him who boasts boast in this: that he understands and knows me." },
-    { "ref": "17:9-10", "question": "What does YHWH say about the human heart?", "options": ["It is pure and righteous", "It is deceitful above all things and desperately sick", "It is strong and faithful", "It is like a rock"], "correct": 1, "source_quote": "The heart is deceitful above all things and desperately sick — who can understand it? I, YHWH, search the heart." }
+    {
+      "ref": "Yirmeyahu 8:8",
+      "question": "Yirmeyahu 8:8 charges the scribes with what specific offense against YHWH's word?",
+      "options": [
+        "The lying pen of the scribes has made the Torah into a lie",
+        "They sold copies of the Torah for profit",
+        "They refused to teach the Torah to the poor",
+        "They translated the Torah into foreign languages"
+      ],
+      "correct": 0,
+      "source_quote": "How can you say, We are wise, and the Torah of YHWH is with us? But behold, the lying pen of the scribes has made it into a lie."
+    },
+    {
+      "ref": "Yirmeyahu 8:20",
+      "question": "Yirmeyahu 8:20's 'harvest is past, summer ended, we are not saved' is a lament about what?",
+      "options": [
+        "The passing of the season of hope without deliverance coming",
+        "A literal failed harvest causing famine",
+        "The end of Yirmeyahu's prophetic ministry",
+        "The loss of the northern kingdom"
+      ],
+      "correct": 0,
+      "source_quote": "The harvest is past, the summer is ended, and we are not saved."
+    },
+    {
+      "ref": "Yirmeyahu 11:1-5",
+      "question": "In Yirmeyahu 11, YHWH charges the people with breaking what?",
+      "options": [
+        "The covenant made with the ancestors at the Exodus",
+        "The Sabbath commandment",
+        "The covenant of the priesthood",
+        "The agreement made with King David"
+      ],
+      "correct": 0,
+      "source_quote": "Hear the words of this covenant and speak to the men of Yehudah and the inhabitants of Yerushalayim. You shall say to them, Thus says YHWH, the Creator of Yisra'el: Cursed be the man who does not hear the words of this covenant."
+    },
+    {
+      "ref": "Yirmeyahu 13:1-11",
+      "question": "What did Yirmeyahu's linen belt parable teach about Yehudah?",
+      "options": [
+        "Yehudah's pride would be ruined and made good for nothing, like the ruined belt",
+        "Yehudah would be carried away to the Euphrates in exile",
+        "The Levites' service would be corrupted",
+        "The covenant would be hidden and forgotten"
+      ],
+      "correct": 0,
+      "source_quote": "For as the loincloth clings to the waist of a man, so I made the whole house of Yisra'el and the whole house of Yehudah cling to me, declares YHWH, that they might be for me a people, a name, a praise, and a glory, but they would not listen."
+    },
+    {
+      "ref": "Yirmeyahu 12:1",
+      "question": "In his first confession, what theological problem does Yirmeyahu raise with YHWH?",
+      "options": [
+        "Why does the way of the wicked prosper?",
+        "Why has YHWH not answered his prayers?",
+        "Why was he born to such suffering?",
+        "Why have the false prophets not been destroyed?"
+      ],
+      "correct": 0,
+      "source_quote": "Righteous are you, O YHWH, when I complain to you; yet I would plead my case before you. Why does the way of the wicked prosper?"
+    },
+    {
+      "ref": "Yirmeyahu 9:23-24",
+      "question": "In Yirmeyahu 9:23-24, what is the only legitimate boast?",
+      "options": [
+        "Understanding and knowing YHWH who practices steadfast love, justice, and righteousness",
+        "Having kept the covenant faithfully",
+        "Possessing wisdom greater than all the nations",
+        "Being born in the city of YHWH's choice"
+      ],
+      "correct": 0,
+      "source_quote": "But let him who boasts boast in this, that he understands and knows me, that I am YHWH who practices steadfast love, justice, and righteousness in the earth."
+    },
+    {
+      "ref": "Yirmeyahu 10:1-16",
+      "question": "How does Yirmeyahu 10:1-16 characterize the idols of the nations?",
+      "options": [
+        "They are scarecrows in a cucumber field — cannot speak or walk, carried by humans",
+        "They are powerful but subject to YHWH's authority",
+        "They are real beings but lesser than YHWH",
+        "They are deceptions made by foreign kings"
+      ],
+      "correct": 0,
+      "source_quote": "Their idols are like scarecrows in a cucumber field, and they cannot speak; they have to be carried, for they cannot walk. Do not be afraid of them, for they cannot do evil, neither is it in them to do good."
+    },
+    {
+      "ref": "Yirmeyahu 15:19",
+      "question": "When Yirmeyahu complains in chapter 15, YHWH responds by commanding him to do what?",
+      "options": [
+        "Return to YHWH and he will restore him to stand before YHWH",
+        "Flee to Mitzrayim and prophesy there",
+        "Be silent for forty days",
+        "Write all his words on a scroll"
+      ],
+      "correct": 0,
+      "source_quote": "Therefore thus says YHWH: If you return, I will restore you, and you shall stand before me. If you utter what is precious, and not what is worthless, you shall be as my mouth."
+    },
+    {
+      "ref": "Yirmeyahu 9:3",
+      "question": "What does Yirmeyahu 9:3 say the people use their tongue for?",
+      "options": [
+        "Their tongue is a bow that shoots lies; they march through the land with falsehood",
+        "Their tongue praises idols in the high places",
+        "Their tongue speaks smooth words to foreign kings",
+        "Their tongue curses the prophets of YHWH"
+      ],
+      "correct": 0,
+      "source_quote": "They bend their tongue like a bow; falsehood and not truth has grown strong in the land; for they proceed from evil to evil, and they do not know me, declares YHWH."
+    },
+    {
+      "ref": "Yirmeyahu 11:14",
+      "question": "What does YHWH tell Yirmeyahu NOT to do for the people in Yirmeyahu 11:14?",
+      "options": [
+        "Do not pray for them or offer any plea on their behalf",
+        "Do not prophesy in the Temple",
+        "Do not rebuke the false prophets",
+        "Do not write their sins in a scroll"
+      ],
+      "correct": 0,
+      "source_quote": "As for you, do not pray for this people, or lift up a cry or prayer on their behalf, for I will not listen when they call to me in the time of their trouble."
+    }
   ],
   "faq": [
     {
-      "question": "How does the shorter DSS Jeremiah affect these chapters?",
-      "answer": "The Qumran Jeremiah (4QJer-b) is substantially shorter than the Masoretic Jeremiah. Emanuel Tov's analysis documents that the Masoretic contains significant later additions — expanded prose sections, doubled oracles, and editorial frameworks not present in the older text. The Septuagint Jeremiah, translated before the Masoretic standardization, is also shorter and agrees with the DSS against the Masoretic in both length and chapter order. In chapters 8-15, the shorter text strips away later editorial additions and reveals the prophet's raw voice — the weeping, the diagnosis of the deceitful heart, the question about healing. The Masoretic additions soften and theologize what the older text presents as direct, unmediated prophetic speech. The DSS text is sharper, more direct, and more painful."
+      "question": "What does Yirmeyahu 8:8 reveal about scribal corruption of YHWH's word?",
+      "answer": "Yirmeyahu 8:8 is one of the most direct charges of textual falsification in the entire Hebrew corpus. The scribes who handle the Torah claim wisdom, but YHWH declares their lying pen has made the Torah into a lie. This is a direct accusation that scribal activity corrupted the text — a warning against treating any scribal tradition as infallible."
     },
     {
-      "question": "What does Yirmeyahu's weeping reveal about the covenant community's current condition?",
-      "answer": "Yirmeyahu does not weep abstractly. He weeps for 'the slain of the daughter of my people' (9:1). The prophet sees the destruction coming — the Babylonian siege, the burning of the Temple, the exile — and he weeps because the people will not turn. 'The harvest is past, the summer is ended, and we are not saved' (8:20). This is the language of a people who have missed their window. The Great Eraser pattern is embedded here: when the covenant people's identity is denied, their history erased, their language stripped — the harvest passes and they do not recognize the season. Yirmeyahu's tears are not for a past event only. They are for every generation of the covenant people that is scattered and does not know who they are."
+      "question": "What are Yirmeyahu's 'confessions'?",
+      "answer": "The confessions (Yirmeyahu 11:18-12:6; 15:10-21; 17:14-18; 18:19-23; 20:7-18) are intimate laments where Yirmeyahu argues directly with YHWH about the suffering of prophetic calling. He raises the theodicy question (why do the wicked prosper?), accuses YHWH of deceiving him, and curses the day of his birth. These are the most raw prophetic self-disclosures in the Hebrew corpus."
     },
     {
-      "question": "Why does YHWH say boasting in wisdom, might, or riches is empty?",
-      "answer": "Yirmeyahu 9:23-24: 'Let not the wise boast in his wisdom, let not the mighty boast in his might, let not the rich boast in his riches — but let him who boasts boast in this: that he understands and knows me, that I am YHWH who practices steadfast love, justice, and righteousness in the earth.' The three categories — wisdom, military power, wealth — are the categories of empire. Every enslaving nation boasts in these three. The covenant alternative is direct knowledge of YHWH and the practice of justice. The Qumran community organized around exactly this principle: they rejected the wealth of the Temple establishment, the military power of the Hasmonean kings, and the wisdom of the Hellenistic philosophical tradition. They pursued direct knowledge of YHWH through the preserved texts. Afro-Asiatic covenant identity is not built on institutional power — it is built on knowing YHWH."
+      "question": "What is the significance of 'lying pen of the scribes' for how we read ancient texts?",
+      "answer": "Yirmeyahu 8:8 is explicit evidence from within the biblical corpus itself that scribes falsified YHWH's word. This is not a modern accusation imposed from outside — the prophet himself named it. Combined with Masoretic vowel pointing (added 6th-10th century CE) and redactional layers, Rule 13 of this study applies: the DSS and Ge'ez Orit give us witnesses closer to the pre-corruption text."
+    },
+    {
+      "question": "Why is 'Is there no balm in Gilad?' in Yirmeyahu 8:22 so powerful?",
+      "answer": "Gilad (Transjordan) was famous for medicinal resin used to heal wounds. Yirmeyahu's question is rhetorical: the medicine exists, the doctor exists, yet the wound of the people's unfaithfulness is not healed. The implication is that the wound is spiritual, not physical, and that the people refuse the medicine available to them."
+    },
+    {
+      "question": "What is the linen belt parable teaching in Yirmeyahu 13?",
+      "answer": "YHWH commands Yirmeyahu to buy a linen belt, wear it at his waist, then hide it at the Euphrates. When retrieved, it is spoiled and useless. The interpretation: Yehudah clung to YHWH as a belt clings to a waist — meant to be a name, a praise, and a glory for him. But their pride and idol worship ruined them, making them useless as the ruined belt."
+    },
+    {
+      "question": "Why does YHWH forbid Yirmeyahu to pray for the people in chapter 11?",
+      "answer": "Yirmeyahu 11:14 (and 7:16; 14:11) records YHWH explicitly forbidding Yirmeyahu to intercede for the people. The situation has passed the point where intercession can help: the covenant has been systematically broken, the people have multiplied altars to Baal, and judgment is now inevitable. The ban on intercession signals that the season of warning has closed."
+    },
+    {
+      "question": "What is the theological problem Yirmeyahu raises in chapter 12?",
+      "answer": "Yirmeyahu 12:1-6 raises the classic theodicy question directly with YHWH: 'Why does the way of the wicked prosper? Why do all who are treacherous thrive?' He is not speaking abstractly — he is reacting to those who plot against his life (11:18-23). YHWH's answer is not philosophical comfort but a challenge: 'If you have raced with men on foot and they have wearied you, how will you compete with horses?'"
+    },
+    {
+      "question": "What does the 'boast in knowing YHWH' passage in Yirmeyahu 9:23-24 teach?",
+      "answer": "Yirmeyahu 9:23-24 strips away every human ground for boasting — wisdom, might, riches — and replaces them with one thing: knowing YHWH who practices steadfast love (hesed), justice (mishpat), and righteousness (tzedaqah) in the earth. This is covenant knowledge, not philosophical or mystical — knowing YHWH means knowing his covenant character."
+    },
+    {
+      "question": "What does Yirmeyahu mean by YHWH being like a stranger who cannot save in Yirmeyahu 14:8-9?",
+      "answer": "In Yirmeyahu 14:8-9, the people cry to YHWH in a drought: 'Why are you like a stranger in the land, like a traveler who turns aside to tarry for a night? Why are you like a man confused, like a mighty warrior who cannot save?' This is a complaint within prayer — are you present but helpless, or absent? YHWH's response: I am here, but you have rejected me. The relationship is broken on your side, not mine."
+    },
+    {
+      "question": "How does Yirmeyahu 10 contrast YHWH with the nations' idols?",
+      "answer": "Yirmeyahu 10 is an extended contrast: the idols are cut from a tree, decorated with silver and gold, nailed down so they don't fall over, carried because they cannot walk, and mute. YHWH, by contrast, made the earth by his power, stretched out the heavens by his understanding, and brings thunder and rain. The contrast is total: manufactured versus Creator."
+    },
+    {
+      "question": "What does YHWH mean when he compares Yehudah to the Ethiopian's unchangeable skin in Yirmeyahu 13:23?",
+      "answer": "Yirmeyahu 13:23 — 'Can the Ethiopian change his skin or the leopard its spots?' — uses a natural impossibility to describe the depth of Yehudah's habituation to evil: they have been doing evil so long that doing good has become as impossible for them as changing their skin color. This is the culmination of the indictment: they have become what they repeatedly chose."
     }
   ]
 }

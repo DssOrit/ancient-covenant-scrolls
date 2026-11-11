@@ -1,33 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_75",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_75",
   "label": "Mishlei (Proverbs) — Part 2 — Chapters 11–20",
   "volume": 22,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Mishlei chapters 11 through 20 deliver the core proverbial wisdom of Shelomoh. These are paired contrasts: the righteous and the wicked, the wise and the fool, the diligent and the lazy. A false balance is an abomination to YHWH, but a just weight is his delight. The tongue of the righteous is choice silver. Whoever loves discipline loves knowledge. The name of YHWH is a strong tower — the righteous run into it and are safe. A friend loves at all times. Even a fool who keeps silent is considered wise.",
   "summary_scholarly": "The ACR reads Mishlei 11-20 from DSS Proverbs fragments (4QProv-a, 4QProv-b) and the Orit Ge'ez. These chapters form the dense core of Shelomoh's mashal collection — antithetical parallelism in its purest form. The instruction on honest weights and measures (11:1, 16:11, 20:10, 20:23) connects to the Egyptian Ma'at tradition — justice, balance, and cosmic order as the foundation of wisdom. The Instructions of Amenemope contain the same emphasis on honest scales. The Hebrew wisdom tradition and the Egyptian wisdom tradition are sister branches of the same Afro-Asiatic intellectual heritage. The proverbs on speech — the tongue, the lips, the mouth — form the largest thematic cluster, reflecting the Afro-Asiatic understanding that language creates and destroys reality.",
   "key_terms": [
-    { "term": "Mashal", "phonetic": "Mah-SHAHL", "definition": "A proverb, comparison, or parable. The root means 'to compare, to liken.' Mishlei is a collection of meshalim — wisdom teachings that compare the righteous and the wicked, the wise and the foolish, to make the right path visible." },
-    { "term": "Migdal Oz (Strong Tower)", "phonetic": "Mig-DAHL Oz", "definition": "18:10: 'The name of YHWH is a strong tower — the righteous run into it and are safe.' YHWH's personal name itself is the refuge. Not a temple, not an institution — the name." },
-    { "term": "Mo'znei Tzedeq (Just Scales)", "phonetic": "Mohz-NAY TZEH-deq", "definition": "11:1: 'A false balance is an abomination to YHWH, but a just weight is his delight.' Justice in commerce is not secular — it is covenant obligation. This instruction parallels the Egyptian Ma'at tradition of cosmic justice symbolized by balanced scales." }
+    {
+      "term": "Pride Before Destruction",
+      "phonetic": "gav-AH lif-NEI she-VER",
+      "definition": "Mishlei 16:18: 'Pride goes before destruction and a haughty spirit before a fall' — one of the most foundational wisdom warnings in the Hebrew tradition."
+    },
+    {
+      "term": "Good Name Over Great Riches",
+      "phonetic": "shem TOV",
+      "definition": "Mishlei 22:1: 'A good name is more desirable than great riches, and favor is better than silver or gold' — a core value statement about reputation and character."
+    },
+    {
+      "term": "Train Up a Child",
+      "phonetic": "kha-NOKH la-NA'ar",
+      "definition": "Mishlei 22:6: 'Train up a child in the way he should go; even when he is old he will not depart from it' — the foundational covenant-education principle."
+    },
+    {
+      "term": "Words of Agur",
+      "phonetic": "div-REI a-GUR",
+      "definition": "The collection in Mishlei 30:1-33, attributed to Agur son of Yaqeh; contains the question 'Who has ascended to heaven and come down?' (30:4) — an ancient text the NT later borrowed from."
+    },
+    {
+      "term": "Who Has Ascended to Heaven",
+      "phonetic": "mi a-LAH sha-MA-yim",
+      "definition": "Mishlei 30:4: 'Who has ascended to heaven and come down? Who has gathered the wind in his fists? What is his name, and what is his son's name?' — ancient source; the NT borrowed from Agur's rhetorical question."
+    },
+    {
+      "term": "Eshet Khayil / Woman of Valor",
+      "phonetic": "E-shet KHA-yil",
+      "definition": "The acrostic poem closing Mishlei (31:10-31), describing a capable, wise, industrious woman; she fears YHWH and is praised at the city gates — the structural bookend to Lady Wisdom in chs 1-9."
+    },
+    {
+      "term": "Proverbs of Lemuel",
+      "phonetic": "div-REI Le-mu-EL",
+      "definition": "Mishlei 31:1-9, attributed to King Lemuel — 'the words that his mother taught him'; warns against women who destroy kings, drunkenness, and urges defense of the poor and needy."
+    },
+    {
+      "term": "Numerical Sayings",
+      "phonetic": "chesh-BON mi-spa-RI",
+      "definition": "The 'three things / four things' pattern in Mishlei (chs 30, 6:16) and other wisdom texts; a literary device for cataloguing related phenomena for reflection."
+    },
+    {
+      "term": "Wise Woman vs. Foolish Woman",
+      "phonetic": "i-SHAH khakha-MAH vs. i-SHET ke-si-LUT",
+      "definition": "The structural contrast running through Mishlei: Wisdom (chs 1-9, 31) invites to life; Folly (9:13-18) steals and leads to Sheol — representing every choice between YHWH's path and destruction."
+    },
+    {
+      "term": "Anthology Structure of Mishlei",
+      "phonetic": "a-si-FAT Mish-LEI",
+      "definition": "Mishlei is not a continuous composition but an anthology of distinct collections: chs 1-9 (instruction essays), 10-22:16 (Shlomo sayings), 22:17-24:22 (Words of the Wise), 25-29 (Khizkiyahu's collection), 30 (Agur), 31 (Lemuel + Eshet Khayil)."
+    }
   ],
   "fill_blank": [
-    { "ref": "18:10", "prompt": "The name of YHWH is a strong ______ — the righteous run into it and are safe.", "answer": "tower", "source_quote": "The name of YHWH is a strong tower — the righteous run into it and are safe." },
-    { "ref": "11:1", "prompt": "A false balance is an abomination to YHWH, but a just ______ is his delight.", "answer": "weight", "source_quote": "A false balance is an abomination to YHWH, but a just weight is his delight." },
-    { "ref": "17:17", "prompt": "A ______ loves at all times, and a brother is born for adversity.", "answer": "friend", "source_quote": "A friend loves at all times, and a brother is born for adversity." }
+    {
+      "ref": "Mishlei 16:18",
+      "prompt": "___ goes before destruction, and a haughty spirit before a fall.",
+      "answer": "Pride",
+      "source_quote": "Pride goes before destruction, and a haughty spirit before a fall."
+    },
+    {
+      "ref": "Mishlei 22:1",
+      "prompt": "A good ___ is to be chosen rather than great riches, and favor is better than silver or gold.",
+      "answer": "name",
+      "source_quote": "A good name is to be chosen rather than great riches, and favor is better than silver or gold."
+    },
+    {
+      "ref": "Mishlei 22:6",
+      "prompt": "Train up a child in the way he should go; even when he is old he will not ___ from it.",
+      "answer": "depart",
+      "source_quote": "Train up a child in the way he should go; even when he is old he will not depart from it."
+    },
+    {
+      "ref": "Mishlei 30:4",
+      "prompt": "Who has ascended to heaven and come down? Who has gathered the ___ in his fists?",
+      "answer": "wind",
+      "source_quote": "Who has ascended to heaven and come down? Who has gathered the wind in his fists?"
+    },
+    {
+      "ref": "Mishlei 31:10",
+      "prompt": "An excellent wife who can find? She is far more precious than ___.",
+      "answer": "jewels",
+      "source_quote": "An excellent wife who can find? She is far more precious than jewels."
+    },
+    {
+      "ref": "Mishlei 31:30",
+      "prompt": "___ is deceitful, and beauty is vain, but a woman who fears YHWH is to be praised.",
+      "answer": "Charm",
+      "source_quote": "Charm is deceitful, and beauty is vain, but a woman who fears YHWH is to be praised."
+    },
+    {
+      "ref": "Mishlei 18:21",
+      "prompt": "Death and life are in the power of the ___; those who love it will eat its fruit.",
+      "answer": "tongue",
+      "source_quote": "Death and life are in the power of the tongue; those who love it will eat its fruit."
+    },
+    {
+      "ref": "Mishlei 25:11",
+      "prompt": "A word fitly spoken is like ___ of gold in a setting of silver.",
+      "answer": "apples",
+      "source_quote": "A word fitly spoken is like apples of gold in a setting of silver."
+    },
+    {
+      "ref": "Mishlei 27:17",
+      "prompt": "Iron sharpens iron, and one man sharpens ___.",
+      "answer": "another",
+      "source_quote": "Iron sharpens iron, and one man sharpens another."
+    },
+    {
+      "ref": "Mishlei 29:18",
+      "prompt": "Where there is no prophetic vision the people ___; but blessed is he who keeps the Torah.",
+      "answer": "perish",
+      "source_quote": "Where there is no prophetic vision the people perish; but blessed is he who keeps the Torah."
+    }
   ],
   "multiple_choice": [
-    { "ref": "18:10", "question": "What does Mishlei call the name of YHWH?", "options": ["A distant memory", "A strong tower — the righteous run into it and are safe", "A hidden secret", "A code for scholars only"], "correct": 1, "source_quote": "The name of YHWH is a strong tower — the righteous run into it and are safe." },
-    { "ref": "11:1", "question": "What does YHWH say about false balances?", "options": ["They are acceptable in the marketplace", "They are an abomination — a just weight is his delight", "They are allowed in emergencies", "They are only forbidden for priests"], "correct": 1, "source_quote": "A false balance is an abomination to YHWH, but a just weight is his delight." },
-    { "ref": "12:1", "question": "Who loves knowledge according to Mishlei 12:1?", "options": ["Whoever avoids discipline", "Whoever loves discipline", "Whoever has wealth", "Whoever has power"], "correct": 1, "source_quote": "Whoever loves discipline loves knowledge, but he who hates reproof is stupid." }
+    {
+      "ref": "Mishlei 16:18",
+      "question": "What does Mishlei 16:18 say goes before destruction?",
+      "options": [
+        "Foolishness",
+        "Laziness",
+        "Pride",
+        "Anger"
+      ],
+      "correct": 2,
+      "source_quote": "Pride goes before destruction, and a haughty spirit before a fall."
+    },
+    {
+      "ref": "Mishlei 22:1",
+      "question": "According to Mishlei 22:1, what is more desirable than great riches?",
+      "options": [
+        "Wisdom",
+        "A good name",
+        "Long life",
+        "Strong children"
+      ],
+      "correct": 1,
+      "source_quote": "A good name is to be chosen rather than great riches."
+    },
+    {
+      "ref": "Mishlei 30:4",
+      "question": "In Mishlei 30:4, what ancient text asks 'Who has ascended to heaven and come down?'",
+      "options": [
+        "The Psalms of David",
+        "The Words of Agur (ch.30)",
+        "The Words of Lemuel (ch.31)",
+        "The Words of Shlomo (ch.25)"
+      ],
+      "correct": 1,
+      "source_quote": "Who has ascended to heaven and come down? — Mishlei 30:4, Words of Agur."
+    },
+    {
+      "ref": "Mishlei 31:30",
+      "question": "According to Mishlei 31:30, what kind of woman is to be praised?",
+      "options": [
+        "A woman of beauty",
+        "A woman of charm",
+        "A woman who fears YHWH",
+        "A woman of great wealth"
+      ],
+      "correct": 2,
+      "source_quote": "Charm is deceitful, and beauty is vain, but a woman who fears YHWH is to be praised."
+    },
+    {
+      "ref": "Mishlei 22:6",
+      "question": "What does Mishlei 22:6 promise about a child trained in the right way?",
+      "options": [
+        "They will become wise in old age",
+        "They will not depart from it when old",
+        "They will teach their children",
+        "They will be honored by all"
+      ],
+      "correct": 1,
+      "source_quote": "Train up a child in the way he should go; even when he is old he will not depart from it."
+    },
+    {
+      "ref": "Mishlei 18:21",
+      "question": "According to Mishlei 18:21, what two things are in the power of the tongue?",
+      "options": [
+        "Honor and shame",
+        "Wealth and poverty",
+        "Death and life",
+        "Wisdom and folly"
+      ],
+      "correct": 2,
+      "source_quote": "Death and life are in the power of the tongue."
+    },
+    {
+      "ref": "Mishlei 27:17",
+      "question": "What does Mishlei 27:17 say iron sharpens?",
+      "options": [
+        "Stone",
+        "Wood",
+        "Iron",
+        "Gold"
+      ],
+      "correct": 2,
+      "source_quote": "Iron sharpens iron, and one man sharpens another."
+    },
+    {
+      "ref": "Mishlei 29:18",
+      "question": "According to Mishlei 29:18, what happens where there is no prophetic vision?",
+      "options": [
+        "The people wander",
+        "The people perish",
+        "The people sin",
+        "The people forget YHWH"
+      ],
+      "correct": 1,
+      "source_quote": "Where there is no prophetic vision the people perish; but blessed is he who keeps the Torah."
+    },
+    {
+      "ref": "Mishlei 25:1",
+      "question": "According to Mishlei 25:1, who had Shlomo's proverbs copied?",
+      "options": [
+        "The Levitical scribes",
+        "Ezra the scribe",
+        "The men of Khizkiyahu",
+        "The elders of Yisra'el"
+      ],
+      "correct": 2,
+      "source_quote": "These also are proverbs of Shlomo which the men of Khizkiyahu king of Yehudah copied."
+    },
+    {
+      "ref": "Mishlei 31:10",
+      "question": "How does Mishlei 31:10 describe the value of an excellent wife?",
+      "options": [
+        "More precious than rubies",
+        "Far more precious than jewels",
+        "Worth more than a city",
+        "Equal to a wise man"
+      ],
+      "correct": 1,
+      "source_quote": "An excellent wife who can find? She is far more precious than jewels."
+    }
   ],
   "faq": [
     {
-      "question": "What does the instruction on honest weights and measures reveal about the covenant?",
-      "answer": "Mishlei repeatedly insists on honest scales and weights (11:1, 16:11, 20:10, 20:23). A false balance is an abomination to YHWH. This instruction connects directly to the Egyptian Ma'at tradition — the judgment of the dead involves weighing the heart against the feather of Ma'at on balanced scales. Both Hebrew and Egyptian wisdom traditions treat commercial honesty as cosmic justice, not merely civil law. The Hebrew and Egyptian traditions share this emphasis because they share the same Afro-Asiatic intellectual origin. The Great Eraser disconnects Hebrew wisdom from its African roots by classifying it as 'Ancient Near Eastern' rather than African — despite the text itself acknowledging Egyptian influence and despite Hebrew and Egyptian being Afro-Asiatic sister languages."
+      "question": "What is the Eshet Khayil and why does it close the book of Mishlei?",
+      "answer": "The Eshet Khayil (Woman of Valor, Mishlei 31:10-31) is an aleph-bet acrostic poem praising a capable, industrious, wise woman who fears YHWH. It closes Mishlei deliberately as a bookend to Lady Wisdom in chs 1-9: the whole book opens with personified Wisdom calling in the streets and closes with a flesh-and-blood embodiment of that wisdom, praised at the city gates."
     },
     {
-      "question": "Why does Mishlei 18:10 say the name of YHWH is the strong tower?",
-      "answer": "Mishlei 18:10 says: 'The name of YHWH is a strong tower — the righteous run into it and are safe.' Not a building. Not a temple. Not an institution. The name itself is the refuge. Every Great Eraser system replaces the name: 'LORD' in English Bibles, 'HaShem' in Rabbinical practice, 'the Lord' in Christian liturgy. If the name is the strong tower and the name has been erased, the refuge has been hidden. The righteous cannot run into what they do not know. Restoring the name YHWH is not a scholarly preference — it is restoring the refuge the text describes."
+      "question": "What is the significance of Agur's question in Mishlei 30:4?",
+      "answer": "Agur asks: 'Who has ascended to heaven and come down? Who has gathered the wind in his fists? What is his name, and what is his son's name?' This rhetorical question in the ancient text emphasizes YHWH's incomparability and human limitation. The NT later borrowed this rhetorical form; the direction runs from Mishlei's ancient text to NT adaptation, not the reverse."
+    },
+    {
+      "question": "What is the anthology structure of Mishlei and what does it reveal?",
+      "answer": "Mishlei is not a single composition but an anthology: chs 1-9 (extended instruction essays), 10:1-22:16 (Shlomo's proverbs), 22:17-24:22 (Words of the Wise), 25-29 (Khizkiyahu's copied collection), 30 (Words of Agur), 31 (Words of Lemuel + Eshet Khayil). This shows Hebrew wisdom was an ongoing tradition, gathered and preserved across generations and royal courts."
+    },
+    {
+      "question": "How does Mishlei 22:17-24:22 (Words of the Wise) relate to Egyptian wisdom?",
+      "answer": "This section shows close parallels to the Egyptian Instruction of Amenemope, demonstrating that Hebrew wisdom engaged with and adapted broader ancient Near Eastern wisdom while reshaping it within the YHWH-covenant framework. This shows ancient Hebrew wisdom was not isolated — it actively engaged with its world while maintaining YHWH as the ultimate foundation."
+    },
+    {
+      "question": "What does Mishlei 29:18 teach about the relationship between prophecy and Torah?",
+      "answer": "Mishlei 29:18 states: 'Where there is no prophetic vision the people perish; but blessed is he who keeps the Torah.' This pairs the prophetic voice with Torah-keeping as the two guardrails of community life. The absence of either leaves a people without guidance and without structure — both are needed for the covenant community to thrive."
+    },
+    {
+      "question": "What does the numerical saying pattern (three things, four things) in Mishlei 30 teach?",
+      "answer": "The numerical sayings (30:15-33) catalog related phenomena — things that are never satisfied, things too wonderful to understand, things the earth cannot bear, things that are small but wise. The pattern invites reflection on categories of experience and divine order. By listing and comparing, the reader is trained to observe creation carefully — a core wisdom discipline."
+    },
+    {
+      "question": "What is the relationship between Mishlei's Lemuel section and women's wisdom?",
+      "answer": "Mishlei 31:1 explicitly states these are 'words that his mother taught him' — a woman's wisdom handed down to a king. This, combined with the Eshet Khayil and Lady Wisdom, makes Mishlei unusual in placing women's wisdom at the beginning, middle, and end of the book. YHWH's wisdom is not exclusively transmitted through male lineage."
+    },
+    {
+      "question": "How does Mishlei 25-29 (Khizkiyahu's collection) differ from the earlier Shlomo sections?",
+      "answer": "Mishlei 25:1 says these are Shlomo's proverbs copied by Khizkiyahu's scribes — showing that the king who reformed Yehudah's worship (and who encountered the Assyrian crisis of Yesha'yahu's time) also valued preserving wisdom literature. The sayings in this section tend toward more extended comparison proverbs (like simile chains) rather than the simple antithetical parallels of chs 10-15."
+    },
+    {
+      "question": "What does Mishlei say about the connection between laziness and poverty?",
+      "answer": "Mishlei repeatedly connects sloth and poverty: 10:4 'A slack hand causes poverty, but the hand of the diligent makes rich.' 13:4 'The soul of the sluggard craves and gets nothing, while the soul of the diligent is richly supplied.' 24:33-34 'A little sleep, a little slumber... and poverty will come upon you like a robber.' This is practical covenant living — creation rewards diligence."
+    },
+    {
+      "question": "What does Mishlei 16:1-9 teach about human planning and YHWH's sovereignty?",
+      "answer": "Mishlei 16 holds two things in tension: humans plan, but YHWH determines the outcome. 16:1: 'The plans of the heart belong to humanity, but the answer of the tongue is from YHWH.' 16:9: 'The heart of a person plans his way, but YHWH establishes his steps.' 16:3: 'Commit your work to YHWH, and your plans will be established.' This is not fatalism but covenant trust — align with YHWH's purposes, and your work is grounded."
     }
   ]
 }

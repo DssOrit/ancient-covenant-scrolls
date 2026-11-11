@@ -1,33 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_76",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_76",
   "label": "Mishlei (Proverbs) — Part 3 — Chapters 21–31",
   "volume": 22,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Mishlei chapters 21 through 31 conclude the wisdom of Shelomoh and introduce the words of Agur and the words of Lemu'el's mother. The heart of the king is in the hand of YHWH — he turns it wherever he wills. A good name is to be chosen rather than great riches. Train up a child in the way he should go — when he is old he will not depart from it. The book closes with Eshet Chayil — the woman of valor: Who can find a woman of valor? Her worth is far above rubies. She opens her mouth with wisdom, and the Torah of kindness is on her tongue.",
   "summary_scholarly": "The ACR reads Mishlei 21-31 from DSS fragments and the Orit Ge'ez. The final chapter — Eshet Chayil (31:10-31) — is an aleph-bet acrostic, the same literary structure as Psalm 119. Each of its 22 verses begins with the next letter of the Hebrew alphabet. The woman of valor is not a passive domestic figure — she buys fields, plants vineyards, trades merchandise, strengthens her arms, opens her hands to the poor, and speaks wisdom with Torah on her tongue. She is the embodiment of Chokmah (Wisdom) from chapters 1-9 made tangible. The words of Agur (ch 30) and the words of King Lemu'el's mother (ch 31:1-9) are wisdom from outside the Shelomoh tradition — possibly Arabian or East African origin, given the non-Israelite names. The wisdom tradition is broader than one king, one court, one nation.",
   "key_terms": [
-    { "term": "Eshet Chayil (Woman of Valor)", "phonetic": "EH-shet KHAH-yil", "definition": "Mishlei 31:10-31: an aleph-bet acrostic describing the woman of valor. She is industrious, wise, generous, and strong. Her worth is far above rubies. She opens her mouth with wisdom, and the Torah of kindness is on her tongue." },
-    { "term": "Agur ben Yaqeh", "phonetic": "Ah-GOOR ben Yah-KEH", "definition": "The speaker of chapter 30. Not identified as Israelite. His sayings include the famous 'four things too wonderful for me' passage. His presence in Mishlei demonstrates the wisdom tradition's openness to truth from beyond the Israelite court." },
-    { "term": "Torat Chesed (Torah of Kindness)", "phonetic": "Toh-RAHT KHEH-sed", "definition": "31:26: 'She opens her mouth with wisdom, and the Torah of kindness is on her tongue.' Torah here is not law code but instruction — and it is qualified by chesed (lovingkindness, covenant faithfulness). Wisdom spoken with chesed." }
+    {
+      "term": "Ben Sira / Sirakh",
+      "phonetic": "Ben SI-ra",
+      "definition": "Wisdom book written by Yehoshua ben Sira (c.180 BCE), preserved in Hebrew fragments and in Ge'ez; also called Ecclesiasticus in the Greek tradition. It explicitly equates Wisdom with Torah in ch.24:23."
+    },
+    {
+      "term": "Ben Sira Chapter 24 (Wisdom in Tzion)",
+      "phonetic": "Ben SI-ra kaf-DA-let",
+      "definition": "The climactic wisdom poem of Ben Sira in which Wisdom (Khokhmah) declares she was sent to dwell in Tzion/Ya'akov — and then explicitly identifies herself with the Torah (24:23), making Tzion the home of YHWH's wisdom."
+    },
+    {
+      "term": "Hymn to the Ancestors",
+      "phonetic": "shi-VAK-hat a-VOT",
+      "definition": "Ben Sira 44-50: 'Let us now praise famous men and our ancestors in their generations' — a sweeping survey of Hebrew covenant history from Chanokh through the high priest Shim'on the Just, celebrating the heroes of the tradition."
+    },
+    {
+      "term": "4QInstruction",
+      "phonetic": "ar-ba kuf-shin horah",
+      "definition": "4Q415-4Q418: the most extensive wisdom text from Qumran; addresses a 'discerning one' (mevin); combines practical household and agricultural wisdom with eschatological teaching centered on the 'mystery that is to come' (raz nihyeh)."
+    },
+    {
+      "term": "Raz Nihyeh",
+      "phonetic": "raz ni-HYE",
+      "definition": "Hebrew phrase from 4QInstruction meaning 'the mystery that is to come' or 'the mystery of existence' — the eschatological secret that the discerning one (mevin) is called to contemplate alongside practical covenant living."
+    },
+    {
+      "term": "Wisdom Equated with Torah",
+      "phonetic": "Khokh-MAH = To-RAH",
+      "definition": "Ben Sira 24:23 explicitly identifies Wisdom with the Torah of Moshe: 'All this is the book of the covenant of the Most High, the Torah that Moshe commanded us.' This equation makes wisdom-living and Torah-keeping identical."
+    },
+    {
+      "term": "Mevin",
+      "phonetic": "me-VIN",
+      "definition": "Hebrew word meaning 'one who understands' or 'the discerning one'; the addressee of 4QInstruction. The mevin is called to perceive the raz nihyeh and apply it to daily covenant life — agriculture, family, and community."
+    },
+    {
+      "term": "Eschatological Wisdom",
+      "phonetic": "ah-cha-rit ha-ya-MIM khokh-MAH",
+      "definition": "The distinctive feature of Qumran wisdom (4QInstruction, Beatitudes 4Q525): wisdom is not merely practical advice for this life but oriented toward the final judgment and the age to come — an eschatological horizon absent from earlier Mishlei."
+    },
+    {
+      "term": "Two-Spirits Doctrine",
+      "phonetic": "shtei ru-KHOT",
+      "definition": "The doctrine in 1QS (Community Rule) cols 3-4 that YHWH created two spirits — of truth and of falsehood — in which all humanity participates; this framework also appears in connection with 4QInstruction's wisdom teaching, shaping its ethical worldview."
+    },
+    {
+      "term": "Wisdom Literature in DSS",
+      "phonetic": "sif-RUT khokh-MAH be-DSS",
+      "definition": "The DSS wisdom corpus includes 4QInstruction (4Q415-418), Mysteries (1Q27, 4Q299-301), Beatitudes (4Q525), and other texts; collectively they demonstrate how the Qumran community extended the Mishlei tradition with covenant and eschatological dimensions."
+    }
   ],
   "fill_blank": [
-    { "ref": "31:10", "prompt": "Who can find a woman of valor? Her worth is far above ______.", "answer": "rubies", "source_quote": "Who can find a woman of valor? Her worth is far above rubies." },
-    { "ref": "22:1", "prompt": "A good ______ is to be chosen rather than great riches.", "answer": "name", "source_quote": "A good name is to be chosen rather than great riches, and favor is better than silver or gold." },
-    { "ref": "22:6", "prompt": "Train up a child in the way he should go — when he is old he will not ______ from it.", "answer": "depart", "source_quote": "Train up a child in the way he should go — when he is old he will not depart from it." }
+    {
+      "ref": "Ben Sira 24:23",
+      "prompt": "In Ben Sira 24:23, Wisdom identifies herself with the ___ of Moshe.",
+      "answer": "Torah",
+      "source_quote": "All this is the book of the covenant of the Most High, the Torah that Moshe commanded us — Ben Sira 24:23."
+    },
+    {
+      "ref": "Ben Sira 1:16",
+      "prompt": "The fullness of wisdom is to ___ YHWH; she satisfies the righteous with her fruits.",
+      "answer": "fear",
+      "source_quote": "The fullness of wisdom is to fear YHWH — Ben Sira 1:16."
+    },
+    {
+      "ref": "Ben Sira 44:1",
+      "prompt": "Let us now ___ famous men and our ancestors in their generations.",
+      "answer": "praise",
+      "source_quote": "Let us now praise famous men and our ancestors in their generations — Ben Sira 44:1."
+    },
+    {
+      "ref": "4QInstruction (4Q416)",
+      "prompt": "The key concept in 4QInstruction that the mevin must contemplate is the ___ that is to come.",
+      "answer": "mystery (raz nihyeh)",
+      "source_quote": "Meditate on the mystery that is to come — 4QInstruction (4Q416)."
+    },
+    {
+      "ref": "Ben Sira 24:4",
+      "prompt": "In Ben Sira 24:4, Wisdom declares: 'I dwelt in ___ places, and my throne was in a pillar of cloud.'",
+      "answer": "high",
+      "source_quote": "I dwelt in high places, and my throne was in a pillar of cloud — Ben Sira 24:4."
+    },
+    {
+      "ref": "4QInstruction",
+      "prompt": "The addressee of 4QInstruction is called the ___, meaning the discerning one.",
+      "answer": "mevin",
+      "source_quote": "To the mevin (discerning one) — 4QInstruction opening address."
+    },
+    {
+      "ref": "Ben Sira 24:8",
+      "prompt": "In Ben Sira 24:8, YHWH commands Wisdom: 'Make your ___ in Ya'akov, and in Yisra'el receive your inheritance.'",
+      "answer": "dwelling",
+      "source_quote": "Make your dwelling in Ya'akov, and in Yisra'el receive your inheritance — Ben Sira 24:8."
+    },
+    {
+      "ref": "4Q525 (Beatitudes)",
+      "prompt": "The DSS Beatitudes text (4Q525) opens with 'Blessed is the one who speaks ___ and does not pursue it with a lying heart.'",
+      "answer": "truth",
+      "source_quote": "Blessed is the one who speaks truth and does not pursue it with a lying heart — 4Q525."
+    },
+    {
+      "ref": "Ben Sira 50:1",
+      "prompt": "In Ben Sira 44-50, the final great ancestor praised is ___ the high priest, son of Yokhanan.",
+      "answer": "Shim'on",
+      "source_quote": "The leader of his brothers and the pride of his people was Shim'on the high priest — Ben Sira 50:1."
+    },
+    {
+      "ref": "1QS 3:18",
+      "prompt": "The Two-Spirits Doctrine in 1QS says YHWH created two spirits for humanity: the spirit of ___ and the spirit of falsehood.",
+      "answer": "truth",
+      "source_quote": "He created the spirits of light and of darkness — 1QS 3:25; and the spirit of truth and the spirit of falsehood — 1QS 3:18-19."
+    }
   ],
   "multiple_choice": [
-    { "ref": "31:10-31", "question": "What is Eshet Chayil (the woman of valor) in Mishlei 31?", "options": ["A passive domestic figure who stays indoors", "A woman who buys fields, plants vineyards, trades, strengthens her arms, helps the poor, and speaks wisdom with Torah on her tongue", "A figurative name for the temple", "A queen who rules by military power"], "correct": 1, "source_quote": "She considers a field and buys it; with the fruit of her hands she plants a vineyard. She dresses herself with strength and makes her arms strong... She opens her hand to the poor and reaches out her hands to the needy... She opens her mouth with wisdom, and the Torah of kindness is on her tongue." },
-    { "ref": "22:1", "question": "What does Mishlei say is to be chosen rather than great riches?", "options": ["Great power", "A good name", "Many children", "A large house"], "correct": 1, "source_quote": "A good name is to be chosen rather than great riches." },
-    { "ref": "31:30", "question": "What does the Eshet Chayil passage say about beauty?", "options": ["Beauty is the highest virtue", "Charm is deceitful and beauty is vain — a woman who fears YHWH is to be praised", "Beauty is eternal", "Beauty proves righteousness"], "correct": 1, "source_quote": "Charm is deceitful, and beauty is vain, but a woman who fears YHWH is to be praised." }
+    {
+      "ref": "Ben Sira 24:23",
+      "question": "In Ben Sira 24:23, Wisdom explicitly identifies herself with what?",
+      "options": [
+        "The Temple of YHWH",
+        "The Torah of Moshe",
+        "The throne of David",
+        "The covenant of Avraham"
+      ],
+      "correct": 1,
+      "source_quote": "All this is the book of the covenant of the Most High, the Torah that Moshe commanded us — Ben Sira 24:23."
+    },
+    {
+      "ref": "4QInstruction",
+      "question": "What is the central eschatological concept in 4QInstruction that the mevin must contemplate?",
+      "options": [
+        "The Day of YHWH",
+        "The raz nihyeh (mystery that is to come)",
+        "The Two-Spirits Doctrine",
+        "The final battle of Gog"
+      ],
+      "correct": 1,
+      "source_quote": "Meditate on the mystery that is to come — 4QInstruction (4Q416)."
+    },
+    {
+      "ref": "Ben Sira 44:1",
+      "question": "Who does the Hymn to the Ancestors in Ben Sira 44 open with praising?",
+      "options": [
+        "YHWH directly",
+        "Famous men and ancestors",
+        "The Levitical priests",
+        "The prophets of Yisra'el"
+      ],
+      "correct": 1,
+      "source_quote": "Let us now praise famous men and our ancestors in their generations — Ben Sira 44:1."
+    },
+    {
+      "ref": "4QInstruction",
+      "question": "What distinguishes 4QInstruction's wisdom from earlier Mishlei?",
+      "options": [
+        "It focuses only on priestly duties",
+        "It combines practical wisdom with eschatological teaching",
+        "It rejects the Torah foundation",
+        "It was written in Greek"
+      ],
+      "correct": 1,
+      "source_quote": "4QInstruction (4Q415-418) combines practical household wisdom with the raz nihyeh (mystery that is to come)."
+    },
+    {
+      "ref": "1QS 3-4",
+      "question": "The Two-Spirits Doctrine in 1QS (Community Rule) says YHWH created two spirits — what are they?",
+      "options": [
+        "Of life and death",
+        "Of truth and falsehood",
+        "Of light and darkness above and below",
+        "Of fire and water"
+      ],
+      "correct": 1,
+      "source_quote": "He created the spirits of truth and of falsehood — 1QS 3:18-19."
+    },
+    {
+      "ref": "Ben Sira 24:8",
+      "question": "Where does YHWH command Wisdom to make her dwelling in Ben Sira 24:8?",
+      "options": [
+        "In Mitzrayim",
+        "In the wilderness",
+        "In Ya'akov / Yisra'el",
+        "In the heavens above"
+      ],
+      "correct": 2,
+      "source_quote": "Make your dwelling in Ya'akov, and in Yisra'el receive your inheritance — Ben Sira 24:8."
+    },
+    {
+      "ref": "4Q525",
+      "question": "The DSS text 4Q525 is known as what?",
+      "options": [
+        "The Two-Spirits text",
+        "The Beatitudes text",
+        "The Hymn to Creation",
+        "The Wisdom of the Mevin"
+      ],
+      "correct": 1,
+      "source_quote": "4Q525, known as the Beatitudes or Sapiential Work C, opens with blessing formulas."
+    },
+    {
+      "ref": "Ben Sira 1:16",
+      "question": "How does Ben Sira 1:16 describe 'the fullness of wisdom'?",
+      "options": [
+        "To study all the Torah",
+        "To fear YHWH",
+        "To serve in the Temple",
+        "To keep the Sabbath"
+      ],
+      "correct": 1,
+      "source_quote": "The fullness of wisdom is to fear YHWH — Ben Sira 1:16."
+    },
+    {
+      "ref": "Ben Sira fragments",
+      "question": "Hebrew fragments of Ben Sira were found in what location before the DSS?",
+      "options": [
+        "Masada only",
+        "The Cairo Geniza (from 1896 onward)",
+        "The cave at Qumran",
+        "The Elephantine documents"
+      ],
+      "correct": 1,
+      "source_quote": "Hebrew fragments of Ben Sira were recovered from the Cairo Geniza beginning in 1896, confirming the Hebrew original behind the Greek and Ge'ez translations."
+    },
+    {
+      "ref": "Wisdom Texts DSS",
+      "question": "Which of the following is the most extensive wisdom text from Qumran?",
+      "options": [
+        "The Damascus Document",
+        "1QS (Community Rule)",
+        "4QInstruction (4Q415-418)",
+        "The War Scroll 1QM"
+      ],
+      "correct": 2,
+      "source_quote": "4QInstruction (4Q415-4Q418) is the most extensive wisdom text from Qumran."
+    }
   ],
   "faq": [
     {
-      "question": "Why does Eshet Chayil matter for understanding covenant women?",
-      "answer": "Eshet Chayil (Mishlei 31:10-31) describes a woman who buys fields, plants vineyards, conducts international trade, strengthens her arms, helps the poor, and speaks wisdom with the Torah of kindness on her tongue. She is not passive. She is not decorative. She is the embodiment of Chokmah (Wisdom) from chapters 1-9 made real in a household. The colonial and institutional erasure of women's covenant roles — reducing them to silent subordinates based on Pauline instructions ('women should be silent in the assemblies,' 1 Corinthians 14:34) — directly contradicts the Hebrew wisdom tradition's portrait. Devorah judged Yisra'EL. Miriam prophesied. The Eshet Chayil speaks wisdom with Torah on her tongue. The Great Eraser silence imposed on women is not from the Hebrew text."
+      "question": "What is Ben Sira and why does it have authority as a primary source?",
+      "answer": "Ben Sira (Sirakh/Ecclesiasticus) was written by Yehoshua ben Sira around 180 BCE in Hebrew, then translated into Greek by his grandson. Hebrew fragments were found in the Cairo Geniza and at Masada (MasSir). The book is part of the Ge'ez Ethiopian canon — the same tradition that preserved 1 Enoch and the Orit. This preservation in both the Hebrew fragment tradition and the African covenant tradition gives it primary-source standing."
     },
     {
-      "question": "Who are Agur and Lemu'el and why are non-Israelite wisdom teachers in scripture?",
-      "answer": "Agur ben Yaqeh (chapter 30) and King Lemu'el (chapter 31:1-9) are not identified as Israelite. Their names suggest Arabian or East African origin. Their presence in Mishlei — canonical scripture — demonstrates that the Hebrew wisdom tradition recognized truth from beyond its own national borders. This is consistent with the Afro-Asiatic intellectual heritage: wisdom circulated across the African-Arabian corridor from Cush to Egypt to the Levant to Arabia. The Instructions of Amenemope (Egyptian), the Proverbs of Ahiqar (Aramaic), and the wisdom of Agur all participate in the same ancient tradition. The Great Eraser isolates Hebrew wisdom from its African and Arabian context, treating it as uniquely 'Judeo-Christian' when it is Afro-Asiatic in origin."
+      "question": "What does Ben Sira 24 teach about the relationship between Wisdom and Torah?",
+      "answer": "Ben Sira 24 is the climactic wisdom poem: Wisdom speaks in the heavenly assembly, is commanded by YHWH to dwell in Tzion/Ya'akov, and then explicitly identifies herself with the Torah of Moshe (24:23). This equation — Wisdom = Torah — means that covenant living and wise living are the same thing. There is no separation between religious observance and practical wisdom in this tradition."
+    },
+    {
+      "question": "What is 4QInstruction and why is it significant?",
+      "answer": "4QInstruction (4Q415-418) is the most extensive wisdom text from Qumran, addressing a 'discerning one' (mevin). It combines practical wisdom about agriculture, family, and poverty with an eschatological focus on the 'mystery that is to come' (raz nihyeh). This shows the Qumran community did not separate daily life from cosmic expectation — wisdom about plowing a field and wisdom about the final age belonged together."
+    },
+    {
+      "question": "What is the raz nihyeh and how does it shape 4QInstruction?",
+      "answer": "Raz nihyeh means 'the mystery that is to come' or 'the mystery of existence.' In 4QInstruction the mevin is repeatedly called to contemplate this mystery alongside practical tasks. It represents the hidden divine plan behind all of history and creation that will be revealed at the end of days. Wisdom in this tradition is not just about navigating the present — it is oriented toward YHWH's final purpose."
+    },
+    {
+      "question": "How does the Two-Spirits Doctrine in 1QS connect to the wisdom tradition?",
+      "answer": "The Two-Spirits Doctrine (1QS 3-4) teaches that YHWH created two spirits — of truth and of falsehood — in which all humanity participates in varying measures until the final judgment. This framework shapes 4QInstruction's ethics: the mevin is called to walk in the spirit of truth and avoid the spirit of falsehood. The wisdom choice between Wisdom and Folly in Mishlei becomes, in the DSS community, a cosmic conflict between two divinely created orientations."
+    },
+    {
+      "question": "What is the Hymn to the Ancestors in Ben Sira 44-50?",
+      "answer": "Ben Sira 44-50 is a survey of Hebrew covenant history celebrating the heroes of the tradition — Chanokh, Noakh, Avraham, Yitzhak, Ya'akov, Moshe, Aharon, Pinekhas, Yehoshua, Shmu'el, Natan, David, Shlomo, Eliyahu, and others — ending with the high priest Shim'on the Just as the embodiment of the covenant tradition in Ben Sira's own time. It is a living chain of covenant memory, not merely a list."
+    },
+    {
+      "question": "How does 4Q525 (the Beatitudes text) relate to the wisdom tradition?",
+      "answer": "4Q525 opens with blessing formulas similar in structure to Psalm 1 and to the broader beatitude form: 'Blessed is the one who speaks truth...' This ancient Hebrew text from Qumran pre-dates the NT Beatitudes and demonstrates that the beatitude form was a living feature of the Hebrew wisdom/covenant tradition. The NT borrowed this form from the existing Hebrew tradition."
+    },
+    {
+      "question": "What Hebrew fragments of Ben Sira exist and where were they found?",
+      "answer": "Hebrew fragments of Ben Sira were found in the Cairo Geniza (from 1896 onward, covering roughly 2/3 of the book), at Masada (MasSir, covering Ben Sira 39:27-44:17, found 1964), and at Qumran (2QSir = 2Q18, a small fragment of Ben Sira 6). These discoveries confirmed the Hebrew original behind the Greek (LXX) and Ge'ez translations, proving the book was composed in Hebrew and was read in the covenant community at Qumran."
+    },
+    {
+      "question": "How does the Qumran wisdom tradition relate to earlier Mishlei?",
+      "answer": "The Qumran community received Mishlei as a foundation and extended it. Where Mishlei offers practical wisdom rooted in the fear of YHWH, 4QInstruction adds the eschatological dimension: wisdom is not just for navigating this life but for understanding YHWH's hidden plan for the age to come (raz nihyeh). The two-way call of Lady Wisdom and Dame Folly in Mishlei becomes, in the DSS, a cosmic battle between the spirit of truth and the spirit of falsehood."
+    },
+    {
+      "question": "Why is Ben Sira included as a primary source rather than a secondary one?",
+      "answer": "Ben Sira was written around 180 BCE in Hebrew — before Rabbinic Judaism existed. It is preserved in the Ge'ez Ethiopian canon (the same tradition that preserved 1 Enoch and the full Orit), and Hebrew fragments confirm it circulated at Qumran. Ben Sira does not reflect Rabbinic manipulation; it reflects the pre-Rabbinic covenant wisdom tradition that was later set aside by the Rabbinic canon process. Its preservation in the African covenant tradition gives it primary standing here."
     }
   ]
 }

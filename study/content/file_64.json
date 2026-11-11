@@ -1,39 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_64",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_64",
   "label": "The Twelve — Part 5 — Zekhariyahu 9–14 and Malakhi",
   "volume": 19,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Zekhariyahu declares: YHWH will be a wall of fire around Yerushalayim and the glory within her. Whoever touches you touches the apple of my eye. Your king comes to you — righteous and having salvation, humble, riding on a donkey. I will pour out on the house of David and the inhabitants of Yerushalayim a spirit of grace and pleas for mercy — they will look on me, the one they have pierced, and mourn for him. On that day a fountain shall be opened for the house of David for sin and uncleanness. YHWH's feet shall stand on the Mount of Olives, and it shall split in two. Living waters shall flow out from Yerushalayim. And YHWH shall be king over all the earth — on that day YHWH shall be one and his name one. Malakhi — the last of the Twelve — declares: I have loved you, says YHWH. A son honors his father — if I am a father, where is my honor? Behold, I send my messenger to prepare the way before me. Behold, I will send you Eliyahu the prophet before the great and awesome Day of YHWH.",
   "summary_scholarly": "The ACR reads from the Minor Prophets Scroll (4QXII) and the Orit Ge'ez. Zekhariyahu 9-14 (often called Deutero-Zechariah) contains some of the most heavily cited prophetic material in the NT: the king on a donkey (9:9), the thirty pieces of silver (11:12-13), the pierced one (12:10), the smitten shepherd (13:7), the Mount of Olives splitting (14:4). The wall of fire around Yerushalayim (2:5) and 'whoever touches you touches the apple of my eye' (2:8) establish YHWH's direct protective relationship with the city. Zekhariyahu 14:9 — 'YHWH shall be one and his name one' — is the eschatological Shema: the full realization of YHWH's sole sovereignty over all the earth. Malakhi — whose name means 'my messenger' — closes the Twelve with the promise of Eliyahu's return before the Day of YHWH.",
   "key_terms": [
-    { "term": "Wall of Fire (Chomat Esh)", "phonetic": "Kho-MAHT Esh", "definition": "Zekhariyahu 2:5: 'I will be to her a wall of fire all around, and I will be the glory within her.' YHWH does not build physical walls — he himself is the wall. The protection is his presence, not human fortification." },
-    { "term": "Apple of His Eye (Bavat Eino)", "phonetic": "Bah-VAHT Ay-NO", "definition": "Zekhariyahu 2:8: 'Whoever touches you touches the apple of my eye.' The pupil of the eye — the most sensitive, most protected part. Touching the covenant people is touching YHWH's most vulnerable point." },
-    { "term": "Malakhi", "phonetic": "Mah-lah-KHEE", "definition": "The last of the Twelve prophets. His name means 'my messenger.' He confronts the priests for offering blemished sacrifices and the people for withholding tithes. He closes the prophetic canon with the promise of Eliyahu's return. Anglicized as Malachi." },
-    { "term": "Eliyahu's Return", "phonetic": "Ay-lee-YAH-hoo", "definition": "Malakhi 4:5 (3:23 in Hebrew): 'Behold, I will send you Eliyahu the prophet before the great and awesome Day of YHWH comes. He will turn the hearts of the fathers to the children and the hearts of the children to the fathers.' The prophetic canon closes with restoration of generational covenant continuity." }
+    {
+      "term": "King Comes on a Donkey (9:9)",
+      "phonetic": "Zekharyah 9:9",
+      "definition": "'Rejoice greatly, O daughter of Tzion! Shout aloud, O daughter of Yerushalayim! Behold, your king is coming to you; righteous and having salvation is he, humble and mounted on a donkey.' Ancient source; NT borrowed this."
+    },
+    {
+      "term": "Thirty Pieces of Silver (11:12-13)",
+      "phonetic": "Zekharyah 11:12-13",
+      "definition": "The shepherd's wages valued at thirty pieces of silver — 'the lordly price at which I was priced by them' — YHWH commands it cast to the potter in the house of YHWH. Ancient source; NT borrowed this."
+    },
+    {
+      "term": "Look on the One They Pierced (12:10)",
+      "phonetic": "Zekharyah 12:10",
+      "definition": "YHWH declares: 'I will pour out on the house of David and the inhabitants of Yerushalayim a spirit of grace and pleas for mercy, so that, when they look on me, on him whom they have pierced, they shall mourn for him.' Ancient source; NT borrowed this."
+    },
+    {
+      "term": "Malakhi",
+      "phonetic": "mah-lah-KHEE",
+      "definition": "The last of the Hebrew prophetic books; a series of disputations in which YHWH addresses the community's spiritual negligence, priestly failures, mixed marriages, tithing violations, and final appeals to return."
+    },
+    {
+      "term": "Messenger of the Covenant (3:1)",
+      "phonetic": "Malakhi 3:1",
+      "definition": "'Behold, I send my messenger, and he will prepare the way before me. And the Lord whom you seek will suddenly come to his temple; and the messenger of the covenant in whom you delight, behold, he is coming.' Ancient source; NT borrowed this."
+    },
+    {
+      "term": "Return to YHWH (Malakhi 3:7)",
+      "phonetic": "Malakhi 3:7",
+      "definition": "'Return to me, and I will return to you, says YHWH of Hosts. But you say, How shall we return?' — the community's question and YHWH's invitation paired together."
+    },
+    {
+      "term": "Sun of Righteousness (4:2)",
+      "phonetic": "Malakhi 4:2",
+      "definition": "'But for you who fear my name, the sun of righteousness shall rise with healing in its wings. You shall go out leaping like calves from the stall.'"
+    },
+    {
+      "term": "Eliyahu Before the Day (4:5)",
+      "phonetic": "Malakhi 4:5",
+      "definition": "YHWH's final prophetic word: 'Behold, I will send you Eliyahu the prophet before the great and awesome day of YHWH comes.' Ancient source; NT borrowed this, applying it to their John the Baptist character."
+    },
+    {
+      "term": "YHWH King Over All the Earth (14:9)",
+      "phonetic": "Zekharyah 14:9",
+      "definition": "The climactic declaration of Zekharyah's final vision: 'And YHWH will be king over all the earth. On that day YHWH will be one and his name one.'"
+    },
+    {
+      "term": "Cleansing Fountain (13:1)",
+      "phonetic": "Zekharyah 13:1",
+      "definition": "'On that day there shall be a fountain opened for the house of David and the inhabitants of Yerushalayim, to cleanse them from sin and uncleanness.'"
+    }
   ],
   "fill_blank": [
-    { "ref": "Zekhariyahu 2:8", "prompt": "Whoever touches you touches the ______ of my eye.", "answer": "apple", "source_quote": "For thus says YHWH of hosts: Whoever touches you touches the apple of my eye." },
-    { "ref": "Zekhariyahu 2:5", "prompt": "I will be to her a wall of ______ all around, and I will be the glory within her.", "answer": "fire", "source_quote": "For I will be to her a wall of fire all around, declares YHWH, and I will be the glory within her." },
-    { "ref": "Malakhi 4:5", "prompt": "Behold, I will send you ______ the prophet before the great and awesome Day of YHWH comes.", "answer": "Eliyahu", "source_quote": "Behold, I will send you Eliyahu the prophet before the great and awesome Day of YHWH comes." },
-    { "ref": "Zekhariyahu 14:9", "prompt": "And YHWH shall be king over all the earth — on that day YHWH shall be ______ and his name ______.", "answer": "one", "source_quote": "And YHWH shall be king over all the earth. On that day YHWH shall be one and his name one." }
+    {
+      "ref": "Zekharyah 9:9",
+      "prompt": "Rejoice greatly, O daughter of Tzion! Behold, your king is coming to you; righteous and having salvation is he, humble and ___ on a donkey.",
+      "answer": "mounted",
+      "source_quote": "Behold, your king is coming to you; righteous and having salvation is he, humble and mounted on a donkey."
+    },
+    {
+      "ref": "Zekharyah 11:12",
+      "prompt": "And they weighed out as my wages ___ pieces of silver.",
+      "answer": "thirty",
+      "source_quote": "And they weighed out as my wages thirty pieces of silver."
+    },
+    {
+      "ref": "Zekharyah 12:10",
+      "prompt": "I will pour out on the house of David a spirit of grace and pleas for mercy, so that when they look on me, on him whom they have ___, they shall mourn for him.",
+      "answer": "pierced",
+      "source_quote": "When they look on me, on him whom they have pierced, they shall mourn for him."
+    },
+    {
+      "ref": "Zekharyah 13:1",
+      "prompt": "On that day there shall be a ___ opened for the house of David and the inhabitants of Yerushalayim, to cleanse them from sin and uncleanness.",
+      "answer": "fountain",
+      "source_quote": "On that day there shall be a fountain opened for the house of David and the inhabitants of Yerushalayim, to cleanse them from sin and uncleanness."
+    },
+    {
+      "ref": "Zekharyah 14:9",
+      "prompt": "And YHWH will be ___ over all the earth. On that day YHWH will be one and his name one.",
+      "answer": "king",
+      "source_quote": "And YHWH will be king over all the earth. On that day YHWH will be one and his name one."
+    },
+    {
+      "ref": "Malakhi 1:6",
+      "prompt": "'A son honors his father, and a servant his master. If then I am a ___, where is my honor? And if I am a master, where is my fear?'",
+      "answer": "father",
+      "source_quote": "A son honors his father, and a servant his master. If then I am a father, where is my honor? And if I am a master, where is my fear?"
+    },
+    {
+      "ref": "Malakhi 3:1",
+      "prompt": "Behold, I send my ___, and he will prepare the way before me. And the Lord whom you seek will suddenly come to his temple.",
+      "answer": "messenger",
+      "source_quote": "Behold, I send my messenger, and he will prepare the way before me."
+    },
+    {
+      "ref": "Malakhi 3:7",
+      "prompt": "Return to me, and I will return to you, says YHWH of Hosts. But you say, 'How shall we ___?'",
+      "answer": "return",
+      "source_quote": "Return to me, and I will return to you, says YHWH of Hosts. But you say, How shall we return?"
+    },
+    {
+      "ref": "Malakhi 4:2",
+      "prompt": "But for you who fear my name, the ___ of righteousness shall rise with healing in its wings.",
+      "answer": "sun",
+      "source_quote": "The sun of righteousness shall rise with healing in its wings."
+    },
+    {
+      "ref": "Malakhi 4:5",
+      "prompt": "Behold, I will send you ___ the prophet before the great and awesome day of YHWH comes.",
+      "answer": "Eliyahu",
+      "source_quote": "Behold, I will send you Eliyahu the prophet before the great and awesome day of YHWH comes."
+    }
   ],
   "multiple_choice": [
-    { "ref": "Zekhariyahu 2:5", "question": "What does YHWH declare he will be to Yerushalayim?", "options": ["A stone wall and iron gate", "A wall of fire all around and the glory within her", "A fortress on a high hill", "A watchtower in the desert"], "correct": 1, "source_quote": "For I will be to her a wall of fire all around, declares YHWH, and I will be the glory within her." },
-    { "ref": "Malakhi 4:5-6", "question": "Who does YHWH promise to send before the Day of YHWH?", "options": ["Moshe", "A new king from David's line", "Eliyahu the prophet", "An angel from heaven"], "correct": 2, "source_quote": "Behold, I will send you Eliyahu the prophet before the great and awesome Day of YHWH comes. He will turn the hearts of the fathers to the children and the hearts of the children to the fathers." },
-    { "ref": "Zekhariyahu 14:9", "question": "What does Zekhariyahu 14:9 declare about YHWH's sovereignty?", "options": ["YHWH will share rule with the nations", "YHWH shall be king over all the earth — YHWH shall be one and his name one", "YHWH will appoint earthly kings", "YHWH will withdraw from the earth"], "correct": 1, "source_quote": "And YHWH shall be king over all the earth. On that day YHWH shall be one and his name one." }
+    {
+      "ref": "Zekharyah 9:9",
+      "question": "How is the coming king described in Zekharyah 9:9?",
+      "options": [
+        "Mighty and riding a warhorse",
+        "Righteous, having salvation, humble and riding a donkey",
+        "Crowned with gold and coming from the north",
+        "Dressed in priestly garments and carrying a scroll"
+      ],
+      "correct": 1,
+      "source_quote": "Righteous and having salvation is he, humble and mounted on a donkey."
+    },
+    {
+      "ref": "Zekharyah 11:12-13",
+      "question": "In Zekharyah 11:12-13, where does YHWH command the thirty pieces of silver to be thrown?",
+      "options": [
+        "Into the sea",
+        "Into the treasury of the Temple",
+        "To the potter in the house of YHWH",
+        "To the king of Babylon"
+      ],
+      "correct": 2,
+      "source_quote": "Cast it to the potter — the lordly price at which I was priced by them. So I took the thirty pieces of silver and cast them into the house of YHWH, to the potter."
+    },
+    {
+      "ref": "Zekharyah 12:10",
+      "question": "What spirit does YHWH promise to pour out on the house of David in Zekharyah 12:10?",
+      "options": [
+        "A spirit of prophetic fire",
+        "A spirit of power and strength",
+        "A spirit of grace and pleas for mercy",
+        "A spirit of wisdom and understanding"
+      ],
+      "correct": 2,
+      "source_quote": "I will pour out on the house of David and the inhabitants of Yerushalayim a spirit of grace and pleas for mercy."
+    },
+    {
+      "ref": "Zekharyah 13:1",
+      "question": "What will be opened for the house of David in Zekharyah 13:1?",
+      "options": [
+        "The gates of Yerushalayim",
+        "A fountain to cleanse from sin and uncleanness",
+        "A new covenant scroll",
+        "The sealed eastern gate of the Temple"
+      ],
+      "correct": 1,
+      "source_quote": "There shall be a fountain opened for the house of David and the inhabitants of Yerushalayim, to cleanse them from sin and uncleanness."
+    },
+    {
+      "ref": "Zekharyah 14:9",
+      "question": "What is YHWH's universal status declared in Zekharyah 14:9?",
+      "options": [
+        "YHWH will establish a new priesthood",
+        "YHWH will rebuild Yerushalayim forever",
+        "YHWH will be king over all the earth, and his name will be one",
+        "YHWH will give Yisra'el dominion over all nations"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH will be king over all the earth. On that day YHWH will be one and his name one."
+    },
+    {
+      "ref": "Malakhi 1:7-8",
+      "question": "What covenant violation does YHWH accuse the priests of in Malakhi 1?",
+      "options": [
+        "Intermarrying with the nations",
+        "Offering polluted and defective animals as sacrifices",
+        "Not collecting tithes from the people",
+        "Refusing to teach the Torah in public"
+      ],
+      "correct": 1,
+      "source_quote": "You offer polluted food upon my altar... When you offer blind animals in sacrifice, is that not evil?"
+    },
+    {
+      "ref": "Malakhi 3:1",
+      "question": "What ancient text in Malakhi 3:1 did NT writers borrow to create their John the Baptist character?",
+      "options": [
+        "A king will come to Yerushalayim on a donkey",
+        "Return to me and I will return to you",
+        "Behold, I send my messenger who will prepare the way before me",
+        "Eliyahu will return before the Day of YHWH"
+      ],
+      "correct": 2,
+      "source_quote": "Behold, I send my messenger, and he will prepare the way before me."
+    },
+    {
+      "ref": "Malakhi 3:10",
+      "question": "What does YHWH challenge the people to do in Malakhi 3:10?",
+      "options": [
+        "Bring all their silver to the Temple treasury",
+        "Bring the full tithe into the storehouse and test YHWH with it",
+        "Observe all 613 commandments without exception",
+        "Fast every new moon and Shabbat"
+      ],
+      "correct": 1,
+      "source_quote": "Bring the full tithe into the storehouse, that there may be food in my house. And thereby put me to the test, says YHWH of Hosts."
+    },
+    {
+      "ref": "Malakhi 4:2",
+      "question": "What image does Malakhi 4:2 use for YHWH's blessing on those who fear his name?",
+      "options": [
+        "A river of living water",
+        "A strong tower of refuge",
+        "The sun of righteousness rising with healing in its wings",
+        "A feast prepared in the presence of enemies"
+      ],
+      "correct": 2,
+      "source_quote": "The sun of righteousness shall rise with healing in its wings."
+    },
+    {
+      "ref": "Malakhi 4:5",
+      "question": "Who does YHWH promise to send before the Day of YHWH in the final verse of Malakhi?",
+      "options": [
+        "Moshe",
+        "A new Yehoshua",
+        "Eliyahu the prophet",
+        "An unnamed messenger of the covenant"
+      ],
+      "correct": 2,
+      "source_quote": "Behold, I will send you Eliyahu the prophet before the great and awesome day of YHWH comes."
+    }
   ],
   "faq": [
     {
-      "question": "How does the Great Eraser handle Zekhariyahu's 'wall of fire' and 'apple of my eye' declarations?",
-      "answer": "Zekhariyahu 2:5 declares YHWH himself as a wall of fire around Yerushalayim. Zekhariyahu 2:8 declares that whoever touches the covenant people touches the apple of YHWH's eye. These are among the most intimate protective declarations in the entire prophetic literature. The Great Eraser operates on two levels with these texts. First, replacement theology claimed that 'Yerushalayim' and 'Yisra'EL' in these verses now refer to the Church — the covenant people's protective promises were transferred to the institution that systematically oppressed the covenant people. Second, the political weaponization: modern Zionism claims these verses for a secular state, while the people whose ancestors were scattered across Africa and the Americas — the actual covenant community addressed by the prophets — are told these promises do not apply to them. The wall of fire is YHWH's direct protection. The apple of his eye is YHWH's personal sensitivity. Both are directed at the covenant people — not at an institution that replaced them or a state that claims their identity."
+      "question": "What makes Zekharyah 9–14 different from chapters 1–8?",
+      "answer": "Chapters 1–8 are dated oracles tied to specific years of Daryavesh's reign, structured around the night visions. Chapters 9–14 are undated 'burden' oracles of cosmic scope — covering cosmic warfare, national judgment, the coming king, and final universal transformation. Many scholars see them as later additions; regardless of composition history, they are preserved together as one prophetic book."
     },
     {
-      "question": "What does Zekhariyahu 14:9 — 'YHWH shall be one and his name one' — mean for Trinitarian theology?",
-      "answer": "Zekhariyahu 14:9 is the eschatological Shema: 'And YHWH shall be king over all the earth. On that day YHWH shall be one and his name one.' This is the prophetic vision of the end — and in the end, YHWH is one. Not three-in-one. Not a Trinity. One. And his name is one — not three names, not Father-Son-Spirit, but the name YHWH. The Trinitarian doctrine was formulated at the Council of Nicaea (325 CE), refined at Constantinople (381 CE), and enforced by imperial decree. The Hebrew prophetic tradition — from the Shema (Devarim 6:4) to Zekhariyahu 14:9 — declares YHWH echad. One. The Qumran community never mentions a Trinity. The Orit Ge'ez preserves the oneness of YHWH. The prophets declare what the end looks like: YHWH is one and his name is one. Any theology that makes YHWH three contradicts the prophetic eschatological vision."
+      "question": "How many times did NT writers borrow from Zekharyah 9–14?",
+      "answer": "Extensively. The king on a donkey (9:9) is borrowed for the entry into Yerushalayim narrative. The thirty pieces of silver (11:12-13) is borrowed for the betrayal narrative. The pierced one (12:10) is borrowed for crucifixion imagery. The shepherd struck and flock scattered (13:7) is borrowed for a garden scene narrative. 'Look, he is coming with the clouds' in the NT book of Revelation borrows from 12:10. All of these are ancient Zekharyah texts — the NT is the borrower."
     },
     {
-      "question": "Why does the prophetic canon close with Eliyahu's return?",
-      "answer": "Malakhi 4:5-6 (3:23-24 in Hebrew) closes the entire prophetic collection with a promise: Eliyahu the prophet will come before the Day of YHWH. His mission: 'He will turn the hearts of the fathers to the children and the hearts of the children to the fathers — lest I come and strike the land with a decree of utter destruction.' The prophetic canon does not end with judgment — it ends with generational restoration. The fathers and children are reconnected. The Great Eraser severed the covenant people from their ancestors — through the Slave Bible, through identity erasure, through the destruction of genealogical memory. Eliyahu's mission reverses the severing: hearts of fathers turn to children, hearts of children turn to fathers. The scattered covenant people — separated from their ancestors by the Middle Passage, by colonial renaming, by institutional identity theft — are promised reconnection. The prophetic canon closes with this promise because it is the final act before YHWH's Day: the restoration of the generational covenant chain."
+      "question": "What is the significance of Zekharyah 14:9 — 'YHWH will be king over all the earth'?",
+      "answer": "Zekharyah 14:9 is the theological destination of the entire prophetic corpus: YHWH's universal kingship established over every nation, with no competing claims. The Shema's words — 'YHWH is one' — become the universal confession. This is the covenant community's ultimate hope: not Yisra'el's political dominance but YHWH's undivided sovereignty over all creation."
+    },
+    {
+      "question": "What is the book of Malakhi about and when was it written?",
+      "answer": "Malakhi means 'my messenger' — possibly a title rather than a personal name. The book addresses the Persian-period community (post-exile, after the Temple was rebuilt) and targets specific abuses: careless priests offering defective sacrifices, men divorcing their covenant wives, failure to tithe, and spiritual fatigue. YHWH engages in direct disputation — stating a charge, then voicing the people's objection, then answering it."
+    },
+    {
+      "question": "What does Malakhi 3:1 say about the messenger, and how was it used by NT writers?",
+      "answer": "Malakhi 3:1 announces YHWH's messenger who will prepare the way before YHWH comes to the Temple. This is YHWH's own herald. NT writers took this ancient text and applied it to their John the Baptist character as a prefiguration. The original text is about YHWH's direct coming to the Temple; the NT recontextualizes it into a preparatory figure for the invented figure."
+    },
+    {
+      "question": "What is the challenge of Malakhi 3:10 about tithing?",
+      "answer": "Malakhi 3:10 contains one of the rare places YHWH explicitly invites the community to test the divine promise: bring the full tithe into the storehouse and see if YHWH does not open the windows of heaven with blessing. The community had been withholding tithes, and YHWH names this as robbery — robbing from YHWH directly. The challenge is to full covenant obedience and trust."
+    },
+    {
+      "question": "What does 'Eliyahu before the Day of YHWH' mean in Malakhi 4:5?",
+      "answer": "YHWH promises to send Eliyahu the prophet before the great and terrible Day of YHWH — a figure who will turn the hearts of parents to children and children to parents, preventing YHWH's coming in destruction. This ancient Hebrew expectation of Eliyahu's return became a source text that NT writers borrowed for their John the Baptist character and later their transfiguration scene. Eliyahu's return is rooted in Malakhi, not the NT."
+    },
+    {
+      "question": "What priestly failures does Malakhi condemn?",
+      "answer": "Malakhi 1–2 details the priests' contempt for YHWH's altar: offering blind, lame, and sick animals for sacrifice — things they would never offer to a human governor. YHWH says it would be better to shut the Temple doors than continue such empty ritual. The priests also corrupted the Torah's teaching and showed partiality in judgments, violating the covenant YHWH made with Levi."
+    },
+    {
+      "question": "How does Malakhi's 'Sun of Righteousness' image function in Malakhi 4:2?",
+      "answer": "YHWH promises that for those who fear the divine name, the sun of righteousness will rise with healing in its wings — like calves released from their stalls leaping with energy. The image contrasts with the Day of YHWH's fire for the arrogant: destruction on one hand, healing and freedom on the other. The same day brings both outcomes depending on one's covenant standing."
+    },
+    {
+      "question": "What does Zekharyah's final vision of the nations coming to Yerushalayim mean?",
+      "answer": "Zekharyah 14 describes YHWH's final transformation of Yerushalayim: enemies attacking, YHWH intervening, the Mount of Olives splitting, living waters flowing east and west year-round, and the survivors of all nations coming up annually to worship YHWH and keep the Festival of Sukkot. Nations that refuse will receive no rain. YHWH's universal kingship means universal covenant accountability."
     }
   ]
 }

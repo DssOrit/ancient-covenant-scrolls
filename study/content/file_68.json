@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_68",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_68",
   "label": "Tehillim (Psalms) — Part 4 — Psalms 73–89",
   "volume": 20,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Psalms 73 through 89 grapple with YHWH's faithfulness in the face of national catastrophe. Psalm 73 asks: why do the wicked prosper? But Asaf enters the sanctuary and understands their end. Psalm 78 retells the whole covenant history from Mitzrayim to Dawid. Psalm 83 is the cry of alarm: the nations conspire together — they say, come, let us wipe them out as a nation, let the name of Yisra'EL be remembered no more. Psalm 89 recites YHWH's covenant with Dawid: I will establish your throne forever. Then it cries out: but you have renounced the covenant of your servant — how long, O YHWH?",
   "summary_scholarly": "The ACR reads Psalms 73-89 from DSS witnesses and the Orit Ge'ez. Psalm 83 is the single most precise verse in all scripture describing the systematic erasure of Israelite identity — a coalition of nations making a covenant specifically to ensure the name of Yisra'EL is remembered no more. The psalm names the confederates: Edom, the Yishma'elim, Mo'av, the Hagrim, Geval, Ammon, Amaleq, Pelesheth, Tzor, and Ashur. Psalm 89 is the Dawid covenant psalm — YHWH swears an oath that Dawid's throne is eternal, then the psalmist laments that the covenant appears broken. The tension between promise and present reality is the theological engine of the exile psalms. The DSS community at Qumran lived in this tension — they preserved both the promise and the lament without resolving the contradiction through institutional theology.",
   "key_terms": [
-    { "term": "Shem Yisra'EL (Name of Yisra'EL)", "phonetic": "Shem Yis-rah-EL", "definition": "Psalm 83:4: 'Let the name of Yisra'EL be remembered no more.' The name itself is the target. The Great Eraser research documents the mechanisms by which this erasure has been carried out across millennia — canon exclusion, linguistic substitution, identity reassignment, institutional gatekeeping." },
-    { "term": "Berit Dawid (Covenant of Dawid)", "phonetic": "Beh-REET Dah-VEED", "definition": "YHWH's oath to Dawid in Psalm 89: 'I will establish your offspring forever, and build your throne for all generations' (89:4). An unconditional covenant sworn by YHWH himself. The psalmist then laments: you have renounced the covenant — the throne is cast to the ground." },
-    { "term": "Asaf", "phonetic": "Ah-SAHF", "definition": "The Levitical musician credited with Psalms 73-83. Asaf's psalms address the problem of the wicked prospering and the righteous suffering — theodicy within the covenant framework." }
+    {
+      "term": "Psalm 90 Moshe's Prayer",
+      "phonetic": "Tehillim 90",
+      "definition": "The only psalm attributed to Moshe; opens Book IV. Reflects on YHWH's eternity versus human transience: 'A thousand years in your sight are like a watch in the night.'"
+    },
+    {
+      "term": "Thousand Years Like a Watch (Ps.90:4)",
+      "phonetic": "Tehillim 90:4",
+      "definition": "'For a thousand years in your sight are but as yesterday when it is past, or as a watch in the night.' YHWH's time is not human time; divine patience is not delay."
+    },
+    {
+      "term": "Psalm 91 Shelter of the Most High",
+      "phonetic": "Tehillim 91",
+      "definition": "The great psalm of divine protection: 'He who dwells in the shelter of the Most High will abide in the shadow of the Almighty.' Promises angelic protection, rescue from pestilence and snare, and covenant security."
+    },
+    {
+      "term": "He Will Command His Angels (91:11)",
+      "phonetic": "Tehillim 91:11",
+      "definition": "'For he will command his angels concerning you to guard you in all your ways.' Ancient source; NT writers borrowed this verse — it appears in the wilderness temptation narrative of their invented figure. The original context is covenant protection for those who trust in YHWH."
+    },
+    {
+      "term": "Psalm 96 Sing to YHWH",
+      "phonetic": "Tehillim 96",
+      "definition": "An enthronement psalm: 'Sing to YHWH a new song; sing to YHWH, all the earth.' Declares YHWH's glory among the nations and YHWH's coming to judge the earth in righteousness."
+    },
+    {
+      "term": "Psalm 103 Bless YHWH O My Soul",
+      "phonetic": "Tehillim 103",
+      "definition": "David's psalm of YHWH's covenant love: forgiveness, healing, redemption, coronation with love and mercy, satisfaction with good things. 'Bless YHWH, O my soul, and all that is within me, bless his holy name.'"
+    },
+    {
+      "term": "Psalm 103 East from West",
+      "phonetic": "Tehillim 103:12",
+      "definition": "'As far as the east is from the west, so far does he remove our transgressions from us.' YHWH's forgiveness is complete, directional, unbounded — east and west never converge, so the transgressions are removed to infinite distance."
+    },
+    {
+      "term": "Hallel Psalms (Ps.113-118 group)",
+      "phonetic": "hal-LEL",
+      "definition": "The 'Egyptian Hallel' — six psalms (113-118) sung at Pesakh, Shavuot, Sukkot, and Khanukkah. The name 'Egyptian Hallel' refers to Ps.114's reference to the Exodus from Mitzrayim. Used liturgically at the Passover seder."
+    },
+    {
+      "term": "Egyptian Hallel",
+      "phonetic": "hal-LEL",
+      "definition": "Another name for the Hallel cycle (Ps.113-118) used at the three pilgrim festivals and Khanukkah; called 'Egyptian' because Psalm 114 begins 'When Yisra'el went out of Mitzrayim.' The seder's Hallel is taken from these psalms."
+    },
+    {
+      "term": "Moses Psalm (Ps.90)",
+      "phonetic": "Tehillim 90",
+      "definition": "Psalm 90 carries the unique superscription 'A Prayer of Moshe, the man of YHWH' — the only psalm attributed to Moshe in the canonical Psalter. It opens Book IV with a reflection on YHWH's eternity as the answer to Ps.89's lament over human failure."
+    }
   ],
   "fill_blank": [
-    { "ref": "83:4", "prompt": "They say: Come, let us wipe them out as a nation — let the name of ______ be remembered no more.", "answer": "Yisra'EL", "source_quote": "They say: Come, let us wipe them out as a nation — let the name of Yisra'EL be remembered no more." },
-    { "ref": "89:3-4", "prompt": "I have made a covenant with my chosen one, I have sworn to ______ my servant: I will establish your offspring forever.", "answer": "Dawid", "source_quote": "I have made a covenant with my chosen one, I have sworn to Dawid my servant: I will establish your offspring forever, and build your throne for all generations." },
-    { "ref": "73:17", "prompt": "When I thought to understand this, it was too painful for me — until I went into the ______ of The Creator.", "answer": "sanctuary", "source_quote": "When I thought to understand this, it was too painful for me — until I went into the sanctuary of The Creator; then I understood their end." },
-    { "ref": "83:5", "prompt": "For they conspire with one ______ — against you they make a covenant.", "answer": "accord", "source_quote": "For they conspire with one accord — against you they make a covenant." }
+    {
+      "ref": "Psalm 90:1",
+      "prompt": "YHWH, you have been our dwelling place in all ___.",
+      "answer": "generations",
+      "source_quote": "YHWH, you have been our dwelling place in all generations."
+    },
+    {
+      "ref": "Psalm 90:4",
+      "prompt": "For a ___ years in your sight are but as yesterday when it is past, or as a watch in the night.",
+      "answer": "thousand",
+      "source_quote": "For a thousand years in your sight are but as yesterday when it is past, or as a watch in the night."
+    },
+    {
+      "ref": "Psalm 90:10",
+      "prompt": "The years of our life are ___, or even by reason of strength eighty; yet their span is but toil and trouble.",
+      "answer": "seventy",
+      "source_quote": "The years of our life are seventy, or even by reason of strength eighty; yet their span is but toil and trouble."
+    },
+    {
+      "ref": "Psalm 91:1",
+      "prompt": "He who dwells in the ___ of the Most High will abide in the shadow of the Almighty.",
+      "answer": "shelter",
+      "source_quote": "He who dwells in the shelter of the Most High will abide in the shadow of the Almighty."
+    },
+    {
+      "ref": "Psalm 91:11",
+      "prompt": "For he will command his ___ concerning you to guard you in all your ways.",
+      "answer": "angels",
+      "source_quote": "For he will command his angels concerning you to guard you in all your ways."
+    },
+    {
+      "ref": "Psalm 96:1",
+      "prompt": "Sing to YHWH a ___ song; sing to YHWH, all the earth!",
+      "answer": "new",
+      "source_quote": "Sing to YHWH a new song; sing to YHWH, all the earth!"
+    },
+    {
+      "ref": "Psalm 103:1",
+      "prompt": "Bless YHWH, O my ___; and all that is within me, bless his holy name!",
+      "answer": "soul",
+      "source_quote": "Bless YHWH, O my soul; and all that is within me, bless his holy name!"
+    },
+    {
+      "ref": "Psalm 103:12",
+      "prompt": "As far as the east is from the ___, so far does he remove our transgressions from us.",
+      "answer": "west",
+      "source_quote": "As far as the east is from the west, so far does he remove our transgressions from us."
+    },
+    {
+      "ref": "Psalm 103:13",
+      "prompt": "As a father shows compassion to his children, so YHWH shows compassion to those who ___ him.",
+      "answer": "fear",
+      "source_quote": "As a father shows compassion to his children, so YHWH shows compassion to those who fear him."
+    },
+    {
+      "ref": "Psalm 105:1",
+      "prompt": "Oh give thanks to YHWH; call upon his name; make known his ___ among the peoples!",
+      "answer": "deeds",
+      "source_quote": "Oh give thanks to YHWH; call upon his name; make known his deeds among the peoples!"
+    }
   ],
   "multiple_choice": [
-    { "ref": "83:4-5", "question": "What do the conspiring nations seek to do in Psalm 83?", "options": ["Conquer Yerushalayim's treasury", "Wipe Yisra'EL out as a nation so that the name is remembered no more", "Negotiate a peace treaty", "Build a rival temple"], "correct": 1, "source_quote": "They say: Come, let us wipe them out as a nation — let the name of Yisra'EL be remembered no more. For they conspire with one accord — against you they make a covenant." },
-    { "ref": "89:3-4, 38-39", "question": "What is the tension in Psalm 89?", "options": ["YHWH swore a covenant with Dawid but the psalmist says YHWH has renounced the covenant", "Dawid breaks his own covenant", "The people request a new king", "The psalm celebrates unbroken victory"], "correct": 0, "source_quote": "I have sworn to Dawid my servant: I will establish your offspring forever... But you have renounced the covenant of your servant; you have defiled his crown in the dust." },
-    { "ref": "73:16-17", "question": "When does Asaf understand why the wicked prosper?", "options": ["When he reads the Torah", "When he enters the sanctuary of The Creator and sees their end", "When YHWH speaks to him in a dream", "When the wicked are immediately punished"], "correct": 1, "source_quote": "When I thought to understand this, it was too painful for me — until I went into the sanctuary of The Creator; then I understood their end." }
+    {
+      "ref": "Psalm 90:1",
+      "question": "Who is credited with Psalm 90 in its superscription?",
+      "options": [
+        "David",
+        "Asaph",
+        "Solomon",
+        "Moshe, the man of YHWH"
+      ],
+      "correct": 3,
+      "source_quote": "A Prayer of Moshe, the man of YHWH."
+    },
+    {
+      "ref": "Psalm 90:4",
+      "question": "How does Psalm 90:4 describe YHWH's experience of a thousand years?",
+      "options": [
+        "A long and difficult age of waiting",
+        "Like a single day or a watch in the night",
+        "Like a moment that passes instantly",
+        "Like the entire history of a nation"
+      ],
+      "correct": 1,
+      "source_quote": "For a thousand years in your sight are but as yesterday when it is past, or as a watch in the night."
+    },
+    {
+      "ref": "Psalm 90:10",
+      "question": "According to Psalm 90:10, what is the typical human lifespan?",
+      "options": [
+        "Forty years or sixty if strong",
+        "Seventy years or eighty by strength",
+        "A hundred years if righteous",
+        "One hundred twenty years like Moshe"
+      ],
+      "correct": 1,
+      "source_quote": "The years of our life are seventy, or even by reason of strength eighty."
+    },
+    {
+      "ref": "Psalm 91:1",
+      "question": "What does Psalm 91:1 promise to the one who dwells in YHWH's shelter?",
+      "options": [
+        "A long life and many descendants",
+        "Prosperity and abundance in the land",
+        "Abiding in the shadow of the Almighty",
+        "Protection from all disease forever"
+      ],
+      "correct": 2,
+      "source_quote": "He who dwells in the shelter of the Most High will abide in the shadow of the Almighty."
+    },
+    {
+      "ref": "Psalm 91:11",
+      "question": "What does YHWH command his angels to do according to Psalm 91:11?",
+      "options": [
+        "Bring messages of comfort to the righteous",
+        "Guard the person in all their ways",
+        "Carry prayers to YHWH's throne",
+        "Stand at the gates of Yerushalayim"
+      ],
+      "correct": 1,
+      "source_quote": "He will command his angels concerning you to guard you in all your ways."
+    },
+    {
+      "ref": "Psalm 96:13",
+      "question": "Why does Psalm 96 call all creation to rejoice?",
+      "options": [
+        "Because Yisra'el has been restored to the land",
+        "Because YHWH is coming to judge the earth with righteousness and faithfulness",
+        "Because the Temple has been rebuilt in Yerushalayim",
+        "Because YHWH has defeated all of Yisra'el's enemies"
+      ],
+      "correct": 1,
+      "source_quote": "He will judge the world in righteousness, and the peoples in his faithfulness."
+    },
+    {
+      "ref": "Psalm 103:1",
+      "question": "With what command does Psalm 103 open?",
+      "options": [
+        "Sing to YHWH a new song",
+        "Praise YHWH from the heavens",
+        "Bless YHWH O my soul and all that is within me",
+        "Give thanks to YHWH for he is good"
+      ],
+      "correct": 2,
+      "source_quote": "Bless YHWH, O my soul; and all that is within me, bless his holy name!"
+    },
+    {
+      "ref": "Psalm 103:12",
+      "question": "To what does Psalm 103:12 compare YHWH's removal of transgressions?",
+      "options": [
+        "As deep as the ocean floor",
+        "As high as the heavens above the earth",
+        "As far as the east is from the west",
+        "As permanent as the mountains"
+      ],
+      "correct": 2,
+      "source_quote": "As far as the east is from the west, so far does he remove our transgressions from us."
+    },
+    {
+      "ref": "Psalm 103:13",
+      "question": "What comparison does Psalm 103:13 use for YHWH's compassion?",
+      "options": [
+        "A shepherd caring for a lost sheep",
+        "A warrior protecting the weak",
+        "A father showing compassion to his children",
+        "A mother eagle sheltering her young"
+      ],
+      "correct": 2,
+      "source_quote": "As a father shows compassion to his children, so YHWH shows compassion to those who fear him."
+    },
+    {
+      "ref": "Psalm 105:1-2",
+      "question": "What does Psalm 105:1 command regarding YHWH's deeds?",
+      "options": [
+        "Hide them in your heart and meditate alone",
+        "Make them known among the peoples",
+        "Record them in a book for all generations",
+        "Teach them only to the priests and Levites"
+      ],
+      "correct": 1,
+      "source_quote": "Oh give thanks to YHWH; call upon his name; make known his deeds among the peoples!"
+    }
   ],
   "faq": [
     {
-      "question": "Why is Psalm 83 THE key Great Eraser verse?",
-      "answer": "Psalm 83:4 states it explicitly: 'Come, let us wipe them out as a nation — let the name of Yisra'EL be remembered no more.' This is not metaphor. It is a documented program. The psalm names a coalition — not a single enemy but a coordinated alliance — making a covenant specifically against YHWH and his people. Every mechanism documented in the Great Eraser research fulfills this verse. The Slave Bible (1807) removed the Exodus. The Masoretic canonizers excluded Chanokh, Yovelim, and the DSS-only psalms. European Bible translators replaced YHWH with 'LORD' and Hebrew names with anglicized forms. Academic institutions delayed publication of the Dead Sea Scrolls for 40 years. DNA companies reassign Israelite markers to European population labels. Each institution serves the same function the psalm describes: ensuring the name of Yisra'EL is remembered no more. The psalm is not ancient prophecy waiting for fulfillment — it is a real-time description of an ongoing program."
+      "question": "Why is Psalm 90 attributed to Moshe and what does it contribute to Book IV?",
+      "answer": "Psalm 90 is the Psalter's only psalm attributed to Moshe — a figure predating the monarchy entirely. Book IV (Ps.90-106) opens by going back past David's dynasty to YHWH's eternal existence. It answers Book III's closing lament (Ps.89's crisis over the Davidic covenant) by lifting the view: YHWH was Israel's dwelling place before kingdoms, and will be after. Human dynasties fail; YHWH's eternity is the constant."
     },
     {
-      "question": "What does Psalm 89 reveal about the Dawid covenant?",
-      "answer": "Psalm 89 contains YHWH's most detailed oath to Dawid: 'I will establish your offspring forever and build your throne for all generations' (89:4). YHWH swears by his holiness: 'I will not lie to Dawid. His offspring shall endure forever, his throne as long as the sun before me' (89:35-36). Then the psalm breaks: 'But you have renounced the covenant of your servant. You have defiled his crown in the dust' (89:38-39). The psalmist does not resolve this tension — he holds both truths simultaneously. YHWH swore and YHWH does not lie. But the throne is in the dust. The DSS community at Qumran lived in this exact tension during the Period of Wrath. The Great Eraser resolution — the NT claim that the Dawid covenant is fulfilled in a divine incarnation — eliminates the tension by changing the nature of the throne from political-national to spiritual-universal. The psalm itself refuses this resolution. The covenant is with Dawid. The throne is of Yisra'EL. The lament is real."
+      "question": "What does Psalm 90:4 teach about YHWH's experience of time?",
+      "answer": "Psalm 90:4 states that a thousand years are to YHWH like yesterday once it has passed — a completed unit that is gone — or like a watch in the night, a few brief hours. YHWH does not experience time as humans do: what feels like infinite delay to a human is a brief moment to YHWH. This reframes the community's impatience and complaint — YHWH's slowness is not indifference but a different relationship with time altogether."
     },
     {
-      "question": "Who are the nations listed in Psalm 83's coalition?",
-      "answer": "Psalm 83:6-8 names the confederates: Edom (Esav's descendants, southern Transjordan), the Yishma'elim (Arabian tribes), Mo'av (Transjordan), the Hagrim (eastern nomads), Geval (Lebanese coast), Ammon (Transjordan), Amaleq (Negev), Pelesheth (the coastal plain — Philistia), Tzor (Tyre — Phoenician coast), and Ashur (Assyria). Ten named groups forming a single covenant against YHWH's people. The psalm describes a multinational, coordinated erasure — not a random attack by one enemy but a systematic alliance. The Great Eraser research documents the same structure across every era: multiple institutions — religious, academic, political, commercial — working in parallel toward the same erasure."
+      "question": "What is Psalm 91 about and who is the 'shelter of the Most High'?",
+      "answer": "Psalm 91 is the great protective psalm of the Psalter, promising comprehensive divine protection to the one who makes YHWH their refuge and dwelling. The 'shelter of the Most High' is YHWH's protective presence — not necessarily a physical place but the covenantal relationship of trust that makes YHWH's care operative. The promises are covenant promises, not unconditional magic."
+    },
+    {
+      "question": "How did NT writers borrow from Psalm 91:11 and what is the original meaning?",
+      "answer": "NT writers placed Psalm 91:11 on the lips of their adversary figure during a 'temptation' scene — quoting it to suggest the invented figure could throw himself from the Temple and angels would catch him. The original context in Psalm 91 is about covenant protection for the person who trusts in YHWH in daily life — protection from snares, pestilence, and attack. Using it as a proof-text for a stunt inverts its meaning."
+    },
+    {
+      "question": "What does Psalm 96 declare about YHWH's relationship to all nations?",
+      "answer": "Psalm 96 is a universal enthronement psalm — YHWH's glory is to be declared among all nations; all gods of the peoples are powerless (elilim — worthless things); YHWH made the heavens. YHWH is coming to judge the earth in righteousness and faithfulness. The psalm commands universal worship — not Yisra'el alone but all families of the nations are to attribute glory and strength to YHWH."
+    },
+    {
+      "question": "What are the key themes of Psalm 103?",
+      "answer": "Psalm 103 catalogues YHWH's covenant benefits: forgiveness of all iniquity, healing of disease, redemption from the pit, coronation with love and mercy, satisfaction with good things, renewal of youth like an eagle. The psalm then grounds these personal benefits in YHWH's covenant character: compassionate as a parent, knowing our dust-nature, removing transgressions as far as east from west. It closes with a cosmic call to all angels and all creation to bless YHWH."
+    },
+    {
+      "question": "What does the 'east from west' comparison in Psalm 103:12 mean?",
+      "answer": "East and west are directions that never converge — they recede from each other infinitely. YHWH's removal of transgressions is compared to this: once removed, they are placed at an unbounded distance. The comparison makes forgiveness total and directional — the transgressions are not merely overlooked or suspended, they are actively moved to the furthest possible distance from the person."
+    },
+    {
+      "question": "What is the Egyptian Hallel and when was it used?",
+      "answer": "The Egyptian Hallel is Psalms 113-118, used liturgically at the three great pilgrimage festivals (Pesakh, Shavuot, Sukkot) and Khanukkah. The name 'Egyptian' comes from Psalm 114's opening reference to Yisra'el's departure from Mitzrayim. At Pesakh, Psalms 113-114 were sung before the meal and 115-118 after. These are the psalms that were part of the last Passover seder observance described in the accounts — 'when they had sung the hymn, they went out.'"
+    },
+    {
+      "question": "How do Psalms 105 and 106 function as a pair at the end of Book IV?",
+      "answer": "Psalm 105 retells the covenant history from YHWH's side — YHWH's faithfulness to the promise made to Avraham, the preservation of Yosef, the plagues of Mitzrayim, the wilderness provision. Psalm 106 retells the same history from the people's side — rebellion, idolatry, ingratitude. Together they form a diptych: YHWH's faithfulness against human unfaithfulness throughout history. Book IV closes with this honest reckoning, then Book V begins with a great 'give thanks to YHWH' (Ps.107)."
+    },
+    {
+      "question": "Why does Psalm 90 begin Book IV rather than a Davidic psalm?",
+      "answer": "Book III ended with Psalm 89's lament over the apparent abandonment of the Davidic covenant — the crown in the dust, enemies mocking. Book IV answers this crisis not with more Davidic psalms but by going back to Moshe and YHWH's pre-monarchic existence. The editorial placement says: when dynasties fail, the community's true refuge is YHWH's eternal nature, not any human covenant arrangement. YHWH was dwelling place before David and remains so after."
     }
   ]
 }

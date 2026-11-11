@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_46",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_46",
   "label": "Yesha'yahu (Isaiah) — 1QIsa-a — Part 5 — Chapters 55–66",
   "volume": 16,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Come, everyone who thirsts — come to the waters. You who have no money — come, buy, and eat. YHWH's word goes out and does not return empty. The mountains and hills break forth into singing. YHWH's house shall be called a house of prayer for all peoples. The watchmen are blind, they are all dumb dogs that cannot bark. Is not this the fast that I choose — to loose the bonds of wickedness, to let the oppressed go free? Arise, shine, for your light has come. The Spirit of YHWH is upon me because he has anointed me to bring good news to the afflicted. YHWH creates new heavens and a new earth. The wolf and the lamb shall feed together.",
   "summary_scholarly": "The ACR reads from the Great Isaiah Scroll (1QIsa-a) and the Orit Ge'ez. Yesha'yahu 18 (covered in Part 2) resonates through these final chapters — the nations beyond the rivers of Cush are addressed in YHWH's universal restoration plan. Chapter 56:7 declares YHWH's house a 'house of prayer for all peoples' — not for one nation or institution. The fast YHWH chooses (58:6) is justice: releasing the oppressed, feeding the hungry, sheltering the homeless. Chapter 61's anointing passage was read at Qumran (11QMelch) as referring to a mortal herald, not a divine figure. The new heavens and new earth (65:17) is the eschatological hope preserved in the oldest prophetic manuscript.",
   "key_terms": [
-    { "term": "New Heavens and New Earth", "phonetic": "", "definition": "YHWH declares: 'I create new heavens and a new earth, and the former things shall not be remembered' (65:17). The eschatological restoration of all creation. Preserved in 1QIsa-a without any intermediary figure — YHWH creates directly." },
-    { "term": "House of Prayer for All Peoples", "phonetic": "", "definition": "YHWH declares: 'My house shall be called a house of prayer for all peoples' (56:7). The covenant is not exclusive to one ethnic group or one institution — YHWH's house is open to all who hold the covenant." },
-    { "term": "The Fast YHWH Chooses", "phonetic": "", "definition": "YHWH defines true fasting as justice: 'to loose the bonds of wickedness, to undo the straps of the yoke, to let the oppressed go free, and to break every yoke' (58:6). Religious ritual without justice is rejected." },
-    { "term": "11QMelchizedek", "phonetic": "", "definition": "A Qumran text from Cave 11 that interprets Yesha'yahu 61:1 — 'the Spirit of YHWH is upon me because he has anointed me' — as referring to a mortal herald who announces the jubilee year of release. Not a divine incarnation." }
+    {
+      "term": "'Come All Who Are Thirsty'",
+      "phonetic": "ch.55:1",
+      "definition": "Yesha'yahu 55:1 — 'Come, everyone who thirsts, come to the waters; and he who has no money, come, buy and eat.' YHWH's invitation is free, open to all, and contrasted with what cannot truly satisfy."
+    },
+    {
+      "term": "Sabbath Covenant Expanded",
+      "phonetic": "ch.56",
+      "definition": "Yesha'yahu 56:1-8 explicitly includes foreigners who hold fast to the covenant and eunuchs who keep the Sabbath; they receive a place in YHWH's house better than sons and daughters."
+    },
+    {
+      "term": "True Fasting",
+      "phonetic": "ch.58",
+      "definition": "Yesha'yahu 58 contrasts the external fast YHWH rejects with the fast he chooses: loosing bonds of wickedness, letting the oppressed go free, sharing bread with the hungry, bringing the homeless poor into one's house."
+    },
+    {
+      "term": "'The Spirit of YHWH Is Upon Me'",
+      "phonetic": "ch.61:1",
+      "definition": "Yesha'yahu 61:1 — 'The Spirit of the Creator YHWH is upon me, because YHWH has anointed me to bring good news to the poor.' Ancient Hebrew source text; the NT borrowed its language."
+    },
+    {
+      "term": "New Heavens and New Earth",
+      "phonetic": "ch.65-66",
+      "definition": "Yesha'yahu 65:17 and 66:22 promise YHWH will create new heavens and a new earth where the former things are not remembered; this ancient source text predates all later apocalyptic borrowings."
+    },
+    {
+      "term": "Zion Restored",
+      "phonetic": "chs 60-62",
+      "definition": "Yesha'yahu 60-62 describes Tziyon's restoration: nations bring wealth, kings bow, the city is called 'City of YHWH' and 'Sought Out'; the desolate land is restored and the people are called priests of YHWH."
+    },
+    {
+      "term": "The Foreigner Included",
+      "phonetic": "ch.56:3-8",
+      "definition": "YHWH explicitly says the foreigner (ben-nekhar) who joins himself to YHWH and holds fast to the covenant will not be excluded; the Temple is to be 'a house of prayer for all peoples' (56:7)."
+    },
+    {
+      "term": "'My House a House of Prayer for All Peoples'",
+      "phonetic": "56:7",
+      "definition": "Yesha'yahu 56:7 — YHWH declares his house shall be called a house of prayer for all peoples; this ancient Hebrew text is the source the NT's Temple-cleansing scene borrowed from."
+    },
+    {
+      "term": "Nations as Witnesses",
+      "phonetic": "ch.66",
+      "definition": "Yesha'yahu 66:18-21 describes YHWH gathering all nations and tongues; he sends survivors to the coastlands who have not heard of his fame, and they declare his glory; some are taken as priests and Levites."
+    },
+    {
+      "term": "Final Judgment Scene",
+      "phonetic": "ch.66:24",
+      "definition": "Yesha'yahu 66:24 concludes with a vision of the righteous going out to look at the corpses of those who rebelled against YHWH; 'their worm shall not die, their fire shall not be quenched.' Ancient Hebrew source; the NT borrowed this language."
+    }
   ],
   "fill_blank": [
-    { "ref": "55:1", "prompt": "Come, everyone who thirsts — come to the ______. You who have no money — come, buy, and eat.", "answer": "waters", "source_quote": "Come, everyone who thirsts — come to the waters. You who have no money — come, buy, and eat." },
-    { "ref": "65:17", "prompt": "For behold, I create new ______ and a new earth, and the former things shall not be remembered.", "answer": "heavens", "source_quote": "For behold, I create new heavens and a new earth, and the former things shall not be remembered or come to mind." },
-    { "ref": "58:6", "prompt": "Is not this the fast that I choose — to loose the bonds of wickedness, to let the ______ go free?", "answer": "oppressed", "source_quote": "Is not this the fast that I choose — to loose the bonds of wickedness, to undo the straps of the yoke, to let the oppressed go free, and to break every yoke?" }
+    {
+      "ref": "Yesha'yahu 55:1",
+      "prompt": "'Come, everyone who thirsts, come to the _____; and he who has no money, come, buy and eat!'",
+      "answer": "waters",
+      "source_quote": "Come, everyone who thirsts, come to the waters; and he who has no money, come, buy and eat!"
+    },
+    {
+      "ref": "Yesha'yahu 55:8-9",
+      "prompt": "'For my thoughts are not your thoughts, neither are your ways my ways, declares YHWH. For as the heavens are higher than the earth, so are my _____ higher than your ways.'",
+      "answer": "ways",
+      "source_quote": "For my thoughts are not your thoughts, neither are your ways my ways, declares YHWH. For as the heavens are higher than the earth, so are my ways higher than your ways and my thoughts than your thoughts."
+    },
+    {
+      "ref": "Yesha'yahu 56:7",
+      "prompt": "YHWH declares: 'My house shall be called a house of _____ for all peoples.'",
+      "answer": "prayer",
+      "source_quote": "These I will bring to my holy mountain, and make them joyful in my house of prayer; their burnt offerings and their sacrifices will be accepted on my altar; for my house shall be called a house of prayer for all peoples."
+    },
+    {
+      "ref": "Yesha'yahu 58:6",
+      "prompt": "The fast YHWH chooses: 'Is it not to loose the bonds of _____, to undo the straps of the yoke, to let the oppressed go free?'",
+      "answer": "wickedness",
+      "source_quote": "Is not this the fast that I choose: to loose the bonds of wickedness, to undo the straps of the yoke, to let the oppressed go free, and to break every yoke?"
+    },
+    {
+      "ref": "Yesha'yahu 61:1",
+      "prompt": "'The Spirit of the Creator YHWH is upon me, because YHWH has _____ me to bring good news to the poor.'",
+      "answer": "anointed",
+      "source_quote": "The Spirit of the Creator YHWH is upon me, because YHWH has anointed me to bring good news to the poor; he has sent me to bind up the brokenhearted."
+    },
+    {
+      "ref": "Yesha'yahu 65:17",
+      "prompt": "'For behold, I create new _____ and a new earth, and the former things shall not be remembered or come into mind.'",
+      "answer": "heavens",
+      "source_quote": "For behold, I create new heavens and a new earth, and the former things shall not be remembered or come into mind."
+    },
+    {
+      "ref": "Yesha'yahu 65:25",
+      "prompt": "'The wolf and the _____ shall feed together; the lion shall eat straw like the ox; and dust shall be the serpent's food.'",
+      "answer": "lamb",
+      "source_quote": "The wolf and the lamb shall feed together; the lion shall eat straw like the ox, and dust shall be the serpent's food. They shall not hurt or destroy in all my holy mountain."
+    },
+    {
+      "ref": "Yesha'yahu 60:1",
+      "prompt": "'Arise, _____! for your light has come, and the glory of YHWH has risen upon you.'",
+      "answer": "shine",
+      "source_quote": "Arise, shine, for your light has come, and the glory of YHWH has risen upon you."
+    },
+    {
+      "ref": "Yesha'yahu 55:11",
+      "prompt": "YHWH declares: 'My word that goes out from my mouth shall not return to me _____, but it shall accomplish that which I purpose.'",
+      "answer": "empty",
+      "source_quote": "So shall my word be that goes out from my mouth; it shall not return to me empty, but it shall accomplish that which I purpose, and shall succeed in the thing for which I sent it."
+    },
+    {
+      "ref": "Yesha'yahu 66:24",
+      "prompt": "The final vision: 'their _____ shall not die, their fire shall not be quenched, and they shall be an abhorrence to all flesh.'",
+      "answer": "worm",
+      "source_quote": "And they shall go out and look on the dead bodies of the men who have rebelled against me. For their worm shall not die, their fire shall not be quenched, and they shall be an abhorrence to all flesh."
+    }
   ],
   "multiple_choice": [
-    { "ref": "56:7", "question": "What does YHWH call his house?", "options": ["A house of sacrifice", "A house of judgment", "A house of prayer for all peoples", "A house of the priests"], "correct": 2, "source_quote": "My house shall be called a house of prayer for all peoples." },
-    { "ref": "58:6", "question": "What fast does YHWH choose?", "options": ["Abstaining from food for seven days", "Wearing sackcloth and ashes", "Loosing the bonds of wickedness and letting the oppressed go free", "Silent prayer in the Temple"], "correct": 2, "source_quote": "Is not this the fast that I choose — to loose the bonds of wickedness, to let the oppressed go free?" },
-    { "ref": "65:17", "question": "What does YHWH promise to create?", "options": ["A new temple", "A new kingdom", "New heavens and a new earth", "A new priesthood"], "correct": 2, "source_quote": "For behold, I create new heavens and a new earth." }
+    {
+      "ref": "Yesha'yahu 61:1",
+      "question": "Yesha'yahu 61:1 — 'The Spirit of the Creator YHWH is upon me, because YHWH has anointed me' — is an ancient source text; which tradition borrowed this anointed-preacher language?",
+      "options": [
+        "The NT borrowed from this ancient text",
+        "This text derived from the NT",
+        "Both were written at the same time",
+        "The text came from Persian royal language"
+      ],
+      "correct": 0,
+      "source_quote": "The Spirit of the Creator YHWH is upon me, because YHWH has anointed me to bring good news to the poor."
+    },
+    {
+      "ref": "Yesha'yahu 56:3-8",
+      "question": "According to Yesha'yahu 56, which two groups that the earlier covenant restricted are now explicitly included?",
+      "options": [
+        "Foreigners who hold the covenant, and eunuchs who keep the Sabbath",
+        "Prisoners and the poor",
+        "Widows and orphans",
+        "Lepers and the blind"
+      ],
+      "correct": 0,
+      "source_quote": "Let not the foreigner who has joined himself to YHWH say, YHWH will surely separate me from his people; and let not the eunuch say, Behold, I am a dry tree."
+    },
+    {
+      "ref": "Yesha'yahu 58:6-7",
+      "question": "In Yesha'yahu 58, the fast YHWH chooses involves doing what first?",
+      "options": [
+        "Loosing bonds of wickedness and letting the oppressed go free",
+        "Fasting three days without water",
+        "Wearing sackcloth and ashes",
+        "Bringing offerings to the Temple"
+      ],
+      "correct": 0,
+      "source_quote": "Is not this the fast that I choose: to loose the bonds of wickedness, to undo the straps of the yoke, to let the oppressed go free, and to break every yoke?"
+    },
+    {
+      "ref": "Yesha'yahu 65:17",
+      "question": "Yesha'yahu 65:17's 'new heavens and a new earth' is an ancient Hebrew source text; this language was later borrowed by whom?",
+      "options": [
+        "The NT and later apocalyptic traditions borrowed from this ancient text",
+        "This text borrowed from Babylonian myth",
+        "Both traditions wrote it simultaneously",
+        "The text came from Hellenistic Greek thought"
+      ],
+      "correct": 0,
+      "source_quote": "For behold, I create new heavens and a new earth, and the former things shall not be remembered or come into mind."
+    },
+    {
+      "ref": "Yesha'yahu 55:3",
+      "question": "In Yesha'yahu 55:3, YHWH offers the people what in the context of an everlasting covenant?",
+      "options": [
+        "The sure mercies of David",
+        "The land promised to Avraham",
+        "The peace of the Sabbath",
+        "The fire of the Spirit"
+      ],
+      "correct": 0,
+      "source_quote": "Incline your ear, and come to me; hear, that your soul may live; and I will make with you an everlasting covenant, my steadfast, sure love for David."
+    },
+    {
+      "ref": "Yesha'yahu 60:3",
+      "question": "Yesha'yahu 60:3 says nations and kings shall come to what?",
+      "options": [
+        "Your light and the brightness of your rising",
+        "The Temple in Yerushalayim",
+        "The gate of Tziyon",
+        "The holy mountain of YHWH"
+      ],
+      "correct": 0,
+      "source_quote": "And nations shall come to your light, and kings to the brightness of your rising."
+    },
+    {
+      "ref": "Yesha'yahu 66:24",
+      "question": "The final verse of Yesha'yahu 66:24 describes what, with language the NT later borrowed for Gehenna?",
+      "options": [
+        "The corpses of rebels whose worm does not die and fire is not quenched",
+        "The glory of YHWH filling the earth",
+        "The nations streaming to Yerushalayim",
+        "The great feast on Mount Tziyon"
+      ],
+      "correct": 0,
+      "source_quote": "For their worm shall not die, their fire shall not be quenched, and they shall be an abhorrence to all flesh."
+    },
+    {
+      "ref": "Yesha'yahu 58:13-14",
+      "question": "If you turn your foot from the Sabbath and call it a delight, Yesha'yahu 58:14 promises what?",
+      "options": [
+        "You will ride on the heights of the earth and eat from the heritage of Ya'akov",
+        "You will receive a double portion",
+        "You will be called a priest of YHWH",
+        "Nations will bring tribute to you"
+      ],
+      "correct": 0,
+      "source_quote": "Then you shall take delight in YHWH, and I will make you ride on the heights of the earth; I will feed you with the heritage of Ya'akov your father, for the mouth of YHWH has spoken."
+    },
+    {
+      "ref": "Yesha'yahu 56:7",
+      "question": "Yesha'yahu 56:7 — 'my house shall be called a house of prayer for all peoples' — is the ancient source text the NT's Temple-scene narrative borrowed from; what does this text actually say about YHWH's house?",
+      "options": [
+        "It shall be a house of prayer for all peoples",
+        "It shall be a house of sacrifice for Yisra'el only",
+        "It shall be called the house of David",
+        "It shall be a place of learning for the nations"
+      ],
+      "correct": 0,
+      "source_quote": "For my house shall be called a house of prayer for all peoples."
+    },
+    {
+      "ref": "Yesha'yahu 61:3",
+      "question": "Yesha'yahu 61:3 promises to give mourners a garland instead of ashes and what instead of a faint spirit?",
+      "options": [
+        "A garment of praise instead of a faint spirit",
+        "A robe of righteousness",
+        "Oil of gladness instead of tears",
+        "Songs of joy instead of weeping"
+      ],
+      "correct": 0,
+      "source_quote": "To grant to those who mourn in Tziyon — to give them a beautiful headdress instead of ashes, the oil of gladness instead of mourning, the garment of praise instead of a faint spirit."
+    }
   ],
   "faq": [
     {
-      "question": "How does Yesha'yahu 18 connect to chapters 55-66?",
-      "answer": "Yesha'yahu 18:1-2 describes 'the land shadowing with wings beyond the rivers of Ethiopia' — a land that sends ambassadors by sea to 'a nation scattered and peeled.' The final chapters of Yesha'yahu (55-66) describe YHWH's universal restoration: 'my house shall be a house of prayer for all peoples' (56:7), 'I create new heavens and a new earth' (65:17), 'from one new moon to another, all flesh shall come to worship before me' (66:23). The scattered people described in chapter 18 are included in this restoration. The covenant is not finished when the people are scattered — the scattering is a stage, and the ingathering is the end. 1QIsa-a preserves both the scattering (ch 18) and the restoration (ch 55-66) on the same scroll, in the same hand. The text was written to be read as a unified narrative from exile to restoration."
+      "question": "What is the significance of Yesha'yahu 56's expansion of the covenant community?",
+      "answer": "Yesha'yahu 56:1-8 explicitly includes two groups that earlier covenant texts excluded: foreigners (ben-nekhar) and eunuchs. The only conditions are keeping the Sabbath and holding fast to the covenant. YHWH gives them a name and place in his house better than sons and daughters. This is YHWH himself expanding the covenant's reach, not a later editorial addition."
     },
     {
-      "question": "How did 11QMelchizedek interpret the anointing of Yesha'yahu 61?",
-      "answer": "11QMelchizedek (11Q13), found in Qumran Cave 11, interprets Yesha'yahu 61:1 — 'the Spirit of YHWH is upon me because he has anointed me to bring good news to the afflicted' — as referring to a mortal herald who announces the eschatological jubilee. The Qumran text connects this passage to the jubilee legislation of Vayikra 25 — the year of release, the year debts are canceled and slaves freed. The anointed herald is a human messenger, not a divine being. Roman Christianity later claimed this passage was fulfilled by a divine incarnation — a reading absent from the DSS community that preserved the oldest copy of the text. The Qumran interpretation is jubilee justice: release for the captive, liberty for the oppressed. The Roman interpretation is theological: divine salvation through belief in a God-man."
+      "question": "What is the 'true fasting' YHWH chooses in Yesha'yahu 58?",
+      "answer": "Yesha'yahu 58 contrasts external religious fasting (which YHWH rejects when it coexists with oppression and exploitation) with the fast he chooses: freeing the oppressed, breaking yokes, sharing bread with the hungry, sheltering the homeless poor, and not hiding from one's own flesh. The result: light breaking forth, healing, and YHWH answering when called."
     },
     {
-      "question": "What does Yesha'yahu's 'dumb dogs' oracle reveal about institutional failure?",
-      "answer": "Yesha'yahu 56:10-11 in 1QIsa-a: 'His watchmen are blind — they are all without knowledge. They are all dumb dogs that cannot bark — dreaming, lying down, loving to slumber. The dogs have a mighty appetite — they never have enough. The shepherds also have no understanding — they have all turned to their own way, each to his own gain.' The prophetic condemnation is directed at the covenant community's own leadership — the watchmen, the shepherds, the religious authorities who are supposed to guard the people. They are blind, silent, self-serving. This is not a condemnation of outsiders. It is a condemnation of the institution that claims to represent YHWH. The Qumran community's withdrawal from the Jerusalem Temple was based on exactly this prophetic pattern: the institutional leadership had failed, and the remnant had to preserve the covenant outside the corrupted center."
+      "question": "Why is Yesha'yahu 61:1 described as an ancient source text?",
+      "answer": "Yesha'yahu 61:1 — 'The Spirit of the Creator YHWH is upon me, because YHWH has anointed me to bring good news to the poor' — is a Hebrew prophetic text centuries older than the NT. The NT borrowed its language for a scene in Yeshua's synagogue reading. The ancient text is the source; it does not derive from the NT. Its original context is the prophetic figure speaking in Yesha'yahu's sequence."
+    },
+    {
+      "question": "What is the New Heavens and New Earth in Yesha'yahu 65?",
+      "answer": "Yesha'yahu 65:17-25 describes YHWH creating entirely new heavens and a new earth where the former pain is not remembered. The renewed order includes longevity (dying at 100 would be counted as youth), productive labor that is not exploited, and peaceful coexistence among formerly predatory animals. This ancient Hebrew vision predates all later apocalyptic borrowings."
+    },
+    {
+      "question": "What does Yesha'yahu 55:8-9 teach about YHWH's ways?",
+      "answer": "YHWH declares: 'My thoughts are not your thoughts, neither are your ways my ways.' As far as the heavens are above the earth, so far are YHWH's ways above human ways. This is not a statement about divine incomprehensibility in the abstract but about YHWH's willingness to forgive abundantly when the wicked turn to him — it grounds the invitation in 55:7."
+    },
+    {
+      "question": "What does Yesha'yahu 60-62 describe as the restored Tziyon?",
+      "answer": "Chapters 60-62 form a unified poem of restoration: Tziyon's light rises, nations come bringing their wealth, former oppressors bow, the city is called 'City of YHWH' and 'Sought Out, a City Not Forsaken' (62:12). The community is called 'priests of YHWH' and 'ministers of our Creator' (61:6). The desolation is reversed completely."
+    },
+    {
+      "question": "What does Yesha'yahu 66:21 say about who becomes priests?",
+      "answer": "Yesha'yahu 66:21 says YHWH will take some of the survivors from among the nations — the ones he sends to the distant coastlands — as priests and Levites. This is the most radical expansion of priestly access in the entire corpus: non-Yisra'elites from distant nations are taken into the priestly service of YHWH."
+    },
+    {
+      "question": "Why does Yesha'yahu 55:11 compare YHWH's word to rain?",
+      "answer": "Yesha'yahu 55:10-11 compares YHWH's word to rain and snow that fall from heaven and do not return until they have watered the earth and produced seed and bread. So YHWH's word goes out and does not return empty — it accomplishes its purpose. This grounds the entire consolation section's promises: YHWH's word is as reliable as the agricultural cycle."
+    },
+    {
+      "question": "What does the wolf-and-lamb image in Yesha'yahu 65:25 represent?",
+      "answer": "In the restored creation of Yesha'yahu 65, the wolf and lamb feed together, the lion eats straw like an ox, and even the serpent's food is dust. This describes the reversal of predatory violence within creation itself — not merely human peace but the whole created order re-aligned to its original non-violent state."
+    },
+    {
+      "question": "What does Yesha'yahu 66:24 teach about the final outcome of rebellion?",
+      "answer": "The final verse of Yesha'yahu — 66:24 — describes the righteous going out to look at the corpses of those who rebelled against YHWH. Their worm does not die and their fire is not quenched. This is an image of irreversible consequence for rebellion against YHWH's covenant; it is an ancient Hebrew text, and the NT's later Gehenna language borrowed from it."
     }
   ]
 }

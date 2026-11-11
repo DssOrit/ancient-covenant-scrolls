@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_62",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_62",
   "label": "The Twelve — Part 3 — Ovadyah, Yonah, Mikhah, Nakhum",
   "volume": 19,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Ovadyah prophesies against Edom — you who dwell in the clefts of the rock, whose habitation is high, who say in your heart: Who will bring me down? YHWH will bring you down. Because you stood aside on the day your brother was carried away captive. Yonah is sent to Nineveh — he flees, is swallowed by a great fish, spends three days and three nights in its belly, is vomited out, and goes to Nineveh. The city repents. YHWH relents. Yonah is angry. Mikhah declares what YHWH requires: Do justice, love mercy, walk humbly with your Creator. He prophesies: from you, Bet Lechem Efratah, shall come one who will be ruler in Yisra'EL — whose coming forth is from of old, from ancient days. Nakhum prophesies the fall of Nineveh — the lion's den, the bloody city full of lies and plunder.",
   "summary_scholarly": "The ACR reads from the Minor Prophets Scroll (4QXII) and the Orit Ge'ez. Ovadyah — the shortest book in the Hebrew canon — targets Edom specifically for complicity during Yerushalayim's fall: they stood by, looted, and handed over fugitives. Yonah is unique among the prophetic books — a narrative about a prophet rather than a collection of oracles. The three days in the fish's belly is the only Hebrew prophetic text explicitly cited in the NT as a typological sign (Matthew 12:40). Mikhah 6:8 is the most concise summary of covenant ethics in the entire prophetic literature. Mikhah 5:2 (Hebrew 5:1) — the Bet Lechem prophecy — is cited in Matthew 2:6 and was known at Qumran. Nakhum's oracle against Nineveh is confirmed by the archaeological record: Nineveh fell to the Babylonians and Medes in 612 BCE.",
   "key_terms": [
-    { "term": "Ovadyah", "phonetic": "O-vad-YAH", "definition": "Prophet against Edom. His name means 'servant of YAH.' His book — the shortest in the Hebrew canon — is a single oracle of judgment against Edom for complicity in Yerushalayim's destruction. Anglicized as Obadiah." },
-    { "term": "Yonah", "phonetic": "Yo-NAH", "definition": "Prophet sent to Nineveh who fled on a ship to Tarshish. Swallowed by a great fish for three days and three nights, then vomited out. His name means 'dove.' Anglicized as Jonah." },
-    { "term": "Mikhah", "phonetic": "Mee-KHAH", "definition": "Prophet from Moreshet in the Shephelah. He declares what YHWH requires — justice, mercy, humility — and prophesies the ruler from Bet Lechem whose origin is from ancient days. Anglicized as Micah." },
-    { "term": "Nakhum", "phonetic": "Nah-KHOOM", "definition": "Prophet against Nineveh, the Assyrian capital. His name means 'comfort.' His oracle describes Nineveh's fall — which occurred in 612 BCE, confirmed by Babylonian chronicles and archaeology. Anglicized as Nahum." }
+    {
+      "term": "Havaqquq",
+      "phonetic": "hah-vah-KOOK",
+      "definition": "A prophet who engaged in direct dialogue with YHWH, questioning why injustice goes unpunished and why YHWH uses a wicked nation as an instrument of judgment."
+    },
+    {
+      "term": "The Righteous Lives by Faith (2:4)",
+      "phonetic": "Havaqquq 2:4",
+      "definition": "'The righteous shall live by his faithfulness.' Ancient source text; Paul's letters borrowed this phrase for a different theological framework. The original context is Yisra'el awaiting YHWH's answer in the face of the Babylonian threat."
+    },
+    {
+      "term": "Havaqquq's Watchtower",
+      "phonetic": "Havaqquq 2:1",
+      "definition": "'I will take my stand at my watchpost and station myself on the tower, and look out to see what YHWH will say to me.' Havaqquq positions himself to receive YHWH's answer to his complaint."
+    },
+    {
+      "term": "Tzefanyah",
+      "phonetic": "tzeh-fan-YAH",
+      "definition": "A prophet who declares universal judgment — YHWH will sweep everything from the earth — before promising restoration for a humble remnant."
+    },
+    {
+      "term": "Day of YHWH (Tzefanyah)",
+      "phonetic": "Tzefanyah 1:14-18",
+      "definition": "Tzefanyah's vivid description of the Day of YHWH: a day of wrath, distress, ruin, devastation, darkness, and gloom — no silver or gold will deliver anyone on that day."
+    },
+    {
+      "term": "He will rejoice over you with singing (Tzefanyah 3:17)",
+      "phonetic": "Tzefanyah 3:17",
+      "definition": "'YHWH your Creator is in your midst, a mighty one who will save; he will rejoice over you with gladness; he will quiet you by his love; he will exult over you with loud singing.'"
+    },
+    {
+      "term": "Khagai",
+      "phonetic": "khah-GAI",
+      "definition": "A post-exile prophet who challenged the returned community for living in finished houses while the Temple of YHWH lay in ruins; he urged immediate rebuilding of the Temple."
+    },
+    {
+      "term": "Rebuilding the Temple",
+      "phonetic": "Khagai 1",
+      "definition": "YHWH's challenge through Khagai: 'Is it time for you yourselves to dwell in paneled houses while this house lies in ruins?' — work on YHWH's house before worrying about personal comfort."
+    },
+    {
+      "term": "Latter House Greater (Khagai 2:9)",
+      "phonetic": "Khagai 2:9",
+      "definition": "YHWH's promise: 'The latter glory of this house shall be greater than the former, and in this place I will give peace.' Comfort to those discouraged by the second Temple's modest appearance compared to Shlomo's Temple."
+    },
+    {
+      "term": "Zeruvavel",
+      "phonetic": "zeh-roo-VAH-vel",
+      "definition": "The governor of Yehudah after the exile and leader of the Temple rebuilding project. Khagai 2:23 makes him YHWH's signet ring — a reversal of Yehoyakhin's de-signet in Yirmeyahu 22:24."
+    }
   ],
   "fill_blank": [
-    { "ref": "Mikhah 6:8", "prompt": "He has told you, O man, what is good — and what does YHWH require of you but to do justice, and to love ______, and to walk humbly with your Creator?", "answer": "mercy", "source_quote": "He has told you, O man, what is good — and what does YHWH require of you but to do justice, and to love mercy, and to walk humbly with your Creator?" },
-    { "ref": "Yonah 1:17", "prompt": "And YHWH appointed a great fish to swallow up Yonah. And Yonah was in the belly of the fish three days and three ______.", "answer": "nights", "source_quote": "And YHWH appointed a great fish to swallow up Yonah. And Yonah was in the belly of the fish three days and three nights." },
-    { "ref": "Mikhah 5:2", "prompt": "But you, Bet Lechem Efratah, though you are small among the clans of Yehudah — from you shall come forth for me one who is to be ______ in Yisra'EL.", "answer": "ruler", "source_quote": "But you, Bet Lechem Efratah, who are too little to be among the clans of Yehudah — from you shall come forth for me one who is to be ruler in Yisra'EL, whose coming forth is from of old, from ancient days." }
+    {
+      "ref": "Havaqquq 1:2",
+      "prompt": "O YHWH, how long shall I cry for ___, and you will not hear? Or cry to you 'Violence!' and you will not save?",
+      "answer": "help",
+      "source_quote": "O YHWH, how long shall I cry for help, and you will not hear? Or cry to you 'Violence!' and you will not save?"
+    },
+    {
+      "ref": "Havaqquq 2:1",
+      "prompt": "I will take my stand at my ___ and station myself on the tower, and look out to see what YHWH will say to me.",
+      "answer": "watchpost",
+      "source_quote": "I will take my stand at my watchpost and station myself on the tower, and look out to see what YHWH will say to me."
+    },
+    {
+      "ref": "Havaqquq 2:4",
+      "prompt": "Behold, his soul is puffed up; it is not ___ within him, but the righteous shall live by his faithfulness.",
+      "answer": "upright",
+      "source_quote": "Behold, his soul is puffed up; it is not upright within him, but the righteous shall live by his faithfulness."
+    },
+    {
+      "ref": "Havaqquq 3:3",
+      "prompt": "YHWH came from ___ (Teiman), and the Holy One from Mount Paran.",
+      "answer": "Teiman",
+      "source_quote": "YHWH came from Teiman, and the Holy One from Mount Paran."
+    },
+    {
+      "ref": "Tzefanyah 1:2",
+      "prompt": "'I will utterly ___ everything from the face of the earth,' declares YHWH.",
+      "answer": "sweep away",
+      "source_quote": "I will utterly sweep away everything from the face of the earth, declares YHWH."
+    },
+    {
+      "ref": "Tzefanyah 2:3",
+      "prompt": "Seek YHWH, all you ___ of the land, who do his just commands; seek righteousness; seek humility; perhaps you may be hidden on the day of the anger of YHWH.",
+      "answer": "humble",
+      "source_quote": "Seek YHWH, all you humble of the land, who do his just commands; seek righteousness; seek humility."
+    },
+    {
+      "ref": "Tzefanyah 3:17",
+      "prompt": "YHWH your Creator is in your midst, a mighty one who will save; he will rejoice over you with gladness; he will ___ you by his love; he will exult over you with loud singing.",
+      "answer": "quiet",
+      "source_quote": "He will quiet you by his love; he will exult over you with loud singing."
+    },
+    {
+      "ref": "Khagai 1:4",
+      "prompt": "'Is it a time for you yourselves to dwell in ___ houses, while this house lies in ruins?'",
+      "answer": "paneled",
+      "source_quote": "Is it a time for you yourselves to dwell in paneled houses, while this house lies in ruins?"
+    },
+    {
+      "ref": "Khagai 2:9",
+      "prompt": "'The latter ___ of this house shall be greater than the former, and in this place I will give peace,' declares YHWH of Hosts.",
+      "answer": "glory",
+      "source_quote": "The latter glory of this house shall be greater than the former, and in this place I will give peace, declares YHWH of Hosts."
+    },
+    {
+      "ref": "Khagai 2:23",
+      "prompt": "On that day, declares YHWH of Hosts, I will take you, O Zeruvavel my servant, and make you like a signet ___, for I have chosen you.",
+      "answer": "ring",
+      "source_quote": "I will take you, O Zeruvavel my servant, and make you like a signet ring, for I have chosen you."
+    }
   ],
   "multiple_choice": [
-    { "ref": "Mikhah 6:8", "question": "What does YHWH require according to Mikhah?", "options": ["Temple sacrifice and burnt offerings", "Do justice, love mercy, walk humbly with your Creator", "Build a new sanctuary", "Fast and pray three times daily"], "correct": 1, "source_quote": "What does YHWH require of you but to do justice, and to love mercy, and to walk humbly with your Creator?" },
-    { "ref": "Ovadyah 1:10-12", "question": "Why is YHWH's judgment against Edom?", "options": ["For idol worship", "For standing aside when Yerushalayim was captured and looting the city", "For attacking Babylon", "For refusing to trade with Yisra'EL"], "correct": 1, "source_quote": "Because of the violence done to your brother Ya'aqov, shame shall cover you, and you shall be cut off forever. On the day that you stood aside — on the day that strangers carried off his wealth — you were like one of them." },
-    { "ref": "Yonah 3:10", "question": "What happened when Nineveh repented?", "options": ["YHWH destroyed them anyway", "YHWH relented from the disaster he had planned", "Yonah was pleased", "The king of Nineveh attacked Yisra'EL"], "correct": 1, "source_quote": "When The Creator saw what they did, how they turned from their evil way, The Creator relented of the disaster that he had said he would do to them, and he did not do it." }
+    {
+      "ref": "Havaqquq 1:2-3",
+      "question": "What was Havaqquq's initial complaint to YHWH?",
+      "options": [
+        "That Yisra'el was not following Torah",
+        "That YHWH was silent while injustice and violence went unanswered",
+        "That the Temple had been abandoned",
+        "That Babylon was too powerful to defeat"
+      ],
+      "correct": 1,
+      "source_quote": "O YHWH, how long shall I cry for help, and you will not hear? Or cry to you 'Violence!' and you will not save?"
+    },
+    {
+      "ref": "Havaqquq 2:1",
+      "question": "What posture does Havaqquq take after his complaint?",
+      "options": [
+        "He fasts and weeps for forty days",
+        "He stands at his watchpost to wait for YHWH's answer",
+        "He travels to Yerushalayim to seek the priests",
+        "He writes the complaint in a scroll and buries it"
+      ],
+      "correct": 1,
+      "source_quote": "I will take my stand at my watchpost and station myself on the tower, and look out to see what YHWH will say to me."
+    },
+    {
+      "ref": "Havaqquq 2:4",
+      "question": "According to Havaqquq 2:4, what characterizes the righteous person?",
+      "options": [
+        "Military strength",
+        "Priestly lineage",
+        "Faithfulness",
+        "Prosperity"
+      ],
+      "correct": 2,
+      "source_quote": "The righteous shall live by his faithfulness."
+    },
+    {
+      "ref": "Havaqquq 3:3",
+      "question": "From which direction does YHWH march in Havaqquq's great hymn?",
+      "options": [
+        "From the north, from Mount Tzion",
+        "From the east, from Babylon",
+        "From Teiman and Mount Paran — the south, associated with Kushite territory",
+        "From the west, across the sea"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH came from Teiman, and the Holy One from Mount Paran."
+    },
+    {
+      "ref": "Tzefanyah 1:2",
+      "question": "How does Tzefanyah open YHWH's declaration of judgment?",
+      "options": [
+        "YHWH will discipline Yisra'el but spare the nations",
+        "YHWH will utterly sweep everything from the face of the earth",
+        "YHWH will begin with the Temple and work outward",
+        "YHWH will judge the wealthy but spare the poor"
+      ],
+      "correct": 1,
+      "source_quote": "I will utterly sweep away everything from the face of the earth, declares YHWH."
+    },
+    {
+      "ref": "Tzefanyah 2:3",
+      "question": "Who does Tzefanyah call to seek YHWH before the Day of his anger?",
+      "options": [
+        "The kings and military leaders",
+        "The priests in the Temple",
+        "The humble of the land who do his commands",
+        "The wealthy merchants and traders"
+      ],
+      "correct": 2,
+      "source_quote": "Seek YHWH, all you humble of the land, who do his just commands."
+    },
+    {
+      "ref": "Tzefanyah 3:17",
+      "question": "What does Tzefanyah 3:17 say YHWH will do over the restored community?",
+      "options": [
+        "Send fire to purify them",
+        "Rejoice over them with gladness and exult over them with loud singing",
+        "Raise up a new covenant",
+        "Judge the nations around them"
+      ],
+      "correct": 1,
+      "source_quote": "He will rejoice over you with gladness; he will exult over you with loud singing."
+    },
+    {
+      "ref": "Khagai 1:4",
+      "question": "What was YHWH's challenge to the returned exiles through Khagai?",
+      "options": [
+        "Why have you not observed the Shabbat?",
+        "Why have you built the Temple while your own houses are in ruins?",
+        "Is it time to live in paneled houses while YHWH's house lies in ruins?",
+        "Why have you intermarried with the nations?"
+      ],
+      "correct": 2,
+      "source_quote": "Is it a time for you yourselves to dwell in paneled houses, while this house lies in ruins?"
+    },
+    {
+      "ref": "Khagai 2:9",
+      "question": "What promise does YHWH make about the rebuilt Temple in Khagai 2:9?",
+      "options": [
+        "It will be built in one year",
+        "Its latter glory will surpass the former glory and peace will come",
+        "YHWH will fill it with gold",
+        "It will stand forever without being destroyed"
+      ],
+      "correct": 1,
+      "source_quote": "The latter glory of this house shall be greater than the former, and in this place I will give peace."
+    },
+    {
+      "ref": "Khagai 2:23",
+      "question": "What does YHWH say he will make Zeruvavel like in Khagai 2:23?",
+      "options": [
+        "A strong fortress wall",
+        "A signet ring",
+        "A plumb line",
+        "A lampstand in the Temple"
+      ],
+      "correct": 1,
+      "source_quote": "I will take you, O Zeruvavel my servant, and make you like a signet ring, for I have chosen you."
+    }
   ],
   "faq": [
     {
-      "question": "How does the Great Eraser use Mikhah 6:8 while ignoring its covenant context?",
-      "answer": "Mikhah 6:8 — 'do justice, love mercy, walk humbly with your Creator' — is one of the most quoted verses in Western religious culture. It appears on church walls, seminary brochures, and inspirational merchandise. But the passage is not a generic ethical maxim. It is YHWH's direct answer to a covenant lawsuit (riv) that begins in 6:1: 'Hear what YHWH says — arise, plead your case before the mountains.' YHWH recounts what he has done for his people: brought them from Mitsrayim, sent Moshe, Aharon, and Miriam, turned Balak's curse into Bil'am's blessing (6:4-5). Then he asks what they have offered in return. The people propose sacrifices — thousands of rams, ten thousands of rivers of oil, even the firstborn (6:6-7). YHWH rejects all of it. What he requires is covenantal: justice, chesed (covenant-faithfulness, not generic kindness), and humble walking with YHWH. The Great Eraser extracts the ethics and removes the covenant framework. Justice becomes social niceness. Chesed becomes generic mercy. Walking humbly becomes personal piety. The covenant lawsuit — YHWH's case against his people for failing to live up to what he did for them — disappears."
+      "question": "What makes Havaqquq unique among the prophets?",
+      "answer": "Havaqquq is unique because his book is structured as a dialogue with YHWH rather than as oracles delivered to the people. He challenges YHWH directly — questioning why violence goes unanswered and why YHWH would use a nation more wicked than Yisra'el as an instrument of judgment. YHWH answers him, and the book records both sides of the exchange."
     },
     {
-      "question": "What does Ovadyah's oracle reveal about complicity in the scattering?",
-      "answer": "Ovadyah condemns Edom not for attacking Yerushalayim directly but for complicity — standing aside, watching, looting, and handing over fugitives (verses 11-14). Edom is Ya'aqov's brother — the descendants of Esav. The judgment is specifically for what was done to a brother: 'Because of the violence done to your brother Ya'aqov, shame shall cover you' (verse 10). The principle extends: every people, nation, and institution that stood aside during the scattering of the covenant people — that profited from the destruction without directly causing it — falls under the same oracle. The European nations that profited from the slave trade without conducting the raids. The religious institutions that theologized the enslavement without wielding the whip. The academic establishments that benefited from stolen labor without owning plantations. Ovadyah's oracle is against complicity, not just direct action. Standing aside is the charge. Edom's silence was Edom's guilt."
+      "question": "What does Havaqquq 2:4 mean by 'the righteous shall live by his faithfulness'?",
+      "answer": "In context, Havaqquq is told to write down YHWH's answer and wait for it — the appointed time will come. The righteous person is one who lives in loyal faithfulness to YHWH while waiting for YHWH to act. This ancient text about covenant faithfulness under pressure was later borrowed by Paul's letters for a different doctrinal argument; Havaqquq's original meaning is steadfast loyalty during delay."
     },
     {
-      "question": "What does Yonah's reluctance reveal about prophetic resistance?",
-      "answer": "Yonah is the only prophet who actively flees from YHWH's commission. He does not want Nineveh to repent — because Nineveh is the capital of the Assyrian empire, the power that destroyed the northern kingdom and deported its population. When Nineveh does repent and YHWH relents, Yonah is angry (4:1). He knew YHWH would do this because YHWH is gracious, merciful, slow to anger, and abounding in steadfast love (4:2). The book ends with YHWH's question: should I not have compassion on Nineveh, that great city? The prophetic tradition does not give the covenant people veto power over YHWH's mercy. YHWH's justice and mercy extend to the nations — including the oppressor — when they turn. This is not Western universalism. It is YHWH's sovereign freedom to extend mercy where he chooses."
+      "question": "Why does Havaqquq's hymn in chapter 3 describe YHWH marching from Teiman?",
+      "answer": "Teiman is in the south — in the direction of the Kushite territories and Mount Paran, associated with the Sinai region. This is consistent with the ancient Hebrew memory of YHWH's presence coming from the south in the Sinai experience. The same directional tradition appears in Devarim 33:2 and Shofetim 5:4-5 — YHWH is associated with the southern region, the region of Kush and Mitzrayim."
+    },
+    {
+      "question": "What is Tzefanyah's overall structure and message?",
+      "answer": "Tzefanyah moves in two movements: universal judgment then specific restoration. The Day of YHWH sweeps everything from the earth — no nation, not even Yerushalayim, is exempt. Then a humble remnant of all nations is gathered, their shame removed, and YHWH rejoices over them with singing. The book is a complete arc from total judgment to tender restoration."
+    },
+    {
+      "question": "What does Tzefanyah 3:17 reveal about YHWH's relationship to the restored people?",
+      "answer": "Tzefanyah 3:17 uses the most intimate language for YHWH's response to the restored community: not distant judgment but rejoicing, quieting with love, and singing over them with exultation. YHWH is described as a mighty warrior who saves and simultaneously as one who takes delight in the people. It is one of the most affectionate divine portraits in the Hebrew prophetic corpus."
+    },
+    {
+      "question": "Why did Khagai have to urge the returned exiles to build the Temple?",
+      "answer": "The returned exiles prioritized building their own houses first after the difficult return from Babylon. Khagai confronted this directly — they were investing in personal comfort while YHWH's house lay in ruins. YHWH pointed out that their agricultural efforts were failing because the Temple was not the community's first priority. When they obeyed and resumed work, YHWH promised renewed blessing."
+    },
+    {
+      "question": "What is the significance of Zeruvavel as YHWH's signet ring in Khagai 2:23?",
+      "answer": "In Yirmeyahu 22:24, YHWH declared that even if Yehoyakhin were the signet ring on YHWH's right hand, he would be torn off and given over to Nebukhadnetzar. Khagai 2:23 reverses this — Zeruvavel, Yehoyakhin's grandson, is made YHWH's signet ring and chosen. It is a restoration of the Davidic line's standing after the exile's judgment."
+    },
+    {
+      "question": "How does Khagai's message address discouragement about the second Temple?",
+      "answer": "Many who had seen Shlomo's Temple wept when they saw the foundation of the rebuilt Temple because it was so much smaller (Ezra 3:12). Khagai addresses this directly in 2:3 — 'Who is left among you who saw this house in its former glory? How does it look to you now?' — and then promises in 2:9 that YHWH will give the latter house a greater glory than the former."
+    },
+    {
+      "question": "What does the Day of YHWH mean in Tzefanyah's prophecy?",
+      "answer": "In Tzefanyah, the Day of YHWH is an imminent day of comprehensive divine judgment — darkness and not light, wrath and burning anger. It falls on those who say YHWH does nothing, on the proud and arrogant, on merchants, on those who worship the host of heaven from their rooftops. No wealth will deliver anyone. It is both historical (the Babylonian destruction) and a template for YHWH's pattern of accountability."
+    },
+    {
+      "question": "How does Havaqquq's treatment of the Babylonian empire model covenant accountability?",
+      "answer": "Havaqquq establishes that YHWH uses Babylon as a judgment instrument against Yisra'el, but Babylon itself will face accountability for its own violence and arrogance. The five 'woe' oracles in Havaqquq 2 enumerate Babylon's sins: plunder, violent gain, bloodshed, intoxicating others, and idolatry. The instrument of judgment is not exempt from judgment itself."
     }
   ]
 }
