@@ -1,31 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_28",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_28",
   "label": "Shemu'el Aleph (1 Samuel) — Part 3 — Chapters 18–24",
   "volume": 12,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Yonatan and Dawid make a covenant — Yonatan loves Dawid as his own soul. Sha'ul becomes jealous and tries to kill Dawid with a spear. Dawid flees. Sha'ul pursues Dawid through the wilderness. Dawid spares Sha'ul's life in the cave at Ein-Gedi — he cuts the corner of Sha'ul's robe but refuses to strike YHWH's anointed. Dawid gathers men around him in the wilderness. The priest Achimelekh gives Dawid the showbread and the sword of Golyat. Sha'ul massacres the priests of Nov.",
   "summary_scholarly": "The ACR reads from 4QSam-a and the Orit Ge'ez. The Dawid-Yonatan covenant (ch 18, 20) uses the Hebrew brit — the same covenant terminology used for YHWH's covenants with Avraham, Yisra'EL, and Dawid. Sha'ul's pursuit of Dawid through the Judean wilderness (chs 23-24) takes place in the same terrain where the Qumran community later established their settlement. The Ein-Gedi cave where Dawid spares Sha'ul is approximately 20 kilometers south of Qumran. Dawid's refusal to strike YHWH's anointed (24:6) establishes the principle: even a rejected king retains YHWH's anointing until YHWH himself removes it. The massacre of the priests at Nov (ch 22) demonstrates the danger of state power wielded against YHWH's servants.",
   "key_terms": [
-    { "term": "Yonatan", "phonetic": "Yo-nah-TAHN", "definition": "Son of Sha'ul. Makes a covenant with Dawid — loves him as his own soul. Protects Dawid from Sha'ul's murderous intent. His loyalty to Dawid costs him the succession. Anglicized as Jonathan." },
-    { "term": "Ein-Gedi", "phonetic": "Ayn-GEH-dee", "definition": "Oasis in the Judean wilderness near the Dead Sea where Dawid hides from Sha'ul. Dawid spares Sha'ul's life in a cave there. Located approximately 20 kilometers south of Qumran." },
-    { "term": "Nov", "phonetic": "NOHV", "definition": "Priestly city where Achimelekh the priest gives Dawid the showbread and the sword of Golyat. Sha'ul orders the massacre of 85 priests of Nov (22:18) — Do'eg the Edomite carries out the slaughter." }
+    {
+      "term": "Yehonatan's Covenant with David",
+      "phonetic": "brit Yehonatan ve-David",
+      "definition": "1 Shemu'el 18-20: Yehonatan's soul was 'knit to the soul of David' and he loved him as himself. He made a covenant with David, stripped his own royal robe and gave it to him along with his armor, sword, bow, and belt — the symbols of his princely inheritance. This covenant is not political calculation but genuine covenant friendship. Yehonatan knew David would be king instead of him and chose the covenant over his own dynastic claim."
+    },
+    {
+      "term": "Sha'ul's Jealousy",
+      "phonetic": "kin'at Sha'ul",
+      "definition": "1 Shemu'el 18: after the defeat of Golyat, the women sang: 'Sha'ul has killed his thousands, David his ten thousands.' From that day, Sha'ul eyed David with suspicion. The next day, while David played the kinnor, Sha'ul hurled a spear at him twice. David escaped. Sha'ul's jealousy of David's covenant favor is the central conflict of chapters 18-31."
+    },
+    {
+      "term": "David at Nob",
+      "phonetic": "David be-Nov",
+      "definition": "Fleeing Sha'ul, David arrives at the priestly city of Nob, where the high priest Akhimelekh gives him consecrated bread and Golyat's sword. Doeg the Edomite (Sha'ul's chief shepherd) is present and later reports to Sha'ul. Sha'ul then commands the massacre of all 85 priests at Nob, carried out by Doeg when Sha'ul's own men refused. One priest (Evyatar) escapes to David."
+    },
+    {
+      "term": "David at En-Gedi",
+      "phonetic": "David be-En-Gedi",
+      "definition": "1 Shemu'el 24: Sha'ul is relieving himself in a cave — the same cave where David and his men are hiding in the depths. David's men urge him to kill Sha'ul: 'This is the day YHWH spoke of.' David refuses. He cuts off a corner of Sha'ul's robe quietly. Afterward he calls to Sha'ul: 'My father the king — I could have killed you.' He holds up the robe corner as evidence."
+    },
+    {
+      "term": "YHWH's Anointed",
+      "phonetic": "meshiakh YHWH",
+      "definition": "David's consistent reason for refusing to kill Sha'ul: 'I will not stretch out my hand against YHWH's anointed.' Even though Sha'ul was pursuing him unjustly, the anointing was real. David recognized that YHWH alone had the right to remove what YHWH had placed. This principle — the inviolability of YHWH's anointed — governs David's conduct toward Sha'ul throughout their conflict and sets the precedent for the covenant concept of kingship."
+    },
+    {
+      "term": "Mikhol and Mikal",
+      "phonetic": "Mikhal bat Sha'ul",
+      "definition": "Sha'ul's daughter Mikhal loved David and became his wife. Sha'ul used her to lay a trap — the bride price was 100 Philistine foreskins (he hoped David would die in the attempt). David brought 200. When Sha'ul sent men to kill David in his house, Mikhal let David down through a window, placed a household idol in his bed to fool the guards, and helped him escape. She chose David over her father."
+    },
+    {
+      "term": "David at Ziklag",
+      "phonetic": "David be-Tziklag",
+      "definition": "David eventually flees to the Philistines for protection — to King Akhish of Gat. He is given the city of Ziklag. For 16 months David raids Israel's traditional enemies (Amalekites, Geshurites, Girzites) while telling Akhish he was raiding Judah. The situation is morally complex: the future covenant king of Yisra'el in the service of a Philistine lord."
+    },
+    {
+      "term": "Naioth in Ramah",
+      "phonetic": "Nayot ba-Ramah",
+      "definition": "1 Shemu'el 19: David flees to Shemu'el at Naioth in Ramah. Sha'ul sends messengers three times; each group arrives and falls into prophetic ecstasy. Finally Sha'ul goes himself and also prophesies all day and night, naked. The question is raised again: 'Is Sha'ul also among the prophets?' YHWH's spirit protects David by overwhelming everyone sent to capture him."
+    },
+    {
+      "term": "Covenant Arrow Signal",
+      "phonetic": "aleph ha-brit",
+      "definition": "In 1 Shemu'el 20, Yehonatan and David arrange a secret signal: Yehonatan will shoot arrows at a target. If he calls the boy to get arrows that have gone beyond him, it means danger — David must flee. If he says the arrows are closer, David can return safely. The signal scene is charged with covenant grief: they both know the arrow will say 'go.'"
+    },
+    {
+      "term": "David's Band of Men",
+      "phonetic": "anashav shel David",
+      "definition": "1 Shemu'el 22: at the cave of Adulam, David's family and 400 men gather to him — 'everyone who was in distress, everyone in debt, everyone who was bitter in soul.' David becomes their leader. This unlikely band of the marginalized will become the core of his fighting force. The covenant king's first followers are the desperate and the rejected."
+    }
   ],
   "fill_blank": [
-    { "ref": "18:1", "prompt": "The ______ of Yonatan was knit to the ______ of Dawid, and Yonatan loved him as his own ______.", "answer": "soul", "source_quote": "The soul of Yonatan was knit to the soul of Dawid, and Yonatan loved him as his own soul." },
-    { "ref": "24:6", "prompt": "And Dawid said to his men: YHWH forbid that I should do this thing to my master, YHWH's ______, to put out my hand against him, seeing he is the ______ of YHWH.", "answer": "anointed", "source_quote": "YHWH forbid that I should do this thing to my master, YHWH's anointed, to put out my hand against him, seeing he is the anointed of YHWH." }
+    {
+      "ref": "1 Shemu'el 18:1",
+      "prompt": "Yehonatan's soul was ___ to the soul of David and he loved him as his own soul.",
+      "answer": "knit / bound",
+      "source_quote": "The soul of Jonathan was knit to the soul of David, and Jonathan loved him as his own soul. — 1 Shemu'el 18:1"
+    },
+    {
+      "ref": "1 Shemu'el 24",
+      "prompt": "David refused to kill Sha'ul saying: 'I will not stretch out my hand against YHWH's ___.",
+      "answer": "anointed",
+      "source_quote": "I will not put out my hand against my lord, for he is YHWH's anointed. — 1 Shemu'el 24:10"
+    },
+    {
+      "ref": "1 Shemu'el 18",
+      "prompt": "The women sang: 'Sha'ul has killed his thousands, and David his ___.",
+      "answer": "ten thousands",
+      "source_quote": "Saul has struck down his thousands, and David his ten thousands. — 1 Shemu'el 18:7"
+    },
+    {
+      "ref": "1 Shemu'el 22",
+      "prompt": "At the cave of Adulam, everyone in ___, everyone in debt, everyone bitter in soul gathered to David.",
+      "answer": "distress",
+      "source_quote": "Everyone who was in distress, and everyone who was in debt, and everyone who was bitter in soul, gathered to him. — 1 Shemu'el 22:2"
+    },
+    {
+      "ref": "1 Shemu'el 18",
+      "prompt": "The bride price Sha'ul demanded for Mikhal was ___ Philistine foreskins; David brought double.",
+      "answer": "100 / a hundred",
+      "source_quote": "The king desires no bride-price except a hundred foreskins of the Philistines. — 1 Shemu'el 18:25"
+    },
+    {
+      "ref": "1 Shemu'el 20",
+      "prompt": "Yehonatan's arrow signal meant: if the arrows are ___ you, return; if beyond you, flee.",
+      "answer": "beside / closer than / on this side of",
+      "source_quote": "If I say to the boy, Look, the arrows are beyond you — then you must go, for YHWH has sent you away. — 1 Shemu'el 20:22"
+    },
+    {
+      "ref": "1 Shemu'el 22",
+      "prompt": "Doeg the Edomite killed ___ priests at Nob when Sha'ul's own men refused the command.",
+      "answer": "85 / eighty-five",
+      "source_quote": "Doeg the Edomite turned and struck down the priests, and he killed on that day eighty-five persons. — 1 Shemu'el 22:18"
+    },
+    {
+      "ref": "1 Shemu'el 24",
+      "prompt": "David quietly cut off a ___ of Sha'ul's robe while Sha'ul was in the cave, then showed it as proof.",
+      "answer": "corner / edge / hem",
+      "source_quote": "David arose and cut off a corner of Saul's robe. — 1 Shemu'el 24:4"
+    },
+    {
+      "ref": "1 Shemu'el 19",
+      "prompt": "Every group Sha'ul sent to capture David at Naioth fell into prophetic ___; Sha'ul himself also prophesied.",
+      "answer": "ecstasy / prophesying",
+      "source_quote": "The Spirit of YHWH came upon the messengers of Saul, and they also prophesied. — 1 Shemu'el 19:20"
+    },
+    {
+      "ref": "1 Shemu'el 20",
+      "prompt": "When Yehonatan and David parted, they wept together — David ___ more than Yehonatan.",
+      "answer": "wept the most / more greatly / exceeded",
+      "source_quote": "David wept the most. — 1 Shemu'el 20:41"
+    }
   ],
   "multiple_choice": [
-    { "ref": "22:18", "question": "What happened to the priests of Nov?", "options": ["They were exiled", "Sha'ul had 85 of them killed by Do'eg the Edomite", "They joined Dawid voluntarily", "They were taken captive by the Philistines"], "correct": 1, "source_quote": "And Do'eg the Edomite turned and struck down the priests, and he killed on that day eighty-five persons who wore the linen ephod." },
-    { "ref": "24:4-6", "question": "What did Dawid do when he found Sha'ul in the cave at Ein-Gedi?", "options": ["He killed Sha'ul", "He cut the corner of Sha'ul's robe but refused to strike him", "He captured Sha'ul", "He fled from the cave"], "correct": 1, "source_quote": "He said to his men: YHWH forbid that I should put out my hand against YHWH's anointed." }
+    {
+      "ref": "1 Shemu'el 18:1",
+      "question": "What did Yehonatan give David as the sign of their covenant?",
+      "options": [
+        "The keys to the royal treasury and his seal ring",
+        "His royal robe, armor, sword, bow, and belt",
+        "His right to the first place at the king's table",
+        "A promise to speak well of David to Sha'ul"
+      ],
+      "correct": 1,
+      "source_quote": "Jonathan stripped himself of the robe that was on him and gave it to David, and his armor, and even his sword and his bow and his belt. — 1 Shemu'el 18:4"
+    },
+    {
+      "ref": "1 Shemu'el 18:7",
+      "question": "What triggered Sha'ul's jealousy toward David?",
+      "options": [
+        "David became more popular with the priests than Sha'ul was",
+        "The women sang that Sha'ul killed thousands but David ten thousands",
+        "David was given more land as his territory than Sha'ul expected",
+        "Shemu'el blessed David publicly at Sha'ul's court"
+      ],
+      "correct": 1,
+      "source_quote": "Saul has struck down his thousands, and David his ten thousands. — 1 Shemu'el 18:7"
+    },
+    {
+      "ref": "1 Shemu'el 24:10",
+      "question": "Why did David refuse to kill Sha'ul in the cave at En-Gedi?",
+      "options": [
+        "His men were too outnumbered by Sha'ul's guards",
+        "He feared the political consequences of killing a sitting king",
+        "Sha'ul was YHWH's anointed — David would not stretch out his hand against him",
+        "He hoped Sha'ul would repent if shown mercy"
+      ],
+      "correct": 2,
+      "source_quote": "I will not put out my hand against my lord, for he is YHWH's anointed. — 1 Shemu'el 24:10"
+    },
+    {
+      "ref": "1 Shemu'el 20",
+      "question": "What was the purpose of Yehonatan's arrow signal?",
+      "options": [
+        "A training exercise to show David was a good archer",
+        "A secret code to tell David whether it was safe to return or he must flee",
+        "A distraction to allow David to sneak back into the palace",
+        "A covenant ceremony marking their friendship"
+      ],
+      "correct": 1,
+      "source_quote": "If I say to the boy, Look, the arrows are beyond you — go, for YHWH has sent you away. — 1 Shemu'el 20:22"
+    },
+    {
+      "ref": "1 Shemu'el 22",
+      "question": "Who killed the 85 priests at Nob?",
+      "options": [
+        "Sha'ul's own royal guard",
+        "Sha'ul himself in a rage",
+        "Doeg the Edomite, after Sha'ul's own soldiers refused the order",
+        "Avner, Sha'ul's army commander"
+      ],
+      "correct": 2,
+      "source_quote": "Doeg the Edomite turned and struck down the priests, and he killed on that day eighty-five persons. — 1 Shemu'el 22:18"
+    },
+    {
+      "ref": "1 Shemu'el 22:2",
+      "question": "Who gathered to David at the cave of Adulam?",
+      "options": [
+        "The priests who survived the Nob massacre",
+        "Trained soldiers loyal to him from Yehudah",
+        "Everyone in distress, in debt, bitter in soul — about 400 men",
+        "His family from Bet-Lekhem plus volunteer warriors from Efrayim"
+      ],
+      "correct": 2,
+      "source_quote": "Everyone who was in distress, and everyone who was in debt, and everyone who was bitter in soul, gathered to him. — 1 Shemu'el 22:2"
+    },
+    {
+      "ref": "1 Shemu'el 19",
+      "question": "What happened to every group Sha'ul sent to capture David at Naioth in Ramah?",
+      "options": [
+        "They joined David's band and refused to return",
+        "They were ambushed by David's men and driven off",
+        "They fell into prophetic ecstasy and could not fulfill their mission",
+        "They were warned by Yehonatan and turned back before reaching David"
+      ],
+      "correct": 2,
+      "source_quote": "The Spirit of YHWH came upon the messengers of Saul, and they also prophesied. — 1 Shemu'el 19:20"
+    },
+    {
+      "ref": "1 Shemu'el 18",
+      "question": "How did Mikhal help David escape from Sha'ul's men?",
+      "options": [
+        "She bribed the guards to let him pass through the gate",
+        "She hid him under the floor of the storeroom",
+        "She lowered him through a window and placed an idol in his bed",
+        "She created a distraction in the courtyard so he could slip over the wall"
+      ],
+      "correct": 2,
+      "source_quote": "Michal let David down through the window, and he fled away and escaped. — 1 Shemu'el 19:12"
+    },
+    {
+      "ref": "1 Shemu'el 20:41",
+      "question": "How did Yehonatan and David part when the arrow signal confirmed David must flee?",
+      "options": [
+        "They embraced and wept, with David weeping the most",
+        "They swore a new oath and parted without showing emotion, knowing others watched",
+        "Yehonatan left without speaking to avoid being seen with David",
+        "David left immediately without waiting to see Yehonatan"
+      ],
+      "correct": 0,
+      "source_quote": "They kissed one another and wept with one another, David weeping the most. — 1 Shemu'el 20:41"
+    },
+    {
+      "ref": "1 Shemu'el 24",
+      "question": "After showing Sha'ul the robe corner at En-Gedi, what did David call Sha'ul?",
+      "options": [
+        "Enemy and unjust king",
+        "My lord the king, my father",
+        "The rejected of YHWH",
+        "The king who lost YHWH's favor"
+      ],
+      "correct": 1,
+      "source_quote": "My father, see, yes, see the corner of your robe in my hand. — 1 Shemu'el 24:11"
+    }
   ],
   "faq": [
     {
-      "question": "Why does Dawid's wilderness period matter for understanding the Qumran community?",
-      "answer": "Dawid flees to the Judean wilderness — the same desert terrain where the Qumran community established their settlement centuries later. Ein-Gedi, where Dawid spares Sha'ul, is approximately 20 kilometers south of Qumran. The cave systems Dawid used for refuge are the same geological formations where the Dead Sea Scrolls were hidden. The pattern is identical: a righteous remnant driven into the wilderness by a corrupt ruling authority, gathering a community of the faithful outside institutional power. Dawid gathers 400 men (22:2) — 'everyone who was in distress, everyone who was in debt, everyone who was bitter in soul.' The Qumran community gathered the same way: those who recognized the corruption of the institutional system and withdrew to the wilderness to await YHWH's justice."
+      "question": "What makes Yehonatan's covenant with David remarkable?",
+      "answer": "Yehonatan was the crown prince — first in line for the throne. He gave David not only friendship but the symbols of his royal inheritance: the robe, the armor, the weapons. He chose covenant loyalty over dynastic claim. When his father demanded he betray David, Yehonatan argued for David's innocence at great personal risk. His final moment with David — the arrow signal, the weeping in the field — is one of the most powerful scenes of covenant friendship in the Tanakh. He never resented David's kingship. His declaration — 'you shall be king over Yisra'el and I shall be next to you' — is not resignation but covenant clarity. Yehonatan's love for David was a covenant love, mirroring the structure of YHWH's own covenant loyalty."
     },
     {
-      "question": "How does the massacre at Nov connect to the Great Eraser pattern of state violence against covenant keepers?",
-      "answer": "Sha'ul orders the massacre of 85 priests at Nov because Achimelekh helped Dawid (22:18-19). No Israelite soldier would carry out the order — Do'eg the Edomite, a foreigner, does the killing. State power turns against YHWH's own priests. This pattern repeats throughout covenant history: the Seleucids killing Torah-faithful priests under Antiochus IV, the Hasmonean dynasty executing their opponents, the Roman destruction of Yerushalayim and its priesthood. The Great Eraser operates through state violence against covenant keepers — destroying the people, then controlling the narrative about who they were. When the priests are dead, the state writes the history. Every colonial power that destroyed African and Indigenous religious leaders followed this same pattern: kill the knowledge-keepers, then rewrite the story."
+      "question": "Why did David spare Sha'ul at En-Gedi?",
+      "answer": "David's men interpreted the cave encounter as a providential opportunity — 'this is the day YHWH spoke of.' David's refusal is a covenant principle: 'YHWH forbid that I should do this thing to my lord, for he is YHWH's anointed.' The anointing made Sha'ul's person covenant-protected regardless of his conduct. YHWH had placed him; only YHWH could remove him. David cutting the robe corner was itself a later source of guilt — he regretted even that indirect act against YHWH's anointed. His conduct at En-Gedi established the theological foundation he would later invoke when others tried to bring him news of Sha'ul's death as good news."
+    },
+    {
+      "question": "What does the massacre at Nob reveal about Sha'ul's condition?",
+      "answer": "Sha'ul commanded the killing of 85 priests — men who had innocently given food to a fugitive they knew only as YHWH's anointed musician. His own men refused the order. That Doeg the Edomite (a foreigner) carried out what Israelite soldiers would not is a marker of how far Sha'ul had fallen from covenant accountability. The Nob massacre destroyed the entire priestly city — men, women, children, animals. This is not royal anger; it is a covenant violation on the scale of Sha'ul's command to destroy Amalek, except this time against YHWH's own servants. Evyatar's escape to David signals where the covenant priesthood now resides — with the hunted man, not the king."
+    },
+    {
+      "question": "What does David's time among the Philistines reveal about the covenant arc?",
+      "answer": "David's sixteen months at Ziklag are a low point of his fugitive period. He deceives Akhish systematically, raiding one set of peoples while claiming to raid another. When the Philistines prepare to march against Yisra'el, the other Philistine lords distrust David and send him back — YHWH providentially removes David from having to choose between fighting against Yisra'el or betraying his Philistine hosts. The situation is morally complex, and the text does not resolve the complexity. It records what happened without editorial commentary. David's covenant path to the throne ran through moral ambiguity — his own choices included deception, manipulation of foreign alliances, and compromise. The covenant is not suspended during these years; it runs through them."
+    },
+    {
+      "question": "What does the Naioth prophesying scene mean?",
+      "answer": "Every group Sha'ul sends to capture David at Naioth falls into prophetic ecstasy. YHWH's spirit overpowers them before they can act. When Sha'ul goes himself, he prophesies all day and all night, lying naked. The question the text repeats — 'Is Sha'ul also among the prophets?' — was first asked when Sha'ul prophesied at his initial commissioning (ch.10). It is now ironic: the man pursuing David, stripped of his royal dignity, overwhelmed by YHWH's spirit, cannot act against YHWH's chosen. The scene demonstrates that YHWH's protection of David operates at a level Sha'ul's military power cannot reach."
+    },
+    {
+      "question": "What is significant about Mikhal's role in David's escape?",
+      "answer": "Mikhal saves David's life. She lowered him through a window, deceived Sha'ul's men with an idol in the bed, and lied to her father to protect David. This is a woman choosing between her husband and her father-king, and she chose her husband. The idol in the bed (teraphim — household god) is an unexpected detail: the daughter of Yisra'el's first king used a household idol as a prop to protect the future king. The moral complexity is left unresolved. What matters narratively is that YHWH's chosen instrument was saved through a woman's courage and quick thinking, at personal risk to herself."
+    },
+    {
+      "question": "How does the gathering at Adulam fit the covenant pattern?",
+      "answer": "David's first followers are the desperate, the indebted, the bitter — 400 men who had no place in Sha'ul's Yisra'el. This mirrors the exodus pattern: Mosheh's people were slaves and outcasts; YHWH led the marginal through the wilderness to the land. David's band at Adulam is a micro-exodus community — the rejected gathering around YHWH's chosen leader in the wilderness before the promised inheritance. The covenant king's core community is not drawn from the elite; it is drawn from those with nothing to lose. These 400 (later 600) will form the foundation of David's most loyal fighting force."
+    },
+    {
+      "question": "What does Yehonatan's giving his robe to David mean in covenant terms?",
+      "answer": "In ancient Near Eastern context, a robe was an identity garment — transferring status and covenant standing. By giving David his robe, Yehonatan was symbolically transferring his claim to the succession. This was not an accidental gesture; Yehonatan was making a deliberate covenant act, acknowledging YHWH's choice. He also gave his armor — military authority; his sword — force; his bow — ranged power; his belt — formal rank. The transfer was complete. Yehonatan understood before the anointing of David became public that the throne was going to David, and he chose covenant solidarity over royal self-interest. YHWH honored this — after Yehonatan's death at Gilboa, David honored the covenant with Mephiboshet, Yehonatan's son."
+    },
+    {
+      "question": "Why did Sha'ul fear David rather than simply being jealous?",
+      "answer": "Sha'ul's response to the women's song is explicitly about kingship: 'They have ascribed to David ten thousands, and to me they have ascribed thousands. What more can he have but the kingdom?' Sha'ul feared David not as a rival warrior but as the man who would take what YHWH had already told him was lost. He knew — from Shemu'el's judgment — that his kingdom would not continue. Every success of David's confirmed what Sha'ul already knew. His violence toward David was not competition between equals; it was a man who knew he had lost his covenant status trying to prevent the inevitable. The spear-throwing, the marriage-traps, the assassination plots were all fear-driven responses to a verdict Sha'ul could not undo."
+    },
+    {
+      "question": "What covenant principle does the En-Gedi cave story teach?",
+      "answer": "The En-Gedi principle is that YHWH's ordinations are inviolable by human hands without YHWH's explicit authorization. Sha'ul was unjust, pursued David wickedly, and had forfeited his right to the throne. None of that removed YHWH's anointing from him. David understood: 'May YHWH judge between me and you. May YHWH avenge me against you, but my hand shall not be against you.' He handed the judgment to YHWH and refused the shortcut. This principle has covenant implications beyond the David-Sha'ul conflict: YHWH's appointments are not undone by the appointee's unworthiness or by human impatience with YHWH's timing. David waited for YHWH to remove Sha'ul rather than removing him himself."
     }
   ]
 }

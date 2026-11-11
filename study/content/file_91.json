@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_91",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_91",
   "label": "Divrei HaYamim Bet (2 Chronicles) — Part 1 — Chapters 1–18",
   "volume": 32,
-  "content_version": 1,
+  "content_version": 6,
   "summary_plain": "Divrei HaYamim Bet opens with Shelomoh asking YHWH for wisdom, not riches or power. YHWH grants him wisdom and adds riches and honor. Shelomoh builds the temple — cedar from Levanon, gold overlays, the great basin called the Sea — and dedicates it with prayer and sacrifice. The glory of YHWH fills the house as a cloud. The Queen of Sheva comes to test Shelomoh with hard questions and is overwhelmed by his wisdom. She says: Happy are your servants who stand before you and hear your wisdom. After Shelomoh's death, the kingdom divides. Rechav'am rules Yehudah. The Chronicler traces the southern kingdom's rulers through reforms and failures.",
   "summary_scholarly": "The ACR reads from DSS fragments and the Orit Ge'ez. The Queen of Sheva narrative (chapter 9) is critical. Sheva (Saba) was an ancient kingdom spanning the southern Arabian Peninsula and the Horn of Africa — modern Yemen, Eritrea, Ethiopia, and Djibouti. The Ethiopian tradition (Kebra Nagast) identifies the Queen of Sheva as Makeda and records that she bore Shelomoh a son, Menelik I, founder of the Solomonic dynasty of Ethiopia. This is not folklore — the Solomonic dynasty ruled Ethiopia from approximately 1270 to 1974 CE. The Aksumite Empire (c. 100-940 CE) controlled both sides of the Red Sea, including Saba. The trade corridor between Yisra'EL and Sheva was the African-Arabian spice and incense route — a continuous commercial and cultural connection. The Orit Ge'ez preserves the Sheva connection as living tradition. The Great Eraser separates Ethiopia from Yisra'EL by treating the Red Sea as a continental boundary when it is actually a narrow waterway that connected, not divided, the African and Arabian shores.",
   "key_terms": [
-    { "term": "Malkat Sheva (Queen of Sheva)", "phonetic": "Mal-KAHT SHEH-vah", "definition": "The queen who visited Shelomoh to test him with hard questions (chapter 9). Sheva (Saba) spanned southern Arabia and the Horn of Africa. The Ethiopian tradition identifies her as Makeda, mother of Menelik I. Anglicized as the Queen of Sheba." },
-    { "term": "Beit HaMiqdash (The Temple)", "phonetic": "Bayt hah-Mik-DAHSH", "definition": "The house Shelomoh built for YHWH in Yerushalayim. The Chronicler devotes chapters 2-7 to its construction and dedication. When the glory of YHWH filled it as a cloud, the priests could not stand to minister." },
-    { "term": "Kevod YHWH (Glory of YHWH)", "phonetic": "Keh-VOD", "definition": "2 Chronicles 7:1-2: 'The glory of YHWH filled the house. The priests could not enter the house of YHWH because the glory of YHWH filled it.' The kavod is YHWH's manifest presence — visible, tangible, overwhelming." }
+    {
+      "term": "Malkat Sheva (Queen of Sheva)",
+      "phonetic": "mal-KAT she-VAH",
+      "definition": "2 Divrei HaYamim 9: the Queen of Sheva comes to Yerushalayim to test Shelomoh with hard questions. She sees his wisdom, his palace, his table, his servants, the ascent by which he goes up to the Temple. She says: 'The report was true that I heard in my own land.' She gives Shelomoh 120 talents of gold, spices, and precious stones. The Aksumite and Ethiopian traditions identify her as Makeda, queen of their region, and as the ancestor of the Solomonic dynasty through the son born of the visit."
+    },
+    {
+      "term": "Beit HaMiqdash (The Temple)",
+      "phonetic": "beit ha-mik-DASH",
+      "definition": "2 Divrei HaYamim 2-7: Shelomoh builds the Temple on Mount Moriyah — the site of Avraham's binding of Yitzhaq and Dawid's plague altar. The building took seven years. The Temple's inner sanctuary contained the Ark. At its dedication, the glory of YHWH filled the Temple so completely that the priests could not stand to minister."
+    },
+    {
+      "term": "Kevod YHWH (Glory of YHWH)",
+      "phonetic": "ke-VOD YHWH",
+      "definition": "2 Divrei HaYamim 7:1-3: when Shelomoh finished his prayer of dedication, fire came down from heaven and consumed the burnt offering; the glory of YHWH filled the Temple. The priests could not enter. All the people saw the fire and the glory, and they bowed with faces to the ground and worshipped: 'For he is good, for his steadfast love endures forever.'"
+    },
+    {
+      "term": "Shelomoh's Request for Wisdom",
+      "phonetic": "biqqesh chokhmah",
+      "definition": "2 Divrei HaYamim 1:7-12: YHWH appears to Shelomoh at Givon (before the Temple is built) and says: 'Ask what I shall give you.' Shelomoh asks for wisdom and knowledge 'to govern this people, for who can govern this your people, that is so great?' YHWH gives him wisdom and also riches, possessions, and honor beyond any king before or after him."
+    },
+    {
+      "term": "The Temple Dedication Prayer",
+      "phonetic": "tefillat hachanukat haBayit",
+      "definition": "2 Divrei HaYamim 6: Shelomoh's dedication prayer is a seven-part covenant prayer — each part covers a scenario in which the covenant people might call out to YHWH from this place: defeat in battle, drought, famine, plague, the foreigner who prays toward the Temple, the exiled who pray toward the land. Each petition ends with a request for YHWH to hear and forgive."
+    },
+    {
+      "term": "YHWH's Response to the Dedication",
+      "phonetic": "",
+      "definition": "2 Divrei HaYamim 7:12-16: YHWH appears to Shelomoh at night after the dedication. 'I have heard your prayer and have chosen this place for myself as a house of sacrifice.' YHWH then declares the conditions: if the people pray toward this place, seek YHWH's face, and turn from their wicked ways — 'then I will hear from heaven and will forgive their sin and heal their land.' This is the foundational Temple-prayer promise."
+    },
+    {
+      "term": "The Horse Trade Controversy",
+      "phonetic": "",
+      "definition": "2 Divrei HaYamim 1:14-17; 9:28: Shelomoh accumulated 1,400 chariots and 12,000 horsemen and imported horses from Mitsrayim and Que. The Torah's covenant law for the king (Devarim 17:16) explicitly prohibited multiplying horses or returning the people to Mitsrayim for horses. The Chronicler records this as historical fact. Shelomoh's accumulation of horses from Mitsrayim was a covenant violation that the Chronicler does not editorially conceal."
+    },
+    {
+      "term": "Hiram of Tyre's Craftsmen",
+      "phonetic": "Huram Avi",
+      "definition": "2 Divrei HaYamim 2: Shelomoh negotiates with Huram (Hiram) of Tyre for materials and skilled craftsmen to build the Temple. Huram sends Huram-abi, a skilled craftsman whose mother was from Dan and whose father was from Tyre. The Temple's construction involved both covenant artisans and foreign craftsmen — the best available skill, organized for YHWH's service."
+    },
+    {
+      "term": "Shelomoh's Commercial Fleet",
+      "phonetic": "oni Shelomoh",
+      "definition": "2 Divrei HaYamim 8:17-18; 9:21: Shelomoh builds a fleet of ships at Etsyon-Gever on the sea of Reeds (Gulf of Aqaba). Huram's servants join the fleet. They sail to Ofir and bring back gold — 450 talents. Ships of Tarshish also bring gold, silver, ivory, apes, and peacocks. Shelomoh's commercial reach extends to the southern seas."
+    },
+    {
+      "term": "YHWH's Covenant Conditions",
+      "phonetic": "",
+      "definition": "2 Divrei HaYamim 7:17-22: YHWH's response to the dedication also includes the warning. If Shelomoh (or his sons) turns away from YHWH and serves other gods, YHWH will uproot the Temple: 'And this house, which I have consecrated for my Name, I will cast out of my sight.' The same covenant structure that promises blessing for faithfulness promises destruction for covenant abandonment. The Temple's permanence is conditional."
+    }
   ],
   "fill_blank": [
-    { "ref": "1:10", "prompt": "Give me now wisdom and ______, that I may go out and come in before this people.", "answer": "knowledge", "source_quote": "Give me now wisdom and knowledge, that I may go out and come in before this people, for who can govern this people of yours, which is so great?" },
-    { "ref": "9:6", "prompt": "The Queen of Sheva said to Shelomoh: The report was true that I heard in my own land of your words and of your ______.", "answer": "wisdom", "source_quote": "She said to the king: The report was true that I heard in my own land of your words and of your wisdom." },
-    { "ref": "7:1", "prompt": "When Shelomoh finished his prayer, fire came down from heaven and consumed the burnt offering, and the ______ of YHWH filled the house.", "answer": "glory", "source_quote": "As soon as Shelomoh finished his prayer, fire came down from heaven and consumed the burnt offering and the sacrifices, and the glory of YHWH filled the house." }
+    {
+      "ref": "2 Divrei HaYamim 1:10",
+      "prompt": "Shelomoh prayed: 'Give me now ___ and knowledge, that I may go out and come in before this people, for who can govern this your people, that is so great?'",
+      "answer": "wisdom",
+      "source_quote": "Give me now wisdom and knowledge to go out and come in before this people, for who can govern this people of yours, which is so great? — 2 Divrei HaYamim 1:10"
+    },
+    {
+      "ref": "2 Divrei HaYamim 9:6",
+      "prompt": "The Queen of Sheva said to Shelomoh: 'The report was ___ that I heard in my own land of your words and your wisdom.'",
+      "answer": "true",
+      "source_quote": "The report was true that I heard in my own land of your words and of your wisdom. — 2 Divrei HaYamim 9:6"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:1",
+      "prompt": "'When Shelomoh finished his prayer, ___ came down from heaven and consumed the burnt offering and the sacrifices, and the glory of YHWH filled the temple.'",
+      "answer": "fire",
+      "source_quote": "As soon as Solomon finished his prayer, fire came down from heaven and consumed the burnt offering and the sacrifices, and the glory of the LORD filled the temple. — 2 Divrei HaYamim 7:1"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:14",
+      "prompt": "YHWH declares: 'If my people who are called by my name humble themselves, and pray and seek my face and turn from their wicked ways, then I will hear from heaven and will ___ their sin and heal their land.'",
+      "answer": "forgive",
+      "source_quote": "Then I will hear from heaven and will forgive their sin and heal their land. — 2 Divrei HaYamim 7:14"
+    },
+    {
+      "ref": "2 Divrei HaYamim 6:18",
+      "prompt": "Shelomoh prayed: 'But will YHWH indeed dwell with man on earth? Behold, ___ cannot contain you, much less this house that I have built.'",
+      "answer": "heaven and the highest heaven",
+      "source_quote": "Behold, heaven and the highest heaven cannot contain you, how much less this house that I have built! — 2 Divrei HaYamim 6:18"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:3",
+      "prompt": "All the people bowed down with faces to the ground: 'For he is ___, for his steadfast love endures forever.'",
+      "answer": "good",
+      "source_quote": "For he is good, for his steadfast love endures forever. — 2 Divrei HaYamim 7:3"
+    },
+    {
+      "ref": "2 Divrei HaYamim 3:1",
+      "prompt": "Shelomoh began to build the house of YHWH on Mount ___, where YHWH had appeared to Dawid his father.",
+      "answer": "Moriyah",
+      "source_quote": "Then Solomon began to build the house of the LORD in Jerusalem on Mount Moriah, where the LORD had appeared to David his father. — 2 Divrei HaYamim 3:1"
+    },
+    {
+      "ref": "2 Divrei HaYamim 9:1",
+      "prompt": "The Queen of Sheva heard of the ___ of Shelomoh, and she came to Yerushalayim to test him with hard questions.",
+      "answer": "fame",
+      "source_quote": "Now when the queen of Sheba heard of the fame of Solomon, she came to Jerusalem to test him with hard questions. — 2 Divrei HaYamim 9:1"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:16",
+      "prompt": "'Now I have chosen and consecrated this house that my Name may be ___ there forever. My eyes and my heart will be there for all time.'",
+      "answer": "there",
+      "source_quote": "For now I have chosen and consecrated this house that my name may be there forever. My eyes and my heart will be there for all time. — 2 Divrei HaYamim 7:16"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:19-20",
+      "prompt": "YHWH warned: 'But if you turn aside and forsake my statutes and my commandments... then I will pluck you up from my land and this ___ I will cast out of my sight.'",
+      "answer": "house",
+      "source_quote": "Then I will pluck you up from my land that I have given you, and this house that I have consecrated for my name, I will cast out of my sight. — 2 Divrei HaYamim 7:20"
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:7-12", "question": "What did Shelomoh ask YHWH for?", "options": ["Military power and vast territory", "Wisdom and knowledge to govern YHWH's people", "Long life and immortality", "Revenge against his enemies"], "correct": 1, "source_quote": "Give me now wisdom and knowledge, that I may go out and come in before this people." },
-    { "ref": "9:1-12", "question": "What did the Queen of Sheva do when she visited Shelomoh?", "options": ["She waged war against him", "She tested him with hard questions and was overwhelmed by his wisdom — she said the report did not tell half of it", "She refused to enter the palace", "She demanded tribute"], "correct": 1, "source_quote": "When the Queen of Sheva had seen the wisdom of Shelomoh... there was no more breath in her. She said: The report was true... but the half of it was not told to me. Your wisdom surpasses the report that I heard." },
-    { "ref": "7:1-2", "question": "What happened when Shelomoh dedicated the temple?", "options": ["Nothing visible occurred", "Fire came down from heaven and the glory of YHWH filled the house — the priests could not enter", "The temple collapsed", "Only the king could enter"], "correct": 1, "source_quote": "Fire came down from heaven and consumed the burnt offering and the sacrifices, and the glory of YHWH filled the house. And the priests could not enter the house of YHWH, because the glory of YHWH filled the house." }
+    {
+      "ref": "2 Divrei HaYamim 1:7-12",
+      "question": "What did Shelomoh ask YHWH for?",
+      "options": [
+        "Long life, riches, and military victory over all his enemies",
+        "Wisdom and knowledge to govern the people — 'for who can govern this your people, that is so great'",
+        "The building plans for the Temple in precise detail, so he could carry them out exactly",
+        "The faithfulness of his sons to keep the covenant after his death"
+      ],
+      "correct": 1,
+      "source_quote": "Give me now wisdom and knowledge to go out and come in before this people. — 2 Divrei HaYamim 1:10"
+    },
+    {
+      "ref": "2 Divrei HaYamim 9:1-12",
+      "question": "What did the Queen of Sheva do when she visited Shelomoh?",
+      "options": [
+        "She tested him with hard questions about YHWH and the covenant — and when she heard his answers she was overwhelmed by his wisdom and the Temple she saw",
+        "She came to negotiate a trade treaty and left with a commercial agreement for annual tribute payments",
+        "She came as a hostile queen to verify the claims of Shelomoh's messengers about Yisra'el's wealth",
+        "She arrived already believing Shelomoh's wisdom was real and came to offer formal tribute to YHWH"
+      ],
+      "correct": 0,
+      "source_quote": "The report was true that I heard in my own land of your words and of your wisdom. — 2 Divrei HaYamim 9:6"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:1-2",
+      "question": "What happened when Shelomoh dedicated the temple?",
+      "options": [
+        "The Ark glowed with YHWH's glory and all the priests fell on their faces before it",
+        "Fire came down from heaven and consumed the offerings; the glory of YHWH filled the Temple so the priests could not enter",
+        "A voice spoke from the Temple's inner sanctuary declaring the dedication was accepted",
+        "The covenant community saw a column of smoke rise from the altar as a sign of YHWH's acceptance"
+      ],
+      "correct": 1,
+      "source_quote": "Fire came down from heaven and consumed the burnt offering and the sacrifices, and the glory of the LORD filled the temple. — 2 Divrei HaYamim 7:1"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:14",
+      "question": "What is YHWH's covenant promise in response to prayer toward the Temple?",
+      "options": [
+        "That Yisra'el will never be exiled as long as the Temple stands and prayers are offered",
+        "If the people humble themselves, pray, seek YHWH's face, and turn from wicked ways — YHWH will hear from heaven, forgive, and heal the land",
+        "That any foreigner who prays toward the Temple will receive YHWH's blessing and protection",
+        "That the Temple will be a house of prayer for all nations who acknowledge YHWH's sovereignty"
+      ],
+      "correct": 1,
+      "source_quote": "Then I will hear from heaven and will forgive their sin and heal their land. — 2 Divrei HaYamim 7:14"
+    },
+    {
+      "ref": "2 Divrei HaYamim 6:18",
+      "question": "What does Shelomoh's prayer acknowledge about YHWH and the Temple?",
+      "options": [
+        "That the Temple is YHWH's permanent dwelling and no other place will carry his Name forever",
+        "That heaven and the highest heaven cannot contain YHWH — the Temple is not a dwelling but a house for YHWH's Name and a place for covenant prayer",
+        "That the Temple replaces the Tabernacle and all previous covenant meeting places",
+        "That the Temple's glory will draw all the nations to worship YHWH in Yerushalayim"
+      ],
+      "correct": 1,
+      "source_quote": "Behold, heaven and the highest heaven cannot contain you, how much less this house that I have built! — 2 Divrei HaYamim 6:18"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:19-22",
+      "question": "What does YHWH warn Shelomoh about after accepting the Temple dedication?",
+      "options": [
+        "That the northern tribes will rebel and split the kingdom if Shelomoh is not careful",
+        "If Shelomoh or his sons turn away and serve other gods, YHWH will uproot Yisra'el from the land and cast the Temple out of his sight — it will become a proverb and byword",
+        "That the surrounding nations will attack the Temple within three generations unless a faithful king protects it",
+        "That the Temple's treasures will be taken by Mitsrayim if Shelomoh allows the horse trade to continue"
+      ],
+      "correct": 1,
+      "source_quote": "Then I will pluck you up from my land that I have given you, and this house that I have consecrated for my name, I will cast out of my sight. — 2 Divrei HaYamim 7:20"
+    },
+    {
+      "ref": "2 Divrei HaYamim 3:1",
+      "question": "Why is Mount Moriyah significant as the Temple site?",
+      "options": [
+        "It was the highest point in Yerushalayim, visible from all directions, appropriate for YHWH's house",
+        "It is where YHWH appeared to Dawid and where he bought the threshing floor — also identified with the place of Avraham's binding of Yitzhaq",
+        "It was the site of the original Yevusite (Jebusite) sanctuary that Dawid had already consecrated to YHWH",
+        "It was the geographical center of the land, equidistant from all twelve tribes' territories"
+      ],
+      "correct": 1,
+      "source_quote": "Then Solomon began to build the house of the LORD in Jerusalem on Mount Moriah, where the LORD had appeared to David his father. — 2 Divrei HaYamim 3:1"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:3",
+      "question": "What was the people's response when YHWH's glory filled the Temple?",
+      "options": [
+        "They shouted the Shema — 'Hear O Yisra'el, YHWH is our Creator, YHWH is one'",
+        "They bowed with faces to the ground: 'For he is good, for his steadfast love endures forever'",
+        "They wept aloud, overwhelmed by YHWH's presence that they had not seen since Moshe's time",
+        "They offered additional sacrifices for seven days until the glory lifted from the Temple"
+      ],
+      "correct": 1,
+      "source_quote": "For he is good, for his steadfast love endures forever. — 2 Divrei HaYamim 7:3"
+    },
+    {
+      "ref": "2 Divrei HaYamim 9:9",
+      "question": "What gifts did the Queen of Sheva bring to Shelomoh?",
+      "options": [
+        "Twenty talents of silver, embroidered cloth, and rare animals from the southern lands",
+        "120 talents of gold, an enormous quantity of spices, and precious stones — the spices she brought exceeded anything ever seen in Yisra'el",
+        "Trading ships and their cargoes, as a covenant of ongoing commercial partnership",
+        "A delegation of skilled craftsmen from her land to assist with the Temple completion"
+      ],
+      "correct": 1,
+      "source_quote": "She gave the king 120 talents of gold, and a very great quantity of spices and precious stones. — 2 Divrei HaYamim 9:9"
+    },
+    {
+      "ref": "2 Divrei HaYamim 6",
+      "question": "What is the structure of Shelomoh's Temple dedication prayer?",
+      "options": [
+        "A single petition for YHWH to accept the Temple as his permanent dwelling",
+        "Seven covenant scenarios — defeat, drought, famine, plague, the foreigner, the exiled — each ending with a petition for YHWH to hear from heaven and forgive",
+        "An affirmation of the Sinaitic covenant followed by requests for Yisra'el's enemies to be defeated",
+        "A recounting of YHWH's works from creation through Dawid, ending with the dedication"
+      ],
+      "correct": 1,
+      "source_quote": "Then hear from heaven your dwelling place and forgive and render to each whose heart you know. — 2 Divrei HaYamim 6:30"
+    }
   ],
   "faq": [
     {
-      "question": "What does the Queen of Sheva narrative reveal about the African-Arabian connection to Yisra'EL?",
-      "answer": "The Queen of Sheva came from Saba — an ancient kingdom that spanned the southern Arabian Peninsula and the Horn of Africa (modern Yemen, Eritrea, Ethiopia, Djibouti). The Red Sea did not divide these territories — it connected them. The Aksumite Empire (c. 100-940 CE) controlled both shores. The Ethiopian tradition (Kebra Nagast) identifies the Queen as Makeda and records that she bore Shelomoh a son, Menelik I, who founded the Solomonic dynasty. That dynasty ruled Ethiopia from approximately 1270 to 1974 CE — the longest continuous monarchical line in recorded history. The Orit Ge'ez was preserved by the community descended from this connection. The Great Eraser separates Ethiopia from Yisra'EL — treating the African Israelite tradition as derivative or legendary — when the textual, genetic, and archaeological evidence points to continuous connection across the African-Arabian trade corridor. The spice route from Sheva to Yerushalayim was the commercial backbone of Shelomoh's wealth."
+      "question": "What does the Queen of Sheva narrative reveal about the African-Arabian connection to the covenant?",
+      "answer": "The Queen of Sheva comes from a southern kingdom — the region identified in ancient sources with the Horn of northeastern Africa and the southwestern Arabian peninsula. The Ethiopian royal tradition (the Kebra Nagast) identifies her as Makeda and records that she returned from Yerushalayim carrying Shelomoh's son Menelik, who later brought the Ark of the Covenant to Aksum. This tradition is the living claim of the Ethiopian/Aksumite covenant community to direct Solomonic lineage. The historical record in 2 Divrei HaYamim 9 does not contradict this tradition — it establishes the visit as fact. The Ethiopian Beta Israel preserved the Ge'ez Orit as the primary text of the covenant tradition, tracing their authority to this connection."
     },
     {
       "question": "Why does Shelomoh ask for wisdom and not power?",
-      "answer": "2 Chronicles 1:10: 'Give me now wisdom and knowledge, that I may go out and come in before this people.' YHWH responds: because you asked for wisdom and not riches, power, or the life of your enemies, I give you wisdom and add riches and honor as well (1:11-12). This is the covenant framework: the covenant leader's first obligation is wisdom — the capacity to govern YHWH's people according to YHWH's instruction. Not military force. Not economic extraction. Not personal glory. Wisdom. The same Chokmah (Wisdom) personified in Mishlei 1-9, the same Torah-wisdom celebrated in Psalm 119. Every Great Eraser system elevates institutional power over wisdom — credentialed authority over direct knowledge. Shelomoh's request says: wisdom is the prerequisite. Everything else follows."
+      "answer": "Shelomoh's request at Givon is striking: YHWH offers to give him anything, and he asks for wisdom and knowledge to govern. His stated reason is covenant humility: 'who can govern this your people, that is so great?' He does not ask for power, wealth, military victory, or long life — the things kings typically seek. YHWH praises the request and grants wisdom plus everything Shelomoh did not ask for. The wisdom Shelomoh requests is specifically administrative — the capacity to discern, to judge, to lead the covenant community in righteousness. The covenant leader needs judgment above all other qualities. Power without judgment is what Sha'ul had."
     },
     {
       "question": "What is the Aksumite connection to the Israelite covenant?",
-      "answer": "The Aksumite Empire, centered in modern-day Eritrea and northern Ethiopia, controlled both sides of the Red Sea from approximately 100 to 940 CE. Aksum was one of the four great world powers of late antiquity — alongside Rome, Persia, and China. The Aksumite script (Ge'ez) preserved the Orit — the Torah, the prophets, Chanokh, Yovelim, and other texts that the Masoretic canon later excluded. The Beta Israel maintained covenant practice — Shabbat, kashrut, pilgrimage, sacrifice — in Ethiopia for millennia before European contact. The Queen of Sheva narrative in 2 Chronicles 9 places the connection at the time of Shelomoh — the 10th century BCE. The Aksumite civilization that later preserved the Orit is the historical continuation of that Sheva-Yisra'EL corridor. The Great Eraser treats this entire tradition as marginal or folkloric, when it is in fact the oldest continuous preservation of the broader Israelite scriptural canon."
+      "answer": "The Aksumite kingdom in present-day northern Ethiopia was one of the great civilizations of the ancient world, with deep roots in the same Kushite-Nile Valley civilization from which the Hebrew covenant people descended. The Kebra Nagast ('Glory of Kings') records that the Queen of Sheva (called Makeda in the Ethiopian tradition) visited Shelomoh, conceived a son (Menelik), and later sent Menelik to study with his father. When Menelik returned, he brought the Ark of the Covenant with him to Aksum. The Beta Israel of Ethiopia preserved the Ge'ez Orit — the Ethiopic Torah — as the primary covenant text. Their claim to covenant lineage through Makeda and Menelik is the living tradition of a continuous Hebrew community in the Kush-Mitsrayim covenant family."
+    },
+    {
+      "question": "What does the fire from heaven at the Temple dedication signify?",
+      "answer": "Fire from heaven consumed Aharon's first altar offering at the Mishkan's dedication (Vayikra 9:24). Fire from heaven consumed Eliyahu's altar on Mount Karmel (1 Melakhim 18:38). Fire from heaven consumes Shelomoh's Temple dedication offering. The pattern is consistent: when YHWH accepts a covenant act of worship, fire from heaven is the sign of that acceptance. The fire is not a demonstration of power for its own sake — it is YHWH's response to covenant faithfulness. The people fall on their faces not in terror but in worship: 'for he is good, for his steadfast love endures forever.'"
+    },
+    {
+      "question": "What covenant principle does the Temple dedication prayer establish?",
+      "answer": "Shelomoh's prayer in chapter 6 establishes the Temple as a covenant prayer-direction, not a physical dwelling for YHWH. 'Heaven and the highest heaven cannot contain you, how much less this house.' The Temple is where YHWH places his Name — not where YHWH lives. It is the designated covenant point toward which prayer is directed, toward which the exiled turn, toward which the foreigner seeks YHWH's face. The prayer also establishes that YHWH forgives and hears from heaven — not from the Temple itself. The Temple directs covenant prayer; YHWH answers from his actual dwelling, which is beyond any earthly location."
+    },
+    {
+      "question": "What does YHWH's conditional warning after the dedication reveal?",
+      "answer": "Immediately after accepting the Temple with fire and glory, YHWH appears to Shelomoh and declares the conditions. The Temple's permanence is conditional on covenant faithfulness. If Shelomoh or his sons turn away and serve other gods, YHWH will uproot the people from the land and cast the Temple from his sight. The Temple will become a proverb and a byword. This conditional warning, given on the very night after the dedication, is the Chronicler's way of explaining what happened centuries later: the exile and destruction of the Temple were not surprises and were not beyond YHWH's covenant terms. They were the stated consequence of covenant abandonment."
+    },
+    {
+      "question": "Why is Shelomoh's wisdom described as his greatest covenant gift?",
+      "answer": "Shelomoh's wisdom is specifically judicial — the ability to hear cases and render true judgment. 1 Melakhim 3 gives the paradigm case: the two women and the infant. Shelomoh's wisdom discerns truth where no evidence exists. Wisdom (chokhmah) in the covenant tradition is not primarily intellectual — it is practical covenant intelligence: knowing what is true, what is right, what YHWH requires in this specific situation. It is the governing intelligence of the covenant community. The covenant king who cannot judge wisely cannot govern the people in righteousness. YHWH gives Shelomoh the governing intelligence first because governing the covenant people rightly is the king's covenant function."
+    },
+    {
+      "question": "What does the Temple's completion reveal about the relationship between Dawid and Shelomoh?",
+      "answer": "The Temple project is a two-generation covenant act. Dawid had the desire, received the plan, gathered the materials, organized the workforce, purchased the site, and transmitted the full plan to Shelomoh. Shelomoh had the conditions (peace, prosperity, the right covenant posture) and carried out the building. Neither generation could have completed the project alone — Dawid's warfare created the peace Shelomoh needed; Shelomoh's wisdom and covenant administration created the conditions for the Temple's functioning. The two-generation structure teaches that covenant projects often span generations, and the generation that completes a work is not superior to the generation that prepared for it."
+    },
+    {
+      "question": "What conditions did YHWH attach to the Temple at its dedication?",
+      "answer": "On the night of the Temple's dedication, YHWH appeared to Shelomoh and said: 'I have heard your prayer and have chosen this place for myself as a house of sacrifice. When I shut up the heavens so that there is no rain, or command the locust to devour the land, or send pestilence among my people, if my people who are called by my name humble themselves, and pray and seek my face and turn from their wicked ways, then I will hear from heaven and will forgive their sin and heal their land.' YHWH also stated the negative: 'But if you turn aside and forsake my statutes and my commandments... then I will pluck you up from my land that I have given you, and this house that I have consecrated for my name, I will cast out of my sight.' The Temple's dedication came with its own built-in accountability clause. The house was not unconditional — it stood on the same covenant faithfulness that every other aspect of the community's life depended on. 2 Divrei HaYamim 36 records the clause operating."
+    },
+    {
+      "question": "What does Shelomoh's wisdom reveal about covenant understanding?",
+      "answer": "Shelomoh's wisdom in 2 Divrei HaYamim is not primarily philosophical wisdom — it is covenant wisdom. When YHWH offered Shelomoh anything he asked, Shelomoh asked for wisdom and knowledge 'that I may go out and come in before this people, for who can govern this people of yours, which is so great.' The wisdom requested is specifically for leading YHWH's covenant community. YHWH's response: because Shelomoh did not ask for riches, wealth, honor, or long life, YHWH gave him all of those as well. The covenant principle operating here is the same one Yeheshua documents in its corrupted form but which the original covenant states directly: seek YHWH first — seek what enables you to serve YHWH's people — and provision follows. Shelomoh's wisdom as demonstrated in the Queen of Sheva's visit became the standard by which all surrounding nations measured extraordinary insight: 'There was nothing hidden from Shelomoh that he could not explain to her.'"
     }
   ]
 }

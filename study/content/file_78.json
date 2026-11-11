@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_78",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_78",
   "label": "Iyov (Job) — Part 2 — Chapters 15–28",
   "volume": 21,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "The friends intensify their arguments. Elifaz says: What is man that he should be clean? One born of woman that he should be righteous? The heavens are not clean in his sight. Bildad declares: How can man be righteous before The Creator? If even the moon is not bright and the stars are not clean in his sight — how much less man who is a maggot! Iyov answers: Miserable comforters are you all. My witness is in heaven. I know that my redeemer lives and at the last he will stand upon the earth — and after my skin has been destroyed, yet in my flesh I shall see The Creator. Tzofar insists the wicked always suffer. Iyov refutes them: the wicked prosper, grow old, increase in power. Where shall wisdom be found? Where is the place of understanding? It is hidden from the eyes of all living. The Creator understands the way to it — he established it, searched it out, and said to man: The fear of YHWH, that is wisdom, and to depart from evil is understanding.",
   "summary_scholarly": "The ACR reads from DSS witnesses (4QJob-a, 4QJob-b, 4QpaleoJob-c, 11QtgJob) and the Orit Ge'ez. The second cycle of speeches (chapters 15-21) and the third cycle (chapters 22-28, which appears disrupted in the Masoretic — chapter 28 may be an independent wisdom poem) present the escalating theological debate. The friends' theology is retribution doctrine: the righteous always prosper, the wicked always suffer. Iyov systematically demolishes this theology with empirical observation — the wicked do prosper. Chapter 19:25-27 — the Redeemer declaration — is one of the most debated passages in the Hebrew canon. The Hebrew go'el (redeemer/vindicator) is a legal term: the kinsman who restores rights, redeems property, and avenges blood. Chapter 28 — the Hymn to Wisdom — asks where wisdom is found and concludes that only The Creator knows the way to it.",
   "key_terms": [
-    { "term": "Go'el (Redeemer/Vindicator)", "phonetic": "Go-EL", "definition": "Iyov 19:25: 'I know that my go'el lives.' The go'el is a legal term — the kinsman-redeemer who restores rights, redeems sold property, and avenges the blood of the slain. Iyov declares that his vindicator is alive and will stand upon the earth at the last." },
-    { "term": "Hymn to Wisdom (Chapter 28)", "phonetic": "", "definition": "Where shall wisdom be found? It cannot be purchased with gold or silver. The deep says: It is not in me. The sea says: It is not with me. Only The Creator understands the way to it. And he said to man: The fear of YHWH — that is wisdom, and to depart from evil is understanding." },
-    { "term": "Retribution Theology", "phonetic": "", "definition": "The theological position of Iyov's friends: the righteous always prosper and the wicked always suffer. If you suffer, you must have sinned. Iyov systematically refutes this with empirical evidence — the wicked prosper and the righteous suffer. YHWH ultimately rejects the friends' theology (42:7)." }
+    {
+      "term": "Elihu",
+      "phonetic": "e-li-HU",
+      "definition": "The fourth speaker in Iyov (chs 32-37); a younger man who is angry both at Iyov for justifying himself and at the three friends for failing to answer. He defends YHWH's justice from a different angle — YHWH speaks through suffering to prevent greater sin (33:19-30)."
+    },
+    {
+      "term": "YHWH from the Whirlwind",
+      "phonetic": "YHWH min ha-se-a-RAH",
+      "definition": "In Iyov 38-41, YHWH speaks to Iyov directly from a whirlwind; the speech does not give a theological explanation of Iyov's suffering but overwhelms with cosmic questions about creation, demonstrating that YHWH's wisdom exceeds all human categories."
+    },
+    {
+      "term": "Where Were You When I Laid Earth's Foundations",
+      "phonetic": "ei-FOH ha-yi-TA be-yo-DI",
+      "definition": "Iyov 38:4 — YHWH's first cosmic question, establishing the gap between human and divine understanding; the foundation of YHWH's answer to Iyov's demand for a hearing."
+    },
+    {
+      "term": "Cosmic Questions",
+      "phonetic": "she-e-LOT ka-va-NI-yot",
+      "definition": "The series of questions YHWH puts to Iyov in chs 38-39: about the morning stars, the gates of death, the storehouses of snow and hail, the Pleiades and Orion, the wild ox and the eagle — all demonstrating that YHWH governs a creation far beyond human comprehension."
+    },
+    {
+      "term": "Behemot",
+      "phonetic": "be-he-MOT",
+      "definition": "The great beast described in Iyov 40:15-24 — 'the first of the works of YHWH'; its bones are like bronze tubes, its limbs like bars of iron; it eats grass like an ox. This ancient text establishes the great-beast tradition that 1 Enoch 60 later develops."
+    },
+    {
+      "term": "Leviathan",
+      "phonetic": "liv-ya-TAN",
+      "definition": "The chaos creature described in Iyov 41 — breathing fire, with scales like rows of shields, impervious to all weapons. YHWH presents it as proof of power beyond human mastery. This ancient text is the source for chaos-beast imagery that the NT book of Revelation borrowed from (via Chanokh); direction: Iyov → Chanokh → NT."
+    },
+    {
+      "term": "Iyov Vindicated",
+      "phonetic": "tzi-duk Iy-YOV",
+      "definition": "YHWH's verdict in Iyov 42:7-8: Iyov has spoken rightly about YHWH, unlike his three friends. Iyov is vindicated — not because he had all the answers, but because he spoke honestly from genuine covenant relationship rather than defending theological formulas."
+    },
+    {
+      "term": "Iyov Restored Double",
+      "phonetic": "shuv Iy-YOV mish-NA",
+      "definition": "In Iyov 42:10-17, YHWH restores Iyov's fortunes — double what he had before: 14,000 sheep, 6,000 camels, 1,000 yoke of oxen, 1,000 donkeys; ten new children. The restoration does not erase the suffering but confirms YHWH's faithfulness and Iyov's vindication."
+    },
+    {
+      "term": "Job's Three Friends Rebuked",
+      "phonetic": "ge-a-RAT she-lo-shet oh-ha-VAV",
+      "definition": "Iyov 42:7: YHWH says to Elifaz: 'My anger burns against you and your two friends, for you have not spoken of me what is right, as my servant Iyov has.' The retribution theology of the three friends is explicitly rejected by YHWH."
+    },
+    {
+      "term": "Theodicy",
+      "phonetic": "te-o-di-TSI-a",
+      "definition": "The philosophical and theological problem of why a just and powerful YHWH permits the suffering of the innocent; Iyov is the central ancient text engaging this question. The book's answer is not a logical explanation but a revelation of YHWH's transcendent wisdom and an affirmation of covenant faithfulness in the face of the unexplained."
+    }
   ],
   "fill_blank": [
-    { "ref": "19:25", "prompt": "I know that my ______ lives, and at the last he will stand upon the earth.", "answer": "redeemer", "source_quote": "For I know that my redeemer lives, and at the last he will stand upon the earth." },
-    { "ref": "28:28", "prompt": "The fear of YHWH — that is ______, and to depart from evil is understanding.", "answer": "wisdom", "source_quote": "And he said to man: Behold, the fear of YHWH — that is wisdom, and to depart from evil is understanding." },
-    { "ref": "28:12", "prompt": "But where shall ______ be found? And where is the place of understanding?", "answer": "wisdom", "source_quote": "But where shall wisdom be found? And where is the place of understanding?" }
+    {
+      "ref": "Iyov 38:3",
+      "prompt": "YHWH said to Iyov: 'Dress for action like a man; I will question you, and you ___ me.'",
+      "answer": "make me know",
+      "source_quote": "Dress for action like a man; I will question you, and you make me know — Iyov 38:3."
+    },
+    {
+      "ref": "Iyov 38:4",
+      "prompt": "'Where were you when I laid the ___ of the earth? Tell me if you have understanding.'",
+      "answer": "foundation",
+      "source_quote": "Where were you when I laid the foundation of the earth? Tell me if you have understanding — Iyov 38:4."
+    },
+    {
+      "ref": "Iyov 38:7",
+      "prompt": "YHWH asked Iyov where he was when 'the morning ___ sang together and all the sons of YHWH shouted for joy?'",
+      "answer": "stars",
+      "source_quote": "When the morning stars sang together and all the sons of YHWH shouted for joy — Iyov 38:7."
+    },
+    {
+      "ref": "Iyov 40:4",
+      "prompt": "Iyov answered YHWH: 'Behold, I am of ___ account; what shall I answer you? I lay my hand on my mouth.'",
+      "answer": "small",
+      "source_quote": "Behold, I am of small account; what shall I answer you? I lay my hand on my mouth — Iyov 40:4."
+    },
+    {
+      "ref": "Iyov 40:15",
+      "prompt": "Behold, ___, which I made as I made you; it eats grass like an ox.",
+      "answer": "Behemot",
+      "source_quote": "Behold, Behemot, which I made as I made you; it eats grass like an ox — Iyov 40:15."
+    },
+    {
+      "ref": "Iyov 41:1",
+      "prompt": "'Can you draw out ___ with a fishhook or press down its tongue with a cord?'",
+      "answer": "Leviathan",
+      "source_quote": "Can you draw out Leviathan with a fishhook or press down its tongue with a cord? — Iyov 41:1."
+    },
+    {
+      "ref": "Iyov 42:5",
+      "prompt": "Iyov said: 'I had heard of you by the ___ of the ear, but now my eye sees you.'",
+      "answer": "hearing",
+      "source_quote": "I had heard of you by the hearing of the ear, but now my eye sees you — Iyov 42:5."
+    },
+    {
+      "ref": "Iyov 42:7",
+      "prompt": "YHWH said to Elifaz: 'My anger burns against you and your two friends, for you have not spoken of me what is ___, as my servant Iyov has.'",
+      "answer": "right",
+      "source_quote": "My anger burns against you and against your two friends, for you have not spoken of me what is right, as my servant Iyov has — Iyov 42:7."
+    },
+    {
+      "ref": "Iyov 42:10",
+      "prompt": "And YHWH ___ the fortunes of Iyov when he had prayed for his friends. And YHWH gave Iyov twice as much as he had before.",
+      "answer": "restored",
+      "source_quote": "And YHWH restored the fortunes of Iyov when he had prayed for his friends — Iyov 42:10."
+    },
+    {
+      "ref": "Iyov 32:2",
+      "prompt": "Then Elihu the son of Barakhel the Buzite, of the family of ___, burned with anger.",
+      "answer": "Ram",
+      "source_quote": "Then Elihu the son of Barakhel the Buzite, of the family of Ram, burned with anger — Iyov 32:2."
+    }
   ],
   "multiple_choice": [
-    { "ref": "19:25-27", "question": "What does Iyov declare about his go'el (redeemer)?", "options": ["He does not exist", "He lives and will stand upon the earth at the last — and Iyov will see The Creator in his flesh", "He is one of the three friends", "He is an angel who will argue Iyov's case"], "correct": 1, "source_quote": "For I know that my redeemer lives, and at the last he will stand upon the earth. And after my skin has been thus destroyed, yet in my flesh I shall see The Creator." },
-    { "ref": "21:7-13", "question": "How does Iyov refute the friends' retribution theology?", "options": ["He agrees that the wicked always suffer", "He shows that the wicked often prosper — they grow old, increase in power, and their offspring flourish", "He argues that suffering is random", "He says only the priests can judge"], "correct": 1, "source_quote": "Why do the wicked live, reach old age, and grow mighty in power? Their offspring are established before them, and their descendants before their eyes." },
-    { "ref": "28:12-28", "question": "According to the Hymn to Wisdom, where is wisdom found?", "options": ["In the deep of the sea", "In gold and precious stones", "Only The Creator understands the way to it — the fear of YHWH is wisdom", "In the words of the elders"], "correct": 2, "source_quote": "The Creator understands the way to it, and he knows its place. And he said to man: Behold, the fear of YHWH — that is wisdom, and to depart from evil is understanding." }
+    {
+      "ref": "Iyov 38:4",
+      "question": "What is YHWH's first question to Iyov from the whirlwind?",
+      "options": [
+        "Why have you sinned against me?",
+        "Where were you when I laid the foundation of the earth?",
+        "Do you know the commands I gave to creation?",
+        "Have you entered the storehouses of snow?"
+      ],
+      "correct": 1,
+      "source_quote": "Where were you when I laid the foundation of the earth? Tell me if you have understanding — Iyov 38:4."
+    },
+    {
+      "ref": "Iyov 40:15",
+      "question": "What creature does YHWH describe in Iyov 40:15 as one he made as he made Iyov?",
+      "options": [
+        "Leviathan",
+        "The lion",
+        "Behemot",
+        "The eagle"
+      ],
+      "correct": 2,
+      "source_quote": "Behold, Behemot, which I made as I made you — Iyov 40:15."
+    },
+    {
+      "ref": "Iyov 41",
+      "question": "In Iyov 41, what ancient text establishes chaos-beast imagery that later traditions (including NT Revelation) borrowed from?",
+      "options": [
+        "The Pleiades passage",
+        "The Behemot passage",
+        "The Leviathan passage",
+        "The Morning Stars passage"
+      ],
+      "correct": 2,
+      "source_quote": "The Leviathan passage in Iyov 41 is the ancient source; direction runs Iyov → Chanokh → NT."
+    },
+    {
+      "ref": "Iyov 42:7",
+      "question": "Whose theology does YHWH explicitly rebuke at the end of Iyov?",
+      "options": [
+        "Iyov's",
+        "Elihu's",
+        "The three friends — Elifaz, Bildad, Tzofar",
+        "All five speakers equally"
+      ],
+      "correct": 2,
+      "source_quote": "My anger burns against you and against your two friends, for you have not spoken of me what is right, as my servant Iyov has — Iyov 42:7."
+    },
+    {
+      "ref": "Iyov 42:5",
+      "question": "How does Iyov describe his new knowledge of YHWH in 42:5?",
+      "options": [
+        "He understands YHWH's justice at last",
+        "Before he had heard by the ear; now his eye sees YHWH",
+        "He has found no satisfying answer",
+        "He repents of all his accusations"
+      ],
+      "correct": 1,
+      "source_quote": "I had heard of you by the hearing of the ear, but now my eye sees you — Iyov 42:5."
+    },
+    {
+      "ref": "Iyov 32:2-3",
+      "question": "Why is Elihu angry at both Iyov and the three friends?",
+      "options": [
+        "Because Iyov refused to pray and the friends spoke too much",
+        "Because Iyov justified himself rather than YHWH, and the friends had no answer yet condemned Iyov",
+        "Because all four men ignored the Torah",
+        "Because they refused to offer sacrifice during the debate"
+      ],
+      "correct": 1,
+      "source_quote": "Elihu burned with anger at Iyov because he justified himself rather than YHWH; and also at the three friends because they had found no answer although they had declared Iyov to be in the wrong — Iyov 32:2-3."
+    },
+    {
+      "ref": "Iyov 38:7",
+      "question": "Who sang together when YHWH laid the foundation of the earth (38:7)?",
+      "options": [
+        "The prophets of YHWH",
+        "The morning stars and the sons of YHWH",
+        "The angels of fire and the seraphim",
+        "The heavenly chorus of the redeemed"
+      ],
+      "correct": 1,
+      "source_quote": "When the morning stars sang together and all the sons of YHWH shouted for joy — Iyov 38:7."
+    },
+    {
+      "ref": "Iyov 42:10",
+      "question": "What does YHWH restore to Iyov in 42:10?",
+      "options": [
+        "His health only",
+        "His former fortunes exactly",
+        "His fortunes — doubled",
+        "His lost children exactly"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH gave Iyov twice as much as he had before — Iyov 42:10."
+    },
+    {
+      "ref": "Iyov 40:4",
+      "question": "What is Iyov's first response after YHWH speaks from the whirlwind?",
+      "options": [
+        "He continues to press his case",
+        "He lays his hand on his mouth in humility",
+        "He praises YHWH for the answer",
+        "He weeps and repents of all sin"
+      ],
+      "correct": 1,
+      "source_quote": "Behold, I am of small account; what shall I answer you? I lay my hand on my mouth — Iyov 40:4."
+    },
+    {
+      "ref": "Iyov theodicy",
+      "question": "What is the book of Iyov's answer to the problem of innocent suffering?",
+      "options": [
+        "Suffering always results from hidden sin",
+        "YHWH's ways exceed human understanding; covenant faithfulness is maintained without explanation",
+        "The innocent are always eventually rescued",
+        "Suffering is an illusion of human perception"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH speaks from the whirlwind with cosmic questions rather than explanations — revealing transcendent wisdom beyond human theodicy."
+    }
   ],
   "faq": [
     {
-      "question": "How does the Great Eraser misuse Iyov 19:25 — 'I know that my redeemer lives'?",
-      "answer": "Iyov 19:25 — 'I know that my go'el lives, and at the last he will stand upon the earth' — is one of the most frequently quoted verses in Western Christianity, typically interpreted as a prophetic statement about Jesus Christ's resurrection and second coming. Handel's Messiah opens Part III with this verse. But the Hebrew term go'el is not 'savior' in the Christian theological sense. Go'el is a legal term from the covenant kinship system: the kinsman-redeemer who restores rights (Ruth 4), redeems sold property (Leviticus 25), and avenges the blood of the slain (Numbers 35). Iyov is invoking a legal advocate — someone who will vindicate him before the court, stand as his kinsman, and prove his innocence. YHWH is the go'el — the one who will restore what was taken unjustly. The Great Eraser ripped this verse from its legal-covenantal context and inserted it into a Christological framework that the text does not support. Iyov is not prophesying about a future religious figure. He is demanding the covenant legal system work — and declaring that his kinsman-vindicator is alive and will deliver the verdict."
+      "question": "What is Elihu's distinctive contribution in Iyov 32-37?",
+      "answer": "Elihu (chs 32-37) is angry that the three friends failed to answer Iyov and that Iyov justified himself rather than YHWH. His distinctive argument (33:19-30) is that YHWH may use suffering not as punishment but as preventive correction — to bring someone back from the pit before they sin more gravely. This is a more nuanced position than retribution theology, though YHWH does not specifically vindicate or rebuke Elihu as he does the three friends."
     },
     {
-      "question": "What does the Hymn to Wisdom (chapter 28) reveal about the limits of human knowledge?",
-      "answer": "Chapter 28 asks: where shall wisdom be found? It searches everywhere — the deep, the sea, the mines where humans dig for gold and sapphires. None of them contain it. It cannot be purchased with gold of Ofir, onyx, sapphire, or coral. Abaddon and Death say: we have heard a rumor of it. Only The Creator understands the way to it — because he sees to the ends of the earth and observes everything under the heavens. He established it, searched it out, and said to man: the fear of YHWH — that is wisdom, and to depart from evil is understanding (28:28). The Hymn to Wisdom demolishes every human knowledge system that claims to have found wisdom through its own investigation. The academy, the seminary, the theological institution — none of them own wisdom. Wisdom belongs to YHWH alone and is accessed through yir'at YHWH (the fear/reverence of YHWH). The Great Eraser built intellectual institutions that claim to possess and dispense wisdom — universities, publishing houses, peer-review systems. Chapter 28 says: only The Creator knows the way. Human access is through reverence and departing from evil — not through credentialing systems."
+      "question": "What does YHWH's speech from the whirlwind accomplish?",
+      "answer": "YHWH never directly answers Iyov's question 'why do I suffer?' Instead he overwhelms Iyov with cosmic questions: Where were you when creation was laid? Can you bind the Pleiades or loose Orion? Can you draw out Leviathan? The effect is not to silence Iyov with power but to reveal that Iyov has been speaking about a YHWH he has not seen. After the whirlwind, Iyov says: 'Now my eye sees you' — the encounter itself is the answer."
     },
     {
-      "question": "Why does Iyov's refutation of retribution theology matter for the covenant people today?",
-      "answer": "Iyov's friends argue a simple equation: righteousness equals prosperity, wickedness equals suffering. Therefore, if you are suffering, you must have sinned. Iyov demolishes this with observation: the wicked prosper, grow old, increase in power, their children are established (21:7-13). This is not a theoretical debate — it is the most practically relevant theological question for the covenant people in every generation. If retribution theology is true, then the covenant people's centuries of suffering under slavery, colonialism, and identity erasure prove they deserved it. Every enslaver, every colonial chaplain, every theological system that justified the suffering of African peoples operated on retribution theology: they suffer because they sinned, because they are cursed (the Ham doctrine), because they are under judgment. YHWH himself rejects the friends' theology in 42:7: 'You have not spoken of me what is right, as my servant Iyov has.' The suffering of the righteous is not proof of guilt. The prosperity of the wicked is not proof of divine favor. Iyov's refutation is the covenant people's theological defense against every system that uses their suffering as evidence of their guilt."
+      "question": "What is the significance of Behemot and Leviathan in Iyov 40-41?",
+      "answer": "Behemot (40:15) and Leviathan (ch.41) are the two great chaos creatures YHWH presents as the pinnacle of his creation — things beyond human mastery that demonstrate YHWH's power. This ancient text in Iyov is the source for the great chaos-beast tradition. 1 Enoch 60 develops this same imagery (Behemot and Leviathan as paired primordial creatures). The NT book of Revelation borrows from both Iyov and Chanokh; the direction is Iyov → Chanokh → NT borrowing."
+    },
+    {
+      "question": "Why does YHWH say Iyov spoke rightly while the three friends did not?",
+      "answer": "Iyov 42:7-8: YHWH rebukes Elifaz, Bildad, and Tzofar for not speaking rightly about YHWH, while vindicating Iyov. The three friends defended YHWH's justice by asserting simple retribution theology — neat answers that were factually wrong about YHWH's nature and about Iyov's situation. Iyov argued, complained, and demanded to meet YHWH directly — which was honest covenant wrestling. YHWH values authentic engagement over theologically tidy but false comfort."
+    },
+    {
+      "question": "What does Iyov's restoration in 42:10-17 signify?",
+      "answer": "The restoration of Iyov's fortunes — doubled — does not mean that suffering is always rewarded in this life (the book's larger argument cuts against that). Rather it confirms YHWH's faithfulness and Iyov's vindication: ha-satan's challenge (does Iyov fear YHWH for nothing?) has been decisively answered. YHWH demonstrates covenant fidelity by restoring the one who maintained faithfulness under extreme testing."
+    },
+    {
+      "question": "How does Iyov 42:5 signal transformation?",
+      "answer": "'I had heard of you by the hearing of the ear, but now my eye sees you' — Iyov marks a before and after. Before the whirlwind, Iyov knew YHWH by report and tradition. After the encounter with the living YHWH from the whirlwind, he has a direct experiential knowledge that transforms his perspective entirely. He repents 'in dust and ashes' (42:6) — not of hidden sin the friends alleged, but of speaking about dimensions of YHWH he had not seen."
+    },
+    {
+      "question": "What does Iyov's story say about covenant faithfulness under suffering?",
+      "answer": "Iyov demonstrates that covenant faithfulness (emunah) is not conditional on outcomes. He loses his wealth, children, and health — yet maintains his integrity and his right to argue directly with YHWH rather than accepting false theological comfort. YHWH vindicates this posture. The covenant relationship is not a transaction (worship in exchange for blessing) but a genuine relationship that persists through the unexplained."
+    },
+    {
+      "question": "How does Iyov ch.28 (the Wisdom Hymn) function within the book?",
+      "answer": "Iyov 28 interrupts the debate cycles with a standalone poem that asks: 'Where shall wisdom be found?' — surveying all of creation and finding no accessible answer. It ends: 'The fear of YHWH, that is wisdom; to turn away from evil is understanding.' This chapter functions as a pivot: the human search for an explanation of suffering (the debate cycles) cannot reach wisdom. Only YHWH can — which is what the whirlwind speech (chs 38-41) confirms from YHWH's own side."
+    },
+    {
+      "question": "What is the significance of Iyov praying for his three friends (42:10)?",
+      "answer": "YHWH's instruction to Iyov is striking: despite being wronged by his friends' false comfort and accusations, Iyov is commanded to pray for them — and his own restoration comes 'when he had prayed for his friends' (42:10). This embeds covenant accountability within the story: Iyov's vindication is not simply his own restoration but his intercession for those who wronged him. This pattern — vindicated intercessor restoring those who mistreated him — is an ancient Hebrew covenant structure."
+    },
+    {
+      "question": "What does the structure of Iyov's debate cycles reveal?",
+      "answer": "Iyov debates the three friends in three cycles: each friend speaks and Iyov responds (chs 4-14 = first cycle; chs 15-21 = second cycle; chs 22-26 = third cycle, where Bildad's speech is cut short and Tzofar disappears — the friends run out of arguments). Then comes Iyov's climactic speech (chs 27-31), Elihu (chs 32-37), and YHWH's speech (chs 38-41). The structure shows the progressive exhaustion of human theological explanation before YHWH's direct response."
     }
   ]
 }

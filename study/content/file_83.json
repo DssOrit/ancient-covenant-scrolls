@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_83",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_83",
   "label": "Kohelet (Ecclesiastes) — Complete",
   "volume": 28,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Kohelet — the Assembler — speaks: Vanity of vanities, all is vanity. What does man gain by all the toil at which he toils under the sun? A generation goes and a generation comes, but the earth remains forever. Kohelet tested wisdom, pleasure, wealth, and labor — all is vanity and a striving after wind. For everything there is a season — a time to be born and a time to die, a time to weep and a time to laugh. The end of the matter: Fear The Creator and keep his commandments, for this is the whole duty of man.",
   "summary_scholarly": "The ACR reads from DSS fragments (4QQoh-a, 4QQoh-b) and the Orit Ge'ez. Kohelet is attributed to Shelomoh but composed later. The text is the most philosophically skeptical in the Hebrew canon — questioning the value of wisdom, wealth, and human effort. Yet it concludes with covenant affirmation: fear The Creator and keep his commandments (12:13). The DSS fragments confirm readings that differ from the Masoretic in places.",
   "key_terms": [
-    { "term": "Kohelet", "phonetic": "Ko-HEH-let", "definition": "Hebrew for 'the Assembler' or 'the Preacher' — one who gathers people to hear wisdom. Anglicized as Ecclesiastes (from the Greek)." },
-    { "term": "Hevel", "phonetic": "HEH-vel", "definition": "Breath, vapor, vanity — the key word of the book. Everything is hevel — fleeting, insubstantial, like breath that appears and disappears. The same word as Hevel (Abel), Adam's son." },
-    { "term": "Under the Sun", "phonetic": "", "definition": "Kohelet's repeated phrase: 'under the sun' — meaning in this present world, in human experience. Everything done 'under the sun' is hevel. The perspective is limited to the earthly realm." }
+    {
+      "term": "Kohelet",
+      "phonetic": "ko-HE-let",
+      "definition": "The Hebrew title for Ecclesiastes; the 'Preacher' or 'Assembler' — Kohelet ben David, king in Yerushalayim; the author-persona who surveys all human experience under the sun and returns repeatedly to the central observation of hevel."
+    },
+    {
+      "term": "Hevel",
+      "phonetic": "HE-vel",
+      "definition": "The key word in Kohelet, occurring 38 times; means 'breath' or 'vapor' (not simply 'vanity') — the fleeting, impermanent nature of human striving. Everything that cannot outlast breath dissipates like vapor. This is an observation, not nihilism."
+    },
+    {
+      "term": "Nothing New Under the Sun",
+      "phonetic": "ein kha-DASH ta-khat ha-SHA-mesh",
+      "definition": "Kohelet 1:9 — 'What has been is what will be, and what has been done is what will be done, and there is nothing new under the sun'; the cyclical observation that history repeats and human striving produces no permanent gain."
+    },
+    {
+      "term": "A Time for Everything",
+      "phonetic": "la-KOL ze-MAN",
+      "definition": "Kohelet 3:1 — 'For everything there is a season, and a time for every matter under heaven'; the famous catalogue of times that follows (3:2-8) affirms that human life has a rhythm governed by YHWH's ordering of creation, not by human control."
+    },
+    {
+      "term": "Fear YHWH Keep His Commandments",
+      "phonetic": "yah-RAH et ha-E-lo-him ve-shmor mitz-vo-TAV",
+      "definition": "Kohelet 12:13 — 'Fear YHWH and keep his commandments, for this is the whole duty of humanity'; the book's concluding directive, anchoring all its reflection in covenant accountability."
+    },
+    {
+      "term": "Qumran Fragments of Kohelet",
+      "phonetic": "frag-MEN-tim Koh-EL-et mi-Kum-RAN",
+      "definition": "4QKoh^a (4Q109) — Cave 4 Qumran fragments of Kohelet; confirm the book was in the Qumran library; the fragments also demonstrate textual variants from the Masoretic Text, consistent with the fluid text tradition found across the DSS."
+    },
+    {
+      "term": "Wisdom Genre of Kohelet",
+      "phonetic": "sug khokh-MAH shel Ko-HE-let",
+      "definition": "Kohelet is classified as wisdom literature — it observes human experience, draws conclusions, and faces the limits of wisdom honestly. Unlike Mishlei's confident proverbs, Kohelet is the skeptical wing of the wisdom tradition, acknowledging that wisdom itself cannot resolve the problem of death or injustice."
+    },
+    {
+      "term": "Better to Go to the House of Mourning",
+      "phonetic": "tov la-LE-khet el-beit e-VEL",
+      "definition": "Kohelet 7:2 — 'It is better to go to the house of mourning than to go to the house of feasting, for this is the end of all mankind, and the living will lay it to heart'; wisdom is learned by facing death honestly, not by avoiding it."
+    },
+    {
+      "term": "The Living Know They Will Die",
+      "phonetic": "ha-KHa-im yo-de-IM she-ya-MU-tu",
+      "definition": "Kohelet 9:5 — 'For the living know that they will die, but the dead know nothing'; a stark acknowledgment of death's finality that shapes Kohelet's call to live fully and wisely in the present, fearing YHWH."
+    },
+    {
+      "term": "Havel Havalim",
+      "phonetic": "HA-vel ha-va-LIM",
+      "definition": "Kohelet 1:2 — 'Havel havalim, says Kohelet, havel havalim, everything is havel'; the opening and closing declaration (also 12:8) that frames the entire book: everything that depends on breath is breath — the frame within which all of life's wisdom must be understood."
+    }
   ],
   "fill_blank": [
-    { "ref": "1:2", "prompt": "______ of vanities, says Kohelet. ______ of vanities — all is ______.", "answer": "vanity", "source_quote": "Vanity of vanities, says Kohelet. Vanity of vanities — all is vanity." },
-    { "ref": "3:1", "prompt": "For everything there is a ______, and a time for every matter under heaven.", "answer": "season", "source_quote": "For everything there is a season, and a time for every matter under heaven." },
-    { "ref": "12:13", "prompt": "The end of the matter — all has been heard. Fear The Creator and keep his ______.", "answer": "commandments", "source_quote": "The end of the matter — all has been heard. Fear The Creator and keep his commandments, for this is the whole duty of man." }
+    {
+      "ref": "Kohelet 1:2",
+      "prompt": "___ havalim, says Kohelet, havel havalim, everything is havel.",
+      "answer": "Havel",
+      "source_quote": "Havel havalim, says Kohelet, havel havalim, everything is havel — Kohelet 1:2."
+    },
+    {
+      "ref": "Kohelet 1:9",
+      "prompt": "There is nothing ___ under the sun; what has been done is what will be done.",
+      "answer": "new",
+      "source_quote": "There is nothing new under the sun — Kohelet 1:9."
+    },
+    {
+      "ref": "Kohelet 3:1",
+      "prompt": "For everything there is a ___, and a time for every matter under heaven.",
+      "answer": "season",
+      "source_quote": "For everything there is a season, and a time for every matter under heaven — Kohelet 3:1."
+    },
+    {
+      "ref": "Kohelet 3:2",
+      "prompt": "A time to be born, and a time to ___; a time to plant, and a time to pluck up what is planted.",
+      "answer": "die",
+      "source_quote": "A time to be born, and a time to die; a time to plant, and a time to pluck up what is planted — Kohelet 3:2."
+    },
+    {
+      "ref": "Kohelet 3:11",
+      "prompt": "He has made everything beautiful in its time. He has also put ___ into man's heart, yet so that he cannot find out what YHWH has done from beginning to end.",
+      "answer": "eternity",
+      "source_quote": "He has made everything beautiful in its time. He has also put eternity into man's heart — Kohelet 3:11."
+    },
+    {
+      "ref": "Kohelet 7:2",
+      "prompt": "It is better to go to the house of ___ than to go to the house of feasting, for this is the end of all mankind.",
+      "answer": "mourning",
+      "source_quote": "It is better to go to the house of mourning than to go to the house of feasting — Kohelet 7:2."
+    },
+    {
+      "ref": "Kohelet 9:5",
+      "prompt": "For the ___ know that they will die, but the dead know nothing, and they have no more reward.",
+      "answer": "living",
+      "source_quote": "For the living know that they will die, but the dead know nothing — Kohelet 9:5."
+    },
+    {
+      "ref": "Kohelet 9:11",
+      "prompt": "The race is not to the swift, nor the battle to the strong, nor bread to the wise... but ___ and chance happen to them all.",
+      "answer": "time",
+      "source_quote": "The race is not to the swift, nor the battle to the strong... but time and chance happen to them all — Kohelet 9:11."
+    },
+    {
+      "ref": "Kohelet 12:1",
+      "prompt": "Remember also your ___ in the days of your youth, before the evil days come.",
+      "answer": "Creator",
+      "source_quote": "Remember also your Creator in the days of your youth — Kohelet 12:1."
+    },
+    {
+      "ref": "Kohelet 12:13",
+      "prompt": "Fear YHWH and keep his commandments, for this is the whole ___ of humanity.",
+      "answer": "duty",
+      "source_quote": "Fear YHWH and keep his commandments, for this is the whole duty of humanity — Kohelet 12:13."
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:2", "question": "What does Kohelet declare about all things under the sun?", "options": ["All is permanent", "All is vanity — hevel", "All is good", "All is wisdom"], "correct": 1, "source_quote": "Vanity of vanities — all is vanity." },
-    { "ref": "3:1", "question": "What does Kohelet say about time?", "options": ["Time is eternal", "For everything there is a season and a time for every matter", "Time does not exist", "Only the present matters"], "correct": 1, "source_quote": "For everything there is a season, and a time for every matter under heaven." },
-    { "ref": "12:13", "question": "What is the conclusion of Kohelet?", "options": ["Eat, drink, and be merry", "Fear The Creator and keep his commandments", "Seek wisdom above all", "Reject all traditions"], "correct": 1, "source_quote": "Fear The Creator and keep his commandments, for this is the whole duty of man." }
+    {
+      "ref": "Kohelet 1:2",
+      "question": "What is the opening declaration of Kohelet 1:2?",
+      "options": [
+        "Wisdom is the beginning of knowledge",
+        "Havel havalim — everything is havel (breath/vapor)",
+        "The fear of YHWH is the beginning of wisdom",
+        "Blessed is the one who fears YHWH"
+      ],
+      "correct": 1,
+      "source_quote": "Havel havalim, says Kohelet, havel havalim, everything is havel — Kohelet 1:2."
+    },
+    {
+      "ref": "Kohelet hevel",
+      "question": "What does the Hebrew word hevel (the key word of Kohelet) literally mean?",
+      "options": [
+        "Vanity and pride",
+        "Breath or vapor — something fleeting and impermanent",
+        "Meaninglessness and despair",
+        "Foolishness and error"
+      ],
+      "correct": 1,
+      "source_quote": "Hevel means breath/vapor — human striving dissipates like breath."
+    },
+    {
+      "ref": "Kohelet 3:11",
+      "question": "According to Kohelet 3:11, what has YHWH put into the human heart?",
+      "options": [
+        "The fear of death",
+        "Eternity",
+        "The love of wisdom",
+        "The desire for justice"
+      ],
+      "correct": 1,
+      "source_quote": "He has also put eternity into man's heart, yet so that he cannot find out what YHWH has done from beginning to end — Kohelet 3:11."
+    },
+    {
+      "ref": "Kohelet 12:13",
+      "question": "What is Kohelet's final directive to humanity?",
+      "options": [
+        "Seek wisdom above all things",
+        "Enjoy life and eat well",
+        "Fear YHWH and keep his commandments — this is the whole duty of humanity",
+        "Pursue justice for the oppressed"
+      ],
+      "correct": 2,
+      "source_quote": "Fear YHWH and keep his commandments, for this is the whole duty of humanity — Kohelet 12:13."
+    },
+    {
+      "ref": "Kohelet 7:2",
+      "question": "Why does Kohelet 7:2 say it is better to go to the house of mourning?",
+      "options": [
+        "Because mourning is more productive than feasting",
+        "Because this is the end of all mankind and the living will lay it to heart",
+        "Because the mourning house has better food",
+        "Because YHWH is pleased by mourning more than joy"
+      ],
+      "correct": 1,
+      "source_quote": "This is the end of all mankind, and the living will lay it to heart — Kohelet 7:2."
+    },
+    {
+      "ref": "Kohelet 9:11",
+      "question": "According to Kohelet 9:11, to whom does chance happen?",
+      "options": [
+        "Only the wicked",
+        "Only the unwise",
+        "All people — time and chance happen to them all",
+        "Only those who reject YHWH"
+      ],
+      "correct": 2,
+      "source_quote": "Time and chance happen to them all — Kohelet 9:11."
+    },
+    {
+      "ref": "Kohelet 12:1",
+      "question": "What does Kohelet 12:1 urge before the evil days come?",
+      "options": [
+        "Gather wisdom from the elders",
+        "Remember your Creator in the days of your youth",
+        "Build a house for your family",
+        "Seek counsel from the wise"
+      ],
+      "correct": 1,
+      "source_quote": "Remember also your Creator in the days of your youth — Kohelet 12:1."
+    },
+    {
+      "ref": "Kohelet 4QKoh",
+      "question": "Where were fragments of Kohelet found in the DSS?",
+      "options": [
+        "Cave 1 (1Q)",
+        "Cave 4 (4QKoh^a = 4Q109)",
+        "Cave 11 (11Q)",
+        "Cave 7 (7Q)"
+      ],
+      "correct": 1,
+      "source_quote": "4QKoh^a (4Q109) — Cave 4 Qumran fragments of Kohelet."
+    },
+    {
+      "ref": "Kohelet 9:5",
+      "question": "According to Kohelet 9:5, what do the living know that the dead do not?",
+      "options": [
+        "The living know the future",
+        "The living know they will die",
+        "The living know YHWH's purposes",
+        "The living know the path to wisdom"
+      ],
+      "correct": 1,
+      "source_quote": "For the living know that they will die, but the dead know nothing — Kohelet 9:5."
+    },
+    {
+      "ref": "Kohelet wisdom genre",
+      "question": "How does Kohelet relate to the broader wisdom tradition of Mishlei?",
+      "options": [
+        "It confirms all of Mishlei's confident proverbs",
+        "It is the skeptical wing — honestly facing wisdom's limits and the problem of death and injustice",
+        "It rejects the fear-of-YHWH foundation entirely",
+        "It was written as a commentary on Mishlei"
+      ],
+      "correct": 1,
+      "source_quote": "Kohelet is the skeptical wing of the Hebrew wisdom tradition, honestly acknowledging that wisdom cannot resolve death or injustice."
+    }
   ],
   "faq": [
     {
-      "question": "Why does Kohelet question everything but conclude with Torah obedience?",
-      "answer": "Kohelet tests every human system — wisdom, wealth, pleasure, labor — and finds them all hevel (vapor). But the conclusion (12:13) does not say 'therefore nothing matters.' It says: 'Fear The Creator and keep his commandments.' The covenant framework survives the deconstruction of everything else. Every human institution is vapor. The commandments of YHWH are not. The Qumran community reached the same conclusion: they withdrew from every corrupt human institution — the Jerusalem Temple, the Rabbinical system, the Roman order — and returned to the covenant texts directly. Kohelet's skepticism is not nihilism. It is the demolition of everything that is not YHWH's direct instruction."
+      "question": "What does hevel mean and how should it be translated in Kohelet?",
+      "answer": "Hevel literally means breath or vapor — something that exists briefly and then dissipates. The traditional translation 'vanity' (from the Latin Vulgate) has led many readers to think Kohelet is nihilistic or cynical. But hevel is more precise: human striving is like a breath — real while it lasts, but it cannot be grasped or retained. The observation is about impermanence and the limits of human achievement, not a declaration that nothing matters."
     },
     {
-      "question": "How does Kohelet connect to the Great Eraser framework?",
-      "answer": "Kohelet 1:9: 'There is nothing new under the sun.' The mechanisms of identity erasure documented across the Great Eraser research — geographic renaming, calendar substitution, name suppression, canon exclusion, forced conversion, institutional gatekeeping — are not new. They are the same patterns operating across 2,000 years. Kohelet's insight applies: the system that erased the covenant people's identity is not novel. It is the same hevel — the same vapor of human institutional power — that every previous empire produced and that every previous empire's collapse exposed. The commandments of YHWH endure. The empires that suppressed them do not."
+      "question": "Is Kohelet a pessimistic or nihilistic book?",
+      "answer": "Neither. Kohelet repeatedly calls the reader to enjoy life fully within YHWH's ordering (2:24-25; 3:12-13; 5:18-20; 9:7-10): eat, drink, work, love — these are YHWH's gift. The hevel observation is a correction of false expectations (that human achievement can produce permanent satisfaction or meaning) rather than a denial of life's worth. The book ends with covenant accountability (12:13-14), not despair."
     },
     {
-      "question": "What does 'for everything there is a season' mean in covenant terms?",
-      "answer": "Kohelet 3:1-8 lists the seasons: a time to be born and a time to die, a time to weep and a time to laugh, a time to keep silence and a time to speak. The Damascus Document at Qumran uses similar language: the Period of Wrath has its season, and the Period of Visitation has its season. The covenant people's current experience — the season of weeping, the season of silence, the season of scattering — is bounded. It has its time. The season that follows — laughing, speaking, gathering — also has its time. Kohelet does not say which season is permanent. Kohelet says every season has its time."
+      "question": "What does Kohelet 3:11 mean by YHWH putting 'eternity into the human heart'?",
+      "answer": "Kohelet 3:11 observes that YHWH has made everything beautiful in its time — but has also put eternity (ha-olam) into the human heart, so that humans cannot fully grasp what YHWH has done from beginning to end. This creates the characteristic human longing: we sense that there is something more permanent than our brief lives, but we cannot see it from within our temporal perspective. This gap between the eternity we sense and the limits we face is the root of Kohelet's restless searching."
+    },
+    {
+      "question": "What is Kohelet's conclusion after surveying all human experience?",
+      "answer": "After surveying wisdom, pleasure, wealth, work, and their limits, Kohelet's conclusion (12:13-14) is not philosophical resignation but covenant directive: 'Fear YHWH and keep his commandments, for this is the whole duty of humanity. For YHWH will bring every deed into judgment, with every secret thing, whether good or evil.' The search through all human options returns to the covenant foundation established in Mishlei: the fear of YHWH is not the beginning of wisdom for Mishlei only — it is the conclusion of Kohelet's exhaustive search too."
+    },
+    {
+      "question": "What does Kohelet say about wisdom's limits?",
+      "answer": "Kohelet is unusually honest about what wisdom cannot do. It cannot prevent death (the same end comes to the wise and the fool — 2:14-16). It cannot explain why the righteous suffer and the wicked prosper (7:15; 8:14). It cannot reveal YHWH's full purposes (3:11; 8:16-17). Within these limits, wisdom is still better than folly (2:13) — but Kohelet refuses to promise what wisdom cannot deliver."
+    },
+    {
+      "question": "What does the catalogue of times in Kohelet 3:1-8 teach?",
+      "answer": "The famous list — 'a time to be born and a time to die; a time to plant and a time to pluck up' — covers 14 pairs of opposite activities. The teaching is not fatalism but recognition that YHWH has built rhythm and appropriate timing into creation. Human wisdom includes discerning what time it is — not forcing what belongs to one season into another. This directly echoes the wisdom tradition: wisdom is knowing when to speak and when to be silent, when to act and when to wait."
+    },
+    {
+      "question": "How does Kohelet understand work and enjoyment?",
+      "answer": "Kohelet's repeated refrain (2:24-25; 3:12-13; 5:18-20; 9:7-10) is that eating, drinking, finding enjoyment in one's work, and loving one's spouse are YHWH's gifts. This is not hedonism — it is recognition that the present moment, lived in YHWH's presence, is the domain of human life. The alternative (striving to accumulate more than any single life can enjoy) is the hevel Kohelet diagnoses. The recommendation is: live fully in the gift of the present."
+    },
+    {
+      "question": "What connection does Kohelet have to the DSS and Qumran?",
+      "answer": "4QKoh^a (4Q109) — Cave 4 fragments of Kohelet — confirm the book was part of the Qumran library's wisdom collection alongside Mishlei, Iyov, and Ben Sira. The Qumran community valued honest engagement with life's limits alongside their eschatological expectations. Kohelet's refusal of easy answers resonated with a community that had experienced exile, persecution, and the destruction of their covenant expectations."
+    },
+    {
+      "question": "What does 'Remember your Creator in the days of your youth' (Kohelet 12:1) mean?",
+      "answer": "Kohelet 12:1 opens the closing poem (12:1-8) about aging and death — using vivid metaphors for the body's decline. The command to remember YHWH in youth is not simply pious advice but urgent wisdom: once the faculties of mind and body begin to fade, the capacity to orient one's life fully toward YHWH diminishes. The best time to establish the covenant foundation is when one has the full resource of life to give to it."
+    },
+    {
+      "question": "How does Kohelet's approach to death shape its wisdom?",
+      "answer": "Kohelet is unusually direct about death — not consoling it away but facing it as the common end of all humanity (9:3: 'this is an evil in all that is done under the sun, that the same event happens to all'). This directness is the source of its wisdom: because death is real and certain, the question of how to live now matters urgently. Kohelet 7:2 says the house of mourning produces more wisdom than the house of feasting — not because grief is good but because honest confrontation with mortality produces the clarity that comfortable avoidance does not."
     }
   ]
 }

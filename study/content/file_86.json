@@ -1,38 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_86",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_86",
   "label": "Daniyel (Daniel) — Part 2 — Chapters 7–12",
   "volume": 29,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Daniyel chapters 7 through 12 contain the apocalyptic visions. Chapter 7: four great beasts rise from the sea — a lion, a bear, a leopard, and a terrifying fourth beast with iron teeth. The Ancient of Days takes his throne. One like a son of man comes with the clouds of heaven and is given dominion. Chapter 9: Daniyel prays and receives the vision of seventy weeks. Chapters 10-12: a final vision of wars between kings of the north and south, the time of trouble, and the resurrection — many who sleep in the dust of the earth shall awake.",
   "summary_scholarly": "The ACR reads Daniyel 7-12 from eight DSS manuscripts (4QDan-a through 4QDan-e, 1QDan-a, 1QDan-b, 6QDan) and the Orit Ge'ez. The 'one like a son of man' (ke-var enash) in 7:13 is critical. In the DSS framework and in the Aramaic original, this figure is collective and national — 'the saints of the Most High' who receive the kingdom (7:18, 7:27). The Aramaic bar enash means simply 'a human being, a mortal.' The figure is like a human being — in contrast to the four beasts who represent empires. The saints of the Most High are the covenant people, not a divine individual. The NT appropriation of 'Son of Man' as a divine title for an individual (Matthew 26:64, Mark 14:62) reverses the text's own interpretation: Daniyel 7:27 explicitly states 'the kingdom and the dominion shall be given to the people of the saints of the Most High.' The kingdom is given to a people, not to a person. The DSS community at Qumran read this text as a national promise for the covenant community in the Period of Wrath.",
   "key_terms": [
-    { "term": "Bar Enash (Son of Man)", "phonetic": "Bar Eh-NAHSH", "definition": "Aramaic for 'a human being, a mortal.' Daniyel 7:13: 'One like a bar enash came with the clouds of heaven.' In the DSS framework, this is a collective figure representing the covenant people — 'the saints of the Most High' (7:18). Not a divine individual." },
-    { "term": "Attiq Yomin (Ancient of Days)", "phonetic": "Ah-TEEK Yoh-MEEN", "definition": "Daniyel 7:9: the Ancient of Days takes his throne — his garment white as snow, his hair like pure wool, his throne flames of fire. This is YHWH himself seated in judgment over the empires." },
-    { "term": "Shavu'im Shiv'im (Seventy Weeks)", "phonetic": "Shah-voo-EEM Shiv-EEM", "definition": "Daniyel 9:24-27: a period of seventy sevens (490 years) decreed for the covenant people. The chronological framework for the exile and restoration. Not a prediction of an individual messiah — a timetable for national redemption." },
-    { "term": "Qaddishei Elyon (Saints of the Most High)", "phonetic": "Kah-dee-SHAY El-YOHN", "definition": "Daniyel 7:18, 7:27: 'The saints of the Most High shall receive the kingdom.' The bar enash figure of 7:13 is identified as the saints collectively — the covenant people. The kingdom is given to a people, not to a person." }
+    {
+      "term": "The Four Beasts (Daniyel 7)",
+      "phonetic": "arba ha-khayot",
+      "definition": "Daniyel's vision of four great beasts rising from the sea: a lion with eagle's wings, a bear raised on one side with ribs in its mouth, a leopard with four wings and four heads, and a terrible fourth beast with iron teeth and ten horns — widely interpreted as representing successive world empires. The vision ends with the Ancient of Days seated in judgment and the dominion given to the Son of Man."
+    },
+    {
+      "term": "The Ancient of Days",
+      "phonetic": "Atik Yomin",
+      "definition": "The figure in Daniyel 7:9-10 who presides over the heavenly court: seated on a throne with wheels of blazing fire, clothing like white snow, hair like pure wool, with ten thousand times ten thousand standing before him — a court of judgment in which the beasts are judged and their dominion taken away. The imagery is entirely within the Hebrew covenant tradition."
+    },
+    {
+      "term": "Son of Man (bar enash)",
+      "phonetic": "bar e-NASH",
+      "definition": "The figure in Daniyel 7:13-14 who comes 'with the clouds of heaven' to the Ancient of Days and receives dominion, glory, and a kingdom that all peoples should serve — an everlasting dominion that will not pass away. 'Bar enash' is Aramaic for 'son of a human being' — a human figure in contrast to the beast-empires. The NT borrowed this language from Daniyel; Daniyel is the source, the NT derivative."
+    },
+    {
+      "term": "The Seventy Weeks (Daniyel 9)",
+      "phonetic": "shivim shavuot",
+      "definition": "The vision given to Daniyel in ch.9 after his prayer responding to Yirmeyahu's seventy-year prophecy: seventy weeks of years (seventy times seven = 490 years) are decreed for the covenant people and the holy city; the vision outlines a framework of periods culminating in the anointing of a most holy place. The DSS community at Qumran read and interpreted this vision intensely."
+    },
+    {
+      "term": "The Ram and Goat Vision (Daniyel 8)",
+      "phonetic": "khazon ha-ayil ve-ha-tsafir",
+      "definition": "Daniyel's vision in ch.8 of a two-horned ram (interpreted as Medo-Persia) and a goat with a conspicuous horn (interpreted as Greece/Alexander the Great) that destroys the ram; the goat's horn is broken and four horns arise; from one of them comes a 'little horn' that grows exceedingly great, casts down stars, removes the daily offering, and magnifies itself against the Prince of the host. The DSS community interpreted this as applying to Antiochus IV Epiphanes."
+    },
+    {
+      "term": "The Little Horn",
+      "phonetic": "keren ze'ira",
+      "definition": "A figure appearing in both Daniyel 7:8 (rising among the ten horns of the fourth beast) and 8:9 (from one of the four horns of the broken goat); in ch.8 it destroys the daily offering and sets up an abomination; in ch.7 it speaks words against the Most High and wars against the holy ones; widely identified in context as Antiochus IV Epiphanes (175-164 BCE), who desecrated the Temple in 167 BCE."
+    },
+    {
+      "term": "Mikhael",
+      "phonetic": "mi-kha-EL",
+      "definition": "The heavenly figure identified in Daniyel 10:21 and 12:1 as 'your prince' — the heavenly guardian of the covenant people; at the time of distress in 12:1, Mikhael stands up and 'your people shall be delivered, everyone whose name shall be found written in the book.' Mikhael is the first named angelic figure in the Hebrew scriptures with a specific protective role."
+    },
+    {
+      "term": "The Book of Life (Daniyel 12:1)",
+      "phonetic": "sefer ha-khayim",
+      "definition": "Daniyel 12:1 refers to 'the book' in which names are written, those who will be delivered at the time of distress: 'everyone whose name shall be found written in the book.' This is the clearest reference in the Hebrew scriptures to a heavenly record of the covenant community that determines who will be delivered. The concept appears throughout later covenant texts."
+    },
+    {
+      "term": "Resurrection / Awakening (Daniyel 12:2)",
+      "phonetic": "tehiyat ha-metim",
+      "definition": "Daniyel 12:2 is one of the clearest statements of resurrection in the pre-Christian Hebrew corpus: 'Many of those who sleep in the dust of the earth shall awake, some to everlasting life, and some to shame and everlasting contempt.' This is not Greek immortality of the soul but physical awakening from the dust — consistent with the Hebrew Sheol-and-resurrection framework."
+    },
+    {
+      "term": "The Abomination of Desolation",
+      "phonetic": "ha-shikuts meshomem",
+      "definition": "The phrase in Daniyel 9:27, 11:31, and 12:11 referring to the removal of the daily offering and the setting up of an abomination; in context, this describes Antiochus IV Epiphanes's desecration of the Temple in 167 BCE (1 Maccabees 1:54 uses the same phrase). The Qumran community used this language to frame their own period of persecution. The NT borrowed this phrase from Daniyel — Daniyel is the source."
+    }
   ],
   "fill_blank": [
-    { "ref": "7:13", "prompt": "I saw in the night visions, and behold, with the clouds of heaven there came one like a ______ — a mortal — and he came to the Ancient of Days.", "answer": "son of man", "source_quote": "I saw in the night visions, and behold, with the clouds of heaven there came one like a son of man, and he came to the Ancient of Days and was presented before him." },
-    { "ref": "7:18", "prompt": "But the ______ of the Most High shall receive the kingdom and possess the kingdom forever.", "answer": "saints", "source_quote": "But the saints of the Most High shall receive the kingdom and possess the kingdom forever, forever and ever." },
-    { "ref": "12:2", "prompt": "And many of those who sleep in the dust of the earth shall ______ — some to everlasting life, and some to shame and everlasting contempt.", "answer": "awake", "source_quote": "And many of those who sleep in the dust of the earth shall awake, some to everlasting life, and some to shame and everlasting contempt." }
+    {
+      "ref": "Daniyel 7:9",
+      "prompt": "As Daniyel watched, thrones were placed and the ___ of Days took his seat; his clothing was white as snow, and the hair of his head like pure wool.",
+      "answer": "Ancient",
+      "source_quote": "The Ancient of Days took his seat; his clothing was white as snow, and the hair of his head like pure wool — Daniyel 7:9."
+    },
+    {
+      "ref": "Daniyel 7:13-14",
+      "prompt": "There came one like a ___ of man, and he came to the Ancient of Days and was presented before him.",
+      "answer": "son",
+      "source_quote": "There came one like a son of man, and he came to the Ancient of Days and was presented before him — Daniyel 7:13."
+    },
+    {
+      "ref": "Daniyel 7:14",
+      "prompt": "And to him was given dominion and glory and a kingdom, that all peoples should serve him; his dominion is an ___ dominion, which shall not pass away.",
+      "answer": "everlasting",
+      "source_quote": "His dominion is an everlasting dominion, which shall not pass away, and his kingdom one that shall not be destroyed — Daniyel 7:14."
+    },
+    {
+      "ref": "Daniyel 9:2",
+      "prompt": "In the first year of Darius, Daniyel perceived in the books the number of years that YHWH had revealed to Yirmeyahu, that Jerusalem must lie desolate for ___ years.",
+      "answer": "seventy",
+      "source_quote": "Daniyel perceived in the books the number of years that YHWH had revealed to Yirmeyahu — seventy years for the desolation of Yerushalayim — Daniyel 9:2."
+    },
+    {
+      "ref": "Daniyel 12:1",
+      "prompt": "At that time Mikhael, the great prince who has charge of your people, shall arise. And there shall be a time of ___, such as never has been since there was a nation till that time.",
+      "answer": "trouble",
+      "source_quote": "There shall be a time of trouble, such as never has been since there was a nation till that time — Daniyel 12:1."
+    },
+    {
+      "ref": "Daniyel 12:2",
+      "prompt": "Many of those who sleep in the dust of the earth shall ___, some to everlasting life, and some to shame and everlasting contempt.",
+      "answer": "awake",
+      "source_quote": "Many of those who sleep in the dust of the earth shall awake, some to everlasting life, and some to shame and everlasting contempt — Daniyel 12:2."
+    },
+    {
+      "ref": "Daniyel 8:21",
+      "prompt": "The goat is the king of ___, and the great horn between his eyes is the first king.",
+      "answer": "Greece",
+      "source_quote": "The goat is the king of Greece, and the great horn between his eyes is the first king — Daniyel 8:21."
+    },
+    {
+      "ref": "Daniyel 12:3",
+      "prompt": "Those who are wise shall shine like the brightness of the sky above; and those who turn many to righteousness, like the ___ forever and ever.",
+      "answer": "stars",
+      "source_quote": "Those who are wise shall shine like the brightness of the sky above; and those who turn many to righteousness, like the stars forever and ever — Daniyel 12:3."
+    },
+    {
+      "ref": "Daniyel 11:31",
+      "prompt": "Forces from him shall appear and profane the temple and fortress, and shall take away the regular burnt offering. And they shall set up the ___ of desolation.",
+      "answer": "abomination",
+      "source_quote": "They shall set up the abomination of desolation — Daniyel 11:31."
+    },
+    {
+      "ref": "Daniyel 7:27",
+      "prompt": "The kingdom and the dominion and the greatness of the kingdoms under the whole heaven shall be given to the people of the ___ of the Most High.",
+      "answer": "holy ones (saints)",
+      "source_quote": "The kingdom and the dominion and the greatness of the kingdoms under the whole heaven shall be given to the people of the holy ones of the Most High — Daniyel 7:27."
+    }
   ],
   "multiple_choice": [
-    { "ref": "7:13, 7:18, 7:27", "question": "Who is the 'one like a son of man' in Daniyel 7?", "options": ["A divine being incarnated as a human", "A collective figure representing the saints of the Most High — the covenant people who receive the kingdom", "An angelic messenger", "The king of Babylon"], "correct": 1, "source_quote": "The kingdom and the dominion and the greatness of the kingdoms under the whole heaven shall be given to the people of the saints of the Most High." },
-    { "ref": "7:3-7", "question": "What are the four beasts in Daniyel's vision?", "options": ["Four prophets of YHWH", "Four successive empires — lion (Babylon), bear (Persia), leopard (Greece), and a terrifying fourth beast (Rome)", "Four tribes of Yisra'EL", "Four angels of judgment"], "correct": 1, "source_quote": "Four great beasts came up out of the sea, different from one another." },
-    { "ref": "7:9", "question": "How is the Ancient of Days described?", "options": ["As a young warrior", "His garment white as snow, his hair like pure wool, his throne flames of fire", "As invisible and silent", "As a pillar of cloud"], "correct": 1, "source_quote": "The Ancient of Days took his seat; his clothing was white as snow, and the hair of his head like pure wool; his throne was fiery flames." }
+    {
+      "ref": "Daniyel 7:13",
+      "question": "What does the 'Son of Man' figure receive from the Ancient of Days in Daniyel 7?",
+      "options": [
+        "A sword to defeat the fourth beast",
+        "Dominion, glory, and an everlasting kingdom",
+        "The seventy weeks decree",
+        "Permission to judge the little horn"
+      ],
+      "correct": 1,
+      "source_quote": "To him was given dominion and glory and a kingdom, that all peoples should serve him; his dominion is an everlasting dominion — Daniyel 7:14."
+    },
+    {
+      "ref": "Daniyel 7 source direction",
+      "question": "Where does the NT's 'Son of Man' language come from?",
+      "options": [
+        "It is an independent NT theological invention",
+        "It is borrowed from Daniyel 7:13 — Daniyel is the source, the NT is derivative",
+        "It originates in Ezekiel and was developed by Paul",
+        "It comes from the Psalms of Ascent"
+      ],
+      "correct": 1,
+      "source_quote": "The NT borrowed the Son of Man language from Daniyel 7:13 — Daniyel is the source; the NT derivative."
+    },
+    {
+      "ref": "Daniyel 8",
+      "question": "In Daniyel 8, what does the goat with the great horn represent according to the angel's interpretation?",
+      "options": [
+        "The Babylonian empire under Nebukhadnetsar",
+        "The kingdom of Greece, with the great horn as the first king (Alexander)",
+        "The Medo-Persian empire divided between Media and Persia",
+        "The kingdom of Yehudah before the exile"
+      ],
+      "correct": 1,
+      "source_quote": "The goat is the king of Greece, and the great horn between his eyes is the first king — Daniyel 8:21."
+    },
+    {
+      "ref": "Daniyel 9",
+      "question": "What prompts Daniyel's prayer and vision in Daniyel 9?",
+      "options": [
+        "A direct vision from YHWH with no prior context",
+        "Daniyel's reading of Yirmeyahu's seventy-year prophecy",
+        "A nightmare of the four beasts",
+        "The handwriting on the wall left unexplained"
+      ],
+      "correct": 1,
+      "source_quote": "Daniyel perceived in the books the number of years that YHWH had revealed to Yirmeyahu — seventy years for the desolation of Yerushalayim — Daniyel 9:2."
+    },
+    {
+      "ref": "Daniyel 12:2",
+      "question": "What does Daniyel 12:2 describe regarding those who sleep in the dust?",
+      "options": [
+        "Their souls ascend to heaven immediately",
+        "Many shall awake — some to everlasting life, some to shame and everlasting contempt",
+        "Only the righteous will be raised; the wicked remain in Sheol forever",
+        "A gradual restoration over the seventy-week period"
+      ],
+      "correct": 1,
+      "source_quote": "Many of those who sleep in the dust of the earth shall awake, some to everlasting life, and some to shame and everlasting contempt — Daniyel 12:2."
+    },
+    {
+      "ref": "Daniyel 12:1",
+      "question": "What is Mikhael's role in Daniyel 12:1?",
+      "options": [
+        "He defeats the little horn in battle",
+        "He is the great prince who has charge of Daniyel's people and stands up at the time of trouble",
+        "He delivers the seventy weeks decree to Daniyel",
+        "He seals the book until the end"
+      ],
+      "correct": 1,
+      "source_quote": "Mikhael, the great prince who has charge of your people, shall arise — Daniyel 12:1."
+    },
+    {
+      "ref": "Daniyel 11:31",
+      "question": "What does the 'abomination of desolation' in Daniyel 11:31 refer to in its historical context?",
+      "options": [
+        "The destruction of the Temple by Nebukhadnetsar",
+        "Antiochus IV Epiphanes's desecration of the Temple in 167 BCE",
+        "The Babylonian exile",
+        "The breaking of the seventy-week period"
+      ],
+      "correct": 1,
+      "source_quote": "They shall set up the abomination of desolation — Daniyel 11:31; this refers in context to Antiochus IV Epiphanes's Temple desecration."
+    },
+    {
+      "ref": "Daniyel 12:3",
+      "question": "What do 'those who are wise' resemble in Daniyel 12:3?",
+      "options": [
+        "The brightness of the sun at midday",
+        "The brightness of the sky; and those who turn many to righteousness, like the stars forever",
+        "Mighty princes standing before the Ancient of Days",
+        "The four living creatures of the heavenly throne"
+      ],
+      "correct": 1,
+      "source_quote": "Those who are wise shall shine like the brightness of the sky above; and those who turn many to righteousness, like the stars forever and ever — Daniyel 12:3."
+    },
+    {
+      "ref": "Daniyel 7 holy ones",
+      "question": "To whom is the final kingdom given in Daniyel 7:27?",
+      "options": [
+        "The Son of Man alone as an individual king",
+        "The people of the holy ones of the Most High",
+        "The nation of Yisra'el in the land of Kena'an",
+        "The angels of the heavenly court"
+      ],
+      "correct": 1,
+      "source_quote": "The kingdom and the dominion and the greatness of the kingdoms under the whole heaven shall be given to the people of the holy ones of the Most High — Daniyel 7:27."
+    },
+    {
+      "ref": "Daniyel DSS",
+      "question": "How heavily represented is Daniyel in the Dead Sea Scrolls?",
+      "options": [
+        "Only one partial copy was found at Qumran",
+        "Fragments from at least eight copies were found, making it one of the most heavily represented books",
+        "No copies were found — only commentaries on Daniyel",
+        "Two complete scrolls of Daniyel were found in Cave 1"
+      ],
+      "correct": 1,
+      "source_quote": "Fragments from at least eight copies of Daniyel were found at Qumran (4QDaniel manuscripts), making it one of the most heavily represented books in the DSS collection."
+    }
   ],
   "faq": [
     {
-      "question": "Why is 'Son of Man' in Daniyel 7:13 a collective national figure and not a divine individual?",
-      "answer": "The text interprets itself. Daniyel 7:13 describes 'one like a bar enash' (a mortal, a human being) coming with the clouds and receiving dominion. Then 7:18 identifies this figure: 'The saints of the Most High shall receive the kingdom.' Then 7:27 removes all ambiguity: 'The kingdom and the dominion and the greatness of the kingdoms under the whole heaven shall be given to the people of the saints of the Most High.' The kingdom is given to a people — not to a person. The Aramaic bar enash means simply 'a human being' — it contrasts with the four beasts, which represent inhuman empires. The human figure represents the human covenant community replacing the bestial empires. The NT appropriation of 'Son of Man' as a divine christological title (Matthew 26:64, Mark 14:62) reverses the text's own explanation. The DSS community at Qumran read Daniyel as a national promise for the covenant people during the Period of Wrath, not as a prediction of a divine incarnation. The Great Eraser operation here is precise: take a collective national image, reassign it to an individual, and use it to replace the very people it originally represented."
+      "question": "What is the significance of the four-beast vision in Daniyel 7?",
+      "answer": "The four beasts rising from the sea represent successive world empires that oppress the covenant people. The vision moves from empire to empire — each more terrible than the last — until the Ancient of Days convenes a heavenly court, the beasts are judged, and dominion is given to the Son of Man figure and to the people of the holy ones. The vision is a covenant declaration: human empires are temporary; YHWH's judgment is final; the covenant community will ultimately receive the kingdom."
     },
     {
-      "question": "What do the four beasts represent and how did the Qumran community understand them?",
-      "answer": "The four beasts of Daniyel 7 represent four successive empires: the lion (Babylon), the bear (Persia), the leopard (Greece/Alexander), and the terrifying fourth beast with iron teeth (Rome). The Qumran community identified Rome as the fourth beast and as the Kittim — the same empire they fought against in the War Scroll (1QM). The fourth beast 'devours the whole earth, treads it down, and breaks it to pieces' (7:23). The ten horns and the little horn represent rulers within the Roman system. The stone that destroys the image in chapter 2 and the saints who receive the kingdom in chapter 7 are the same reality: YHWH's people replacing the empires. The NT's instruction to 'render unto Caesar' (Matthew 22:21) stands in direct contradiction to Daniyel's vision — the stone does not render unto the image, it destroys it."
+      "question": "Who is the 'Son of Man' in Daniyel 7, and what is his significance?",
+      "answer": "The Son of Man ('bar enash' in Aramaic) is a human figure who receives eternal dominion from the Ancient of Days. In contrast to the beast-empires that rise from the sea, this human figure approaches from the clouds of heaven. The vision likely represents either a corporate symbol for the covenant people (the holy ones who inherit the kingdom, 7:27) or a heavenly figure representing them. The NT borrowed this language for the constructed figure — Daniyel 7 is the source; the NT is the derivative."
     },
     {
-      "question": "What is the significance of the Ancient of Days description — white garment, wool-like hair?",
-      "answer": "Daniyel 7:9 describes the Ancient of Days: 'His clothing was white as snow, and the hair of his head like pure wool.' This is YHWH himself seated in judgment. The description of hair like pure wool (amar naqe) denotes texture — wool-like. This physical description of the divine figure uses African phenotypic imagery from the Afro-Asiatic cultural world the text emerges from. Revelation 1:14 repeats the description nearly verbatim: 'His head and his hair were white like wool, white as snow.' The European artistic tradition systematically depicted this figure with straight hair and European features, directly contradicting the text's own wool-hair description. The Great Eraser operates through art as powerfully as through text — every European Renaissance painting of a straight-haired divine figure is a visual contradiction of the scriptural description."
+      "question": "What does Daniyel's prayer in ch.9 reveal about his theology?",
+      "answer": "Daniyel's prayer (9:4-19) is a covenant confession: he acknowledges the community's breach of the covenant, the justice of YHWH's punishment (the exile), and appeals not to any merit of the covenant people but entirely to YHWH's righteousness and mercy. 'We do not present our pleas before you because of our righteousness, but because of your great mercy' (9:18). This is the covenant structure of Devarim: breach, exile, confession, appeal, restoration."
+    },
+    {
+      "question": "What does the seventy weeks prophecy in Daniyel 9 mean?",
+      "answer": "After Daniyel reads Yirmeyahu's seventy-year prophecy, the figure Gavri'el gives a vision of seventy 'weeks' of years (490 years) decreed for the covenant people. The vision outlines three periods: seven weeks, sixty-two weeks, and one final week — culminating in the anointing of a most holy place. The DSS Qumran community interpreted this framework as applying to their own period. The exact calculation has been read in many ways; the theological core is that YHWH has a determined timeline for the covenant people."
+    },
+    {
+      "question": "How does Daniyel 12:2 fit into the Hebrew understanding of death and resurrection?",
+      "answer": "Daniyel 12:2 uses the language of sleeping in the dust — consistent with the Hebrew view of Sheol as the place of the dead, the dust of the earth. The resurrection described is a physical awakening from the dust, not the Greek immortality of the soul (which needs no resurrection because the soul never truly dies). This is the same framework as Yehezkel's valley of dry bones (ch.37) — the dead are truly dead, and their raising is an act of YHWH's power. Daniyel 12:2 is the clearest pre-Christian Hebrew resurrection statement."
+    },
+    {
+      "question": "What is the role of Mikhael in Daniyel?",
+      "answer": "Mikhael appears in 10:13-21 as the heavenly prince of Yisra'el, engaged in conflict with the 'prince of Persia' and 'prince of Greece' — heavenly figures associated with empires. In 12:1 he stands up at the time of the greatest distress, and his standing is linked to the deliverance of those written in the book. Mikhael is the first named angelic figure in the Hebrew scriptures with a specific guardianship role over the covenant community. This divine-council framework is consistent with Devarim 32 and the Qumran corpus."
+    },
+    {
+      "question": "What does Daniyel have to do with the Qumran community?",
+      "answer": "The Qumran Yahad community preserved at least eight copies of Daniyel and wrote multiple pesher (interpretive commentary) texts applying Daniyel's visions to their own period. They understood themselves as living in the final crisis period Daniyel described — the same seventy-week framework, the same abomination-era conflict. 4QFlorilegium and other Qumran texts cite Daniyel's Son of Man and the seventy weeks as a framework for the Teacher of Righteousness's era. Daniyel was a living operational text for the Qumran covenant community."
+    },
+    {
+      "question": "What is the 'abomination of desolation' in Daniyel?",
+      "answer": "The phrase appears in 9:27, 11:31, and 12:11. In its historical context (Daniyel 11:31 especially), it refers to the actions of Antiochus IV Epiphanes in 167 BCE: removing the daily burnt offering and setting up an abomination in the Temple. 1 Maccabees 1:54 uses identical language. The Qumran community also applied this language to their own experience. The NT borrowed the phrase from Daniyel — the direction is from Daniyel forward, not from the NT backward."
+    },
+    {
+      "question": "How does the book of Daniyel fit the Source Integrity rule?",
+      "answer": "Daniyel is a Second Temple period text physically composed c. 165 BCE, but it carries pre-Corruption First Temple covenant tradition: YHWH as the unsubstituted Name, the divine council (the Ancient of Days, the heavenly court, Mikhael), covenant accountability language (the prayer in ch.9), and the Hebrew resurrection framework (12:2 — dust and awakening, not Greek soul-immortality). It qualifies under Rule 25's pre-Corruption standard because the tradition it carries — not its physical composition date — is what determines its standing."
+    },
+    {
+      "question": "What is the relationship between Daniyel's visions and 1 Enoch?",
+      "answer": "Both Daniyel and 1 Enoch (especially the Book of Watchers and the Similitudes) share the Ancient of Days imagery, the heavenly throne with wheels of fire, the angelic court, and the Son of Man figure. The Similitudes of Enoch develop the Son of Man language in ways that parallel and expand Daniyel 7. Both texts were central to the Qumran community. 1 Enoch's material predates or is contemporaneous with Daniyel; both draw on the same First Temple divine-council tradition. Neither text is derivative of NT — the NT borrowed from both."
+    },
+    {
+      "question": "What does the vision of the ram and goat (Daniyel 8) reveal about the nature of these visions?",
+      "answer": "Daniyel 8 is unusual in that the angel Gavri'el explicitly names the figures being symbolized: the two-horned ram is Medo-Persia; the goat is Greece; the great horn is the first king (Alexander). This named interpretation establishes that the visions are not purely abstract — they refer to real historical empires and figures. The Qumran community and later readers used this interpretive framework to decode the more cryptic visions in chs 7 and 11-12."
     }
   ]
 }

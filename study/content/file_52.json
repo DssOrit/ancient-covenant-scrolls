@@ -1,37 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_52",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_52",
   "label": "Yirmeyahu (Jeremiah) — Part 6 — Chapters 40–48",
   "volume": 17,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "After the fall of Yerushalayim, Nebukhadnetzar leaves Gedalyahu son of Achikam as governor over the remnant in the land. Yirmeyahu is released from chains and stays with Gedalyahu at Mitzpah. Yishma'EL son of Netanyahu assassinates Gedalyahu and kills the garrison. Yochanan son of Qareach pursues Yishma'EL and rescues the captives. The remnant asks Yirmeyahu to inquire of YHWH — he says: Stay in this land and do not go down to Mitsrayim. But they refuse to obey YHWH's voice and flee to Mitsrayim, taking Yirmeyahu with them. In Mitsrayim, the women burn incense to the Queen of Heaven and say: When we burned incense to her, we had plenty of food and were well. Yirmeyahu delivers oracles against Mitsrayim, Moav, Ammon, Edom, Damascus, Qedar, Chatsor, and Elam.",
   "summary_scholarly": "The ACR reads from the DSS Jeremiah manuscripts (4QJer-a through 4QJer-e) and the Orit Ge'ez. Chapters 40-44 document the aftermath of the Babylonian destruction — the remnant community's decision to flee to Mitsrayim against YHWH's explicit command. The Queen of Heaven worship in chapter 44 records the women's defense of syncretic practice — they claim prosperity came through her veneration, not through YHWH's covenant. The LXX arrangement of Jeremiah differs significantly from the Masoretic in these chapters — the oracles against the nations (chapters 46-48 in the MT) appear in a different position in the LXX, and the DSS fragments support the shorter LXX text type. The flight to Mitsrayim inverts the exodus pattern: the covenant people voluntarily return to the house of bondage.",
   "key_terms": [
-    { "term": "Gedalyahu", "phonetic": "Ged-al-YAH-hoo", "definition": "Son of Achikam, appointed by Nebukhadnetzar as governor over the remnant left in the land after the fall of Yerushalayim. He was assassinated by Yishma'EL son of Netanyahu at Mitzpah. His murder ended the last vestige of Judean self-governance in the land." },
-    { "term": "Queen of Heaven (Melekhet HaShamayim)", "phonetic": "Meh-LEH-khet Hah-Shah-MAH-yim", "definition": "A pagan deity worshipped by Judean women in Mitsrayim (44:17-19). The women claim prosperity came through burning incense and pouring libations to her. Yirmeyahu identifies this as the reason YHWH brought calamity. Often identified with Ishtar/Ashtoreth — the same fertility goddess tradition later absorbed into Marian devotion." },
-    { "term": "Mitzpah", "phonetic": "Mitz-PAH", "definition": "The administrative center where Gedalyahu governed the remnant after the fall of Yerushalayim. Site of the assassination and the gathering of the remnant who then fled to Mitsrayim." }
+    {
+      "term": "Gedalyahu the Governor",
+      "phonetic": "ge-dal-YA-hu",
+      "definition": "After Yerushalayim's fall, Nebuchadnezzar appointed Gedalyahu ben Akhikam governor over the remaining population; Yirmeyahu chose to stay in the land with him at Mitzpah."
+    },
+    {
+      "term": "Gedalyahu's Assassination",
+      "phonetic": "ch.41",
+      "definition": "Yishma'el ben Netanyah, of royal blood, killed Gedalyahu and all the Yehudim with him at Mitzpah, also killing Babylonian soldiers; this act destroyed the remnant community's last stability in the land."
+    },
+    {
+      "term": "Flight to Mitzrayim",
+      "phonetic": "chs 42-43",
+      "definition": "After Gedalyahu's assassination, the surviving remnant asked Yirmeyahu whether to flee to Mitzrayim; YHWH through Yirmeyahu commanded them to stay in the land; they fled to Mitzrayim anyway, taking Yirmeyahu with them."
+    },
+    {
+      "term": "Yirmeyahu's Warning Against Egypt",
+      "phonetic": "ch.42-43",
+      "definition": "YHWH declares: if you go to Mitzrayim, the sword, famine, and pestilence that you fear in Yehudah will overtake you in Mitzrayim; the land you fear will find you in the land you fled to."
+    },
+    {
+      "term": "Oracle Against Mitzrayim",
+      "phonetic": "ch.46",
+      "definition": "Yirmeyahu 46 addresses the defeat of Pharaoh Nekho at Carchemish (605 BCE) by Nebuchadnezzar; YHWH says Mitzrayim shall be put to shame by Babylon — the great river kingdom will be humbled."
+    },
+    {
+      "term": "'Queen of Heaven' Idolatry",
+      "phonetic": "ch.44",
+      "definition": "In Mitzrayim, the Yehudite women (and their husbands) burn incense to the Queen of Heaven; when Yirmeyahu rebukes them, they say things went better when they worshipped her and refuse to stop."
+    },
+    {
+      "term": "Barukh ben Neriyah",
+      "phonetic": "ba-RUKH",
+      "definition": "Yirmeyahu's devoted scribe; Yirmeyahu 45 addresses Barukh directly with a personal promise: 'I will give you your life as a prize of war in all places to which you may go.' He preserved Yirmeyahu's scroll."
+    },
+    {
+      "term": "Scroll of Yirmeyahu",
+      "phonetic": "ch.36",
+      "definition": "YHWH commanded Yirmeyahu to dictate all his prophecies; Barukh wrote them on a scroll, which was read in the Temple, then to the princes, then to King Yehoyaqim, who cut it and burned it; Yirmeyahu and Barukh rewrote it with more additions."
+    },
+    {
+      "term": "Oracles Against Nations",
+      "phonetic": "chs 46-51",
+      "definition": "Chapters 46-51 of Yirmeyahu contain oracles against Mitzrayim, Plishtim, Moav, Ammon, Edom, Damascus, Qedar, Khatzor, Elam, and Babylon; YHWH's judgment extends over every regional power."
+    },
+    {
+      "term": "Moav Oracle",
+      "phonetic": "ch.48",
+      "definition": "Yirmeyahu 48 is the longest oracle against a single nation in the book; Moav is condemned for pride and self-confidence in its own strength ('I am mighty and strong'); YHWH will humble Kemosh the god of Moav."
+    }
   ],
   "fill_blank": [
-    { "ref": "42:10", "prompt": "If you will remain in this ______, then I will build you up and not pull you down — I will plant you and not pluck you up.", "answer": "land", "source_quote": "If you will remain in this land, then I will build you up and not pull you down — I will plant you and not pluck you up, for I relent of the disaster that I did to you." },
-    { "ref": "44:17", "prompt": "We will burn incense to the Queen of ______ and pour out drink offerings to her, as we did, we and our fathers.", "answer": "Heaven", "source_quote": "We will do everything that we have vowed — burn incense to the Queen of Heaven and pour out drink offerings to her, as we did, we and our fathers, our kings and our officials." },
-    { "ref": "40:4", "prompt": "Behold, I release you today from the ______ on your hands.", "answer": "chains", "source_quote": "Behold, I release you today from the chains on your hands. If it seems good to you to come with me to Babylon, come, and I will look after you." }
+    {
+      "ref": "Yirmeyahu 40:9",
+      "prompt": "Gedalyahu encouraged the people: 'Do not be afraid to serve the _____. Live in the land and serve the king of Babylon, and it shall be well with you.'",
+      "answer": "Chaldeans",
+      "source_quote": "Do not be afraid to serve the Chaldeans. Dwell in the land and serve the king of Babylon, and it shall be well with you."
+    },
+    {
+      "ref": "Yirmeyahu 42:10",
+      "prompt": "YHWH commands through Yirmeyahu: 'If you will remain in this land, then I will _____ you up and not pull you down; I will plant you and not pluck you up.'",
+      "answer": "build",
+      "source_quote": "If you will remain in this land, then I will build you up and not pull you down; I will plant you and not pluck you up; for I relent of the disaster that I did to you."
+    },
+    {
+      "ref": "Yirmeyahu 42:14-16",
+      "prompt": "YHWH warns: if you say you will go to Mitzrayim to escape the _____, the sword and famine you fear shall overtake you in Mitzrayim.",
+      "answer": "sword",
+      "source_quote": "If you say, We will not remain in this land, the sword that you fear shall overtake you there in the land of Egypt, and the famine of which you are afraid shall follow close after you to Egypt."
+    },
+    {
+      "ref": "Yirmeyahu 44:17",
+      "prompt": "The Yehudite women in Mitzrayim say: 'We will make offerings to the Queen of Heaven, for then we had plenty of food, and prospered, and saw no _____.'",
+      "answer": "disaster",
+      "source_quote": "But we will do everything that we have vowed, make offerings to the queen of heaven and pour out drink offerings to her, as we did, both we and our fathers, our kings and our officials, in the cities of Yehudah and in the streets of Yerushalayim. For then we had plenty of food, and prospered, and saw no disaster."
+    },
+    {
+      "ref": "Yirmeyahu 45:5",
+      "prompt": "YHWH addresses Barukh: 'Do you seek great things for yourself? Seek them not. For behold, I am bringing disaster upon all flesh. But I will give you your life as a _____ of war.'",
+      "answer": "prize",
+      "source_quote": "And do you seek great things for yourself? Seek them not, for behold, I am bringing disaster upon all flesh, declares YHWH. But I will give you your life as a prize of war in all places to which you may go."
+    },
+    {
+      "ref": "Yirmeyahu 36:23",
+      "prompt": "When Yehoyaqim heard three or four columns read, he cut the scroll with a penknife and threw it into the _____ until the whole scroll was consumed.",
+      "answer": "fire",
+      "source_quote": "As Yehudi read three or four columns, the king would cut them off with a penknife and throw them into the fire in the fire pot, until the entire scroll was consumed in the fire."
+    },
+    {
+      "ref": "Yirmeyahu 46:2",
+      "prompt": "The oracle in chapter 46 concerns the army of Pharaoh Nekho which Nebuchadnezzar defeated at _____.",
+      "answer": "Carchemish",
+      "source_quote": "About Egypt. Concerning the army of Pharaoh Neco, king of Egypt, which was by the Euphrates River at Carchemish and which Nebuchadnezzar king of Babylon defeated in the fourth year of Yehoyaqim."
+    },
+    {
+      "ref": "Yirmeyahu 48:11",
+      "prompt": "Moav is condemned because it has been 'at ease from its youth and has settled on its _____; it has not been emptied from vessel to vessel, nor has it gone into exile.'",
+      "answer": "dregs",
+      "source_quote": "Moav has been at ease from his youth and has settled on his dregs; he has not been emptied from vessel to vessel, nor has he gone into exile; so his taste remains in him, and his scent is not changed."
+    },
+    {
+      "ref": "Yirmeyahu 41:1-2",
+      "prompt": "In the seventh month, _____ ben Netanyah, of royal stock, came to Mitzpah to Gedalyahu and struck him down so that he died.",
+      "answer": "Yishma'el",
+      "source_quote": "In the seventh month, Ishmael the son of Netaniah, son of Elishama, of the royal family, one of the chief officers of the king, came with ten men to Gedaliah the son of Ahikam at Mizpah. As they ate bread together there at Mizpah, Ishmael the son of Netaniah and the ten men with him rose up and struck down Gedaliah the son of Ahikam with the sword and killed him."
+    },
+    {
+      "ref": "Yirmeyahu 44:28",
+      "prompt": "Only a small number will escape from Mitzrayim to return to the land of Yehudah, 'and all the remnant of Yehudah, who came to Mitzrayim to live there, shall _____ whose word will stand, mine or theirs.'",
+      "answer": "know",
+      "source_quote": "And those who escape the sword shall return from the land of Egypt to the land of Yehudah, few in number; and all the remnant of Yehudah, who came to the land of Egypt to live there, shall know whose word will stand, mine or theirs."
+    }
   ],
   "multiple_choice": [
-    { "ref": "41:1-3", "question": "Who assassinated Gedalyahu the governor?", "options": ["Yochanan son of Qareach", "Yishma'EL son of Netanyahu", "Barukh the scribe", "Nebuzaradan the captain"], "correct": 1, "source_quote": "Yishma'EL son of Netanyahu, son of Elishama, of the royal family, came with ten men to Gedalyahu at Mitzpah. And they ate bread together at Mitzpah. Then Yishma'EL son of Netanyahu rose up and struck down Gedalyahu." },
-    { "ref": "42:19-43:7", "question": "What did YHWH command the remnant through Yirmeyahu, and what did they do?", "options": ["Stay in the land — and they obeyed", "Go to Babylon — and they went", "Stay in the land — but they fled to Mitsrayim", "Go to Mitsrayim — and they went"], "correct": 2, "source_quote": "YHWH has said to you, remnant of Yehudah: Do not go to Mitsrayim. But Yochanan and all the commanders took the entire remnant and went to the land of Mitsrayim." },
-    { "ref": "44:17-18", "question": "What did the women in Mitsrayim claim about the Queen of Heaven?", "options": ["She was YHWH's consort", "When they worshipped her they had plenty of food and were well", "She commanded them to leave the land", "She was the mother of the prophets"], "correct": 1, "source_quote": "When we burned incense to the Queen of Heaven and poured out drink offerings to her, we had plenty of food and prospered and saw no disaster." }
+    {
+      "ref": "Yirmeyahu 40:7-12",
+      "question": "After the fall of Yerushalayim, where did Yirmeyahu choose to go and with whom?",
+      "options": [
+        "He stayed in the land with Governor Gedalyahu at Mitzpah",
+        "He went to Babylon with the exiles",
+        "He fled to Mitzrayim immediately",
+        "He went to Anathot, his hometown"
+      ],
+      "correct": 0,
+      "source_quote": "So Yirmeyahu stayed with Gedalyahu the son of Ahikam at Mizpah, among the people who were left in the land."
+    },
+    {
+      "ref": "Yirmeyahu 41:1-3",
+      "question": "Who killed Gedalyahu and why was his royal connection significant?",
+      "options": [
+        "Yishma'el ben Netanyah, of royal stock — he may have resented Gedalyahu's appointment as governor over a Babylonian-approved remnant",
+        "A Babylonian officer who suspected Gedalyahu of disloyalty",
+        "A group of nobles who preferred exile to submission",
+        "The Ammonite king who wanted to control the remnant"
+      ],
+      "correct": 0,
+      "source_quote": "Ishmael the son of Netaniah, son of Elishama, of the royal family, one of the chief officers of the king, came with ten men to Gedaliah."
+    },
+    {
+      "ref": "Yirmeyahu 42:1-6",
+      "question": "What did the remnant ask Yirmeyahu to do before they decided whether to flee to Mitzrayim?",
+      "options": [
+        "Inquire of YHWH for them and tell them whatever YHWH said, pledging to obey",
+        "Give them a written prophecy for safe passage to Mitzrayim",
+        "Pray for YHWH to send them a sign confirming the right path",
+        "Seek counsel from the Babylonian governor Gedalyahu's replacement"
+      ],
+      "correct": 0,
+      "source_quote": "And they said to Yirmeyahu the prophet: Let our plea for mercy come before you, and pray to YHWH your Creator for us — We swear that we will obey the voice of YHWH our Creator."
+    },
+    {
+      "ref": "Yirmeyahu 44:16-17",
+      "question": "How did the Yehudite women in Mitzrayim respond to Yirmeyahu's rebuke about burning incense to the Queen of Heaven?",
+      "options": [
+        "They refused to stop, saying that prosperity came when they worshipped her and disaster came when they stopped",
+        "They repented and destroyed their incense altars",
+        "They appealed to their husbands to decide",
+        "They said they were following a practice approved by the Temple priests"
+      ],
+      "correct": 0,
+      "source_quote": "As for the word that you have spoken to us in the name of YHWH, we will not listen to you. But we will do everything that we have vowed, make offerings to the queen of heaven."
+    },
+    {
+      "ref": "Yirmeyahu 36:1-32",
+      "question": "When King Yehoyaqim burned Yirmeyahu's scroll, what did YHWH command Yirmeyahu to do?",
+      "options": [
+        "Take another scroll and write all the words of the first scroll on it again, plus more additions",
+        "Compose a new, shorter prophecy against the king",
+        "Prophesy publicly against Yehoyaqim in the Temple court",
+        "Commission Barukh to deliver an oral warning to the king"
+      ],
+      "correct": 0,
+      "source_quote": "Take another scroll and write on it all the former words that were in the first scroll, which Yehoyaqim king of Yehudah has burned. And concerning Yehoyaqim king of Yehudah you shall say: Thus says YHWH."
+    },
+    {
+      "ref": "Yirmeyahu 46:13-19",
+      "question": "In Yirmeyahu 46's oracle against Mitzrayim, what does YHWH declare about Nebuchadnezzar and Pharaoh?",
+      "options": [
+        "Nebuchadnezzar will strike Mitzrayim as a shepherd clears his cloak of vermin",
+        "Pharaoh will defeat Nebuchadnezzar at the border of Mitzrayim",
+        "Mitzrayim will be spared for the sake of its Hebrew population",
+        "The two powers will make a lasting peace treaty"
+      ],
+      "correct": 0,
+      "source_quote": "He shall come and strike the land of Egypt, giving over to the pestilence those who are marked for pestilence, to captivity those who are marked for captivity, and to the sword those who are marked for the sword."
+    },
+    {
+      "ref": "Yirmeyahu 48:7",
+      "question": "What is Moav condemned for trusting in?",
+      "options": [
+        "Your works and your treasures — Kemosh shall go into exile",
+        "Your military alliances with Ammon and Edom",
+        "Your tribute payments to Babylon",
+        "Your border fortifications and high places"
+      ],
+      "correct": 0,
+      "source_quote": "For because you trusted in your works and your treasures, you also shall be taken; and Kemosh shall go into exile with his priests and his officials."
+    },
+    {
+      "ref": "Yirmeyahu 43:8-13",
+      "question": "What symbolic act did Yirmeyahu perform at Tahpanhes in Mitzrayim?",
+      "options": [
+        "He hid large stones in the clay pavement at Pharaoh's palace as a sign that Nebuchadnezzar would set his throne there",
+        "He poured water from the Nile on the ground as a sign of Mitzrayim's end",
+        "He planted a cedar branch to signal the coming of restoration",
+        "He smashed a jar at the city gate of Tahpanhes"
+      ],
+      "correct": 0,
+      "source_quote": "Take in your hands large stones and hide them in the mortar in the pavement that is at the entrance to Pharaoh's palace in Tahpanhes, in the sight of the men of Yehudah."
+    },
+    {
+      "ref": "Yirmeyahu 42:7",
+      "question": "How long did Yirmeyahu wait before delivering YHWH's answer about whether to flee to Mitzrayim?",
+      "options": [
+        "Ten days",
+        "Three days",
+        "Seven days",
+        "Forty days"
+      ],
+      "correct": 0,
+      "source_quote": "At the end of ten days the word of YHWH came to Yirmeyahu."
+    },
+    {
+      "ref": "Yirmeyahu 48:47",
+      "question": "Despite the severe oracle against Moav in Yirmeyahu 48, the chapter ends with what unexpected promise?",
+      "options": [
+        "YHWH will restore the fortunes of Moav in the latter days",
+        "Moav will be absorbed into Yisra'el's restored community",
+        "Moav's survivors will be sent to Babylon as guests of honor",
+        "Kemosh will be revealed as a servant of YHWH"
+      ],
+      "correct": 0,
+      "source_quote": "Yet I will restore the fortunes of Moav in the latter days, declares YHWH."
+    }
   ],
   "faq": [
     {
-      "question": "What does the Queen of Heaven worship reveal about the Great Eraser?",
-      "answer": "In Yirmeyahu 44, the women defend their worship of the Queen of Heaven (Melekhet HaShamayim) — claiming that prosperity came through her veneration. Yirmeyahu condemns this as the reason YHWH brought calamity. The Queen of Heaven is identified across comparative religion scholarship with Ishtar/Ashtoreth — the Mesopotamian-Canaanite fertility goddess. The Roman Church later absorbed the same devotional structure — a heavenly queen receiving prayers, incense, and petitions — into the Marian cult. The Council of Ephesus (431 CE) declared Mary 'Theotokos' (Mother of God), and the veneration practices that followed — incense, images, prayers for intercession, the rosary — structurally reproduce the Queen of Heaven devotion that YHWH explicitly condemned through Yirmeyahu. The Great Eraser did not merely suppress the covenant people's identity — it absorbed pagan practices the prophets condemned and re-branded them as Christian doctrine."
+      "question": "Who was Gedalyahu and why was his appointment significant?",
+      "answer": "Gedalyahu ben Akhikam was appointed by Nebuchadnezzar as governor over the peasants and poor left in Yehudah after the exile. His father Akhikam had earlier protected Yirmeyahu's life (Yirmeyahu 26:24). Yirmeyahu chose to stay with Gedalyahu — a sign that living faithfully under Babylonian authority was possible. Gedalyahu's assassination by Yishma'el destroyed the last organized remnant in the land."
     },
     {
-      "question": "Why does the flight to Mitsrayim invert the exodus pattern?",
-      "answer": "YHWH brought the covenant people out of Mitsrayim with signs and wonders — the defining act of the covenant. In Yirmeyahu 42-43, the remnant voluntarily returns to Mitsrayim against YHWH's explicit command: 'Do not go to Mitsrayim.' They go back to the house of bondage by choice. The entire Exodus — the foundational event of covenant identity — is reversed. The remnant prefers the security of the oppressor's land to the risk of obeying YHWH in their own land. This pattern recurs: covenant people choosing institutional security within systems that dominate them rather than trusting YHWH's direct instruction. The Damascus Document at Qumran describes the Period of Wrath as a time when the people walked in the stubbornness of their hearts — the same language Yirmeyahu uses for the remnant who fled to Mitsrayim."
+      "question": "Why did the remnant go to Mitzrayim against YHWH's word?",
+      "answer": "After Gedalyahu's murder, the people feared Babylonian retaliation. They asked Yirmeyahu to inquire of YHWH and promised to obey whatever he said. YHWH's answer was clear: stay in the land, do not fear Babylon, I will protect you there. But they accused Yirmeyahu of lying and fled to Mitzrayim anyway, taking Yirmeyahu and Barukh with them. Their fear of Babylon was stronger than their trust in YHWH."
     },
     {
-      "question": "What do the DSS fragments reveal about Yirmeyahu's text in these chapters?",
-      "answer": "The 4QJer fragments preserve a text approximately one-eighth shorter than the Masoretic version of Yirmeyahu. The LXX Jeremiah is similarly shorter and arranges the oracles against the nations differently — they appear after 25:13 in the LXX rather than in chapters 46-51 as in the MT. The DSS fragments support the LXX text type, demonstrating that the shorter version is not a Greek abbreviation but reflects an earlier Hebrew Vorlage. The Masoretic text represents an expanded edition. The ACR prioritizes the DSS and Orit Ge'ez readings over the Masoretic expansion — the older witnesses take precedence over the 10th-century standardization."
+      "question": "What is the theological significance of the Queen of Heaven passage in Yirmeyahu 44?",
+      "answer": "The women in Mitzrayim argue explicitly that things went better when they burned incense to the Queen of Heaven — prosperity and safety. When they stopped, disaster came. This is a direct theological counter-argument to Yirmeyahu's covenant theology. YHWH answers: you stopped burning incense to other gods only partially and inconsistently — it was your unfaithfulness to the whole covenant that brought disaster, not stopping the Queen of Heaven worship."
+    },
+    {
+      "question": "Why is Barukh's oracle in Yirmeyahu 45 addressed to him personally?",
+      "answer": "Yirmeyahu 45 is a brief oracle specifically for Barukh: 'Do not seek great things for yourself in a time when I am bringing disaster on all flesh.' Barukh is apparently discouraged and perhaps mourning the loss of his expectations. YHWH's promise to him — 'I will give you your life as a prize of war' — is humble but real: survival is itself the gift in this season, not prosperity or advancement."
+    },
+    {
+      "question": "What is the significance of King Yehoyaqim burning Yirmeyahu's scroll?",
+      "answer": "Yehoyaqim's burning of the scroll (chapter 36) is a paradigm of the rejection of YHWH's word by power. The king heard three or four columns and cut them off with a knife and threw them in the fire — a deliberate, unhurried rejection, not a moment of rage. YHWH's response: Yehoyaqim will have no descendant on David's throne; he himself will be thrown out unburied. And the scroll was rewritten with more words added."
+    },
+    {
+      "question": "What did the oracle against Mitzrayim in Yirmeyahu 46 teach about Pharaoh's power?",
+      "answer": "Yirmeyahu 46 describes the defeat of Pharaoh Nekho's army at Carchemish (605 BCE) in real historical terms: the soldiers flee, the mighty are stumbled, the shield-bearer is paralyzed. YHWH uses this historical disaster to demonstrate that Mitzrayim's military power — the thing the Yehudites fled to for protection — cannot save them. If Mitzrayim cannot defend itself at Carchemish, it cannot protect the Yehudite refugees."
+    },
+    {
+      "question": "What is the oracle against Moav in Yirmeyahu 48 about?",
+      "answer": "Yirmeyahu 48 is the longest single-nation oracle in the book. Moav is condemned primarily for pride: 'I am mighty and strong' (48:14); 'you trusted in your works and your treasures' (48:7). YHWH will humble Kemosh (Moav's national deity) and send Moav into exile. Yet the chapter ends with an unexpected promise: YHWH will restore Moav's fortunes in the latter days — judgment is not the final word even for Moav."
+    },
+    {
+      "question": "Why does YHWH warn the remnant not to go to Mitzrayim even though it seems safer?",
+      "answer": "YHWH's logic in Yirmeyahu 42:15-18 is consistent: if the sword, famine, and pestilence you fear in Yehudah make you flee to Mitzrayim, those same instruments of YHWH's judgment will find you there. Mitzrayim is not outside YHWH's reach. The only safety is in the land YHWH designated for them, under the covenant. Flight to Mitzrayim — the place of their ancestors' slavery — is a return to the wrong starting point."
+    },
+    {
+      "question": "How does Yirmeyahu 43:8-13's symbolic act at Tahpanhes connect to Babylon?",
+      "answer": "Yirmeyahu's symbolic act of hiding stones in the clay pavement at the entrance of Pharaoh's palace at Tahpanhes is a prophetic sign: Nebuchadnezzar will set his throne on those very stones when he conquers Mitzrayim. The act says: the place you fled to for safety will become Babylon's throne room. YHWH's judgment reaches Mitzrayim too."
+    },
+    {
+      "question": "What happened to Yirmeyahu after the fall of Yerushalayim?",
+      "answer": "Nebuchadnezzar gave specific orders to treat Yirmeyahu well. After the city fell, Yirmeyahu was found among the deportees at Ramah and given the choice to go to Babylon or stay in the land. He chose to stay with Gedalyahu at Mitzpah. After Gedalyahu's murder, the surviving remnant forced Yirmeyahu (and Barukh) to accompany them to Mitzrayim. Yirmeyahu's last recorded words are in Mitzrayim, still prophesying to a community that refuses to listen."
+    },
+    {
+      "question": "Why did Yirmeyahu describe the Yehudites in Mitzrayim as 'knowing whose word will stand'?",
+      "answer": "In Yirmeyahu 44:28-29, YHWH says the few who escape Mitzrayim will return to Yehudah, 'and all the remnant of Yehudah who came to Mitzrayim shall know whose word will stand — mine or theirs.' This is the ultimate verification test: they claimed YHWH's word through Yirmeyahu was false and their own plan was right. History itself will adjudicate the dispute. YHWH's word will stand; theirs will not."
     }
   ]
 }

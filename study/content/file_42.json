@@ -1,44 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_42",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_42",
   "label": "Yesha'yahu (Isaiah) — 1QIsa-a — Part 1 — Chapters 1–12",
   "volume": 16,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Yesha'yahu opens with YHWH's case against Yisra'EL. The ox knows its owner but Yisra'EL does not know. YHWH calls the nation to repentance: though your sins are like scarlet, they shall be as white as snow. Yesha'yahu sees YHWH seated on a high throne — the seraphim cry Holy, holy, holy is YHWH of hosts. A coal touches the prophet's lips. He is sent. The sign of Immanuel is given. The people who walked in darkness have seen a great light. A child is born — Wonderful Counselor, Mighty Creator, Everlasting Father, Prince of Peace.",
   "summary_scholarly": "The ACR reads from the Great Isaiah Scroll (1QIsa-a) — the oldest complete prophetic manuscript known, found in Qumran Cave 1. This single scroll preserves all 66 chapters and predates the Masoretic Isaiah by approximately 1,000 years. The Orit Ge'ez serves as the second witness. The throne vision in chapter 6 is the most detailed divine throne description in the prophetic literature. The child of chapters 7 and 9 is a mortal Davidic heir — not a divine incarnation. The Qumran community read these passages as descriptions of a human king in the Davidic line.",
   "key_terms": [
-    { "term": "1QIsa-a", "phonetic": "", "definition": "The Great Isaiah Scroll — the oldest complete prophetic manuscript in existence. Found in Qumran Cave 1 in 1947. 7.3 meters long. Preserves all 66 chapters of Yesha'yahu. Predates the Masoretic text by approximately 1,000 years." },
-    { "term": "Seraphim", "phonetic": "Seh-rah-FEEM", "definition": "Fiery beings above YHWH's throne (6:2). Each has six wings — two covering the face, two covering the feet, two for flight. They cry: Holy, holy, holy is YHWH of hosts — the whole earth is full of his glory." },
-    { "term": "Immanuel", "phonetic": "Im-mah-noo-EL", "definition": "Hebrew for 'El is with us.' A sign given through a young woman (almah) bearing a son (7:14). In context, this is a sign to King Ahaz about events in his own time — not a prediction of events 700 years later." },
-    { "term": "Remnant (She'ar Yashuv)", "phonetic": "Sheh-AR Yah-SHOOV", "definition": "Yesha'yahu names his son She'ar Yashuv — 'a remnant shall return' (7:3). The name is a prophecy: after judgment, a remnant of the covenant people will return to YHWH." }
+    {
+      "term": "Yesha'yahu",
+      "phonetic": "ye-sha-YA-hu",
+      "definition": "Prophet of Yehudah during the Assyrian crisis, 8th century BCE; his visions open with YHWH enthroned and the earth filled with divine glory."
+    },
+    {
+      "term": "Throne Vision",
+      "phonetic": "ch.6",
+      "definition": "Yesha'yahu sees YHWH seated on a high throne in the Temple; seraphim cry 'Holy, holy, holy is YHWH of Hosts; the whole earth is full of his glory.'"
+    },
+    {
+      "term": "Seraphim",
+      "phonetic": "se-ra-PHIM",
+      "definition": "Fiery celestial beings in the Throne Vision of Yesha'yahu 6; they have six wings and cry the threefold holiness declaration over YHWH's throne."
+    },
+    {
+      "term": "Holy Holy Holy",
+      "phonetic": "qa-DOSH qa-DOSH qa-DOSH",
+      "definition": "The threefold acclamation of YHWH's holiness sung by the seraphim in Yesha'yahu 6:3; source text the NT later borrowed from."
+    },
+    {
+      "term": "Immanuel Sign",
+      "phonetic": "im-ma-NU-el",
+      "definition": "Sign given to King Ahaz in Yesha'yahu 7: a young woman will bear a son called Immanuel ('El is with us'); the sign is to Ahaz's immediate historical crisis, not a future figure."
+    },
+    {
+      "term": "Ahaz",
+      "phonetic": "A-khaz",
+      "definition": "King of Yehudah who refused to ask YHWH for a sign; Yesha'yahu gave the Immanuel sign to the entire House of David in response to Ahaz's faithlessness."
+    },
+    {
+      "term": "Shoot from Yishai's Stump",
+      "phonetic": "ch.11",
+      "definition": "Yesha'yahu 11 describes a future leader who will arise from the severed line of Yishai (David's father); the sevenfold Spirit of YHWH rests on him."
+    },
+    {
+      "term": "Spirit of YHWH Sevenfold",
+      "phonetic": "ch.11",
+      "definition": "Seven aspects of YHWH's Spirit resting on the coming leader in Yesha'yahu 11: wisdom, understanding, counsel, strength, knowledge, fear of YHWH, and delight in YHWH's fear."
+    },
+    {
+      "term": "1QIsa-a Scroll",
+      "phonetic": "1Q-I-sa-a",
+      "definition": "The Great Isaiah Scroll found at Qumran Cave 1; one of the best-preserved DSS manuscripts, containing the entire text of Yesha'yahu with notable textual variants."
+    },
+    {
+      "term": "Highway of Holiness",
+      "phonetic": "ch.35",
+      "definition": "The road through the wilderness on which YHWH's redeemed travel; unclean creatures do not walk on it; it appears in Yesha'yahu 35 as part of the restoration vision."
+    }
   ],
   "fill_blank": [
-    { "ref": "6:3", "prompt": "Holy, holy, holy is YHWH of hosts — the whole ______ is full of his glory.", "answer": "earth", "source_quote": "And one called to another and said: Holy, holy, holy is YHWH of hosts — the whole earth is full of his glory." },
-    { "ref": "1:18", "prompt": "Though your sins are like scarlet, they shall be as white as ______.", "answer": "snow", "source_quote": "Come now, let us reason together, says YHWH: though your sins are like scarlet, they shall be as white as snow." },
-    { "ref": "9:6", "prompt": "For to us a child is born, to us a son is given, and the government shall be upon his ______.", "answer": "shoulder", "source_quote": "For to us a child is born, to us a son is given, and the government shall be upon his shoulder." },
-    { "ref": "1:3", "prompt": "The ox knows its owner, and the donkey its master's crib, but Yisra'EL does not ______.", "answer": "know", "source_quote": "The ox knows its owner, and the donkey its master's crib, but Yisra'EL does not know, my people do not understand." }
+    {
+      "ref": "Yesha'yahu 6:3",
+      "prompt": "In the Throne Vision, the seraphim called to one another: 'Holy, holy, holy is YHWH of Hosts; the whole _____ is full of his glory.'",
+      "answer": "earth",
+      "source_quote": "Holy, holy, holy is YHWH of Hosts; the whole earth is full of his glory."
+    },
+    {
+      "ref": "Yesha'yahu 6:5",
+      "prompt": "When Yesha'yahu saw YHWH enthroned, he cried: 'Woe is me! I am undone, for I am a man of _____ lips.'",
+      "answer": "unclean",
+      "source_quote": "Woe is me! For I am undone; because I am a man of unclean lips, and I dwell in the midst of a people of unclean lips."
+    },
+    {
+      "ref": "Yesha'yahu 7:14",
+      "prompt": "The sign given to the House of David: 'Behold, the _____ woman shall conceive and bear a son, and shall call his name Immanuel.'",
+      "answer": "young",
+      "source_quote": "Behold, the young woman shall conceive and bear a son, and shall call his name Immanuel."
+    },
+    {
+      "ref": "Yesha'yahu 9:6",
+      "prompt": "The ancient source text states: 'For to us a _____ is born, to us a son is given; and the government shall be upon his shoulder.'",
+      "answer": "child",
+      "source_quote": "For to us a child is born, to us a son is given; and the government shall be upon his shoulder."
+    },
+    {
+      "ref": "Yesha'yahu 11:1",
+      "prompt": "Yesha'yahu 11 begins: 'There shall come forth a _____ from the stump of Yishai, and a branch from his roots shall bear fruit.'",
+      "answer": "shoot",
+      "source_quote": "There shall come forth a shoot from the stump of Yishai, and a branch from his roots shall bear fruit."
+    },
+    {
+      "ref": "Yesha'yahu 11:2",
+      "prompt": "The Spirit of YHWH shall rest on him: the spirit of wisdom and understanding, the spirit of counsel and _____, the spirit of knowledge and the fear of YHWH.",
+      "answer": "strength",
+      "source_quote": "The Spirit of YHWH shall rest upon him: the spirit of wisdom and understanding, the spirit of counsel and strength, the spirit of knowledge and the fear of YHWH."
+    },
+    {
+      "ref": "Yesha'yahu 1:18",
+      "prompt": "YHWH reasons with Yisra'el: 'Come now, let us reason together. Though your sins are like scarlet, they shall be as _____ as snow.'",
+      "answer": "white",
+      "source_quote": "Come now, let us reason together, says YHWH: though your sins are like scarlet, they shall be as white as snow."
+    },
+    {
+      "ref": "Yesha'yahu 2:4",
+      "prompt": "Nations shall beat their _____ into plowshares and their spears into pruning hooks; nation shall not lift up sword against nation.",
+      "answer": "swords",
+      "source_quote": "They shall beat their swords into plowshares, and their spears into pruning hooks; nation shall not lift up sword against nation."
+    },
+    {
+      "ref": "Yesha'yahu 6:8",
+      "prompt": "YHWH asked: 'Whom shall I send, and who will go for us?' Yesha'yahu answered: 'Here I am! _____ me.'",
+      "answer": "Send",
+      "source_quote": "And I heard the voice of YHWH saying, Whom shall I send, and who will go for us? Then I said, Here I am! Send me."
+    },
+    {
+      "ref": "Yesha'yahu 11:9",
+      "prompt": "In the restored world, 'the earth shall be full of the knowledge of YHWH as the _____ cover the sea.'",
+      "answer": "waters",
+      "source_quote": "They shall not hurt or destroy in all my holy mountain; for the earth shall be full of the knowledge of YHWH as the waters cover the sea."
+    }
   ],
   "multiple_choice": [
-    { "ref": "6:1-3", "question": "What did Yesha'yahu see in his throne vision?", "options": ["An angel with a sword", "YHWH seated on a high throne with seraphim crying Holy, holy, holy", "A burning mountain", "A ladder reaching to heaven"], "correct": 1, "source_quote": "I saw YHWH sitting upon a throne, high and lifted up — and the seraphim called: Holy, holy, holy is YHWH of hosts." },
-    { "ref": "1QIsa-a", "question": "What is the Great Isaiah Scroll?", "options": ["A medieval copy", "The oldest complete prophetic manuscript known — from Qumran Cave 1", "A Greek translation", "A Masoretic variant"], "correct": 1, "source_quote": "The Great Isaiah Scroll (1QIsa-a) is the oldest complete prophetic manuscript in existence." },
-    { "ref": "9:6", "question": "What titles are given to the child in chapter 9?", "options": ["King of Kings and Lord of Lords", "Wonderful Counselor, Mighty Creator, Everlasting Father, Prince of Peace", "The Anointed One and the Holy One", "Prophet, Priest, and King"], "correct": 1, "source_quote": "His name shall be called Wonderful Counselor, Mighty Creator, Everlasting Father, Prince of Peace." },
-    { "ref": "7:14", "question": "What does the name Immanuel mean?", "options": ["YHWH saves", "El is with us", "The anointed one", "YHWH remembers"], "correct": 1, "source_quote": "The young woman shall conceive and bear a son, and shall call his name Immanuel — El is with us." }
+    {
+      "ref": "Yesha'yahu 6:1",
+      "question": "In what year did Yesha'yahu see YHWH enthroned in the Throne Vision?",
+      "options": [
+        "The year King Uzziyahu died",
+        "The year Khizkiyahu became king",
+        "The year Babylon fell",
+        "The year the Temple was built"
+      ],
+      "correct": 0,
+      "source_quote": "In the year that King Uzziyahu died I saw YHWH sitting upon a throne, high and lifted up."
+    },
+    {
+      "ref": "Yesha'yahu 6:6-7",
+      "question": "How did the seraph cleanse Yesha'yahu's lips in the Throne Vision?",
+      "options": [
+        "With a burning coal from the altar",
+        "With water from the Temple basin",
+        "With oil from the menorah",
+        "With incense smoke"
+      ],
+      "correct": 0,
+      "source_quote": "Then one of the seraphim flew to me, having in his hand a burning coal that he had taken with tongs from the altar. And he touched my mouth."
+    },
+    {
+      "ref": "Yesha'yahu 7:3",
+      "question": "Who accompanied Yesha'yahu when he met King Ahaz at the conduit of the upper pool?",
+      "options": [
+        "His son Shear-Yashuv",
+        "His son Maher-Shalal-Hash-Baz",
+        "The priest Uriyah",
+        "The prophet Mikhah"
+      ],
+      "correct": 0,
+      "source_quote": "And YHWH said to Yesha'yahu, Go out to meet Ahaz, you and Shear-Yashuv your son."
+    },
+    {
+      "ref": "Yesha'yahu 8:1",
+      "question": "What name did YHWH tell Yesha'yahu to write on a large tablet?",
+      "options": [
+        "Maher-Shalal-Hash-Baz",
+        "Immanuel",
+        "Shear-Yashuv",
+        "El-Gibbor"
+      ],
+      "correct": 0,
+      "source_quote": "Then YHWH said to me, Take a large tablet and write on it in common characters, Maher-Shalal-Hash-Baz."
+    },
+    {
+      "ref": "Yesha'yahu 11:6",
+      "question": "What two animals are described as dwelling peacefully together in the restored world of Yesha'yahu 11?",
+      "options": [
+        "The wolf and the lamb",
+        "The lion and the ox",
+        "The bear and the cow",
+        "The leopard and the goat"
+      ],
+      "correct": 0,
+      "source_quote": "The wolf shall dwell with the lamb, and the leopard shall lie down with the young goat."
+    },
+    {
+      "ref": "Yesha'yahu 2:3",
+      "question": "According to Yesha'yahu 2, Torah shall go forth from which city?",
+      "options": [
+        "Tziyon/Yerushalayim",
+        "Shomron",
+        "Khevron",
+        "Be'er Sheva"
+      ],
+      "correct": 0,
+      "source_quote": "For out of Tziyon shall go the Torah, and the word of YHWH from Yerushalayim."
+    },
+    {
+      "ref": "Yesha'yahu 5:1-7",
+      "question": "What does the Song of the Vineyard in Yesha'yahu 5 represent?",
+      "options": [
+        "The house of Yisra'el is YHWH's vineyard",
+        "Wisdom is a fruitful vine",
+        "Babylon is YHWH's planting",
+        "The Temple garden"
+      ],
+      "correct": 0,
+      "source_quote": "For the vineyard of YHWH of Hosts is the house of Yisra'el, and the men of Yehudah are his pleasant planting."
+    },
+    {
+      "ref": "Yesha'yahu 9:6",
+      "question": "The ancient source text in Yesha'yahu 9:6 is the original; which tradition borrowed its 'a child is born, a son is given' language?",
+      "options": [
+        "The NT borrowed from this ancient text",
+        "This text borrowed from the NT",
+        "Both were written simultaneously",
+        "The text was borrowed from Babylon"
+      ],
+      "correct": 0,
+      "source_quote": "For to us a child is born, to us a son is given; and the government shall be upon his shoulder."
+    },
+    {
+      "ref": "Yesha'yahu 1:3",
+      "question": "What animals does YHWH contrast with Yisra'el's unfaithfulness in Yesha'yahu 1:3?",
+      "options": [
+        "The ox knows its owner, and the donkey its master's crib",
+        "The sheep know their shepherd's voice",
+        "The eagle returns to its nest",
+        "The lion guards its prey"
+      ],
+      "correct": 0,
+      "source_quote": "The ox knows its owner, and the donkey its master's crib, but Yisra'el does not know, my people do not understand."
+    },
+    {
+      "ref": "Yesha'yahu 7:16",
+      "question": "The Immanuel sign in Yesha'yahu 7 is given in the context of what immediate historical threat?",
+      "options": [
+        "The Syro-Ephraimitish coalition against Ahaz",
+        "The Babylonian siege of Yerushalayim",
+        "The Assyrian capture of Shomron",
+        "The Philistine raids on Yehudah"
+      ],
+      "correct": 0,
+      "source_quote": "For before the boy knows how to refuse the evil and choose the good, the land whose two kings you dread will be deserted."
+    }
   ],
   "faq": [
     {
-      "question": "Why is the Great Isaiah Scroll (1QIsa-a) the most important DSS manuscript?",
-      "answer": "1QIsa-a is the oldest complete prophetic manuscript in existence — 7.3 meters long, preserving all 66 chapters. It predates the Masoretic Isaiah by approximately 1,000 years. The Qumran scribes wrote YHWH in Paleo-Hebrew script (𐤉𐤄𐤅𐤄) within the square-script text — marking the Name as categorically different from all other words. This visual distinction was deliberate. The Nahal Hever Septuagint fragments show early Greek copies also preserved the Name in Paleo-Hebrew within Greek text. The substitution of 'LORD' for YHWH — 7,000+ times across translations — was introduced later. It has no ancient basis."
+      "question": "What is the 1QIsa-a Scroll and why does it matter?",
+      "answer": "The Great Isaiah Scroll (1QIsa-a) is the best-preserved manuscript from Qumran, found in Cave 1 in 1947. It contains the full text of Yesha'yahu and predates the Masoretic Text by roughly 1,000 years, preserving textual variants that show the Masoretes' editorial choices—making it an essential pre-Rabbinic witness."
     },
     {
-      "question": "Is the child of chapters 7 and 9 a divine figure?",
-      "answer": "No. The Qumran community read these passages as describing a mortal Davidic king. The DSS messianic expectation — documented in 1QS, 1QSa, and the Damascus Document — describes two mortal messiahs: a Messiah of Aaron (priestly) and a Messiah of Israel (kingly). Neither is divine. Neither is an object of worship. The titles in 9:6 — Wonderful Counselor, Mighty Creator, Everlasting Father, Prince of Peace — are throne names given to a human king at enthronement, following the ancient Near Eastern pattern of royal titles. Roman Christianity later reinterpreted these passages as predictions of a divine incarnation — a reading absent from the DSS, the Orit Ge'ez, and every pre-Roman Hebrew source."
+      "question": "Who were the seraphim in Yesha'yahu's Throne Vision?",
+      "answer": "The seraphim are fiery celestial beings serving in YHWH's throne room. Each has six wings: two covering the face, two covering the feet, two for flying. They continuously cry the threefold holiness declaration over YHWH's throne, their voices shaking the thresholds of the Temple."
     },
     {
-      "question": "What does the 44-year DSS publication delay reveal?",
-      "answer": "The Dead Sea Scrolls were discovered in 1947. Full publication was not completed until 1991 — a 44-year delay. The original publication committee was dominated by scholars trained at Catholic institutions, including Roland de Vaux, a Dominican friar who headed the project for decades. John Allegro, who published findings suggesting the scrolls contradicted Roman Christian theological claims, was professionally destroyed by the Catholic-dominated team. When the Huntington Library forced open access in 1991 by releasing photographic copies, the suppression ended. The scrolls hidden by the Qumran community in 68 CE to preserve them for a future generation are now directly accessible — for the first time in 1,900 years."
+      "question": "What was the Immanuel Sign given to Ahaz?",
+      "answer": "In Yesha'yahu 7, YHWH offered Ahaz any sign as confirmation that YHWH would protect Yehudah. Ahaz refused. YHWH then gave the sign anyway to the entire House of David: a young woman would conceive and bear a son called Immanuel. The sign addressed Ahaz's immediate crisis with Aram and Efrayim."
     },
     {
-      "question": "How does Yesha'yahu connect to the African covenant geography?",
-      "answer": "Yesha'yahu 18:1-2 (preserved in 1QIsa-a): 'Woe to the land shadowing with wings which is beyond the rivers of Ethiopia — that sends ambassadors by the sea — go swift messengers to a nation scattered and peeled — to a people terrible from their beginning onward — a nation meted out and trodden down.' The text's own geography: 'beyond the rivers of Ethiopia' places this land west of Africa — the direction of the Americas from the African perspective. 'A nation scattered and peeled' — a population dispersed and stripped. The oldest complete prophetic manuscript on earth contains a geographic description that corresponds to the documented experience of the covenant people taken in ships from the Kingdom of Juda."
+      "question": "What is the Shoot from Yishai's Stump in Yesha'yahu 11?",
+      "answer": "After describing Assyria's pride being cut down like a great tree, Yesha'yahu 11 announces that a new shoot will grow from the severed stump of Yishai (David's father). The sevenfold Spirit of YHWH rests on this leader, who rules with wisdom, justice for the poor, and faithfulness."
+    },
+    {
+      "question": "What does the Song of the Vineyard in Yesha'yahu 5 teach?",
+      "answer": "The Song of the Vineyard (Yesha'yahu 5:1-7) is a parable in which YHWH planted Yisra'el as a beloved vineyard, did everything right, yet it produced wild grapes instead of justice. The punch line: YHWH expected justice (mishpat) and saw bloodshed (mispakh); righteousness (tzedaqah) and heard a cry (tze'aqah)."
+    },
+    {
+      "question": "Why is Yesha'yahu 9:6 described as an ancient source text the NT borrowed from?",
+      "answer": "Yesha'yahu 9:6 — 'For to us a child is born, to us a son is given' — predates the NT by centuries. This ancient Hebrew text is the original; the NT's nativity and 'son given' language borrowed from it. Describing the ancient text as 'NT-like' inverts the chronology."
+    },
+    {
+      "question": "What two Assyrian kings are named in Yesha'yahu 1-12?",
+      "answer": "Yesha'yahu's ministry covered the reigns of Uziyahu, Yotam, Ahaz, and Khizkiyahu (Yesha'yahu 1:1). The Assyrian kings in this period whose shadow falls over these chapters are Tiglath-Pileser III (called Pul) and Sennakherib. The crisis with Aram-Syria and Efrayim in chapters 7-8 is the Syro-Ephraimitish war."
+    },
+    {
+      "question": "What does the name Immanuel mean?",
+      "answer": "Immanuel (Hebrew: El-with-us) means 'El is with us.' In Yesha'yahu 7, the name is the sign's message: despite Ahaz's faithlessness, YHWH is still with the House of David. The sign is for the immediate historical crisis, not a promise about a distant future figure."
+    },
+    {
+      "question": "What is the 'Highway of Holiness' in Yesha'yahu 35?",
+      "answer": "Yesha'yahu 35:8 describes a Way of Holiness through the wilderness on which YHWH's redeemed travel from exile back to Tziyon. It is so pure that even the unwise cannot stray from it, and unclean creatures do not walk on it. The redeemed come back to Tziyon with singing and everlasting joy."
+    },
+    {
+      "question": "What sin did Yesha'yahu confess in the Throne Vision?",
+      "answer": "When he saw YHWH enthroned, Yesha'yahu cried 'Woe is me! I am undone; for I am a man of unclean lips, and I dwell in the midst of a people of unclean lips.' A seraph then flew to him with a burning coal from the altar and touched his mouth, declaring his guilt taken away and his sin atoned."
     }
   ]
 }

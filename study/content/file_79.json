@@ -1,39 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_79",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_79",
   "label": "Iyov (Job) — Part 3 — Chapters 29–42",
   "volume": 21,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Iyov remembers his former days — when The Creator watched over him, when his steps were washed with butter, when the elders rose and stood for him. Now the young mock him. My skin is black upon me, and my bones are burned with heat. My harp is turned to mourning. Iyov swears an oath of innocence — if I have lifted my hand against the fatherless, then let my arm fall from my shoulder. Elihu speaks — young but angry — he says Iyov is wrong to justify himself rather than The Creator. Then YHWH answers Iyov out of the whirlwind: Where were you when I laid the foundation of the earth? Who shut in the sea with doors? Have you commanded the morning? Can you bind the chains of the Pleiades or loose the cords of Orion? Iyov answers: I had heard of you by the hearing of the ear, but now my eye sees you — therefore I repent in dust and ashes. YHWH turns to the friends: You have not spoken of me what is right, as my servant Iyov has. YHWH restores Iyov — doubles everything he had before.",
   "summary_scholarly": "The ACR reads from DSS witnesses (4QJob-a, 4QJob-b, 4QpaleoJob-c, 11QtgJob) and the Orit Ge'ez. Iyov 30:30 — 'my skin is black (shachar) upon me' — is a first-person phenotypic statement using the same root (shin-chet-resh) as Shir HaShirim 1:5. Chapter 31 is the most comprehensive oath of innocence (negative confession) in the Hebrew canon — paralleling the Egyptian Book of the Dead's Negative Confession tradition. YHWH's speeches from the whirlwind (chapters 38-41) are the most sustained divine monologue in the covenant literature. YHWH does not answer Iyov's theological question — he overwhelms Iyov with creation's scope. The critical theological conclusion: YHWH rejects the friends' theology (42:7) — 'you have not spoken of me what is right, as my servant Iyov has.' The righteous sufferer is vindicated. The institutional theologians are condemned.",
   "key_terms": [
-    { "term": "Shachar (Black)", "phonetic": "Shah-KHAR", "definition": "Iyov 30:30: 'my skin is black (shachar) upon me, and my bones are burned with heat.' The root shin-chet-resh is the same used in Shir HaShirim 1:5 (shechorah ani). This is a first-person phenotypic description — physical skin color — not a metaphor." },
-    { "term": "Whirlwind (Se'arah)", "phonetic": "Seh-ah-RAH", "definition": "YHWH answers Iyov from the whirlwind (38:1). The se'arah is a storm, a tempest. YHWH's response does not come through institutional channels — priest, prophet, or sage — but directly from the storm. The divine voice bypasses every mediating structure." },
-    { "term": "Oath of Innocence (Chapter 31)", "phonetic": "", "definition": "Iyov swears a comprehensive oath listing everything he has not done — lust, deceit, oppression of the poor, withholding from the widow, trust in gold, rejoicing at an enemy's misfortune. The form parallels the Egyptian Negative Confession (Book of the Dead, Spell 125)." },
-    { "term": "Elihu", "phonetic": "Eh-lee-HOO", "definition": "A young man who speaks after the three friends and before YHWH's response (chapters 32-37). He is angry at Iyov for justifying himself and at the friends for failing to refute him. YHWH neither commends nor condemns Elihu in the epilogue." }
+    {
+      "term": "11QtgJob (Targum of Job, Cave 11)",
+      "phonetic": "yod-aleph kuf-tet-gimmel Iy-YOV",
+      "definition": "11Q10 — the most complete Aramaic Targum of Job found in the DSS, from Cave 11 at Qumran; covers roughly chs 17-42; a relatively literal rendering of the Hebrew, not a paraphrase, demonstrating the book's importance to the Qumran community."
+    },
+    {
+      "term": "4QtgJob",
+      "phonetic": "dalet kuf-tet-gimmel Iy-YOV",
+      "definition": "4Q157 — the Cave 4 Aramaic Targum of Job fragments, covering small portions of Iyov 3-5; the earliest Aramaic targum found in the DSS alongside 11Q10, together confirming Iyov's central place in the Qumran library."
+    },
+    {
+      "term": "Aramaic Targum in DSS",
+      "phonetic": "tar-GUM ara-MIT be-DSS",
+      "definition": "Both 4Q157 and 11Q10 are Aramaic translations (targumim) of Iyov, predating the rabbinic targum tradition; they show the Qumran community reading and studying Iyov in Aramaic — the vernacular alongside Hebrew — without the later Rabbinic interpretive overlays."
+    },
+    {
+      "term": "Land of Uz",
+      "phonetic": "eretz UZ",
+      "definition": "The setting of Iyov's story; located to the east of Yisra'el, associated in the Hebrew tradition with the Edom/Aram region. Far from marking Iyov as a foreigner to the Hebrew covenant, the text presents him as a man who fears YHWH and lives blamelessly — the covenant's reach is not geographically limited."
+    },
+    {
+      "term": "Iyov in DSS Canon",
+      "phonetic": "Iy-YOV be-si-FREY ha-DSS",
+      "definition": "The presence of two separate Aramaic targumim of Iyov (4Q157 and 11Q10) in the Qumran library confirms the book was central to the community's study; it was not a marginal or contested text but a core part of the covenant tradition alongside the Torah and Psalms."
+    },
+    {
+      "term": "Behemot and Leviathan in Chanokh",
+      "phonetic": "be-he-MOT ve-liv-ya-TAN be-Kha-NOKH",
+      "definition": "1 Enoch 60:7-10 and 60:24: Chanokh's vision names Behemot dwelling in a hidden wilderness east of Eden and Leviathan in the deep of the sea; both are described as prepared for the day of YHWH's covenant. This ancient text in Chanokh develops the imagery from Iyov 40-41."
+    },
+    {
+      "term": "NT Beast Imagery Borrowed from Iyov/Chanokh",
+      "phonetic": "khay-YOT ha-NT mil-Iy-YOV/Kha-NOKH",
+      "definition": "The chaos-beast imagery in the NT book of Revelation (the beast from the sea, the beast from the land, Leviathan-like figures) is borrowed from the ancient Hebrew tradition established in Iyov 40-41 and developed in 1 Enoch 60. The direction is Iyov → Chanokh → NT; these ancient texts are the sources."
+    },
+    {
+      "term": "Theodicy in Hebrew Tradition",
+      "phonetic": "te-o-di-TSI-a be-ma-so-RET iv-RIT",
+      "definition": "The Hebrew primary sources engage the problem of innocent suffering directly and honestly — Iyov, Tehillim 44 and 73, Yirmeyahu's confessions, Khavaqquq's dialogue — without the Hellenistic philosophical resolution (dualism, afterlife reward) that later traditions imposed. The ancient Hebrew answer preserves the tension."
+    },
+    {
+      "term": "Covenant Framework of Iyov",
+      "phonetic": "mat-se-RET ha-brit shel Iy-YOV",
+      "definition": "Despite being set outside Yisra'el, Iyov operates entirely within covenant categories: he fears YHWH, uses YHWH's covenant name, invokes the go'el (kinsman-redeemer), and undergoes testing that is a divine-court dispute. The covenant framework is the native context of the book."
+    },
+    {
+      "term": "Job's Integrity as Pre-Rabbinic Model",
+      "phonetic": "to-mat Iy-YOV ke-mo-DEL kdam-Ra-ba-NI",
+      "definition": "The figure of Iyov — blameless, arguing directly with YHWH, ultimately vindicated — represents the pre-Rabbinic model of covenant faithfulness: direct honest engagement with YHWH, not mediated by institutional religion. This model is what the Qumran community (and the DSS targumim) preserved and valued."
+    }
   ],
   "fill_blank": [
-    { "ref": "30:30", "prompt": "My skin is ______ upon me, and my bones are burned with heat.", "answer": "black", "source_quote": "My skin is black upon me, and my bones are burned with heat." },
-    { "ref": "38:4", "prompt": "Where were you when I laid the ______ of the earth? Tell me, if you have understanding.", "answer": "foundation", "source_quote": "Where were you when I laid the foundation of the earth? Tell me, if you have understanding." },
-    { "ref": "42:5", "prompt": "I had heard of you by the hearing of the ear, but now my ______ sees you.", "answer": "eye", "source_quote": "I had heard of you by the hearing of the ear, but now my eye sees you." },
-    { "ref": "42:7", "prompt": "You have not spoken of me what is right, as my servant ______ has.", "answer": "Iyov", "source_quote": "YHWH said to Elifaz the Temanite: My anger burns against you and against your two friends, for you have not spoken of me what is right, as my servant Iyov has." }
+    {
+      "ref": "11Q10",
+      "prompt": "The most complete Aramaic Targum of Job from the DSS is known as ___.",
+      "answer": "11QtgJob (11Q10)",
+      "source_quote": "11Q10 (11QtgJob) covers roughly Iyov chapters 17-42 in Aramaic."
+    },
+    {
+      "ref": "4Q157",
+      "prompt": "The Cave 4 fragments of an Aramaic Targum of Job are designated ___.",
+      "answer": "4Q157 (4QtgJob)",
+      "source_quote": "4Q157 (4QtgJob) contains Cave 4 Aramaic fragments of Iyov 3-5."
+    },
+    {
+      "ref": "1 Enoch 60:7",
+      "prompt": "In 1 Enoch 60, the two chaos creatures named as dwelling in hidden places until the day of YHWH are ___ and Leviathan.",
+      "answer": "Behemot",
+      "source_quote": "Behemot shall be revealed from his place and Leviathan shall ascend from the midst of the sea — 1 Enoch 60:7-8."
+    },
+    {
+      "ref": "Iyov 40-41",
+      "prompt": "The ancient text that establishes Behemot and Leviathan as chaos creatures is Iyov chs ___ and 41.",
+      "answer": "40",
+      "source_quote": "Behold, Behemot, which I made as I made you — Iyov 40:15; and the Leviathan passage in ch.41."
+    },
+    {
+      "ref": "Iyov 1:1",
+      "prompt": "The book of Iyov is set in the land of ___, located to the east.",
+      "answer": "Uz",
+      "source_quote": "There was a man in the land of Uz whose name was Iyov — Iyov 1:1."
+    },
+    {
+      "ref": "1 Enoch 60:24",
+      "prompt": "In 1 Enoch 60, Behemot and Leviathan are described as prepared for the great ___ of YHWH's covenant.",
+      "answer": "day",
+      "source_quote": "Behemot and Leviathan... they shall be food — 1 Enoch 60:24."
+    },
+    {
+      "ref": "Iyov covenant",
+      "prompt": "Iyov uses the Hebrew term ___ (kinsman-redeemer) in his declaration of confidence in 19:25.",
+      "answer": "go'el",
+      "source_quote": "For I know that my Redeemer (go'el) lives — Iyov 19:25."
+    },
+    {
+      "ref": "DSS Iyov targumim",
+      "prompt": "The DSS contain ___ separate Aramaic targumim of Iyov (4Q157 and 11Q10), confirming the book's central place in the Qumran community.",
+      "answer": "two",
+      "source_quote": "4Q157 (Cave 4) and 11Q10 (Cave 11) are both Aramaic targumim of Iyov found in the DSS."
+    },
+    {
+      "ref": "NT Revelation source",
+      "prompt": "The chaos-beast imagery of NT Revelation was borrowed from the ancient Hebrew tradition established in Iyov 40-41 and developed in 1 Enoch ch.___.",
+      "answer": "60",
+      "source_quote": "1 Enoch 60 names Behemot and Leviathan as great creatures prepared for the day of YHWH — the ancient source for later beast imagery."
+    },
+    {
+      "ref": "Iyov 42:7",
+      "prompt": "YHWH said to Elifaz: 'You have not spoken of me what is ___, as my servant Iyov has.'",
+      "answer": "right",
+      "source_quote": "You have not spoken of me what is right, as my servant Iyov has — Iyov 42:7."
+    }
   ],
   "multiple_choice": [
-    { "ref": "38:1-4", "question": "How does YHWH respond to Iyov?", "options": ["He explains why Iyov suffered", "He speaks from the whirlwind and asks: Where were you when I laid the foundation of the earth?", "He sends an angel with a message", "He agrees with the three friends"], "correct": 1, "source_quote": "Then YHWH answered Iyov out of the whirlwind and said: Who is this that darkens counsel by words without knowledge? Where were you when I laid the foundation of the earth?" },
-    { "ref": "42:7", "question": "What does YHWH say about the friends' theology?", "options": ["They spoke correctly", "They have not spoken of YHWH what is right — but Iyov has", "They should have spoken more harshly", "Their words will be forgotten"], "correct": 1, "source_quote": "YHWH said to Elifaz the Temanite: My anger burns against you and against your two friends, for you have not spoken of me what is right, as my servant Iyov has." },
-    { "ref": "30:30", "question": "What does Iyov 30:30 state about Iyov's physical appearance?", "options": ["His skin was pale from illness", "His skin is black upon him and his bones burned with heat", "His hair turned white", "His eyes grew dim"], "correct": 1, "source_quote": "My skin is black upon me, and my bones are burned with heat." }
+    {
+      "ref": "11Q10",
+      "question": "What is 11QtgJob (11Q10)?",
+      "options": [
+        "A Hebrew commentary on Iyov from Cave 11",
+        "An Aramaic Targum of Job covering roughly chs 17-42",
+        "A Greek translation of Iyov",
+        "A Rabbinic midrash on Iyov"
+      ],
+      "correct": 1,
+      "source_quote": "11Q10 is the most complete Aramaic Targum of Job found at Qumran, covering roughly Iyov chs 17-42."
+    },
+    {
+      "ref": "4Q157",
+      "question": "What do 4Q157 (Cave 4) and 11Q10 (Cave 11) together confirm?",
+      "options": [
+        "Iyov was composed in Aramaic originally",
+        "Iyov was not in the Qumran canon",
+        "Iyov was central to the Qumran community's study, with two separate Aramaic targumim found there",
+        "Iyov was read only in Greek at Qumran"
+      ],
+      "correct": 2,
+      "source_quote": "The presence of two separate Aramaic targumim of Iyov confirms the book was central to the Qumran community."
+    },
+    {
+      "ref": "1 Enoch 60",
+      "question": "What ancient text develops the Behemot and Leviathan imagery from Iyov 40-41?",
+      "options": [
+        "The Damascus Document",
+        "1 Enoch 60",
+        "4QInstruction",
+        "The War Scroll 1QM"
+      ],
+      "correct": 1,
+      "source_quote": "1 Enoch 60:7-10 names Behemot and Leviathan as primordial creatures prepared for the day of YHWH."
+    },
+    {
+      "ref": "NT Revelation source direction",
+      "question": "What is the correct direction of literary borrowing for the chaos-beast imagery in NT Revelation?",
+      "options": [
+        "NT Revelation → 1 Enoch → Iyov",
+        "Iyov → NT Revelation directly",
+        "Iyov → 1 Enoch → NT Revelation (NT borrowed from the ancient sources)",
+        "1 Enoch → Iyov → NT Revelation"
+      ],
+      "correct": 2,
+      "source_quote": "Iyov 40-41 is the original source; 1 Enoch 60 develops it; NT Revelation borrowed from both ancient texts."
+    },
+    {
+      "ref": "Iyov 1:1",
+      "question": "The land of Uz, where Iyov lived, was located in what direction from Yisra'el?",
+      "options": [
+        "To the north",
+        "To the west",
+        "To the east",
+        "To the south"
+      ],
+      "correct": 2,
+      "source_quote": "There was a man in the land of Uz — associated with the east, possibly Edom-adjacent."
+    },
+    {
+      "ref": "Iyov covenant framework",
+      "question": "What covenant term does Iyov use in 19:25 when declaring his confidence?",
+      "options": [
+        "Kohel (assembly)",
+        "Go'el (kinsman-redeemer)",
+        "Mashiakh (anointed one)",
+        "Rav (teacher)"
+      ],
+      "correct": 1,
+      "source_quote": "For I know that my go'el (Redeemer) lives — Iyov 19:25."
+    },
+    {
+      "ref": "DSS targumim character",
+      "question": "How do the DSS Aramaic targumim of Iyov differ from later Rabbinic targumim?",
+      "options": [
+        "They are freer paraphrases",
+        "They are relatively literal renderings without later Rabbinic interpretive overlays",
+        "They are allegorical commentaries",
+        "They skip difficult passages"
+      ],
+      "correct": 1,
+      "source_quote": "The DSS Iyov targumim are relatively literal renderings, predating the Rabbinic targum tradition."
+    },
+    {
+      "ref": "Theodicy Hebrew tradition",
+      "question": "What is distinctive about the Hebrew primary texts' approach to innocent suffering?",
+      "options": [
+        "They resolve the tension through dualism (good vs. evil deity)",
+        "They promise full afterlife reward that makes suffering meaningless",
+        "They engage the problem directly and honestly, preserving the tension without Greek philosophical resolution",
+        "They teach that all suffering is divine punishment"
+      ],
+      "correct": 2,
+      "source_quote": "Iyov, Tehillim 44 and 73, Yirmeyahu's confessions, Khavaqquq — the ancient Hebrew texts engage innocent suffering honestly without the Hellenistic resolution."
+    },
+    {
+      "ref": "Iyov model",
+      "question": "What model of covenant faithfulness does the figure of Iyov represent?",
+      "options": [
+        "Institutional obedience mediated by priests",
+        "Direct honest engagement with YHWH, arguing rather than submitting to false comfort",
+        "Quiet acceptance of all suffering as YHWH's will",
+        "Philosophical acceptance of fate"
+      ],
+      "correct": 1,
+      "source_quote": "Iyov argued directly with YHWH and was vindicated — the pre-Rabbinic model of honest covenant engagement."
+    },
+    {
+      "ref": "1 Enoch 60",
+      "question": "In 1 Enoch 60:24, what role are Behemot and Leviathan described as serving?",
+      "options": [
+        "They guard the heavenly throne",
+        "They are symbols of evil nations",
+        "They are prepared as food for YHWH's great day",
+        "They are angels in disguise"
+      ],
+      "correct": 2,
+      "source_quote": "Behemot and Leviathan shall be food — 1 Enoch 60:24."
+    }
   ],
   "faq": [
     {
-      "question": "What does Iyov 30:30 — 'my skin is black upon me' — reveal, and how has it been erased?",
-      "answer": "Iyov 30:30 reads: 'my skin is black (shachar) upon me, and my bones are burned with heat.' The Hebrew shachar uses the root shin-chet-resh — the identical root in Shir HaShirim 1:5: 'shechorah ani ve-na'vah' — I am black and lovely. In both texts, the root describes physical skin color. Iyov describes intensification — his already dark complexion has further darkened through suffering, and his bones burn with fever. The Great Eraser handles this verse through systematic reinterpretation: modern translations render shachar as 'darkened' or 'turned dark' — implying a change from a lighter baseline to a temporary darker state caused by illness. The NIV translates: 'My skin grows black and peels.' The ESV: 'My skin turns black and falls from me.' The word shachar means black. When the same root appears in Song of Songs, the same translators acknowledge blackness but then immediately contextualize it as sunburn ('dark because of the sun'). The covenant people's phenotype — documented in their own first-person literature — is systematically explained away by every major English translation. The text says what it says: my skin is black upon me."
+      "question": "What are the DSS Aramaic targumim of Iyov and why are they significant?",
+      "answer": "4Q157 (Cave 4) and 11Q10 (Cave 11) are Aramaic Targumim — translations — of Iyov found in the Dead Sea Scrolls. 11Q10 is the most complete, covering roughly chs 17-42. They are among the earliest known Aramaic targumim, predating the Rabbinic targum tradition. Their presence in the Qumran library confirms Iyov was not a marginal text but a core part of the community's covenant study."
     },
     {
-      "question": "Why does YHWH reject the friends' theology but vindicate Iyov?",
-      "answer": "YHWH's verdict in 42:7 is devastating: 'My anger burns against you and your two friends, for you have not spoken of me what is right, as my servant Iyov has.' The friends argued retribution theology: the righteous prosper, the wicked suffer, therefore Iyov must have sinned. YHWH rejects this entire framework. Iyov, who questioned YHWH, demanded justice, challenged the covenant terms, and maintained his innocence — spoke rightly. The friends, who defended YHWH's honor with systematic theology — spoke wrongly. This is the most important theological verdict in the wisdom literature: the honest sufferer who questions YHWH is preferred over the institutional theologian who defends YHWH with false premises. Every theological system that explains the covenant people's suffering as divine punishment for sin — the Ham curse, the deicide charge, the 'spiritual blindness' doctrine — stands under the same judgment YHWH pronounced on Elifaz, Bildad, and Tzofar. The friends' theology is the Great Eraser's theology. YHWH rejected it in the text."
+      "question": "How does 1 Enoch 60 develop the Behemot and Leviathan imagery from Iyov?",
+      "answer": "1 Enoch 60:7-10 names Behemot as dwelling in a hidden wilderness east of Eden and Leviathan as dwelling in the deep of the sea — both prepared for the great day of YHWH's covenant. This builds directly on Iyov 40-41 where YHWH presents both creatures as the summit of his creation. The Chanokh tradition takes the cosmic-power imagery of Iyov and gives it an eschatological function. The NT then borrows from both — with Iyov and Chanokh as the ancient sources."
     },
     {
-      "question": "What does YHWH's speech from the whirlwind (chapters 38-41) actually accomplish?",
-      "answer": "YHWH does not answer Iyov's question. He does not explain why Iyov suffered. He does not provide a theodicy. Instead, he poses questions about creation: Where were you when I laid the foundation of the earth? Can you bind the chains of the Pleiades? Can you draw out Leviathan with a fishhook? The effect is not intellectual explanation but existential overwhelming. Iyov's categories — justice, fairness, deserving — are not refuted. They are placed within a frame so vast that Iyov's demand for explanation becomes insufficient. Iyov's response confirms this: 'I had heard of you by the hearing of the ear, but now my eye sees you' (42:5). The shift is from hearing about YHWH through institutional theology (the friends' tradition) to directly seeing YHWH. The whirlwind speech does not defend retribution theology — it destroys it. YHWH's creation cannot be reduced to a moral equation. The covenant people's suffering cannot be explained by the friends' formula. But YHWH is still present — speaking from the storm, not from the institution. Direct. Unmediated. Overwhelming."
+      "question": "Does being set in the land of Uz make Iyov a non-Hebrew text?",
+      "answer": "No. Iyov is set in Uz (east of Yisra'el, possibly Edom-adjacent) but operates entirely within Hebrew covenant categories: Iyov uses the covenant divine name YHWH, invokes the go'el (kinsman-redeemer), and the story frames his testing as a divine-court dispute with YHWH. The land of Uz marks Iyov as a figure whose covenant faithfulness extends beyond the geographical borders of Yisra'el — consistent with the Hebrew tradition that the fear of YHWH is not geographically limited."
+    },
+    {
+      "question": "What does the DSS's preservation of two Iyov targumim tell us?",
+      "answer": "The Qumran community made Aramaic translations of Iyov for practical use — it was important enough to translate into the community's vernacular for study. This was not done for every biblical book. The two targumim (4Q157 and 11Q10) together confirm that Iyov was a key text for the community alongside the Torah and Psalms — perhaps because its themes of testing, covenant faithfulness, and direct engagement with YHWH resonated deeply with a community that understood itself as the tested remnant."
+    },
+    {
+      "question": "How does the book of Iyov engage theodicy differently from Hellenistic approaches?",
+      "answer": "Hellenistic philosophical approaches to suffering tend toward resolution: the soul is immortal so earthly suffering is temporary; or suffering is unreal; or a good principle and an evil principle are in conflict. The Hebrew primary text of Iyov refuses all these resolutions. YHWH's whirlwind speech does not explain the suffering — it reveals YHWH's transcendent wisdom and Iyov's encounter with the living YHWH. The tension between covenant faithfulness and unexplained suffering is preserved, not dissolved."
+    },
+    {
+      "question": "What does the Qumran community's use of Iyov suggest about how they understood their own situation?",
+      "answer": "The Qumran community understood itself as the righteous remnant tested and wrongly condemned — the Teacher of Righteousness was persecuted by the Wicked Priest; the community was driven from the Temple. Iyov's story of a blameless man unjustly suffering while his accusers (the friends/the establishment) were wrong mapped directly onto their self-understanding. The vindication promised to Iyov was their own hope."
+    },
+    {
+      "question": "How is the go'el concept in Iyov 19:25 a covenant term?",
+      "answer": "Go'el means kinsman-redeemer — the family member with the right and responsibility to redeem a relative in distress (restore their land, pay their debt, avenge their death). Iyov uses this covenant legal term to express his confidence that YHWH will ultimately vindicate him: 'I know that my go'el lives.' He is appealing to YHWH as his family-covenant protector, not simply a distant deity. This deeply Hebrew covenant concept gives 19:25 its force."
+    },
+    {
+      "question": "What does the connection between Iyov and Chanokh reveal about the Hebrew literary tradition?",
+      "answer": "Both Iyov 40-41 (Behemot and Leviathan) and 1 Enoch 60 develop the same chaos-creature imagery, confirming that the books are part of a living, interconnected Hebrew literary tradition — not isolated texts. Chanokh (preserved in the Ge'ez Orit and in the DSS) builds on and develops Iyov's imagery. This internal development within the pre-Rabbinic covenant tradition is the ancient source that later traditions (including NT Revelation) drew from."
+    },
+    {
+      "question": "What is the pre-Rabbinic model of covenant faithfulness that Iyov represents?",
+      "answer": "Iyov represents direct, honest engagement with YHWH — arguing his case, demanding to be heard, refusing to accept false theological comfort, maintaining integrity under pressure. This is the pre-Rabbinic covenant model: the individual stands before YHWH without institutional mediation, speaks honestly, and is ultimately vindicated. The Qumran community valued this model precisely because it did not require Rabbinic institutional approval — it was between the covenant person and YHWH directly."
+    },
+    {
+      "question": "What does the Iyov story say about the limits of human theology?",
+      "answer": "Iyov's three friends had good theology — accurate about YHWH's justice, accurate about retribution in principle — but applied it wrongly to Iyov's specific situation. YHWH rebukes them not for heresy but for false application. The book teaches that even correct theological principles can be weaponized against innocent people when applied without knowledge of the specific situation. Human theology always operates with incomplete information; humility before YHWH's transcendent knowledge is the only valid response."
     }
   ]
 }

@@ -1,31 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_33",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_33",
   "label": "Shemu'el Bet (2 Samuel) — Part 4 — Chapters 19–24",
   "volume": 13,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Dawid returns to Yerushalayim after Avshalom's death. Sheva ben Bikhri leads a rebellion — every man to his tents, O Yisra'EL! Yo'av crushes the revolt. The Giv'onites demand justice for Sha'ul's violation of the covenant with them — Dawid delivers seven of Sha'ul's descendants. Ritzpah guards their bodies on the rock. YHWH sends a three-year famine because Sha'ul broke the covenant with the Giv'onites. Dawid's mighty warriors are listed — the thirty and the three. Dawid's census angers YHWH — a pestilence strikes Yisra'EL. Dawid purchases the threshing floor of Aravnah the Yevusite and builds an altar. YHWH relents from the plague. Dawid's song of praise: YHWH is my rock, my fortress, my deliverer.",
   "summary_scholarly": "The ACR reads from 4QSam-a and the Orit Ge'ez. Dawid's song (ch 22) parallels Tehillim 18 — the DSS Psalms scroll (11QPsa) preserves independent witness to the psalm tradition. The Giv'onite episode (ch 21) demonstrates YHWH's commitment to covenant justice across generations — a covenant made with non-Israelites (Yehoshua 9) is enforced by YHWH against Yisra'EL's own king. The census (ch 24) establishes the site of the future Temple — the threshing floor of Aravnah the Yevusite. 4QSam-a preserves variant readings in the warrior lists (ch 23) that differ from the Masoretic and the parallel account in 1 Divre ha-Yamim 11.",
   "key_terms": [
-    { "term": "Aravnah", "phonetic": "Ah-rav-NAH", "definition": "Yevusite (Jebusite) owner of the threshing floor that Dawid purchases to build an altar after the pestilence (ch 24). This site becomes the location of Shelomoh's Temple. Dawid insists on paying full price: 'I will not offer burnt offerings to YHWH that cost me nothing.' Also called Ornan in Divre ha-Yamim." },
-    { "term": "Ritzpah", "phonetic": "Ritz-PAH", "definition": "Concubine of Sha'ul. When seven of Sha'ul's descendants are executed for the Giv'onite covenant violation, Ritzpah guards their bodies on the rock from the beginning of harvest until the rains fall — protecting them from birds and beasts. Her vigil moves Dawid to bury Sha'ul and Yonatan properly." },
-    { "term": "Giv'onites", "phonetic": "Giv-oh-NEEM", "definition": "Non-Israelite people who made a covenant with Yehoshua (Yehoshua 9). Sha'ul violated this covenant by attempting to destroy them. YHWH sends a three-year famine because of Sha'ul's breach. Even a covenant with non-Israelites carries YHWH's enforcement." }
+    {
+      "term": "David's Return to Yerushalayim",
+      "phonetic": "",
+      "definition": "After Avshalom's death, David's return to Yerushalayim is politically complex (2 Shemu'el 19). The northern tribes are angry that Yehudah acted first to bring David back. Shimei begs forgiveness and is pardoned. Mefivoshet meets David looking unkempt. Barzillai the Gileadite is honored. The rift between Yehudah and the northern tribes foreshadows the eventual kingdom split."
+    },
+    {
+      "term": "Sheva ben Bikhri",
+      "phonetic": "SHEH-va ben bikh-RI",
+      "definition": "A Binyaminite man who sounds a trumpet and calls: 'We have no share in David, no part in the son of Yishai — every man to his tent, Yisra'el!' (2 Shemu'el 20:1). He leads a brief northern rebellion after Avshalom's defeat. Yoav pursues him to the city of Avel Bet-Ma'akhah. The city's wise woman negotiates — she drops Sheva's head over the wall to Yoav, ending the rebellion."
+    },
+    {
+      "term": "The Wise Woman of Avel",
+      "phonetic": "ah-VEL",
+      "definition": "The unnamed wise woman of Avel Bet-Ma'akhah who intervenes when Yoav besieges her city to capture Sheva ben Bikhri. She calls to Yoav and negotiates: Avel is 'a mother in Yisra'el,' a city of peaceable and faithful people. Why would Yoav destroy it? Yoav says he only wants Sheva. She promises to drop his head over the wall — and does. One woman ends the rebellion and saves her city."
+    },
+    {
+      "term": "Rizpah bat Ayah",
+      "phonetic": "riz-PAH bat a-YAH",
+      "definition": "Sha'ul's concubine who spreads sackcloth on a rock and guards the bodies of Sha'ul's seven descendants from exposure to birds and wild animals (2 Shemu'el 21:8-10). She watches from the beginning of harvest until the rains come. When David hears of her vigil, he collects the bones of Sha'ul and Yehonatan from Yavesh-Gilad and buries them all honorably in the tomb of Qish. Rizpah's covenant faithfulness prompts David's covenant action."
+    },
+    {
+      "term": "The Famine and the Gibeonites",
+      "phonetic": "giv-o-NIM",
+      "definition": "A three-year famine in David's reign is attributed to Sha'ul's earlier slaughter of the Gibeonites — a people Yehoshua had made a covenant with. YHWH reveals this to David (2 Shemu'el 21). David goes to the Gibeonites and asks what atonement they require. They ask for seven of Sha'ul's descendants to be handed over. David hands them seven sons/grandsons of Sha'ul, excluding Mefivoshet for the sake of his covenant with Yehonatan. The famine ends."
+    },
+    {
+      "term": "David's Census",
+      "phonetic": "",
+      "definition": "In 2 Shemu'el 24, David orders a census of all fighting men in Yisra'el and Yehudah — Yoav tries to dissuade him. After nine months the count is 800,000 in Yisra'el and 500,000 in Yehudah. David immediately recognizes he has sinned. YHWH offers three punishments through the prophet Gad: three years of famine, three months of fleeing enemies, or three days of plague. David chooses the plague — preferring to fall into YHWH's hands rather than human hands."
+    },
+    {
+      "term": "Gad the Seer",
+      "phonetic": "GAD ha-ro-EH",
+      "definition": "David's prophet (also mentioned in 1 Shemu'el) who brings YHWH's three-option punishment after the census. Gad also commands David to build an altar at Aravnah's threshing floor. David obeys, purchases the threshing floor from Aravnah, and builds the altar. YHWH answers his prayer and the plague stops. This site — the threshing floor of Aravnah the Yevusite — becomes the location of Shlomoh's Temple."
+    },
+    {
+      "term": "Threshing Floor of Aravnah",
+      "phonetic": "a-RAV-na",
+      "definition": "The site on Mount Moriyah where David builds an altar after the plague (2 Shemu'el 24:18-25). Aravnah (also called Ornan in Chronicles) offers to give David the threshing floor, the oxen, and everything for free. David refuses: 'I will not sacrifice to YHWH my Creator burnt offerings that cost me nothing.' He pays 50 shekels of silver and builds the altar. This site becomes the future location of Shlomoh's Temple."
+    },
+    {
+      "term": "David's Song of Deliverance",
+      "phonetic": "",
+      "definition": "In 2 Shemu'el 22 (essentially the same as Psalm 18), David sings a great poem thanking YHWH for deliverance from all his enemies and from Sha'ul. YHWH is his rock, his fortress, his deliverer, his shield. He describes YHWH's coming in storm imagery — smoke from His nostrils, fire from His mouth, He rode on a cherub and flew on the wings of the wind. The song spans all of David's life and stands as his theological testimony."
+    },
+    {
+      "term": "David's Last Words",
+      "phonetic": "",
+      "definition": "In 2 Shemu'el 23:1-7, David speaks his 'last words' — a brief oracle in which he describes himself as 'the man exalted by the Most High, the anointed of the Creator of Ya'akov, Yisra'el's singer of songs.' He describes the ideal king who rules in the fear of YHWH — like the light of morning, like the sun rising. Then he acknowledges his own house is not like that before YHWH, but YHWH has made an everlasting covenant with him. The 'last words' appear before the account of David's mighty warriors."
+    }
   ],
   "fill_blank": [
-    { "ref": "22:2", "prompt": "YHWH is my rock and my fortress and my ______.", "answer": "deliverer", "source_quote": "YHWH is my rock and my fortress and my deliverer." },
-    { "ref": "24:24", "prompt": "Dawid said: No, but I will buy it from you for a price. I will not offer burnt offerings to YHWH my Creator that cost me ______.", "answer": "nothing", "source_quote": "I will not offer burnt offerings to YHWH my Creator that cost me nothing." }
+    {
+      "ref": "2 Shemu'el 20:1",
+      "prompt": "Sheva ben Bikhri cried: 'We have no ___ in David, no part in the son of Yishai!'",
+      "answer": "share",
+      "source_quote": "We have no share in David, no part in the son of Jesse. — 2 Shemu'el 20:1"
+    },
+    {
+      "ref": "2 Shemu'el 21:1",
+      "prompt": "YHWH told David the three-year famine was because of Sha'ul's slaughter of the ___.",
+      "answer": "Gibeonites",
+      "source_quote": "It is on account of Saul and his blood-stained house; it is because he put the Gibeonites to death. — 2 Shemu'el 21:1"
+    },
+    {
+      "ref": "2 Shemu'el 21:10",
+      "prompt": "Rizpah spread ___ on a rock and kept watch over the bodies from harvest until rain came.",
+      "answer": "sackcloth",
+      "source_quote": "Rizpah daughter of Aiah took sackcloth and spread it out for herself on a rock. — 2 Shemu'el 21:10"
+    },
+    {
+      "ref": "2 Shemu'el 22:2",
+      "prompt": "In his great song, David called YHWH his rock, his fortress, and his ___.",
+      "answer": "deliverer",
+      "source_quote": "YHWH is my rock, my fortress and my deliverer. — 2 Shemu'el 22:2"
+    },
+    {
+      "ref": "2 Shemu'el 24:3",
+      "prompt": "Yoav tried to ___ David from conducting the census of fighting men.",
+      "answer": "dissuade",
+      "source_quote": "But Joab replied to the king, 'May YHWH your God multiply the troops a hundred times over... why does my lord the king want to do such a thing?' — 2 Shemu'el 24:3"
+    },
+    {
+      "ref": "2 Shemu'el 24:14",
+      "prompt": "David said: 'Let us fall into the hands of YHWH, for his ___ is great; but do not let me fall into human hands.'",
+      "answer": "mercy",
+      "source_quote": "Let us fall into the hands of YHWH, for his mercy is great. — 2 Shemu'el 24:14"
+    },
+    {
+      "ref": "2 Shemu'el 24:24",
+      "prompt": "David refused Aravnah's offer, saying: 'I will not sacrifice burnt offerings to YHWH that cost me ___.'",
+      "answer": "nothing",
+      "source_quote": "I will not sacrifice to YHWH my God burnt offerings that cost me nothing. — 2 Shemu'el 24:24"
+    },
+    {
+      "ref": "2 Shemu'el 23:1",
+      "prompt": "David's last words call him 'the man exalted by the Most High, the ___ of the Creator of Ya'akov.'",
+      "answer": "anointed",
+      "source_quote": "The anointed of the God of Jacob — 2 Shemu'el 23:1"
+    },
+    {
+      "ref": "2 Shemu'el 20:16-22",
+      "prompt": "The wise woman of Avel negotiated with Yoav and saved her city by throwing ___ over the wall.",
+      "answer": "Sheva's head",
+      "source_quote": "They cut off the head of Sheba son of Bikri and threw it to Joab. — 2 Shemu'el 20:22"
+    },
+    {
+      "ref": "2 Shemu'el 24:16",
+      "prompt": "YHWH stopped the plague when the angel was at the threshing floor of ___.",
+      "answer": "Aravnah (Araunah)",
+      "source_quote": "The LORD was grieved because of the calamity and said to the angel who was afflicting the people, 'Enough! Withdraw your hand.' — 2 Shemu'el 24:16"
+    }
   ],
   "multiple_choice": [
-    { "ref": "21:1", "question": "Why did YHWH send a three-year famine during Dawid's reign?", "options": ["Because of Dawid's census", "Because Sha'ul broke the covenant with the Giv'onites", "Because Yisra'EL worshiped idols", "Because of Avshalom's rebellion"], "correct": 1, "source_quote": "There is bloodguilt on Sha'ul and on his house, because he put the Giv'onites to death." },
-    { "ref": "24:18-25", "question": "What did Dawid purchase from Aravnah the Yevusite?", "options": ["A palace", "The threshing floor where he built an altar", "A vineyard", "Weapons for his army"], "correct": 1, "source_quote": "So Dawid bought the threshing floor and the oxen for fifty shekels of silver." }
+    {
+      "ref": "2 Shemu'el 19",
+      "question": "What political tension surfaces during David's return to Yerushalayim after Avshalom's rebellion?",
+      "options": [
+        "The northern tribes demand Avshalom's children as hostages",
+        "The northern tribes are angry that Yehudah acted first to bring David back",
+        "Mefivoshet refuses to come to David",
+        "The priests demand David purify himself before entering the city"
+      ],
+      "correct": 1,
+      "source_quote": "Why have our brothers the men of Judah stolen the king away? — 2 Shemu'el 19:41"
+    },
+    {
+      "ref": "2 Shemu'el 21:1-9",
+      "question": "What atonement did the Gibeonites require for Sha'ul's slaughter of them?",
+      "options": [
+        "Silver and gold payment to their families",
+        "Seven of Sha'ul's descendants to be handed over",
+        "Public confession by David",
+        "A covenant ceremony at Givon"
+      ],
+      "correct": 1,
+      "source_quote": "The Gibeonites answered, 'We have no right to demand silver or gold from Saul or his family, nor do we have the right to put anyone in Israel to death.'... 'Give us seven of his male descendants.' — 2 Shemu'el 21:4-6"
+    },
+    {
+      "ref": "2 Shemu'el 21:10",
+      "question": "What did Rizpah bat Ayah do that prompted David to honorably bury Sha'ul and Yehonatan's bones?",
+      "options": [
+        "She sent a message to David demanding he bury them",
+        "She kept watch over the exposed bodies from harvest until the rains came",
+        "She built a memorial stone at the execution site",
+        "She wept publicly at the city gate for forty days"
+      ],
+      "correct": 1,
+      "source_quote": "Rizpah... spread sackcloth for herself on a rock. From the beginning of the harvest till the rain poured down from the heavens on the bodies, she did not let the birds touch them by day or the wild animals by night. — 2 Shemu'el 21:10"
+    },
+    {
+      "ref": "2 Shemu'el 22:11",
+      "question": "In David's song of deliverance, how is YHWH described coming in power?",
+      "options": [
+        "As a mighty warrior with drawn sword",
+        "As a consuming fire in the Temple",
+        "He mounted a cherub and flew, soaring on the wings of the wind",
+        "As a still small voice from the mountain"
+      ],
+      "correct": 2,
+      "source_quote": "He mounted the cherubim and flew; he soared on the wings of the wind. — 2 Shemu'el 22:11"
+    },
+    {
+      "ref": "2 Shemu'el 24:1-2",
+      "question": "What did David order that became a great sin?",
+      "options": [
+        "He ordered the Ark to be built into a permanent Temple",
+        "He ordered a census of all fighting men",
+        "He ordered the death of Shimei ben Gera",
+        "He ordered tribute from the northern tribes"
+      ],
+      "correct": 1,
+      "source_quote": "So the king said to Joab and the army commanders with him, 'Go throughout the tribes of Israel from Dan to Beersheba and enroll the fighting men.' — 2 Shemu'el 24:2"
+    },
+    {
+      "ref": "2 Shemu'el 24:12-13",
+      "question": "What three punishments did YHWH offer David through Gad for the census sin?",
+      "options": [
+        "Exile, famine, or plague",
+        "Three years of famine, three months of fleeing enemies, or three days of plague",
+        "Loss of the kingdom, loss of his sons, or loss of Yerushalayim",
+        "Seven years of silence, seven years of war, or seven days of death"
+      ],
+      "correct": 1,
+      "source_quote": "Shall there come on you three years of famine in your land? Or three months of fleeing from your enemies? Or three days of plague in your land? — 2 Shemu'el 24:13"
+    },
+    {
+      "ref": "2 Shemu'el 24:14",
+      "question": "Why did David choose the plague over the other punishments?",
+      "options": [
+        "The plague would affect fewer people",
+        "He preferred to fall into YHWH's hands (whose mercy is great) rather than human hands",
+        "He had seen how famine destroyed the people before",
+        "He knew the plague would end quickly"
+      ],
+      "correct": 1,
+      "source_quote": "Let us fall into the hands of YHWH, for his mercy is great; but do not let me fall into human hands. — 2 Shemu'el 24:14"
+    },
+    {
+      "ref": "2 Shemu'el 24:24",
+      "question": "What did David say when Aravnah offered him the threshing floor and oxen for free?",
+      "options": [
+        "He accepted with gratitude and built the altar the same day",
+        "He refused — he would not offer burnt offerings that cost him nothing",
+        "He paid more than Aravnah asked to show his dedication",
+        "He asked Aravnah to offer the sacrifice together with him"
+      ],
+      "correct": 1,
+      "source_quote": "I will not sacrifice to YHWH my God burnt offerings that cost me nothing. — 2 Shemu'el 24:24"
+    },
+    {
+      "ref": "2 Shemu'el 23:1-5",
+      "question": "What does David describe in his 'last words' as the sign of the ideal king?",
+      "options": [
+        "Vast military power and tribute from nations",
+        "A ruler who rules justly in the fear of YHWH — like morning light, like the sun rising",
+        "A king who builds a great Temple",
+        "A king who raises wise sons to follow him"
+      ],
+      "correct": 1,
+      "source_quote": "When one rules over people in righteousness, when he rules in the fear of God, he is like the light of morning at sunrise. — 2 Shemu'el 23:3-4"
+    },
+    {
+      "ref": "2 Shemu'el 20:16-22",
+      "question": "How did the wise woman of Avel end the rebellion of Sheva ben Bikhri?",
+      "options": [
+        "She led the people to surrender Sheva to Yoav",
+        "She negotiated with Yoav then had Sheva's head thrown over the wall",
+        "She sent a message to David asking for mercy",
+        "She organized the townspeople to defend against Yoav's siege"
+      ],
+      "correct": 1,
+      "source_quote": "They cut off the head of Sheba son of Bikri and threw it to Joab. — 2 Shemu'el 20:22"
+    }
   ],
   "faq": [
     {
-      "question": "What does the Giv'onite covenant episode reveal about YHWH's justice toward non-Israelite peoples?",
-      "answer": "YHWH sends a three-year famine because Sha'ul violated the covenant Yehoshua made with the Giv'onites — a non-Israelite people (21:1-2). YHWH enforces covenant justice on behalf of non-Israelites against an Israelite king. The covenant framework is not ethnic exclusivism — it is covenant fidelity. A promise made to anyone under YHWH's name carries YHWH's enforcement. This dismantles every theological system that claims YHWH's justice applies only to one ethnic group. The same principle applies to the African and Indigenous peoples who received covenant knowledge: YHWH's justice operates for all peoples who are within covenant relationship, regardless of ethnic origin. The Great Eraser framed the covenant as European Christianity's exclusive property. YHWH's own text says otherwise."
+      "question": "Why is the census a sin?",
+      "answer": "The text does not explain the reason directly — it simply records that David's heart struck him after taking the census and he confessed 'I have sinned greatly.' Several explanations exist in the tradition: a census may have implied David was counting on military manpower rather than on YHWH; a census in ancient practice required payment of a half-shekel ransom to avoid plague (Shemot 30:12) and this may not have been done; or the census represented a royal assertion of control over the people that transgressed covenant boundaries. What the text emphasizes is David's immediate recognition and confession, and YHWH's graded response that still allows David to choose."
     },
     {
-      "question": "Why does Dawid insist on paying full price for Aravnah's threshing floor?",
-      "answer": "Aravnah offers the threshing floor as a gift. Dawid refuses: 'I will not offer burnt offerings to YHWH that cost me nothing' (24:24). This principle — that authentic covenant worship requires genuine sacrifice, not costless gestures — stands against every institutional system that profits from other people's offerings while contributing nothing of its own. The threshing floor of Aravnah the Yevusite becomes the Temple site. A Yevusite — an indigenous Canaanite — owns the ground where YHWH's house will stand. The Yevusites were the original inhabitants of Yerushalayim. The covenant people purchased, not conquered, the Temple site. The land has indigenous roots that predate Yisra'EL's arrival. Recognizing indigenous claims — paying full price rather than taking — is embedded in the covenant tradition itself."
+      "question": "What is the significance of the threshing floor of Aravnah as the Temple site?",
+      "answer": "The threshing floor of Aravnah becomes the location of Shlomoh's Temple (confirmed in 2 Divrei HaYamim/Chronicles 3:1, which identifies it as Mount Moriyah). By purchasing the site himself with silver — refusing the gift — David ensures that the Temple's future location is bought, not donated. David's altar and the stopping of the plague at that exact spot mark it as the place where YHWH's anger was appeased. The site carries enormous theological weight: it is purchased, it is the place where plague stopped, and it is on the mountain later identified with the covenant sacrifice of Bereshit 22."
+    },
+    {
+      "question": "Who was Rizpah and what does her vigil accomplish?",
+      "answer": "Rizpah bat Ayah was Sha'ul's concubine — the same woman Avner was accused of sleeping with, which triggered the break between Avner and Ish-Boshet. When seven of Sha'ul's descendants are executed to satisfy the Gibeonites, she spreads sackcloth on a rock and stands guard over their exposed bodies from the beginning of harvest through the rains — refusing to let birds or wild animals touch them. Proper burial was essential to honor in ancient Hebrew culture; exposure was a mark of disgrace and divine curse. Her determined, months-long vigil draws David's attention and leads him to retrieve and bury Sha'ul and Yehonatan's bones from Yavesh-Gilad."
+    },
+    {
+      "question": "What does the Gibeonite episode reveal about covenant obligations?",
+      "answer": "The Gibeonites had a covenant with Yisra'el dating back to Yehoshua — they had deceived Yehoshua into making peace with them, but the covenant was ratified by oath (invoking YHWH) and therefore binding. Sha'ul's later slaughter of Gibeonites violated this ancient covenant oath. The famine that results is YHWH's judgment not primarily for the killing but for the broken covenant. When David asks the Gibeonites what atonement they need, he is treating their covenant claim as legally valid — even a covenant made under false pretenses is binding once sworn before YHWH."
+    },
+    {
+      "question": "What is the significance of the tension between Yehudah and the northern tribes at David's return?",
+      "answer": "In 2 Shemu'el 19, Yehudah acts first to bring David back across the Yarden, and the northern tribes — who had a larger portion of the military — feel excluded and dishonored. The argument becomes heated: 'We have ten shares in the king — we are the ones who first spoke of bringing back the king.' But Yehudah prevailed. This resentment does not disappear; it re-ignites immediately in Sheva ben Bikhri's rebellion. And decades later, after Shlomoh's death, the same wound opens permanently: 'We have no share in David.' The kingdom splits along exactly this fault line."
+    },
+    {
+      "question": "What does David's choice of plague reveal about his theology?",
+      "answer": "When YHWH offers three punishments — famine (human suffering over time), fleeing enemies (falling into human hands), or plague (direct divine judgment over three days) — David chooses the plague. His reasoning: 'Let us fall into the hands of YHWH, for his mercy is great; but do not let me fall into human hands.' David trusts YHWH's character more than any human power's restraint. He has experienced YHWH's mercy and forgiveness personally (the Bat-Sheva confession). He prefers a known, merciful YHWH over unpredictable human cruelty. The plague kills 70,000 people, but it also stops when YHWH relents — exactly as David predicted."
+    },
+    {
+      "question": "Who are the 'mighty warriors' listed in 2 Shemu'el 23?",
+      "answer": "The list in 2 Shemu'el 23:8-39 names David's elite soldiers, beginning with the Three (the most elite) and the Thirty (a wider circle of champions). The Three are Yashov'am (or Yoshev-Bashebet), El'azar ben Dodo, and Shammah ben Agee. Notable deeds include: defending a plot of lentils alone against the Plishtim; going into the Plishtim camp to draw water from a well in Bet-Lekhem at David's offhand wish (David pours it out as a libation to YHWH, refusing to drink what cost blood). Uriyah the Hittite appears at the end of the list — a final indictment of David's betrayal of one of his own heroes."
+    },
+    {
+      "question": "What is the structure of the end of Shemu'el Bet and why does it end this way?",
+      "answer": "The final chapters of 2 Shemu'el (21-24) form a symmetrical appendix structured around Avshalom's rebellion narrative. Two episodes of national crisis (Gibeonite atonement and census/plague) frame two lists of David's warriors and two poems (David's song and last words). This creates an artistic chiasm rather than pure chronological narrative. The book ends with David purchasing the Temple site — positioning Shlomoh's future work as the fulfillment of David's whole story. The placement of Uriyah at the end of the warrior list, after the census episode, is likely a deliberate editorial choice that keeps the moral reckoning of David's greatest sin visible to the end."
+    },
+    {
+      "question": "What does Sheva ben Bikhri's rebellion reveal about David's kingdom?",
+      "answer": "Sheva's rebellion, coming immediately on the heels of Avshalom's, shows how fragile the unified kingdom actually is. All it takes is one Binyaminite sounding a horn and invoking tribal identity — 'we have no share in David' — for the northern tribes to follow a nobody. David's response is swift and effective: Yoav pursues Sheva relentlessly. But the fact that Sheva's call finds immediate followers reveals that Avshalom's rebellion did not resolve the underlying political tension — it only deferred it. The kingdom is held together by David's personal authority, not by institutional unity, and the moment that personal authority is questioned, the structure strains."
+    },
+    {
+      "question": "What does David's great song in chapter 22 tell us about his faith?",
+      "answer": "David's song in 2 Shemu'el 22 (preserved also as Psalm 18) is a comprehensive theological statement. YHWH is his rock, fortress, deliverer, shield, stronghold. When he cried in distress, YHWH heard from His Temple — the entire cosmos shook. YHWH came in storm, thundered from heaven, shot lightning as arrows. He rescued David because YHWH delighted in him. The theology is direct and personal: YHWH acts for David specifically, not abstractly. The song also claims David's own righteousness as the basis for YHWH's favor — not because David is sinless, but because he maintained covenant loyalty and did not turn from YHWH's decrees. It is covenant theology in poetic form."
     }
   ]
 }

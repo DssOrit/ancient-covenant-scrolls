@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_23",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_23",
   "label": "Shofetim (Judges) — Part 1 — Chapters 1–7",
   "volume": 11,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "After Yehoshua's death, the tribes fight to possess the land. They fail to drive out the inhabitants completely. A pattern repeats: Yisra'EL does evil, YHWH gives them into the hand of an oppressor, they cry out, YHWH raises a judge to deliver them. Otniel, Ehud, Shamgar, Devorah and Barak, and Gid'on are raised as judges. Devorah the prophet leads Yisra'EL to victory. Gid'on defeats Midyan with 300 men — YHWH says the people are too many, lest they say their own hand saved them.",
   "summary_scholarly": "The ACR reads from DSS Judges fragments (4QJudg-a, 4QJudg-b) and the Orit Ge'ez. The cyclical pattern of Shofetim — apostasy, oppression, cry, deliverance — is the covenant justice framework in action. YHWH does not abandon the covenant permanently — he responds to the cry. The Gid'on narrative (ch 6-7) establishes that covenant victory comes through YHWH's direct action with minimal human resources, not through military superiority.",
   "key_terms": [
-    { "term": "Shofetim", "phonetic": "Sho-feh-TEEM", "definition": "Judges — military and spiritual leaders raised by YHWH to deliver Yisra'EL from oppression. They are not kings. They do not establish dynasties. YHWH raises them for specific crises." },
-    { "term": "Devorah", "phonetic": "Deh-vo-RAH", "definition": "A prophet and judge who leads Yisra'EL. She summons Barak to battle and accompanies him. She composes the Song of Devorah (ch 5) — one of the oldest Hebrew poems." },
-    { "term": "Gid'on", "phonetic": "Gid-ON", "definition": "Judge who defeats Midyan with 300 men. YHWH reduces his army from 32,000 to 300 — so Yisra'EL cannot claim their own strength saved them. Anglicized as Gideon." }
+    {
+      "term": "Judges Cycle",
+      "phonetic": "",
+      "definition": "The repeating pattern throughout Shofetim: Yisra'el abandons YHWH → YHWH hands them over to an enemy → they cry out → YHWH raises a deliverer (shofet) → peace for a generation → the cycle repeats. The pattern is not random sin but structural covenant: the land responds to covenant loyalty and the land suffers under covenant violation."
+    },
+    {
+      "term": "Devorah",
+      "phonetic": "dev-o-RAH",
+      "definition": "The only female judge in Shofetim, who judged Yisra'el under the Palm of Devorah. When Yisra'el faced Sisera and the iron-chariot army of Hatzor, Devorah summoned Barak and commissioned him as military commander. She herself accompanied the army into battle. The victory is YHWH's and comes specifically through two women: Devorah and Ya'el."
+    },
+    {
+      "term": "Barak ben Avino'am",
+      "phonetic": "ba-RAK ben av-i-NO-am",
+      "definition": "The military commander summoned by Devorah in Shofetim 4-5 to lead the coalition against Sisera. Barak refused to go without Devorah, so she warned him: 'The glory will not be yours — YHWH will give Sisera into the hand of a woman.' This is fulfilled not by Devorah but by Ya'el."
+    },
+    {
+      "term": "Ya'el",
+      "phonetic": "ya-EL",
+      "definition": "The wife of Hever the Qenite who killed Sisera after the battle. Sisera fled on foot and sought refuge in her tent. She gave him milk and covered him, and when he slept she drove a tent peg through his temple with a hammer. The Song of Devorah calls her: 'Most blessed of women is Ya'el, wife of Hever the Qenite, most blessed among tent-dwelling women.'"
+    },
+    {
+      "term": "Song of Devorah",
+      "phonetic": "shirat Devorah",
+      "definition": "Shofetim 5 — one of the oldest Hebrew poems in the Tanakh, presented as the victory song of Devorah and Barak after the defeat of Sisera. It praises tribes that came to fight and curses tribes that stayed away ('Curse Meroz... because they did not come to the help of YHWH'). It is a witness to covenant accountability at the tribal level."
+    },
+    {
+      "term": "Gid'on",
+      "phonetic": "gid-ON",
+      "definition": "The judge called by YHWH's messenger in Shofetim 6, while he was secretly threshing wheat in a winepress to hide it from the Midianites. YHWH calls him 'mighty warrior' — Gid'on doubts: 'My clan is the weakest in Menasheh and I am the least in my family.' YHWH reduces his army from 32,000 to 300 to make clear the victory is YHWH's alone."
+    },
+    {
+      "term": "Fleece Test",
+      "phonetic": "gizat tzemer",
+      "definition": "Gid'on's double test with a wool fleece in Shofetim 6: first he asks YHWH to leave the fleece wet with dew while the ground is dry; then to leave the ground wet while the fleece is dry. YHWH does both. This is Gid'on seeking confirmation of the divine commission — the text does not condemn the test but records YHWH's patient response to it."
+    },
+    {
+      "term": "YHWH's Army of 300",
+      "phonetic": "",
+      "definition": "In Shofetim 7, YHWH reduces Gid'on's force: first from 32,000 to 10,000 (all the fearful dismissed), then from 10,000 to 300 (only those who lapped water like a dog rather than kneeling). The reason: 'The people are too many for me to give Midian into their hand, lest Yisra'el boast over me: My own hand saved me.' The victory must be clearly YHWH's."
+    },
+    {
+      "term": "Otni'el",
+      "phonetic": "ot-ni-EL",
+      "definition": "The first judge in Shofetim — the same Otni'el who captured Devir and married Achsah (Kalev's daughter) in Yehoshua 15. He delivers Yisra'el from King Kushan-Rishatayim of Aram-Naharayim. His story is the purest form of the judges cycle: oppression → cry → judge raised by YHWH → rest → death → back to oppression."
+    },
+    {
+      "term": "Ehud ben Gera",
+      "phonetic": "e-HUD ben GE-ra",
+      "definition": "The left-handed judge from Binyamin who delivered Yisra'el from Eglon king of Moav. He made himself a double-edged sword, hid it on his right thigh (not searched for on a right-handed man), presented tribute to Eglon, and when alone with him declared 'I have a word from YHWH for you' — then drove the sword into the fat king's belly. A story of covenant deliverance through cunning."
+    }
   ],
   "fill_blank": [
-    { "ref": "6:12", "prompt": "The angel of YHWH appeared to Gid'on and said: YHWH is with you, O mighty man of ______.", "answer": "valor", "source_quote": "And the angel of YHWH appeared to him and said to him: YHWH is with you, O mighty man of valor." },
-    { "ref": "5:7", "prompt": "The villagers ceased in Yisra'EL — they ceased until I arose, until I, Devorah, arose as a ______ in Yisra'EL.", "answer": "mother", "source_quote": "The villagers ceased in Yisra'EL — they ceased until I arose, Devorah — I arose as a mother in Yisra'EL." },
-    { "ref": "7:7", "prompt": "With the ______ hundred men who lapped I will save you and give the Midyanites into your hand.", "answer": "three", "source_quote": "And YHWH said to Gid'on: With the three hundred men who lapped I will save you and give the Midyanites into your hand." }
+    {
+      "ref": "Shofetim 5:24",
+      "prompt": "The Song of Devorah calls Ya'el 'most ___ of women, most blessed among tent-dwelling women.'",
+      "answer": "blessed",
+      "source_quote": "Most blessed of women is Jael, wife of Heber the Kenite, most blessed of tent-dwelling women. — Shofetim 5:24"
+    },
+    {
+      "ref": "Shofetim 4:9",
+      "prompt": "Devorah warned Barak: 'The glory will not be yours — YHWH will give Sisera into the hand of a ___.",
+      "answer": "woman",
+      "source_quote": "The glory will not be yours, for YHWH will give Sisera into the hand of a woman. — Shofetim 4:9"
+    },
+    {
+      "ref": "Shofetim 7:2",
+      "prompt": "YHWH told Gid'on: 'The people are too many, lest Yisra'el boast: My own ___ saved me.'",
+      "answer": "hand",
+      "source_quote": "The people are too many for me to give Midian into their hand, lest Israel say, My own hand has saved me. — Shofetim 7:2"
+    },
+    {
+      "ref": "Shofetim 2:16",
+      "prompt": "YHWH raised up ___ who saved the people from the hand of those who plundered them.",
+      "answer": "judges / deliverers",
+      "source_quote": "YHWH raised up judges, who saved them from the hand of those who plundered them. — Shofetim 2:16"
+    },
+    {
+      "ref": "Shofetim 4",
+      "prompt": "Sisera fled the battle on foot and was killed by Ya'el with a ___ through his temple.",
+      "answer": "tent peg",
+      "source_quote": "She drove the tent peg into his temple, and it went down into the ground. — Shofetim 4:21"
+    },
+    {
+      "ref": "Shofetim 6:12",
+      "prompt": "YHWH's messenger called Gid'on a 'mighty ___ — YHWH is with you' while he threshed wheat in a winepress.",
+      "answer": "warrior",
+      "source_quote": "YHWH is with you, mighty warrior. — Shofetim 6:12"
+    },
+    {
+      "ref": "Shofetim 7",
+      "prompt": "YHWH reduced Gid'on's army from 32,000 to only ___ for the battle against Midian.",
+      "answer": "300 / three hundred",
+      "source_quote": "The number of those who lapped was three hundred. — Shofetim 7:6-7"
+    },
+    {
+      "ref": "Shofetim 5",
+      "prompt": "The Song of Devorah curses the city of Meroz because they did not come to the help of ___.",
+      "answer": "YHWH",
+      "source_quote": "Curse Meroz, says the messenger of YHWH, because they did not come to the help of YHWH. — Shofetim 5:23"
+    },
+    {
+      "ref": "Shofetim 3",
+      "prompt": "Ehud was a ___ left-handed man from the tribe of Binyamin who killed King Eglon of Moav.",
+      "answer": "left-handed",
+      "source_quote": "The Israelites sent tribute by Ehud son of Gera, a Benjaminite, a left-handed man. — Shofetim 3:15"
+    },
+    {
+      "ref": "Shofetim 2",
+      "prompt": "The judges cycle: Yisra'el ___ YHWH → handed to enemies → cry out → judge raised → rest → repeat.",
+      "answer": "abandoned / forsook",
+      "source_quote": "The Israelites forsook YHWH and served the Baals and the Ashtaroth. — Shofetim 2:11-13"
+    }
   ],
   "multiple_choice": [
-    { "ref": "4:4", "question": "What titles does the text give Devorah?", "options": ["Queen and commander", "Prophet and judge", "Priestess and seer", "Mother and warrior"], "correct": 1, "source_quote": "Now Devorah, a prophet, the wife of Lappidoth, was judging Yisra'EL at that time." },
-    { "ref": "7:2", "question": "Why did YHWH reduce Gid'on's army?", "options": ["They were too weak", "So Yisra'EL would not say their own hand saved them", "The enemy was small", "To punish them"], "correct": 1, "source_quote": "YHWH said to Gid'on: The people with you are too many for me to give the Midyanites into their hand, lest Yisra'EL boast over me, saying: My own hand has saved me." },
-    { "ref": "2:16-19", "question": "What is the repeating cycle in Shofetim?", "options": ["Prosperity, war, exile, return", "Evil, oppression, cry, YHWH raises a deliverer", "Building, destruction, rebuilding, rest", "Prophecy, fulfillment, prophecy, fulfillment"], "correct": 1, "source_quote": "Then YHWH raised up judges, who saved them out of the hand of those who plundered them." }
+    {
+      "ref": "Shofetim 4:9",
+      "question": "What was Devorah's warning to Barak when he refused to go to battle without her?",
+      "options": [
+        "He would die in battle and Devorah would lead in his place",
+        "The glory would not be his — YHWH would give Sisera to a woman",
+        "YHWH would not go with the army at all",
+        "Yisra'el would lose the battle entirely"
+      ],
+      "correct": 1,
+      "source_quote": "The glory will not be yours, for YHWH will give Sisera into the hand of a woman. — Shofetim 4:9"
+    },
+    {
+      "ref": "Shofetim 4:21",
+      "question": "How did Ya'el kill Sisera?",
+      "options": [
+        "She stabbed him with a sword he had left behind",
+        "She poisoned the milk she gave him",
+        "She drove a tent peg through his temple while he slept",
+        "She called Barak's soldiers to capture him"
+      ],
+      "correct": 2,
+      "source_quote": "She drove the tent peg into his temple, and it went down into the ground. — Shofetim 4:21"
+    },
+    {
+      "ref": "Shofetim 7:2",
+      "question": "Why did YHWH reduce Gid'on's army to 300?",
+      "options": [
+        "The others were untrained and would have died",
+        "To ensure Yisra'el could not credit their own strength for the victory",
+        "The 300 were the most experienced fighters",
+        "YHWH wanted a small army to match Midian's size"
+      ],
+      "correct": 1,
+      "source_quote": "Lest Israel say, My own hand has saved me. — Shofetim 7:2"
+    },
+    {
+      "ref": "Shofetim 5:23",
+      "question": "Which city does the Song of Devorah curse?",
+      "options": [
+        "Hatzor",
+        "Megiddo",
+        "Meroz",
+        "Hazor"
+      ],
+      "correct": 2,
+      "source_quote": "Curse Meroz... because they did not come to the help of YHWH against the mighty. — Shofetim 5:23"
+    },
+    {
+      "ref": "Shofetim 2",
+      "question": "What is the repeating pattern in the Book of Shofetim?",
+      "options": [
+        "Conquest, settlement, prosperity, expansion",
+        "Abandonment of YHWH, enemy oppression, crying out, deliverance, rest",
+        "Prophet speaks, king disobeys, exile follows",
+        "Foreign invasion, military defeat, tribute paid, peace treaty"
+      ],
+      "correct": 1,
+      "source_quote": "They forsook YHWH... so YHWH handed them over to plunderers... yet he raised up judges to save them. — Shofetim 2:12-16"
+    },
+    {
+      "ref": "Shofetim 6",
+      "question": "Where was Gid'on when YHWH's messenger called him a 'mighty warrior'?",
+      "options": [
+        "Leading troops on a training march",
+        "Praying at the central altar in Shilo",
+        "Secretly threshing wheat in a winepress to hide it from Midian",
+        "Sitting in judgment at the city gate"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH is with you, mighty warrior. — Shofetim 6:12"
+    },
+    {
+      "ref": "Shofetim 1-3",
+      "question": "Who was the first judge named in Shofetim?",
+      "options": [
+        "Ehud",
+        "Devorah",
+        "Otni'el",
+        "Gid'on"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH raised up a deliverer for the Israelites, Othniel son of Kenaz. — Shofetim 3:9"
+    },
+    {
+      "ref": "Shofetim 3",
+      "question": "How did Ehud conceal his weapon when bringing tribute to King Eglon?",
+      "options": [
+        "Inside the tribute basket",
+        "Strapped under his left thigh — unexpected on a left-handed man",
+        "Hidden under his outer robe at his chest",
+        "Carried openly as a gift for the king"
+      ],
+      "correct": 1,
+      "source_quote": "Ehud made himself a sword... and strapped it on his right thigh under his clothes. — Shofetim 3:16"
+    },
+    {
+      "ref": "Shofetim 5:24",
+      "question": "What title does the Song of Devorah give to Ya'el?",
+      "options": [
+        "Queen of the battlefield",
+        "First among the women of Yisra'el",
+        "Most blessed of women, most blessed among tent-dwelling women",
+        "The hand of YHWH against the nations"
+      ],
+      "correct": 2,
+      "source_quote": "Most blessed of women is Jael, wife of Heber the Kenite, most blessed of tent-dwelling women. — Shofetim 5:24"
+    },
+    {
+      "ref": "Shofetim 6",
+      "question": "What was Gid'on's objection when YHWH called him to deliver Yisra'el?",
+      "options": [
+        "He was already too old and weak to fight",
+        "His clan was the weakest in Menasheh and he was the least in his family",
+        "He had not completed his military training",
+        "He had sworn not to fight in any more battles"
+      ],
+      "correct": 1,
+      "source_quote": "My clan is the weakest in Manasseh, and I am the least in my father's house. — Shofetim 6:15"
+    }
   ],
   "faq": [
     {
-      "question": "What does the Shofetim cycle reveal about covenant justice?",
-      "answer": "The pattern repeats throughout the book: Yisra'EL abandons the covenant, YHWH allows an oppressor nation to dominate them, they cry out, YHWH raises a deliverer. This is not random. It is the covenant justice framework from Vayikra 26 and Devarim 28 in action — the covenant blessings and curses operating in real time. The Damascus Document (CD) at Qumran describes the same framework for the current age: the Period of Wrath (domination) followed by the Period of Visitation (deliverance). The covenant people's cry to YHWH — not to human institutions — activates the deliverance."
+      "question": "What does the judges cycle reveal about the covenant structure?",
+      "answer": "The cycle is not random moral failure but a structured covenant pattern: the land responds to covenant loyalty. When Yisra'el serves other deities, the land's covenant protection dissolves — YHWH's hand is not against them, it is simply withdrawn. Enemies who would have been driven out in a covenant-obedient generation now oppress freely. The cry that follows is not civic complaint but covenant appeal — invoking YHWH's redemptive role. The judge is not a human fix but YHWH's chosen instrument. The pattern repeats because each generation must make its own covenant decision; there is no inherited righteousness."
     },
     {
-      "question": "Why is Devorah called a 'mother in Yisra'EL'?",
-      "answer": "Devorah's song (5:7) uses the title 'mother in Yisra'EL' — not queen, not commander, but mother. She holds the prophetic, judicial, and military authority simultaneously. The text names her as a prophet first (4:4), then as judge, then as the one who summons and accompanies the army. Miryam in Shemot 15:20 is similarly titled 'the prophet.' The covenant tradition names women as prophets and leaders in the primary text itself — these are not later additions. They are in the oldest manuscript witnesses."
+      "question": "Why does Devorah matter in a system where male leadership was normative?",
+      "answer": "Devorah is introduced without any explanation or apology for her role — she judged Yisra'el, she delivered YHWH's commands, she went to battle. The text's silence on gender is itself the statement. Covenant role is determined by YHWH's calling, not by social convention. Devorah's presence reflects the same pattern as Miryam (prophetess at the sea), Khannah (covenant intercessor), and later Hulda (prophetess in the time of Yoshiyahu) — YHWH chooses whom he chooses. Devorah's specific role here includes both judicial authority (she judged under her palm) and prophetic authority (she transmitted YHWH's battle strategy to Barak)."
     },
     {
-      "question": "How does Gid'on's 300 connect to the War Scroll?",
-      "answer": "YHWH reduces Gid'on's army from 32,000 to 300 — deliberately — so that the victory cannot be attributed to human military strength. The War Scroll (1QM) preserves this same principle: the weapons carry YHWH's name, the priests direct the battle, the victory belongs to YHWH. Human power is not the mechanism of covenant victory. YHWH's direct intervention is. Gid'on's 300 with trumpets and torches defeating a vast Midyanite army is the Shofetim version of the War Scroll's Sons of Light prevailing through YHWH's direct action."
+      "question": "What is the significance of two women being the instruments of Sisera's defeat?",
+      "answer": "Devorah's prophecy was specific: 'YHWH will give Sisera into the hand of a woman.' This was fulfilled not by Devorah herself but by Ya'el — a non-Israelite, the wife of a Qenite who had a peace treaty with Hatzor (Sisera's side). The victory comes through unexpected instruments: a foreign woman who chose YHWH's side over her husband's political alliance. The Song of Devorah enshrines both women's actions in covenant memory. The military commander (Sisera) is not defeated by the strongest warrior in Yisra'el but by a woman with a tent peg — YHWH's power works through the weak and the overlooked."
+    },
+    {
+      "question": "Why did YHWH reduce Gid'on's army to 300?",
+      "answer": "YHWH's explicit reason: 'lest Yisra'el boast over me saying, My own hand saved me.' Covenant victories must be clearly attributable to YHWH, not to military strength. 32,000 against Midian's vast army is already under-manned; 300 against that same force is impossible by any human calculation. The reduction process itself is covenant instruction: the fearful are dismissed first (Devarim's principle — fear is contagious and disqualifying), then the method of drinking separates the alert from the inattentive. The final 300 are not superhuman warriors but the last remnant after YHWH's deliberate de-selection. When 300 men route a massive coalition, only YHWH gets credit."
+    },
+    {
+      "question": "What does the Song of Devorah teach about tribal covenant accountability?",
+      "answer": "The Song praises the tribes that answered the call to fight (Efrayim, Binyamin, Makhir, Zevulun, Yissakhar, Naftali) and explicitly shames those who stayed away (Reuven's heart-searchings, Gilead staying east of Jordan, Dan staying in his ships, Asher sitting by the harbor). Most strikingly, the city of Meroz is cursed directly by YHWH's messenger 'because they did not come to the help of YHWH against the mighty.' Covenant solidarity in battle is not optional. Yisra'el is a covenant community with shared obligations — when YHWH calls a coalition, neutrality is betrayal. The Song preserves the tribal accounting of who kept faith."
+    },
+    {
+      "question": "Who was Otni'el and why does he appear first?",
+      "answer": "Otni'el appears as the first judge because he is the clearest, most uncomplicatedly faithful deliverer in the book. He is already established in Yehoshua 15 as a man of courage (captured Devir to win Achsah) and covenant family (nephew of Kalev, who was the paradigm of YHWH-following fidelity). His story contains no moral complications — he is raised by YHWH, delivers Yisra'el, the land rests 40 years, and he dies. This is the judges cycle at its pure form, before the increasingly complex and compromised figures that follow. Otni'el is the benchmark that every subsequent judge falls short of."
+    },
+    {
+      "question": "What does the Fleece Test reveal about Gid'on's character?",
+      "answer": "Gid'on's fleece test is a request for confirmation from someone who struggles to believe YHWH's direct commission. He asks once, then immediately says 'do not be angry with me — let me test once more.' YHWH accommodates both requests. The text does not condemn the test, which is significant — this is not faithless doubt but the legitimate insecurity of someone called to an impossible task. The same pattern appears with Mosheh's objections at the burning bush. YHWH's patience with Gid'on's hesitation is itself covenant instruction: YHWH meets the called person where they are. By the time the army is reduced to 300 and the midnight attack begins, Gid'on's hesitation has been replaced by action."
+    },
+    {
+      "question": "How does Ehud's left-handedness matter to the story?",
+      "answer": "Ehud is explicitly introduced as 'ish iter yad-ymino' — a man restricted in his right hand, i.e., left-handed. When presenting tribute, all security searches would focus on the left side where right-handed men carry weapons. Ehud concealed a short double-edged sword on his right thigh — the unexpected side. The story is a covenant deliverance through strategic use of an apparent disadvantage. YHWH works through Yisra'el's marginalized — left-handed, the weakest clan, the least in a family, a woman with a tent peg. The pattern is consistent: covenant victory comes through human weakness made instrument."
+    },
+    {
+      "question": "What does Gid'on's story say about kingship?",
+      "answer": "After the victory over Midian, the men of Yisra'el ask Gid'on: 'Rule over us — you, your son, and your grandson.' Gid'on's response is explicitly correct covenant theology: 'I will not rule over you, nor will my son rule over you — YHWH shall rule over you.' He refuses hereditary monarchy as a violation of YHWH's direct kingship. However, Gid'on then makes a golden ephod from the battle plunder, which 'all Yisra'el went whoring after.' He declines the crown but creates an idol. His story illustrates the judges' pattern: flashes of genuine covenant fidelity alongside persistent failure. His correct answer about kingship will be ignored a generation later when Avimelekh seizes rule."
+    },
+    {
+      "question": "What connects Shofetim to the trajectory of Yisra'el's history?",
+      "answer": "Shofetim opens with a question asked twice: 'Who shall go up first for us against the Kena'anites?' In Yehoshua the question was military. In Shofetim the question becomes covenant: 'Why has YHWH done this to us?' The answer given by the messenger of YHWH is consistent throughout the book: Yisra'el has not driven out the nations and has served their deities. The book ends in chaos — the Levite's concubine at Giv'ah, the near-annihilation of Binyamin, the idolatry of Mikha — with the repeated verdict: 'In those days there was no king in Yisra'el; everyone did what was right in his own eyes.' This sets the stage for the demand for a king in Shemu'el, which YHWH will grant as a judgment, not a blessing."
     }
   ]
 }

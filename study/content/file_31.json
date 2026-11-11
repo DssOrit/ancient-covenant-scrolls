@@ -1,32 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_31",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_31",
   "label": "Shemu'el Bet (2 Samuel) — Part 2 — Chapters 7–12",
   "volume": 13,
-  "content_version": 1,
+  "content_version": 3,
   "summary_plain": "Dawid wants to build a house for YHWH. YHWH sends Natan the prophet with a different word: YHWH will build Dawid a house — a dynasty. YHWH's promise: your throne will be established forever. Dawid's prayer of gratitude. Dawid defeats the surrounding nations — Moav, Aram, Ammon, Edom, Philistines. Dawid shows chesed to Mefiboshet, son of Yonatan. Dawid sins with Bat-Sheva — he takes her while her husband Uriyah the Hittite fights in battle. Natan confronts Dawid with the parable of the poor man's lamb. Dawid confesses: I have sinned against YHWH. The child born of the adultery dies.",
   "summary_scholarly": "The ACR reads from 4QSam-a, 4QSam-b, and the Orit Ge'ez. The Davidic covenant (ch 7) is one of the foundational covenant texts in the Hebrew canon — YHWH promises Dawid an enduring dynasty. The DSS community read this text as pointing toward a mortal Davidic messiah — a human king from Dawid's line, not a divine incarnation. 4Q174 (Florilegium) quotes 2 Shemu'el 7:10-14 explicitly: 'I will be to him a father, and he will be to me a son.' The Qumran interpretation is clear: this refers to the Branch of Dawid who will arise in the last days — a human descendent. The Bat-Sheva narrative (ch 11-12) demonstrates YHWH's justice: even the covenant king is held to the Torah's standard. No one is above YHWH's law.",
   "key_terms": [
-    { "term": "Davidic Covenant", "phonetic": "", "definition": "YHWH's promise through Natan the prophet (ch 7): YHWH will build Dawid a house — an enduring dynasty. 'Your throne shall be established forever' (7:16). The DSS community read this as the promise of a future mortal Davidic king — the Branch of Dawid." },
-    { "term": "Natan", "phonetic": "Nah-TAHN", "definition": "Prophet who delivers YHWH's covenant promise to Dawid (ch 7) and later confronts Dawid over the sin with Bat-Sheva using the parable of the poor man's lamb (ch 12). Anglicized as Nathan." },
-    { "term": "Mefiboshet", "phonetic": "Meh-fee-BOH-shet", "definition": "Son of Yonatan, grandson of Sha'ul. Crippled in both feet. Dawid shows him chesed (covenant loyalty) for Yonatan's sake, restoring Sha'ul's land and giving him a permanent seat at the king's table (ch 9). Anglicized as Mephibosheth." }
+    {
+      "term": "Bat-Sheva and Uriyah",
+      "phonetic": "Bat-She-VA ve-Ur-ri-YAH",
+      "definition": "David sees Bat-Sheva bathing and sleeps with her — she becomes pregnant. Her husband Uriyah the Hittite (one of David's mighty men) is at the front. David brings him back but Uriyah refuses to sleep at home while his comrades are in the field. David sends a letter with Uriyah (his own death warrant): 'Set Uriyah in the forefront of the hardest fighting, then draw back from him that he may be struck down and die.'"
+    },
+    {
+      "term": "Natan's Parable",
+      "phonetic": "mashal Natan",
+      "definition": "YHWH sends Natan to David. Natan tells a parable: a rich man who had many flocks takes a poor man's one beloved lamb for a guest. David is furious: 'The man who did this deserves to die!' Natan says: 'You are the man.' He then pronounces judgment: the sword will never depart from David's house; evil will rise from his own household; his wives will be taken before his eyes."
+    },
+    {
+      "term": "David's Repentance",
+      "phonetic": "teshuva shel David",
+      "definition": "When Natan says 'you are the man,' David immediately responds: 'I have sinned against YHWH.' Natan replies: 'YHWH has put away your sin; you shall not die. Nevertheless, the child that is born to you shall die.' Tehillim 51 is David's psalm of repentance from this event: 'Create in me a clean heart, YHWH.'"
+    },
+    {
+      "term": "Amnon and Tamar",
+      "phonetic": "Amnon ve-Tamar",
+      "definition": "David's son Amnon becomes infatuated with his half-sister Tamar and rapes her. Afterward he despises her with intense hatred. David is angry but does not punish Amnon (the first-born). Tamar's full brother Avshalom hates Amnon for two years then has him killed at a sheep-shearing feast."
+    },
+    {
+      "term": "Avshalom's Rebellion",
+      "phonetic": "mered Avshalom",
+      "definition": "Avshalom (David's third son, famous for his hair) flees after killing Amnon, is eventually restored to Yerushalayim, then steals the hearts of Yisra'el by sitting at the city gate and treating every man's case personally. He raises a rebellion in Hevron, is anointed king, and David flees Yerushalayim on foot, weeping."
+    },
+    {
+      "term": "David Flees Yerushalayim",
+      "phonetic": "brikhato shel David",
+      "definition": "2 Shemu'el 15-16: David leaves Yerushalayim barefoot, weeping, with his head covered — a posture of mourning. He sends the Ark back (refusing to bring it into his exile), encounters Shimei who curses him from a hillside, and receives Tsiva's provisions. The scene is the fulfillment of Natan's judgment: evil from his own household."
+    },
+    {
+      "term": "Khushai the Arkite",
+      "phonetic": "Khushai ha-Arki",
+      "definition": "David's friend who returns to Yerushalayim as a double agent. When Avshalom's counselor Akhitofel (David's former advisor) gives excellent tactical advice, Khushai counters with deliberately flawed counsel. Avshalom follows Khushai's advice instead of Akhitofel's — the text notes 'YHWH had ordained to defeat the good counsel of Akhitofel so that YHWH might bring harm to Avshalom.'"
+    },
+    {
+      "term": "Akhitofel's Suicide",
+      "phonetic": "hitarvut Akhitofel",
+      "definition": "When Avshalom rejects Akhitofel's counsel in favor of Khushai's, Akhitofel recognizes the rebellion is doomed. He sets his house in order and hangs himself. His counsel had been 'as though one consulted the word of YHWH' — the highest description in the text. His death by his own hand, abandoned by the rebellion he joined, is a marker of the entire story's tragic arc."
+    },
+    {
+      "term": "Avshalom's Death",
+      "phonetic": "mot Avshalom",
+      "definition": "Avshalom rides his mule under the oak of a great terebinth; his head catches in the branches and he is left hanging while the mule continues. Yoav, against David's explicit command to spare Avshalom, drives three spears into his heart and his men finish him. When David hears, he weeps: 'My son Avshalom! Would I had died instead of you, Avshalom, my son!'"
+    },
+    {
+      "term": "The Sword Never Departs",
+      "phonetic": "kherev lo tasur mi-vetekha",
+      "definition": "Natan's judgment in 2 Shemu'el 12:10: 'The sword shall never depart from your house, because you despised me and took the wife of Uriyah the Hittite to be your wife.' This judgment shapes the entire narrative of 2 Shemu'el 11-24: Amnon murdered, Avshalom's rebellion and death, Sheva ben Bikhri's revolt, the plague. David's household pays the price for his private act against Uriyah."
+    }
   ],
   "fill_blank": [
-    { "ref": "7:16", "prompt": "And your house and your kingdom shall be made sure forever before me. Your ______ shall be established forever.", "answer": "throne", "source_quote": "And your house and your kingdom shall be made sure forever before me. Your throne shall be established forever." },
-    { "ref": "12:13", "prompt": "Dawid said to Natan: I have ______ against YHWH. And Natan said to Dawid: YHWH has also put away your sin — you shall not die.", "answer": "sinned", "source_quote": "Dawid said to Natan: I have sinned against YHWH. And Natan said to Dawid: YHWH has also put away your sin; you shall not die." }
+    {
+      "ref": "2 Shemu'el 12:7",
+      "prompt": "After his parable, Natan told David: 'You are ___.",
+      "answer": "the man",
+      "source_quote": "You are the man! — 2 Shemu'el 12:7"
+    },
+    {
+      "ref": "2 Shemu'el 12:13",
+      "prompt": "David said: 'I have sinned against ___.' Natan replied: 'YHWH has put away your sin; you shall not die.'",
+      "answer": "YHWH",
+      "source_quote": "David said to Nathan, I have sinned against YHWH. And Nathan said to David, YHWH also has put away your sin. — 2 Shemu'el 12:13"
+    },
+    {
+      "ref": "2 Shemu'el 12:10",
+      "prompt": "Natan pronounced: 'The ___ shall never depart from your house because you despised me and took Uriyah's wife.'",
+      "answer": "sword",
+      "source_quote": "The sword shall never depart from your house. — 2 Shemu'el 12:10"
+    },
+    {
+      "ref": "2 Shemu'el 18:33",
+      "prompt": "When told Avshalom was dead, David cried: 'My son Avshalom! Would I had ___ instead of you, my son!'",
+      "answer": "died",
+      "source_quote": "O my son Absalom, my son, my son Absalom! Would I had died instead of you. — 2 Shemu'el 18:33"
+    },
+    {
+      "ref": "2 Shemu'el 17:14",
+      "prompt": "YHWH had ordained to defeat Akhitofel's good counsel so that YHWH might bring ___ to Avshalom.",
+      "answer": "harm",
+      "source_quote": "YHWH had ordained to defeat the good counsel of Ahithophel, so that YHWH might bring harm upon Absalom. — 2 Shemu'el 17:14"
+    },
+    {
+      "ref": "2 Shemu'el 11",
+      "prompt": "David wrote a letter with Uriyah as its carrier ordering that Uriyah be placed in the ___ of the fighting.",
+      "answer": "forefront / front",
+      "source_quote": "Set Uriah in the forefront of the hardest fighting, and then draw back from him, that he may be struck down and die. — 2 Shemu'el 11:15"
+    },
+    {
+      "ref": "2 Shemu'el 15",
+      "prompt": "Avshalom stole the hearts of Yisra'el by sitting at the ___ gate and hearing every man's case personally.",
+      "answer": "city",
+      "source_quote": "Absalom stole the hearts of the men of Israel. — 2 Shemu'el 15:6"
+    },
+    {
+      "ref": "2 Shemu'el 18",
+      "prompt": "Avshalom's head caught in an oak while riding his mule, and he was left ___ between heaven and earth.",
+      "answer": "hanging",
+      "source_quote": "Absalom was hanging between heaven and earth. — 2 Shemu'el 18:9"
+    },
+    {
+      "ref": "2 Shemu'el 17",
+      "prompt": "When Avshalom rejected his counsel, Akhitofel set his house in order and ___ himself.",
+      "answer": "hanged",
+      "source_quote": "He saddled his donkey and went off home to his own city. And he set his house in order and hanged himself. — 2 Shemu'el 17:23"
+    },
+    {
+      "ref": "2 Shemu'el 16",
+      "prompt": "As David fled, Shimei cursed him from a hillside; David refused to let his men kill Shimei saying YHWH had told him to ___ David.",
+      "answer": "curse",
+      "source_quote": "Leave him alone, and let him curse, for YHWH has told him to. — 2 Shemu'el 16:11"
+    }
   ],
   "multiple_choice": [
-    { "ref": "7:5-7", "question": "What did YHWH say when Dawid wanted to build a temple?", "options": ["Build it immediately", "YHWH would build Dawid a house — a dynasty — instead", "Wait until your son is born", "YHWH rejected the idea completely"], "correct": 1, "source_quote": "YHWH declares to you that YHWH will make you a house." },
-    { "ref": "12:7", "question": "How did Natan confront Dawid about Bat-Sheva?", "options": ["He publicly denounced him before the army", "He used the parable of the poor man's lamb", "He sent a written letter", "He refused to speak to Dawid"], "correct": 1, "source_quote": "Natan said to Dawid: You are the man!" },
-    { "ref": "9:7", "question": "Why did Dawid show chesed to Mefiboshet?", "options": ["He feared Sha'ul's family", "For the sake of his covenant with Yonatan", "Mefiboshet was a great warrior", "YHWH commanded it through a prophet"], "correct": 1, "source_quote": "Dawid said to him: Do not fear, for I will show you chesed for the sake of Yonatan your father." }
+    {
+      "ref": "2 Shemu'el 12:7",
+      "question": "How did Natan deliver his judgment to David about Bat-Sheva and Uriyah?",
+      "options": [
+        "He announced it at a public assembly of the elders",
+        "He sent a written message sealed with the priestly seal",
+        "He told a parable about a rich man taking a poor man's lamb, then said 'you are the man'",
+        "He waited until David came to the sanctuary and confronted him there"
+      ],
+      "correct": 2,
+      "source_quote": "You are the man! — 2 Shemu'el 12:7"
+    },
+    {
+      "ref": "2 Shemu'el 12:10",
+      "question": "What was the specific judgment Natan pronounced against David's house?",
+      "options": [
+        "The kingdom would split in his son's generation",
+        "The Temple would never be built by David's line",
+        "The sword would never depart from his house",
+        "His wives would be given to his enemies"
+      ],
+      "correct": 2,
+      "source_quote": "The sword shall never depart from your house. — 2 Shemu'el 12:10"
+    },
+    {
+      "ref": "2 Shemu'el 11",
+      "question": "Why could David not cover up his affair with Bat-Sheva by recalling Uriyah?",
+      "options": [
+        "Uriyah discovered the pregnancy before David could recall him",
+        "Uriyah refused to return from the front",
+        "Uriyah came back but refused to sleep at home while his comrades were in the field",
+        "Uriyah went directly to the palace and confronted David"
+      ],
+      "correct": 2,
+      "source_quote": "The ark and Israel and Judah dwell in booths... and shall I go to my house to eat and drink and lie with my wife? — 2 Shemu'el 11:11"
+    },
+    {
+      "ref": "2 Shemu'el 15",
+      "question": "What political tactic did Avshalom use to steal the hearts of Yisra'el?",
+      "options": [
+        "He bribed the army commanders to support him",
+        "He spread false reports that David had become too old to judge",
+        "He sat at the city gate, treated every man's case personally, and said he wished he were judge",
+        "He promised to lower taxes for every tribe outside Yehudah"
+      ],
+      "correct": 2,
+      "source_quote": "Absalom stole the hearts of the men of Israel. — 2 Shemu'el 15:6"
+    },
+    {
+      "ref": "2 Shemu'el 17:14",
+      "question": "Why did Avshalom reject Akhitofel's counsel in favor of Khushai's?",
+      "options": [
+        "Khushai's plan seemed militarily superior on its merits",
+        "Avshalom was personally closer to Khushai and trusted him more",
+        "YHWH had ordained to defeat Akhitofel's good counsel to bring harm on Avshalom",
+        "Akhitofel's plan required too many soldiers Avshalom did not have"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH had ordained to defeat the good counsel of Ahithophel, so that YHWH might bring harm upon Absalom. — 2 Shemu'el 17:14"
+    },
+    {
+      "ref": "2 Shemu'el 18:33",
+      "question": "What was David's reaction when told Avshalom was dead?",
+      "options": [
+        "He thanked YHWH for delivering him from his son's rebellion",
+        "He ordered a week of national mourning for all Yisra'el",
+        "He wept: 'My son Avshalom! Would I had died instead of you!'",
+        "He immediately began planning to reconcile with Avshalom's remaining supporters"
+      ],
+      "correct": 2,
+      "source_quote": "O my son Absalom, my son, my son Absalom! Would I had died instead of you. — 2 Shemu'el 18:33"
+    },
+    {
+      "ref": "2 Shemu'el 13",
+      "question": "What did Avshalom do to avenge his sister Tamar?",
+      "options": [
+        "He brought Amnon before David for public judgment",
+        "He challenged Amnon to a formal duel",
+        "He had Amnon killed at a sheep-shearing feast two years after the rape",
+        "He reported Amnon to the priest for a ruling on the crime"
+      ],
+      "correct": 2,
+      "source_quote": "Absalom had commanded his servants: when Amnon's heart is merry with wine, then strike him down. — 2 Shemu'el 13:28"
+    },
+    {
+      "ref": "2 Shemu'el 15",
+      "question": "What did David do with the Ark when he fled Yerushalayim?",
+      "options": [
+        "He took it with him as a divine protection for his journey",
+        "He left it in the palace treasury for safekeeping",
+        "He sent it back to Yerushalayim, refusing to use it as a political or military tool",
+        "He gave it to the Levites to carry ahead of the army"
+      ],
+      "correct": 2,
+      "source_quote": "Carry the ark of YHWH back into the city. If I find favor in the eyes of YHWH, he will bring me back. — 2 Shemu'el 15:25"
+    },
+    {
+      "ref": "2 Shemu'el 18",
+      "question": "How did Avshalom die?",
+      "options": [
+        "He was killed by an arrow from one of David's archers",
+        "His head caught in a terebinth oak while riding his mule; Yoav then drove spears into him",
+        "He drowned crossing a river while fleeing Yoav's pursuit",
+        "He was killed by his own men who turned against the rebellion"
+      ],
+      "correct": 1,
+      "source_quote": "The mule went on and he was left hanging between heaven and earth. — 2 Shemu'el 18:9"
+    },
+    {
+      "ref": "2 Shemu'el 17:23",
+      "question": "What did Akhitofel do when Avshalom rejected his counsel?",
+      "options": [
+        "He fled to David and offered to serve as a double agent",
+        "He organized a smaller faction to continue the rebellion his way",
+        "He set his house in order and hanged himself",
+        "He went to Hevron and tried to recruit new supporters for Avshalom"
+      ],
+      "correct": 2,
+      "source_quote": "He set his house in order and hanged himself. — 2 Shemu'el 17:23"
+    }
   ],
   "faq": [
     {
-      "question": "How does the DSS community interpret the Davidic covenant differently from Christian theology?",
-      "answer": "4Q174 (Florilegium) quotes 2 Shemu'el 7:10-14 directly: 'I will be to him a father, and he will be to me a son.' The Qumran community interprets this as the Branch of Dawid — a mortal human king from Dawid's lineage who will arise in the last days. This is not a divine incarnation. The DSS messianic expectation is documented in 4Q252 (Commentary on Bereshit), 4Q285 (Sefer ha-Milchamah), and the Community Rule — all describing a human Davidic descendant who will rule in righteousness. Christian theology reframed this as a prophecy of divine incarnation — a theological move that has no basis in the DSS or the Orit Ge'ez. The original covenant framework expected a righteous mortal king, not a second person of a trinity."
+      "question": "What does Natan's parable technique reveal about covenant accountability for kings?",
+      "answer": "Natan's approach is deliberate: he tells a story designed to get David to pronounce judgment on himself before revealing the application. 'The man who did this deserves to die!' — David's own verdict, then turned back on him. This technique ensures the king cannot claim ignorance of the moral standard. The prophetic role in the covenant structure is precisely this: speaking YHWH's accountability to the person who holds the most power and has the most reason to suppress such accountability. Natan enters the king's chamber and says what YHWH sends him to say, without diplomatic softening. David's immediate 'I have sinned against YHWH' shows the technique worked — the king could not defend what he had done once forced to see it clearly."
     },
     {
-      "question": "What does the Bat-Sheva narrative reveal about covenant justice and power?",
-      "answer": "Dawid — the covenant king, YHWH's anointed — takes another man's wife and arranges her husband's death. YHWH sends Natan to confront him. Dawid is not above the Torah. The child of the adultery dies. The sword will not depart from Dawid's house (12:10). Covenant justice applies to the king. This is the opposite of every imperial theological system that placed the ruler above the law — the Egyptian Pharaoh as a god, the Roman Emperor as divine, the European doctrine of divine right of kings. YHWH's covenant framework holds the king accountable to the same Torah as the poorest person in Yisra'EL. Uriyah the Hittite — a non-Israelite fighting for Yisra'EL — is the righteous one in the narrative. The covenant king is the sinner. YHWH's justice does not respect institutional rank."
+      "question": "What does 'I have sinned against YHWH' mean in the covenant framework?",
+      "answer": "David does not say 'I have sinned against Uriyah' or 'I have sinned against Bat-Sheva' — though both were true. His declaration 'against YHWH' is the covenant diagnosis. All covenant sin is ultimately against YHWH because the covenant is YHWH's relationship with his people. Uriyah's murder violated the covenant community; Bat-Sheva's violation violated covenant structure; but both were violations of YHWH's covenant authority. Tehillim 51 expands this: 'Against you, you only, have I sinned and done what is evil in your sight.' The covenant structure means YHWH is the ultimate party wronged by every breach, even when human victims are primary. David's formulation is theologically precise, not evasion."
+    },
+    {
+      "question": "What does Avshalom's rebellion fulfill in the covenant structure?",
+      "answer": "Natan's judgment was explicit: 'evil will rise up against you from your own house.' Avshalom's rebellion is not simply political ambition — it is YHWH's judgment executed through David's own family. David's private sin (Uriyah's murder) produces public disaster (his son's revolt). The connection is not arbitrary; it is covenant logic: what is done in secret becomes public (Natan's specific word: 'your wives will be taken before all Yisra'el and in broad daylight'). Avshalom's public degradation of David's concubines on the palace roof is the visible, public fulfillment of the private wrong. The covenant does not leave sin unaddressed — but the instrument of its address is often the sinner's own choices and their downstream consequences."
+    },
+    {
+      "question": "Why did David weep for Avshalom even though Avshalom had tried to kill him?",
+      "answer": "David's grief for Avshalom — 'My son! My son! Would I had died instead of you!' — is genuine parental love overriding political calculation. This is what distinguishes David from typical ancient monarchs: his grief was real, not managed. His general Yoav had to rebuke him for it: 'You have shamed all your servants who have saved your life — you love those who hate you and hate those who love you.' David's grief was at the cost of his army's morale. But the grief itself reveals a father's heart: even after everything Avshalom had done, David wanted him alive. The covenant king's heart is relational, not merely administrative."
+    },
+    {
+      "question": "What does David's flight from Yerushalayim reveal about his character?",
+      "answer": "David left barefoot, weeping, head covered — the full posture of mourning. He sent the Ark back rather than using it as a talisman. He accepted Shimei's curses: 'If he is cursing because YHWH told him, who am I to stop him?' He had Tsadok and Evyatar stay as his intelligence network. His flight shows strategic humility: he would not fight in the city and destroy it; he accepted the judgment; he trusted YHWH to bring him back if that was YHWH's will. This is the same man who would not kill Sha'ul at En-Gedi. David's most difficult moments are also his covenant-clearest moments: he submits to YHWH's governance of his circumstances rather than forcing outcomes."
+    },
+    {
+      "question": "What is Akhitofel's significance in the story?",
+      "answer": "Akhitofel is introduced as a counselor whose advice was 'as if one consulted the word of YHWH' — the highest possible description. He joined Avshalom's rebellion (possibly motivated by being Bat-Sheva's grandfather — 2 Shemu'el 23:34 identifies Eliam as her father, and Akhitofel as Eliam's father). His tactical advice was sound. His suicide when his counsel was rejected confirms the rebellion's outcome was clear to him — without the military advantage his plan offered, the rebellion was lost. His death by his own hand while David's rebellion-born grief plays out is one of the story's most precise ironies: the man whose counsel was treated as YHWH's word hanged himself because human judgment rejected it."
+    },
+    {
+      "question": "What does the Amnon-Tamar episode reveal about justice in David's household?",
+      "answer": "Tamar is raped by Amnon, then told to be quiet by David (who was angry but did not punish Amnon 'because he loved him, for he was his firstborn'). Avshalom waits two years then executes revenge himself. The cycle shows complete failure of covenant justice at the household level: the father who was responsible for judgment did nothing; the brother with cause for outrage acted outside covenant structure. The result was a chain of consequences — Amnon's death, Avshalom's flight, his eventual rebellion — that could have been interrupted at multiple points by proper covenant accountability. The rape was not the end of the damage; David's inaction multiplied it."
+    },
+    {
+      "question": "What covenant principle does David display by sending the Ark back to Yerushalayim?",
+      "answer": "David says: 'Carry the ark of YHWH back into the city. If I find favor in the eyes of YHWH, he will bring me back and let me see it again. But if he says, I have no pleasure in you — here I am; let him do to me what seems good to him.' This is the covenant leader's surrender to YHWH's sovereignty in the most extreme personal crisis. He is not taking the Ark as a guarantee of return; he is placing himself in YHWH's hands without conditions. The Ark is YHWH's covenant symbol, not David's political tool. His refusal to use it instrumentally — even when his life and kingdom depend on it — is one of the clearest covenant statements in his entire story."
+    },
+    {
+      "question": "What does the chapter 12 judgment reveal about how YHWH handles covenant failure at the highest level?",
+      "answer": "David was not removed as king. He was not executed. YHWH's response was: 'He has put away your sin; you shall not die.' But the consequences were real and permanent: the child died; the sword never departed; Avshalom's rebellion came. The covenant does not simply expunge consequences upon repentance. YHWH's forgiveness addressed the ultimate verdict (death) but the structural damage in David's household continued. This is not arbitrary harshness — it reflects the reality that actions have consequences that persist beyond the moment of repentance. David's story after ch.12 is a man living out those consequences with covenant faith intact, returning to YHWH at each crisis, while the judgment Natan announced unfolds."
+    },
+    {
+      "question": "What does Khushai's role as double agent say about how YHWH works through human means?",
+      "answer": "Khushai's return to Yerushalayim as David's spy, his successful counter-counsel to Akhitofel, and the text's explicit note — 'YHWH had ordained to defeat the good counsel of Akhitofel' — place human deception inside YHWH's direct governance. YHWH did not send a miracle to defeat Avshalom; he used a loyal friend who told convincing lies. The covenant pattern is consistent: YHWH works through human choices, human words, human relationships — sometimes through the unexpected instrument of a friend's deliberate deception in the service of YHWH's chosen king. The means are human; the governance is YHWH's."
     }
   ]
 }

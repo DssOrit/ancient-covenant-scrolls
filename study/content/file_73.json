@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_73",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_73",
   "label": "Tehillim (Psalms) — Part 9 — Psalms 151, 154, 155 — DSS Only",
   "volume": 20,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Psalms 151, 154, and 155 are preserved in the Great Psalms Scroll (11QPsa) from Qumran Cave 11. They are NOT in the Masoretic text. Psalm 151 is Dawid's song about being the youngest brother, chosen by YHWH from among the sheep to be anointed over Yisra'EL, and his victory over the Pelishti giant. Psalm 154 calls the congregation to praise YHWH in the assembly of the faithful. Psalm 155 is a personal prayer for deliverance from sin and from the evil impulse. These are scripture preserved in the DSS and in the Orit Ge'ez but excluded from the Masoretic canon.",
   "summary_scholarly": "The ACR reads Psalms 151, 154, and 155 from 11QPsa (the Great Psalms Scroll, Qumran Cave 11) and from the Orit Ge'ez, where Psalm 151 has been continuously preserved as canonical scripture. The Masoretic Psalter ends at Psalm 150. European Bibles based on the Masoretic therefore exclude these psalms entirely. The Orit Ge'ez never excluded them. The DSS prove the Orit was not adding foreign material — it was preserving what the Masoretic removed. Psalm 151 in 11QPsa is longer than the version preserved in the Septuagint, containing details about Dawid's anointing and his battle with the giant. The Syriac Peshitta also preserves Psalms 151-155 in some manuscripts. The pattern is consistent: the Masoretic is the narrowest canon, not the original canon. Every older and independent witness — DSS, Orit Ge'ez, Syriac — preserves a broader collection.",
   "key_terms": [
-    { "term": "11QPsa (Great Psalms Scroll)", "phonetic": "", "definition": "The largest Psalms manuscript from Qumran, found in Cave 11. It preserves Psalms 101-150 in a different order than the Masoretic and includes compositions absent from European Bibles — Psalms 151, 154, 155, and other texts. It is the primary DSS witness for the broader Psalter." },
-    { "term": "Psalm 151", "phonetic": "", "definition": "Dawid's autobiographical psalm — he was small among his brothers, YHWH sent his messenger and anointed him, and he went out against the Pelishti. Preserved in 11QPsa (in Hebrew) and in the Orit Ge'ez (in Ge'ez). Excluded from the Masoretic." },
-    { "term": "Yetzer HaRa (Evil Impulse)", "phonetic": "YET-zer hah-RAH", "definition": "Psalm 155 prays for deliverance from the yetzer hara — the inclination toward wrongdoing. This concept is central to the covenant anthropology: the human being has both the impulse toward good and the impulse toward evil. No external savior is needed — YHWH directly strengthens the individual against the evil impulse." }
+    {
+      "term": "1QPsa (Great Psalms Scroll, Cave 1)",
+      "phonetic": "1Q-P-sa",
+      "definition": "A psalms scroll from Cave 1 at Qumran containing a large portion of the Psalter. Distinct from the more famous 11QPsa (Cave 11). The Cave 1 scroll represents the early-discovery Qumran Psalter evidence."
+    },
+    {
+      "term": "11QPsa (Great Psalms Scroll, Cave 11)",
+      "phonetic": "11Q-P-sa",
+      "definition": "The major Psalms Scroll from Cave 11 at Qumran (11Q5), containing 41 canonical psalms plus additional compositions: Psalm 151 (found in Greek Septuagint), the Plea for Deliverance, Apostrophe to Zion, David's Last Words, and a prose list of David's compositions. Its psalm order differs from the Masoretic Text."
+    },
+    {
+      "term": "Psalm 151 (extra-canonical psalm)",
+      "phonetic": "Tehillah 151",
+      "definition": "A psalm found in the Greek Septuagint and in 11QPsa at Qumran. It describes David as the small shepherd whom YHWH chose over his brothers and anointed to defeat the enemy. The Qumran version (11QPsa col.28) may preserve a longer, more original form than the LXX version. Absent from the Masoretic Text."
+    },
+    {
+      "term": "Hodayot — Thanksgiving Hymns (1QH)",
+      "phonetic": "Ho-da-YOT",
+      "definition": "A major Qumran composition (1QH, 4QH) consisting of 'Thanksgiving Hymns' (Hodayot) in the style of biblical psalms. Divided into two main groups: Teacher Hymns (believed to be composed by the Teacher of Righteousness) and Community Hymns. They draw heavily on the language and theology of Tehillim."
+    },
+    {
+      "term": "Pesher Psalms (4Q171, 4Q173)",
+      "phonetic": "pe-SHER te-hil-LIM",
+      "definition": "Qumran commentary texts (4Q171 = Pesher on Ps.37; 4Q173 = Pesher on Ps.45, 60) that apply the psalms to the community's own history using the pesherpesher interpretive method: 'this means that...' — reading psalm verses as prophecy about the Teacher of Righteousness, the Wicked Priest, and the end times."
+    },
+    {
+      "term": "David's Compositions (11QPsa col.27)",
+      "phonetic": "divrey David",
+      "definition": "A prose list preserved at the end of 11QPsa attributing to David 3,600 psalms plus 364 songs for the daily Tamid offering, 52 songs for Shabbat, and 30 songs for festivals — totaling 4,050 compositions. The 364 daily songs directly mirror the 364-day covenant calendar. This is a Qumran claim about David's prophetic scope."
+    },
+    {
+      "term": "Apocryphon of Psalms (4Q88)",
+      "phonetic": "apokruphon tehillim",
+      "definition": "A Qumran text (4Q88) containing eschatological psalm-like compositions alongside Psalm 7:14-17 — additional covenant poetry not found in the Masoretic Psalter. Documents the fluidity of the Psalter's boundaries at Qumran: canonical and non-canonical psalm-type poetry existed in the same scrolls."
+    },
+    {
+      "term": "Teacher of Righteousness (Moreh HaTzedek)",
+      "phonetic": "Mo-REH ha-tze-DEK",
+      "definition": "The founding leader of the Qumran Yahad community, who is not named but is referenced throughout the DSS. The Hodayot Teacher Hymns are believed to represent his personal psalmic voice. The Pesher texts interpret Psalms 37 and 45 as applying directly to him and to the Wicked Priest who persecuted him."
+    },
+    {
+      "term": "Psalm 37 (Pesher subject)",
+      "phonetic": "Tehillah 37",
+      "definition": "An acrostic wisdom psalm about trusting YHWH while the wicked flourish. The Qumran Pesher on Psalm 37 (4Q171) systematically reads each verse of Ps.37 as a prophecy about the Teacher of Righteousness, the community of the poor (Ebionim), and the Wicked Priest who seeks to destroy them."
+    },
+    {
+      "term": "Qumran Psalter vs. Masoretic Psalter",
+      "phonetic": "nusakh Qumran / nusakh ha-Masoret",
+      "definition": "The Qumran Psalms scrolls (especially 11QPsa) organize the psalms in a different sequence from the Masoretic Text and include compositions the MT excludes. Scholars debate whether the 11QPsa order represents a different authoritative edition of the Psalter, a liturgical selection scroll, or a secondary anthology. What is clear: the Psalter's exact canonical form was not fixed in the late Second Temple period."
+    }
   ],
   "fill_blank": [
-    { "ref": "151:1 (11QPsa)", "prompt": "I was small among my brothers, and the youngest among the sons of my father. He made me ______ of his flocks.", "answer": "shepherd", "source_quote": "I was small among my brothers, and the youngest among the sons of my father. He made me shepherd of his flocks, and ruler over his kids." },
-    { "ref": "151:4 (11QPsa)", "prompt": "He sent his messenger and took me from my father's sheep, and ______ me with the oil of anointing.", "answer": "anointed", "source_quote": "He sent his messenger and took me from my father's sheep, and anointed me with the oil of anointing." },
-    { "ref": "154:1 (11QPsa)", "prompt": "Glorify YHWH with a loud voice — in the ______ of the many proclaim his splendor.", "answer": "congregation", "source_quote": "Glorify YHWH with a loud voice — in the congregation of the many proclaim his splendor." }
+    {
+      "ref": "11QPsa col.27",
+      "prompt": "David spoke through prophecy before YHWH all these: 3,600 psalms; and songs to sing before the altar over the whole-burnt tamid offering for every day, for all the days of the year, ___ [songs].",
+      "answer": "364",
+      "source_quote": "364 songs for the daily whole-burnt tamid offering, one for each day of the year."
+    },
+    {
+      "ref": "Psalm 151 (11QPsa)",
+      "prompt": "Smaller was I than my brothers and the youngest among the sons of my father, so he made me shepherd of his flock and ruler over his ___.",
+      "answer": "kids",
+      "source_quote": "Smaller was I than my brothers and the youngest among the sons of my father."
+    },
+    {
+      "ref": "Psalm 37:3",
+      "prompt": "Trust in YHWH, and do good; dwell in the land and befriend ___.",
+      "answer": "faithfulness",
+      "source_quote": "Trust in YHWH, and do good; dwell in the land and befriend faithfulness."
+    },
+    {
+      "ref": "Psalm 37:7",
+      "prompt": "Be still before YHWH and wait patiently for him; fret not yourself over the one who prospers in his way, over the man who carries out evil ___!",
+      "answer": "devices",
+      "source_quote": "Be still before YHWH and wait patiently for him."
+    },
+    {
+      "ref": "1QH Teacher Hymn",
+      "prompt": "I thank you, YHWH, that you have put me at a source of flowing streams in dry land, a spring of water in a land of ___, a source of watering in a garden.",
+      "answer": "drought",
+      "source_quote": "I thank you, YHWH, that you have put me at a source of flowing streams in dry land."
+    },
+    {
+      "ref": "Psalm 37:11",
+      "prompt": "But the meek shall inherit the land and delight themselves in ___ peace.",
+      "answer": "abundant",
+      "source_quote": "But the meek shall inherit the land and delight themselves in abundant peace."
+    },
+    {
+      "ref": "Psalm 37:34",
+      "prompt": "Wait for YHWH and keep his way, and he will exalt you to inherit the land; you will look on when the wicked are ___.",
+      "answer": "cut off",
+      "source_quote": "You will look on when the wicked are cut off."
+    },
+    {
+      "ref": "Hodayot (1QH)",
+      "prompt": "I was as one who enters a fortified city, as one who seeks refuge behind a high wall, until ___ should come.",
+      "answer": "deliverance",
+      "source_quote": "I was as one who enters a fortified city, as one who seeks refuge behind a high wall."
+    },
+    {
+      "ref": "Psalm 37:25",
+      "prompt": "I have been young, and now am old, yet I have not seen the righteous forsaken or his children begging ___.",
+      "answer": "bread",
+      "source_quote": "I have not seen the righteous forsaken or his children begging bread."
+    },
+    {
+      "ref": "Psalm 37:39",
+      "prompt": "The salvation of the righteous is from YHWH; he is their ___ in the time of trouble.",
+      "answer": "stronghold",
+      "source_quote": "The salvation of the righteous is from YHWH; he is their stronghold in the time of trouble."
+    }
   ],
   "multiple_choice": [
-    { "ref": "151 (11QPsa)", "question": "What is Psalm 151 about?", "options": ["A prophecy about the end of days", "Dawid's account of being the youngest brother, anointed by YHWH, and defeating the Pelishti giant", "Shelomoh building the temple", "A song for the Shabbat"], "correct": 1, "source_quote": "I was small among my brothers, and the youngest among the sons of my father... He sent his messenger and took me from my father's sheep, and anointed me with the oil of anointing." },
-    { "ref": "151, 154, 155", "question": "Where are Psalms 151, 154, and 155 preserved?", "options": ["Only in the Masoretic text", "In the Dead Sea Scrolls (11QPsa) and the Orit Ge'ez — NOT in the Masoretic", "Only in the NT", "Only in the Septuagint"], "correct": 1, "source_quote": "Psalms 151, 154, and 155 are preserved in the Great Psalms Scroll (11QPsa) from Qumran Cave 11 and in the Orit Ge'ez." },
-    { "ref": "155 (11QPsa)", "question": "What does Psalm 155 pray for?", "options": ["Victory in war", "Deliverance from sin and the evil impulse — directly from YHWH", "A new temple", "Restoration of the monarchy"], "correct": 1, "source_quote": "Psalm 155 is a personal prayer for deliverance from sin and from the evil impulse." }
+    {
+      "ref": "11QPsa",
+      "question": "What additional compositions does 11QPsa include beyond canonical psalms?",
+      "options": [
+        "Only the canonical 150 psalms in a different order",
+        "Psalm 151, the Plea for Deliverance, Apostrophe to Zion, and David's Compositions list",
+        "Only Psalm 151 and a commentary on Psalm 37",
+        "A complete additional Psalter of 150 new psalms"
+      ],
+      "correct": 1,
+      "source_quote": "11QPsa contains Psalm 151, the Plea for Deliverance, Apostrophe to Zion, David's Last Words, and a prose list of David's compositions."
+    },
+    {
+      "ref": "David's Compositions",
+      "question": "According to the prose list in 11QPsa, how many songs did David compose for the daily Tamid offering?",
+      "options": [
+        "52 songs",
+        "30 songs",
+        "3,600 songs",
+        "364 songs"
+      ],
+      "correct": 3,
+      "source_quote": "364 songs for the daily whole-burnt tamid offering for every day of the year."
+    },
+    {
+      "ref": "Hodayot",
+      "question": "What are the Hodayot and how are they connected to Tehillim?",
+      "options": [
+        "A Qumran commentary on specific psalms using the pesher method",
+        "Qumran Thanksgiving Hymns in the style of biblical psalms, drawing on Tehillim's language",
+        "A list of all David's compositions preserved at Qumran",
+        "The 13 Songs of Sabbath Sacrifice for the first calendar quarter"
+      ],
+      "correct": 1,
+      "source_quote": "The Hodayot are Thanksgiving Hymns in the style of biblical psalms, drawing heavily on the language and theology of Tehillim."
+    },
+    {
+      "ref": "Pesher Psalms",
+      "question": "Which psalm is the main subject of the Qumran Pesher on Psalms (4Q171)?",
+      "options": [
+        "Psalm 22",
+        "Psalm 45",
+        "Psalm 37",
+        "Psalm 110"
+      ],
+      "correct": 2,
+      "source_quote": "4Q171 = Pesher on Psalm 37, applying its verses to the Teacher of Righteousness and the community's history."
+    },
+    {
+      "ref": "Psalm 37:11",
+      "question": "What does the meek inherit, according to Psalm 37:11?",
+      "options": [
+        "The kingdom of the heavens",
+        "Wisdom and understanding",
+        "Abundant peace and the land",
+        "YHWH's covenant faithfulness"
+      ],
+      "correct": 2,
+      "source_quote": "But the meek shall inherit the land and delight themselves in abundant peace."
+    },
+    {
+      "ref": "Qumran Psalter order",
+      "question": "What does the different psalm ordering in 11QPsa demonstrate about the Psalter's status at Qumran?",
+      "options": [
+        "That Qumran used a completely different set of 150 psalms",
+        "That the Psalter's exact canonical sequence was not yet fixed in the late Second Temple period",
+        "That David wrote all 150 psalms plus 3,600 additional compositions",
+        "That the Psalter was organized at Qumran by the Teacher of Righteousness"
+      ],
+      "correct": 1,
+      "source_quote": "The Psalter's exact canonical form was not fixed in the late Second Temple period."
+    },
+    {
+      "ref": "Teacher of Righteousness",
+      "question": "How does the Pesher on Psalm 37 (4Q171) apply the psalm's verses?",
+      "options": [
+        "As historical commentary on David's fight with Golyat",
+        "As cosmic poetry about the angelic war",
+        "As prophecy about the Teacher of Righteousness, the community, and the Wicked Priest",
+        "As a liturgical song for the Sukkot water-drawing ceremony"
+      ],
+      "correct": 2,
+      "source_quote": "The Pesher on Psalm 37 reads each verse as a prophecy about the Teacher of Righteousness and the Wicked Priest who persecuted him."
+    },
+    {
+      "ref": "Psalm 151",
+      "question": "In which ancient text collection is Psalm 151 found outside of Qumran?",
+      "options": [
+        "The Masoretic Text (MT)",
+        "The Aramaic Targum",
+        "The Greek Septuagint (LXX)",
+        "The Peshitta (Syriac)"
+      ],
+      "correct": 2,
+      "source_quote": "Psalm 151 is found in the Greek Septuagint and in 11QPsa at Qumran. Absent from the Masoretic Text."
+    },
+    {
+      "ref": "Psalm 37:3",
+      "question": "What does Psalm 37:3 instruct the righteous to do regarding YHWH?",
+      "options": [
+        "Fear YHWH and keep his commandments",
+        "Trust in YHWH, do good, dwell in the land, and befriend faithfulness",
+        "Meditate on YHWH's Torah day and night",
+        "Bring offerings to YHWH's house at the appointed times"
+      ],
+      "correct": 1,
+      "source_quote": "Trust in YHWH, and do good; dwell in the land and befriend faithfulness."
+    },
+    {
+      "ref": "David's Compositions",
+      "question": "According to 11QPsa, how many total compositions does David's list include?",
+      "options": [
+        "150 psalms",
+        "1,000 compositions",
+        "4,050 compositions",
+        "7 books of psalms"
+      ],
+      "correct": 2,
+      "source_quote": "3,600 psalms plus 364 daily songs, 52 Shabbat songs, and 30 festival songs — totaling 4,050 compositions."
+    }
   ],
   "faq": [
     {
-      "question": "Why did the Masoretic canon exclude Psalms 151, 154, and 155?",
-      "answer": "The Masoretic Psalter ends at Psalm 150. Psalms 151, 154, and 155 are preserved in the Dead Sea Scrolls (11QPsa, 1st century BCE) and in the Orit Ge'ez — but the Masoretic canonizers excluded them. This is not an accident. The Masoretic canon was finalized by the Ben Asher family in Tiberias between 850-950 CE — nearly 1,000 years after the DSS were sealed in the caves. The narrowing of the canon is a documented editorial decision. The Orit Ge'ez never excluded Psalm 151 — it has been continuously canonical in the Ethiopian Israelite tradition for millennia. The DSS prove the Orit was preserving older material, not adding later inventions. Every time the Masoretic canon is treated as 'the original,' the excluded material disappears. This is the Great Eraser in its most basic form: defining the boundaries of scripture so that inconvenient texts cease to exist."
+      "question": "What makes 11QPsa different from the Masoretic Psalter?",
+      "answer": "The Great Psalms Scroll from Cave 11 (11QPsa) differs from the MT Psalter in two ways: (1) order — it arranges canonical psalms in a sequence that diverges from the MT, especially in Books IV-V; and (2) inclusion — it contains compositions absent from the MT, including Psalm 151, the Plea for Deliverance, the Apostrophe to Zion, David's Last Words, and the prose list of David's Compositions. This demonstrates that the Psalter's canonical boundaries and sequence were still fluid at Qumran in the late Second Temple period."
     },
     {
-      "question": "What does the existence of DSS-only psalms prove about the Masoretic canon?",
-      "answer": "The existence of Psalms 151, 154, 155, and additional compositions in 11QPsa — all absent from the Masoretic — proves one thing conclusively: the Masoretic canon is NOT the original. It is a later reduction of a broader collection. The DSS are 800-1,000 years older than the Masoretic. The Orit Ge'ez preserves the same broader collection independently. Two ancient witnesses — one from the Judean desert, one from the Ethiopian highlands — agree against the Masoretic. The academic habit of treating the Masoretic as the baseline and everything else as 'additions' or 'apocrypha' reverses the chronology. The broader collection is older. The Masoretic is the reduction. The Great Eraser depends on this reversal — treating the narrowest, latest canon as the standard and everything excluded as secondary."
+      "question": "What are the Hodayot and who is the Teacher of Righteousness?",
+      "answer": "The Hodayot (Thanksgiving Hymns, 1QH) are psalm-like hymns of personal gratitude and lament preserved at Qumran. They are divided into Teacher Hymns (believed to be composed by the Teacher of Righteousness, the community's founding leader) and Community Hymns. The Teacher of Righteousness is never named in the DSS — he is referred to by title. His Teacher Hymns are intensely personal, speaking of persecution, suffering, and covenant trust in language that deliberately echoes Tehillim."
     },
     {
-      "question": "How does Psalm 151 connect to Dawid's anointing narrative?",
-      "answer": "Psalm 151 in 11QPsa is Dawid speaking in first person: 'I was small among my brothers, and the youngest among the sons of my father. He made me shepherd of his flocks.' YHWH sends his messenger and anoints Dawid. Then Dawid goes out and defeats the Pelishti. This is the 1 Shemu'el 16-17 narrative compressed into a psalm — Dawid's own voice telling his own story. The Masoretic Psalter excludes this. European Bibles therefore contain no first-person psalm from Dawid about his anointing. The 11QPsa also includes a prose composition listing Dawid's total output: 3,600 tehillim (psalms) and 450 songs. The Masoretic preserves 150. The 11QPsa preserves the tradition that most of Dawid's compositions were lost — or excluded."
+      "question": "What is the pesher method and how was it applied to Psalm 37?",
+      "answer": "The pesher method (from Hebrew pesher — 'interpretation') is the Qumran community's distinctive interpretive approach: each verse of a prophetic or psalm text is quoted and then followed by 'its interpretation (pishro) is that...' — applying the verse to the community's own history and end-times expectations. The Pesher on Psalm 37 (4Q171) reads every verse of that acrostic wisdom psalm as a prophecy about the Teacher of Righteousness (the righteous one who trusts YHWH), the Qumran community (the meek who inherit the land), and the Wicked Priest (who persecutes them)."
+    },
+    {
+      "question": "What does the David's Compositions list in 11QPsa claim about David's prophetic output?",
+      "answer": "The prose list at the end of 11QPsa attributes to David 3,600 psalms; 364 songs for the daily Tamid offering (one per day of the year); 52 songs for Shabbat (one per Shabbat of the year); and 30 songs for festivals — totaling 4,050 compositions. The claim that David composed 364 daily songs explicitly mirrors the 364-day covenant calendar. The list calls David a prophet: 'he spoke all these through prophecy given to him before the Most High.' This is not a historical record but a theological claim about the Psalter's scope."
+    },
+    {
+      "question": "What is Psalm 151 and why is it significant for understanding the Psalter's formation?",
+      "answer": "Psalm 151 is an extra-canonical psalm found in the Greek Septuagint and in 11QPsa at Qumran. It describes David as the small shepherd YHWH chose and anointed over his brothers. The Qumran version (11QPsa col.28) may be a longer, more original form than the LXX version. Its presence in both a major translation tradition (LXX) and at Qumran, while absent from the MT, is evidence that multiple authoritative Psalter traditions existed — the MT's 150-psalm boundary was one decision among several, not an obvious universal given."
+    },
+    {
+      "question": "How did the Qumran community use the Psalms as prophetic texts about their own time?",
+      "answer": "The Qumran community read Tehillim not primarily as historical hymns of David but as prophecy about the end times and their own community. The Pesher method applied specific psalm verses to their founding leader, their enemies, and their covenant hope. The Hodayot composed new psalm-style poetry using Tehillim's language to express the Teacher of Righteousness's experience. The David's Compositions list claimed the entire Psalter was prophetic ('all spoken through prophecy'). For Qumran, the Psalms were a living prophetic word about the present crisis, not a closed historical archive."
+    },
+    {
+      "question": "What is the Apocryphon of Psalms (4Q88) and what does it show?",
+      "answer": "4Q88 is a Qumran text that places canonical psalm verses (Ps.7:14-17) alongside eschatological psalm-like poetry not found in the Masoretic Text. Its existence shows that at Qumran, the boundary between 'canonical psalms' and 'psalm-type compositions' was not sharply policed — both coexisted in the same physical scrolls. This fluidity is consistent with 11QPsa's inclusion of non-MT compositions: the Psalter at Qumran was an open, living collection, not a fixed 150-psalm canon."
+    },
+    {
+      "question": "How do the Hodayot Teacher Hymns relate to the lament psalms of Tehillim?",
+      "answer": "The Teacher Hymns in the Hodayot (1QH) are built from the vocabulary and structure of Tehillim's lament psalms. The Teacher writes in the first person about persecution, being abandoned, enemies plotting, and trust in YHWH despite overwhelming odds — the same pattern as Ps.22, 69, 88. The deliberate echo is theological: the Teacher positions himself as the 'righteous sufferer' figure of the lament psalms, and his community's persecution as the fulfillment of what those psalms described. Tehillim's lament language provided the vocabulary for Qumran's understanding of its own crisis."
+    },
+    {
+      "question": "What connection exists between Psalm 37 and covenant community identity at Qumran?",
+      "answer": "Psalm 37 is an alphabetic acrostic that repeatedly addresses the righteous community facing the flourishing of the wicked: 'do not fret,' 'trust YHWH,' 'the meek shall inherit the land,' 'the salvation of the righteous is from YHWH.' The Qumran Pesher on Psalm 37 systematically identifies the Qumran community as the 'meek' and 'poor' who will inherit, and their opponents (the Jerusalem establishment, the Wicked Priest) as the flourishing wicked who will be cut off. The psalm gave the community a covenant framework for understanding why they were persecuted and what YHWH's response would be."
+    },
+    {
+      "question": "Why is the fluid Psalter boundary at Qumran important for understanding the canon?",
+      "answer": "The fluid Psalter at Qumran (different ordering in 11QPsa, extra compositions included, 4Q88's mixing of canonical and non-canonical psalm-poetry) shows that the Psalter's canonical form was not fixed in the late Second Temple period. The MT's 150-psalm closed collection represents one tradent's decisions — not a universal, timeless boundary that all ancient communities recognized. The Qumran evidence stands alongside the Greek Septuagint's inclusion of Psalm 151 to document that multiple ancient communities maintained different forms of the Psalter, all drawing from the same living covenant-worship tradition."
     }
   ]
 }

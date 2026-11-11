@@ -1,38 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_45",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_45",
   "label": "Yesha'yahu (Isaiah) — 1QIsa-a — Part 4 — Chapters 42–54",
   "volume": 16,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "YHWH presents his servant: Behold my servant whom I uphold, my chosen in whom my soul delights — I have put my spirit upon him, he will bring forth justice to the nations. He will not cry aloud or lift up his voice. A bruised reed he will not break. YHWH calls the servant from the womb. The servant gives his back to those who strike him, his cheeks to those who pull out the beard. He is despised and rejected, a man of sorrows acquainted with grief. He was wounded for our transgressions, crushed for our iniquities. By his stripes we are healed. He was cut off from the land of the living. YHWH's will was to crush him. He makes himself an offering for guilt.",
   "summary_scholarly": "The ACR reads from the Great Isaiah Scroll (1QIsa-a) and the Orit Ge'ez. The four servant songs (42:1-4, 49:1-6, 50:4-9, 52:13-53:12) are the most contested passages in the entire covenant literature. The DSS read the servant as a mortal figure — either collective Yisra'EL or an individual human prophet. 1QIsa-a column 44, line 14 reads 'he will see light' after the servant's suffering — a reading absent from the Masoretic but confirmed by the Septuagint. The Qumran community never identifies the servant as divine. The Roman Church's reading of these passages as predictions of a divine incarnation is absent from every pre-Roman Hebrew source.",
   "key_terms": [
-    { "term": "Eved YHWH (Servant of YHWH)", "phonetic": "EH-ved YHWH", "definition": "The figure described in the four servant songs (42:1-4, 49:1-6, 50:4-9, 52:13-53:12). In the DSS and Orit Ge'ez, this is a mortal figure — either collective Yisra'EL or a human prophet. Not divine." },
-    { "term": "Man of Sorrows", "phonetic": "", "definition": "The servant is described as 'despised and rejected, a man of sorrows and acquainted with grief' (53:3). In 1QIsa-a this describes human suffering — not a divine being choosing to suffer." },
-    { "term": "1QIsa-a Column 44", "phonetic": "", "definition": "The column of the Great Isaiah Scroll containing chapter 53. Line 14 reads 'he will see light' after the suffering — a reading confirmed by the Septuagint but absent from the Masoretic. The oldest manuscripts agree against the later standardized text." },
-    { "term": "Asham (Guilt Offering)", "phonetic": "Ah-SHAHM", "definition": "The servant makes himself an asham — a guilt offering (53:10). In the Torah, the asham is an animal sacrifice. The servant-as-asham is a mortal who bears the consequence of the people's transgression — a sacrificial metaphor applied to a human figure." }
+    {
+      "term": "Servant Songs",
+      "phonetic": "chs 42-53",
+      "definition": "Four poems in Yesha'yahu 42, 49, 50, and 52-53 describing YHWH's Servant: chosen, spirit-endowed, called to bring justice to the nations, and ultimately bearing the community's suffering."
+    },
+    {
+      "term": "First Servant Song",
+      "phonetic": "ch.42:1-9",
+      "definition": "YHWH declares: 'Behold my servant, whom I uphold, my chosen, in whom my soul delights; I have put my Spirit upon him; he will bring forth justice to the nations.'"
+    },
+    {
+      "term": "Cyrus as Mashiakh",
+      "phonetic": "ch.44-45",
+      "definition": "YHWH calls Cyrus king of Persia 'my anointed' (mashiakh) in Yesha'yahu 44:28 and 45:1; Cyrus will authorize the rebuilding of the Temple without knowing YHWH."
+    },
+    {
+      "term": "'A Light to the Nations'",
+      "phonetic": "49:6",
+      "definition": "Second Servant Song: YHWH says the Servant is 'too small a thing' to restore only Yisra'el; he is given as 'a light to the nations, that my salvation may reach to the end of the earth.'"
+    },
+    {
+      "term": "Suffering Servant",
+      "phonetic": "52:13-53:12",
+      "definition": "The Fourth Servant Song describes one who is disfigured, despised, and bears the community's transgressions; this ancient Hebrew text is the source the NT borrowed its suffering-figure language from."
+    },
+    {
+      "term": "1QIsa-a Textual Variants in Ch.53",
+      "phonetic": "1QIsa-a",
+      "definition": "The Great Isaiah Scroll (1QIsa-a) has significant orthographic and textual differences from the Masoretic Text in chapter 53, confirming that the Masoretic Text is a later editorial layer, not the original."
+    },
+    {
+      "term": "'He Was Pierced for Our Transgressions'",
+      "phonetic": "53:5",
+      "definition": "Yesha'yahu 53:5 — 'he was pierced for our transgressions; he was crushed for our iniquities; upon him was the chastisement that brought us peace.' Ancient Hebrew source text; the NT borrowed from it."
+    },
+    {
+      "term": "New Exodus",
+      "phonetic": "chs 43-55",
+      "definition": "Deutero-Yesha'yahu repeatedly frames the return from Babylon as a New Exodus: YHWH will make a way in the wilderness and rivers in the desert, surpassing even the original Exodus from Mitzrayim."
+    },
+    {
+      "term": "Redemption from Babylon",
+      "phonetic": "chs 48-49",
+      "definition": "YHWH's act of bringing Yisra'el out of Babylon is framed as a redemption (ge'ulah); YHWH is the go'el — the kinsman-redeemer — who buys back his people from bondage."
+    },
+    {
+      "term": "'No Weapon Formed Against You'",
+      "phonetic": "54:17",
+      "definition": "Yesha'yahu 54:17 — 'no weapon that is fashioned against you shall succeed, and you shall refute every tongue that rises against you in judgment. This is the heritage of the servants of YHWH.'"
+    }
   ],
   "fill_blank": [
-    { "ref": "42:1", "prompt": "Behold my ______ whom I uphold, my chosen in whom my soul delights — I have put my spirit upon him.", "answer": "servant", "source_quote": "Behold my servant whom I uphold, my chosen in whom my soul delights — I have put my spirit upon him, he will bring forth justice to the nations." },
-    { "ref": "53:5", "prompt": "He was wounded for our transgressions, he was crushed for our iniquities — the chastisement that brought us peace was upon him, and by his ______ we are healed.", "answer": "stripes", "source_quote": "He was wounded for our transgressions, he was crushed for our iniquities — the chastisement that brought us peace was upon him, and by his stripes we are healed." },
-    { "ref": "42:3", "prompt": "A bruised ______ he will not break, and a faintly burning wick he will not quench.", "answer": "reed", "source_quote": "A bruised reed he will not break, and a faintly burning wick he will not quench." }
+    {
+      "ref": "Yesha'yahu 42:1",
+      "prompt": "'Behold my servant, whom I uphold, my _____, in whom my soul delights; I have put my Spirit upon him.'",
+      "answer": "chosen",
+      "source_quote": "Behold my servant, whom I uphold, my chosen, in whom my soul delights; I have put my Spirit upon him; he will bring forth justice to the nations."
+    },
+    {
+      "ref": "Yesha'yahu 44:28",
+      "prompt": "YHWH says of Cyrus: 'He is my _____, and he shall fulfill all my purpose; he shall say of Yerushalayim, She shall be built.'",
+      "answer": "shepherd",
+      "source_quote": "Who says of Cyrus, He is my shepherd, and he shall fulfill all my purpose; he shall say of Yerushalayim, She shall be built, and of the Temple, Your foundation shall be laid."
+    },
+    {
+      "ref": "Yesha'yahu 45:1",
+      "prompt": "YHWH addresses Cyrus: 'Thus says YHWH to his _____ Cyrus, whose right hand I have grasped, to subdue nations before him.'",
+      "answer": "anointed",
+      "source_quote": "Thus says YHWH to his anointed, to Cyrus, whose right hand I have grasped, to subdue nations before him."
+    },
+    {
+      "ref": "Yesha'yahu 49:6",
+      "prompt": "YHWH says the Servant is given as 'a light to the _____, that my salvation may reach to the end of the earth.'",
+      "answer": "nations",
+      "source_quote": "I will make you as a light for the nations, that my salvation may reach to the end of the earth."
+    },
+    {
+      "ref": "Yesha'yahu 53:3",
+      "prompt": "The Servant 'was _____ and rejected by men, a man of sorrows and acquainted with grief.'",
+      "answer": "despised",
+      "source_quote": "He was despised and rejected by men, a man of sorrows and acquainted with grief; and as one from whom men hide their faces he was despised, and we esteemed him not."
+    },
+    {
+      "ref": "Yesha'yahu 53:5",
+      "prompt": "'He was pierced for our _____; he was crushed for our iniquities; upon him was the chastisement that brought us peace.'",
+      "answer": "transgressions",
+      "source_quote": "He was pierced for our transgressions; he was crushed for our iniquities; upon him was the chastisement that brought us peace, and with his wounds we are healed."
+    },
+    {
+      "ref": "Yesha'yahu 53:7",
+      "prompt": "'He was oppressed, and he was afflicted, yet he opened not his mouth; like a _____ that is led to the slaughter he was silent.'",
+      "answer": "lamb",
+      "source_quote": "He was oppressed, and he was afflicted, yet he opened not his mouth; like a lamb that is led to the slaughter, and like a sheep that before its shearers is silent, so he opened not his mouth."
+    },
+    {
+      "ref": "Yesha'yahu 43:2",
+      "prompt": "'When you pass through the waters, I will be with you; and through the rivers, they shall not _____ you.'",
+      "answer": "overwhelm",
+      "source_quote": "When you pass through the waters, I will be with you; and through the rivers, they shall not overwhelm you; when you walk through fire you shall not be burned."
+    },
+    {
+      "ref": "Yesha'yahu 54:17",
+      "prompt": "'No weapon that is fashioned against you shall _____, and you shall refute every tongue that rises against you in judgment.'",
+      "answer": "succeed",
+      "source_quote": "No weapon that is fashioned against you shall succeed, and you shall refute every tongue that rises against you in judgment. This is the heritage of the servants of YHWH."
+    },
+    {
+      "ref": "Yesha'yahu 50:4",
+      "prompt": "Third Servant Song: 'The Creator YHWH has given me the tongue of those who are _____, that I may know how to sustain with a word him who is weary.'",
+      "answer": "taught",
+      "source_quote": "The Creator YHWH has given me the tongue of those who are taught, that I may know how to sustain with a word him who is weary."
+    }
   ],
   "multiple_choice": [
-    { "ref": "53:3", "question": "How is the servant described in chapter 53?", "options": ["A mighty warrior king", "Despised and rejected, a man of sorrows acquainted with grief", "A priest in the temple", "A divine being from heaven"], "correct": 1, "source_quote": "He was despised and rejected by men, a man of sorrows and acquainted with grief." },
-    { "ref": "1QIsa-a col 44", "question": "What does 1QIsa-a read in 53:11 that the Masoretic omits?", "options": ["He will see glory", "He will see light", "He will see the nations", "He will see the Temple"], "correct": 1, "source_quote": "After his suffering he will see light and be satisfied by his knowledge." },
-    { "ref": "42:1-4", "question": "What does YHWH say the servant will bring to the nations?", "options": ["Worship", "Justice", "Sacrifice", "War"], "correct": 1, "source_quote": "I have put my spirit upon him, he will bring forth justice to the nations." }
+    {
+      "ref": "Yesha'yahu 53:5",
+      "question": "Yesha'yahu 53:5 — 'he was pierced for our transgressions' — is an ancient Hebrew source text; which tradition borrowed its suffering-figure language?",
+      "options": [
+        "The NT borrowed from this ancient text",
+        "This text derived from the NT",
+        "Both were written at the same time",
+        "The text came from Babylonian myth"
+      ],
+      "correct": 0,
+      "source_quote": "He was pierced for our transgressions; he was crushed for our iniquities; upon him was the chastisement that brought us peace, and with his wounds we are healed."
+    },
+    {
+      "ref": "Yesha'yahu 44:28-45:1",
+      "question": "In Yesha'yahu 44-45, which foreign king does YHWH call 'my anointed' (mashiakh)?",
+      "options": [
+        "Cyrus of Persia",
+        "Nebuchadnezzar of Babylon",
+        "Sennakherib of Assyria",
+        "Darius the Mede"
+      ],
+      "correct": 0,
+      "source_quote": "Who says of Cyrus, He is my shepherd, and he shall fulfill all my purpose. Thus says YHWH to his anointed, to Cyrus."
+    },
+    {
+      "ref": "Yesha'yahu 42:1",
+      "question": "In the First Servant Song, what does YHWH say he has put upon his Servant?",
+      "options": [
+        "His Spirit",
+        "His Torah",
+        "His wisdom",
+        "His covenant"
+      ],
+      "correct": 0,
+      "source_quote": "Behold my servant, whom I uphold, my chosen, in whom my soul delights; I have put my Spirit upon him."
+    },
+    {
+      "ref": "Yesha'yahu 49:6",
+      "question": "The Second Servant Song says restoring Yisra'el is 'too small a thing'; what greater task is the Servant given?",
+      "options": [
+        "To be a light to the nations so YHWH's salvation reaches the earth's end",
+        "To judge the nations with YHWH's sword",
+        "To build the Temple in Yerushalayim",
+        "To lead the exiles back through the wilderness"
+      ],
+      "correct": 0,
+      "source_quote": "I will make you as a light for the nations, that my salvation may reach to the end of the earth."
+    },
+    {
+      "ref": "Yesha'yahu 53:9",
+      "question": "According to the Fourth Servant Song, what was assigned to the Servant in death?",
+      "options": [
+        "His grave was with the wicked but he was with the rich",
+        "His grave was in Yerushalayim",
+        "He was buried in a foreign land",
+        "He had no burial at all"
+      ],
+      "correct": 0,
+      "source_quote": "And they made his grave with the wicked and with a rich man in his death, although he had done no violence, and there was no deceit in his mouth."
+    },
+    {
+      "ref": "Yesha'yahu 43:1",
+      "question": "In Yesha'yahu 43:1, YHWH says to Yisra'el: 'I have redeemed you; I have called you by name, you are ___.'",
+      "options": [
+        "mine",
+        "holy",
+        "forgiven",
+        "saved"
+      ],
+      "correct": 0,
+      "source_quote": "But now thus says YHWH, he who created you, O Ya'akov, he who formed you, O Yisra'el: Fear not, for I have redeemed you; I have called you by name, you are mine."
+    },
+    {
+      "ref": "Yesha'yahu 50:6",
+      "question": "In the Third Servant Song, the Servant says he gave his back to those who struck him; what else did he give?",
+      "options": [
+        "His cheeks to those who pulled out the beard",
+        "His hands to those who bound him",
+        "His feet to those who shackled him",
+        "His voice to those who mocked him"
+      ],
+      "correct": 0,
+      "source_quote": "I gave my back to those who strike, and my cheeks to those who pull out the beard; I hid not my face from disgrace and spitting."
+    },
+    {
+      "ref": "Yesha'yahu 44:2-3",
+      "question": "What does YHWH promise to pour on Yisra'el's offspring in Yesha'yahu 44:3?",
+      "options": [
+        "His Spirit and his blessing",
+        "Water and rain",
+        "Wisdom and knowledge",
+        "His Torah and his covenant"
+      ],
+      "correct": 0,
+      "source_quote": "For I will pour water on the thirsty land, and streams on the dry ground; I will pour my Spirit upon your offspring, and my blessing on your descendants."
+    },
+    {
+      "ref": "Yesha'yahu 42:3",
+      "question": "According to the First Servant Song, what will the Servant not break?",
+      "options": [
+        "A bruised reed and a faintly burning wick",
+        "An ancient covenant",
+        "A contrite spirit",
+        "A repentant heart"
+      ],
+      "correct": 0,
+      "source_quote": "A bruised reed he will not break, and a faintly burning wick he will not quench; he will faithfully bring forth justice."
+    },
+    {
+      "ref": "Yesha'yahu 54:1",
+      "question": "Yesha'yahu 54 opens by addressing whom to sing, as her children are more than those of the married wife?",
+      "options": [
+        "The barren woman who did not bear",
+        "The widow of Yerushalayim",
+        "The daughter of Tziyon",
+        "The captive daughter of Babylon"
+      ],
+      "correct": 0,
+      "source_quote": "Sing, O barren one, who did not bear; break forth into singing and cry aloud, you who have not been in labor! For the children of the desolate one will be more than the children of her who is married."
+    }
   ],
   "faq": [
     {
-      "question": "Is the servant of Yesha'yahu 53 a divine figure?",
-      "answer": "No. The DSS messianic texts — 1QS, 1QSa, 4Q521, the Damascus Document — describe two mortal messiahs: a Messiah of Aaron (priestly) and a Messiah of Israel (kingly). Neither is divine. Neither is an object of worship. The Qumran community read Yesha'yahu 53 as describing a mortal servant — either collective Yisra'EL suffering among the nations or an individual human prophet who suffers on behalf of the people. 1QIsa-a column 44 preserves the text without any divine identification. The Roman Church's interpretation of these passages as predicting a divine incarnation — fully God and fully man — was formalized at the Council of Nicaea (325 CE) under Roman imperial authority. This reading is absent from the DSS, the Orit Ge'ez, and every pre-Roman Hebrew source. The oldest manuscripts describe a mortal servant. The divine incarnation is a Roman theological construction."
+      "question": "Who is the Servant in the Servant Songs of Yesha'yahu?",
+      "answer": "The Servant is identified as Yisra'el in some passages (Yesha'yahu 49:3) and as an individual figure within Yisra'el in others. The four songs trace a progression: chosen and spirit-endowed (42), called from the womb (49), opened to suffering without turning back (50), and finally the community's suffering borne by one on behalf of many (52-53). The NT later borrowed the suffering-servant imagery, but the ancient texts are the source."
     },
     {
-      "question": "What does 1QIsa-a 53:11 reveal about textual manipulation?",
-      "answer": "1QIsa-a column 44, line 14 reads: 'After his suffering he will see light and be satisfied.' The Masoretic text — standardized centuries later — omits the word 'light' (or). The Septuagint, translated before the Masoretic standardization, also reads 'light.' The DSS and the Septuagint agree against the Masoretic. When the two oldest witnesses agree and the later standardized text disagrees, the later text is the alteration. The removal of 'light' from the Masoretic may reflect theological editing — the servant seeing light after suffering implies a mortal vindication narrative, while the Masoretic omission creates ambiguity that enabled the Roman divine-resurrection reading. The oldest manuscripts tell a different story than the standardized text."
+      "question": "Why does YHWH call Cyrus 'anointed' (mashiakh)?",
+      "answer": "In Yesha'yahu 44:28 and 45:1, YHWH calls Cyrus of Persia 'my shepherd' and 'my anointed' because YHWH uses him as the instrument to authorize the rebuilding of Yerushalayim and the Temple. Cyrus will do this without knowing YHWH — the anointing is functional, not covenantal. This is the only place in the Hebrew corpus where a foreign king receives this title."
     },
     {
-      "question": "How were the servant songs used to erase African identity from the covenant?",
-      "answer": "The servant songs describe a figure who is 'despised and rejected' (53:3), whose 'appearance was marred beyond human semblance' (52:14), who is 'cut off from the land of the living' (53:8). Roman Christianity universalized these passages into a theology of divine suffering that replaced the specific covenant community with a generic 'humanity.' The servant became a European-depicted divine figure — systematically whitened in art from the Byzantine period onward. The actual covenant community described in these texts — an Afro-Asiatic population whose phenotype is documented across the DSS, the Orit Ge'ez, and the archaeological record — was replaced by a European theological abstraction. The specific became universal. The African became European. The mortal became divine. Each transformation served the erasure."
+      "question": "What are the DSS textual variants in Yesha'yahu 53?",
+      "answer": "The Great Isaiah Scroll (1QIsa-a) from Qumran has differences from the Masoretic Text in chapter 53. One significant variant: where the MT reads 'he disfigured him' (53:14), 1QIsa-a reads 'I disfigured him.' These variants confirm the MT is a later editorial layer, not the original text. The pre-Masoretic text is the primary witness."
+    },
+    {
+      "question": "What is the New Exodus theme in Yesha'yahu 43-55?",
+      "answer": "YHWH announces: 'Remember not the former things; behold, I am doing a new thing' (43:18-19). The return from Babylon will surpass the Exodus from Mitzrayim: YHWH will make rivers in the desert, roads through the wilderness, and lead the exiles back as a second great act of redemption. The covenant community's story is framed as an ongoing liberation narrative."
+    },
+    {
+      "question": "What does the Fourth Servant Song teach about suffering and community?",
+      "answer": "Yesha'yahu 52:13-53:12 describes a figure whose suffering is at first incomprehensible (53:1-3) but then revealed as vicarious: 'he bore our griefs and carried our sorrows' (53:4); 'he was pierced for our transgressions' (53:5). The community confesses it went astray while he bore the burden. This is communal covenant theology: one bearing for many, not personal punishment."
+    },
+    {
+      "question": "What is the significance of 'light to the nations' in Yesha'yahu 49:6?",
+      "answer": "The Second Servant Song declares that restoring Yisra'el alone would be 'too small a thing' for the Servant; YHWH's salvation through him must reach the ends of the earth. This frames Yisra'el's covenant role as global — not exclusive to one people but as a demonstration and vehicle of YHWH's universal redemption."
+    },
+    {
+      "question": "What does Yesha'yahu 44:9-20 say about idol-makers?",
+      "answer": "The extended idol-making polemic (44:9-20) describes a craftsman who plants a cedar, nourishes it with rain, then cuts it down: half goes into the fire for warmth and baking bread; from the remaining half he carves a god, falls down before it and prays 'Save me, for you are my god.' The polemic's conclusion: 'He feeds on ashes; a deluded heart has led him astray' (44:20)."
+    },
+    {
+      "question": "What promise does Yesha'yahu 54:10 make about YHWH's covenant of peace?",
+      "answer": "Yesha'yahu 54:10 — 'For the mountains may depart and the hills be removed, but my steadfast love shall not depart from you, and my covenant of peace shall not be removed, says YHWH who has compassion on you.' This covenant of peace (brit shalom) is unconditional; it is more stable than the creation itself."
+    },
+    {
+      "question": "Why is Yesha'yahu 53:7's 'lamb led to slaughter' significant?",
+      "answer": "The lamb image in Yesha'yahu 53:7 describes the Servant's silence in the face of oppression. It is an ancient Hebrew image of complete submission to suffering without resistance or complaint. This text — not anything from the NT — is the original; all later lamb-of-sacrifice imagery borrowed from this ancient source."
+    },
+    {
+      "question": "What does 'no weapon formed against you shall succeed' mean in context?",
+      "answer": "Yesha'yahu 54:17 concludes the great consolation section with an assurance to the restored covenant community: every weapon crafted against them will fail, and every legal accusation will be refuted. 'This is the heritage of the servants of YHWH' — the collective promise belongs to the whole community, not a single individual."
+    },
+    {
+      "question": "Who does Yesha'yahu 42:4 say the coastlands will wait for?",
+      "answer": "The First Servant Song ends: 'He will not grow faint or be discouraged till he has established justice in the earth; and the coastlands wait for his Torah.' The coastal nations and distant peoples will receive YHWH's teaching (Torah) through the Servant's work of bringing justice to the earth."
     }
   ]
 }

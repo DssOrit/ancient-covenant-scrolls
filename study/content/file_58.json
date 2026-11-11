@@ -1,38 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_58",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_58",
   "label": "Yehezkel (Ezekiel) — Part 5 — Chapters 33–39",
   "volume": 18,
-  "content_version": 1,
+  "content_version": 7,
   "summary_plain": "YHWH appoints Yehezkel as watchman: if the watchman sees the sword coming and does not warn the people, their blood is on his hands. YHWH declares: I have no pleasure in the death of the wicked — turn back, turn back from your evil ways — why will you die, house of Yisra'EL? YHWH denounces the shepherds of Yisra'EL who feed themselves instead of the flock — I will rescue my sheep from their mouths. YHWH himself will be their shepherd. In the valley of dry bones, YHWH sets Yehezkel down among bones that are very dry. Can these bones live? YHWH commands: Prophesy to these bones — and they come together, bone to bone, sinew and flesh cover them, and the breath enters them. YHWH says: These bones are the whole house of Yisra'EL — they say our bones are dried up, our hope is lost. But I will open your graves and bring you into the land. Two sticks — Yehudah and Efrayim — become one stick in YHWH's hand. Gog of the land of Magog comes against Yisra'EL — and YHWH destroys him with fire, brimstone, and pestilence.",
   "summary_scholarly": "The ACR reads from the DSS Ezekiel fragments (4QEzek-a, 4QEzek-b, 4QEzek-c, 11QEzek) and the Orit Ge'ez. Chapter 34 — the denunciation of false shepherds — is the foundational prophetic critique of institutional leadership. Chapter 37 — the valley of dry bones — is the defining restoration vision of the entire prophetic literature. The bones are explicitly identified: 'these bones are the whole house of Yisra'EL' (37:11). The two-sticks prophecy (37:15-28) promises the reunification of the divided kingdoms — Yehudah and Efrayim/Yosef — into one nation under one shepherd. Chapters 38-39 — the Gog and Magog oracle — describe an eschatological invasion that YHWH himself defeats. The War Scroll at Qumran (1QM) draws on this framework for its eschatological battle scenario.",
   "key_terms": [
-    { "term": "Valley of Dry Bones (Biq'at Ha'Atzamot)", "phonetic": "Biq-AHT Hah-Ah-tsah-MOT", "definition": "Chapter 37: YHWH sets Yehezkel in a valley full of dry bones and commands him to prophesy. The bones come together, sinew and flesh cover them, breath enters them, and they live. YHWH declares: these bones are the whole house of Yisra'EL. The vision is the definitive prophetic image of national restoration." },
-    { "term": "False Shepherds (Ro'im)", "phonetic": "Ro-EEM", "definition": "Chapter 34: YHWH denounces the shepherds of Yisra'EL: they eat the fat, clothe themselves with wool, slaughter the fattened sheep — but they do not feed the flock. The weak they do not strengthen. The sick they do not heal. The lost they do not seek. YHWH will remove them and shepherd the flock himself." },
-    { "term": "Two Sticks (Shnei Etzim)", "phonetic": "Shnay Ey-TSEEM", "definition": "Chapter 37:15-28: YHWH commands Yehezkel to take two sticks — one for Yehudah and one for Yosef/Efrayim — and join them into one stick. YHWH will make them one nation, no longer two kingdoms, under one king — and David my servant shall be their prince forever." },
-    { "term": "Gog of Magog", "phonetic": "Gog / Mah-GOG", "definition": "Chapters 38-39: a figure from the land of Magog who leads a coalition of nations against Yisra'EL in the latter days. YHWH destroys him with fire, brimstone, blood, and pestilence. The War Scroll at Qumran draws on this framework." }
+    {
+      "term": "Yehezkel the Watchman (Ezekiel 33)",
+      "phonetic": "tzofeh",
+      "definition": "YHWH appoints Yehezkel as watchman over the house of Yisra'el: if the watchman sees the sword coming and does not blow the trumpet, the people's blood is on his hands; if he warns them and they do not listen, their blood is on their own heads. Yehezkel is personally responsible to deliver YHWH's word."
+    },
+    {
+      "term": "YHWH Takes No Pleasure in the Death of the Wicked (Ezekiel 33:11)",
+      "phonetic": "lo khefetz be-mot ha-rashah",
+      "definition": "YHWH declares: As I live, I have no pleasure in the death of the wicked, but that the wicked turn from his way and live. Turn back, turn back from your evil ways, for why will you die, O house of Yisra'el? This restatement of the covenant appeal from Ezekiel 18 marks the transition from judgment oracles to restoration oracles."
+    },
+    {
+      "term": "Yerushalayim Falls — Yehezkel's Silence Broken (Ezekiel 33:21-22)",
+      "phonetic": "pe-tikhat pi",
+      "definition": "On the day before a refugee arrived from Yerushalayim with the news of the city's fall, the hand of YHWH opened Yehezkel's mouth. When the refugee came and confirmed the fall, Yehezkel was no longer silent. His role shifts from judgment prophet to restoration prophet."
+    },
+    {
+      "term": "Shepherds of Yisra'el Condemned (Ezekiel 34:1-10)",
+      "phonetic": "ro'im / no'am",
+      "definition": "YHWH pronounces woe on the shepherds of Yisra'el who fed themselves instead of the flock: they ate the fat, clothed themselves with the wool, but did not strengthen the weak, heal the sick, bind up the injured, seek the lost, or bring back the strayed. YHWH will remove the shepherds from tending the flock and hold them accountable."
+    },
+    {
+      "term": "YHWH as the Good Shepherd (Ezekiel 34:11-16)",
+      "phonetic": "YHWH ro'i",
+      "definition": "YHWH declares: Behold, I myself will search for my sheep and seek them out. I will gather them from the countries where they were scattered and bring them to their own land. I will feed them on the mountains of Yisra'el, by the ravines. I will seek the lost, bring back the strayed, bind up the injured, strengthen the weak."
+    },
+    {
+      "term": "YHWH Will Judge Between Sheep (Ezekiel 34:17-31)",
+      "phonetic": "mishpat beyn seh le-seh",
+      "definition": "YHWH will judge between the fat sheep and the lean sheep — those who ate and drank well but fouled the remaining water and pasture for others. YHWH will set over the restored flock his servant David as a shepherd and prince forever. YHWH will make a covenant of peace — a brit shalom — removing harmful beasts and causing blessing."
+    },
+    {
+      "term": "Valley of Dry Bones (Ezekiel 37:1-14)",
+      "phonetic": "ha-azamot ha-yeveshot",
+      "definition": "YHWH brought Yehezkel in the spirit to a valley full of bones — very dry. YHWH asked: can these bones live? Yehezkel prophesied as commanded. Bones came together, sinews and flesh came on them, skin covered them, and breath (ruakh) entered — a vast army stood on their feet. YHWH declares: I will bring you up from your graves and put my spirit (ruakh) in you, and you shall live."
+    },
+    {
+      "term": "Two Sticks Becoming One (Ezekiel 37:15-28)",
+      "phonetic": "ekhad be-yadi",
+      "definition": "YHWH commanded Yehezkel to take two sticks — one for Yehudah (Judah), one for Yosef/Efrayim (the northern kingdom) — and join them in his hand so they became one stick. YHWH declares: I will make them one nation in the land, one king over them. No longer two nations, no longer divided. YHWH's servant David will be king over them, and YHWH will make a brit shalom (covenant of peace) with them forever."
+    },
+    {
+      "term": "Gog of the Land of Magog (Ezekiel 38-39)",
+      "phonetic": "Gog and Magog",
+      "definition": "YHWH's prophecy against Gog of the land of Magog, chief prince of Meshekh and Tuval: in the latter days, Gog will come against the restored Yisra'el dwelling securely. YHWH will bring Gog against the land as bait, then destroy him with earthquake, pestilence, blood, overflowing rain, hailstones, fire, and burning sulfur. All the nations will know that YHWH is YHWH."
+    },
+    {
+      "term": "YHWH Will Restore His Spirit to Yisra'el (Ezekiel 39:29)",
+      "phonetic": "eshtok rukhi al beit Yisra-el",
+      "definition": "After the destruction of Gog and the full regathering of Yisra'el, YHWH declares: I will not hide my face anymore from them, when I pour out my spirit upon the house of Yisra'el. The covenant promise that drives the entire restoration section: YHWH's spirit poured out on the restored covenant people, never withdrawn again."
+    }
   ],
   "fill_blank": [
-    { "ref": "37:3", "prompt": "And he said to me: Son of man, can these ______ live? And I answered: O YHWH, you know.", "answer": "bones", "source_quote": "And he said to me: Son of man, can these bones live? And I answered: O YHWH, you know." },
-    { "ref": "34:2", "prompt": "Woe to the shepherds of Yisra'EL who have been feeding ______!", "answer": "themselves", "source_quote": "Son of man, prophesy against the shepherds of Yisra'EL — prophesy and say to them: Woe to the shepherds of Yisra'EL who have been feeding themselves! Should not shepherds feed the flock?" },
-    { "ref": "33:11", "prompt": "I have no pleasure in the death of the wicked — but that the wicked turn from his way and ______.", "answer": "live", "source_quote": "Say to them: As I live, declares YHWH, I have no pleasure in the death of the wicked, but that the wicked turn from his way and live. Turn back, turn back from your evil ways — why will you die, O house of Yisra'EL?" }
+    {
+      "ref": "Ezekiel 33:7",
+      "prompt": "Son of man, I have made you a ___ for the house of Yisra'el. Whenever you hear a word from my mouth, you shall give them warning.",
+      "answer": "watchman",
+      "source_quote": "I have made you a watchman for the house of Yisra'el."
+    },
+    {
+      "ref": "Ezekiel 33:11",
+      "prompt": "As I live, declares the Sovereign YHWH, I have no pleasure in the ___ of the wicked, but that the wicked turn from his way and live.",
+      "answer": "death",
+      "source_quote": "I have no pleasure in the death of the wicked, but that the wicked turn from his way and live."
+    },
+    {
+      "ref": "Ezekiel 34:2",
+      "prompt": "Woe to the shepherds of Yisra'el who have been feeding ___! Should not shepherds feed the sheep?",
+      "answer": "themselves",
+      "source_quote": "Woe to the shepherds of Yisra'el who have been feeding themselves! Should not shepherds feed the sheep?"
+    },
+    {
+      "ref": "Ezekiel 34:12",
+      "prompt": "I will seek out my sheep, and I will ___ them out from all places where they have been scattered.",
+      "answer": "rescue",
+      "source_quote": "I will seek out my sheep, and I will rescue them from all places where they have been scattered."
+    },
+    {
+      "ref": "Ezekiel 34:25",
+      "prompt": "I will make with them a covenant of ___ and banish wild beasts from the land, so that they may dwell securely in the wilderness and sleep in the woods.",
+      "answer": "peace",
+      "source_quote": "I will make with them a covenant of peace."
+    },
+    {
+      "ref": "Ezekiel 37:3",
+      "prompt": "He said to me, Son of man, can these bones ___? And I answered, O Sovereign YHWH, you know.",
+      "answer": "live",
+      "source_quote": "Can these bones live? And I answered, O Sovereign YHWH, you know."
+    },
+    {
+      "ref": "Ezekiel 37:5",
+      "prompt": "YHWH said to these bones: Behold, I will cause ___ to enter you, and you shall live.",
+      "answer": "breath",
+      "source_quote": "Behold, I will cause breath to enter you, and you shall live."
+    },
+    {
+      "ref": "Ezekiel 37:17",
+      "prompt": "Join them one to another into one stick, that they may become ___ in your hand.",
+      "answer": "one",
+      "source_quote": "Join them one to another into one stick, that they may become one in your hand."
+    },
+    {
+      "ref": "Ezekiel 38:3",
+      "prompt": "YHWH said: I am against you, O Gog, chief prince of ___ and Tuval.",
+      "answer": "Meshekh",
+      "source_quote": "I am against you, O Gog, chief prince of Meshekh and Tuval."
+    },
+    {
+      "ref": "Ezekiel 39:29",
+      "prompt": "I will not hide my face anymore from them, when I pour out my ___ upon the house of Yisra'el.",
+      "answer": "spirit",
+      "source_quote": "I will not hide my face anymore from them, when I pour out my spirit upon the house of Yisra'el."
+    }
   ],
   "multiple_choice": [
-    { "ref": "37:11", "question": "Who do the dry bones represent?", "options": ["The dead in Sheol", "The whole house of Yisra'EL", "The Babylonian army", "The fallen angels"], "correct": 1, "source_quote": "Then he said to me: Son of man, these bones are the whole house of Yisra'EL. Behold, they say: Our bones are dried up, and our hope is lost — we are cut off completely." },
-    { "ref": "34:10", "question": "What does YHWH declare about the false shepherds?", "options": ["He will give them another chance", "He will remove them and rescue the flock from their mouths", "He will promote them to kings", "He will send them to the nations"], "correct": 1, "source_quote": "I am against the shepherds, and I will require my flock at their hand and put a stop to their feeding the flock. No longer shall the shepherds feed themselves. I will rescue my flock from their mouths." },
-    { "ref": "37:17", "question": "What does the two-sticks prophecy represent?", "options": ["Two separate covenants", "The reunification of Yehudah and Efrayim into one nation", "Two different Torot", "The division of the priesthood"], "correct": 1, "source_quote": "Join them one to another into one stick, that they may become one in your hand — I will make them one nation in the land, and one king shall be king over them all." }
+    {
+      "ref": "Ezekiel 33:7",
+      "question": "What responsibility does YHWH assign to Yehezkel as watchman?",
+      "options": [
+        "To guard the Temple from Babylonian soldiers",
+        "To warn the house of Yisra'el of YHWH's word or bear responsibility for their death",
+        "To lead the exiles in prayer and covenant renewal",
+        "To record all the visions in a scroll for the exiles"
+      ],
+      "correct": 1,
+      "source_quote": "If you warn the wicked of his way to turn from it, and he does not turn, he shall die in his iniquity, but you will have delivered your soul."
+    },
+    {
+      "ref": "Ezekiel 33:11",
+      "question": "What is YHWH's covenant appeal in Ezekiel 33:11?",
+      "options": [
+        "Return to the Temple and bring the required offerings",
+        "Submit to Nebukhadnetzar as YHWH's appointed king",
+        "Turn back from evil ways — YHWH has no pleasure in the death of the wicked",
+        "Gather at the borders of the land and wait for YHWH's signal"
+      ],
+      "correct": 2,
+      "source_quote": "I have no pleasure in the death of the wicked, but that the wicked turn from his way and live. Turn back, turn back."
+    },
+    {
+      "ref": "Ezekiel 34:2-4",
+      "question": "What specific failures does YHWH accuse the shepherds of Yisra'el of in Ezekiel 34?",
+      "options": [
+        "Failing to defend the land against Babylon's armies",
+        "Feeding themselves instead of the flock, not strengthening the weak or seeking the lost",
+        "Refusing to teach the Torah to the next generation",
+        "Allowing the Temple worship to become corrupt"
+      ],
+      "correct": 1,
+      "source_quote": "You eat the fat, you clothe yourselves with the wool, you slaughter the fat ones, but you do not feed the sheep."
+    },
+    {
+      "ref": "Ezekiel 34:11-16",
+      "question": "What does YHWH declare he himself will do as the shepherd of Yisra'el?",
+      "options": [
+        "Appoint a Levitical priest to care for the scattered exiles",
+        "Establish a new Temple where the flock can gather",
+        "Search for his scattered sheep, bring them back, and feed them in their own land",
+        "Give the land to the nations until the appointed time of restoration"
+      ],
+      "correct": 2,
+      "source_quote": "Behold, I myself will search for my sheep and seek them out... I will bring them out from the peoples."
+    },
+    {
+      "ref": "Ezekiel 37:3",
+      "question": "When YHWH asked if the dry bones could live, what was Yehezkel's answer?",
+      "options": [
+        "Yes, if the people repent and turn back",
+        "No, for they had been dead too long",
+        "O Sovereign YHWH, you know",
+        "Only if YHWH sends his spirit from the east"
+      ],
+      "correct": 2,
+      "source_quote": "And I answered, O Sovereign YHWH, you know."
+    },
+    {
+      "ref": "Ezekiel 37:1-14",
+      "question": "What does the valley of dry bones vision represent according to YHWH's explanation?",
+      "options": [
+        "The final judgment of the wicked at the end of days",
+        "The army of Gog that will come against restored Yisra'el",
+        "The whole house of Yisra'el in exile — their hope apparently lost, to be raised up and returned",
+        "The souls of those killed in the fall of Yerushalayim"
+      ],
+      "correct": 2,
+      "source_quote": "These bones are the whole house of Yisra'el. They say, Our bones are dried up, our hope is lost."
+    },
+    {
+      "ref": "Ezekiel 37:15-28",
+      "question": "What do the two sticks in Ezekiel 37 represent?",
+      "options": [
+        "The Torah of Moshe and the word of the prophets",
+        "The two tablets of the covenant given at Sinai",
+        "Yehudah (the southern kingdom) and Yosef/Efrayim (the northern kingdom), to be reunited as one",
+        "The covenant made with Avraham and the covenant made at Sinai"
+      ],
+      "correct": 2,
+      "source_quote": "Take a stick and write on it, For Judah... then take another stick, For Joseph... and join them one to another into one stick."
+    },
+    {
+      "ref": "Ezekiel 38-39",
+      "question": "What is the purpose of YHWH bringing Gog against restored Yisra'el in the latter days?",
+      "options": [
+        "To test whether Yisra'el will keep the covenant after restoration",
+        "So that all the nations will know that YHWH is YHWH when he destroys Gog",
+        "To give Nebukhadnetzar a final victory over the covenant people",
+        "To punish Yisra'el for rebuilding the Temple incorrectly"
+      ],
+      "correct": 1,
+      "source_quote": "So I will show my greatness and my holiness and make myself known in the eyes of many nations. Then they will know that I am YHWH."
+    },
+    {
+      "ref": "Ezekiel 39:29",
+      "question": "What does YHWH promise at the end of the Gog prophecy regarding the restored Yisra'el?",
+      "options": [
+        "That the Temple will be rebuilt exactly as described in Ezekiel's vision",
+        "That the Davidic king will reign forever without end",
+        "That YHWH will pour out his spirit upon the house of Yisra'el and no longer hide his face",
+        "That Yisra'el will never be exiled again from the covenant land"
+      ],
+      "correct": 2,
+      "source_quote": "I will not hide my face anymore from them, when I pour out my spirit upon the house of Yisra'el."
+    },
+    {
+      "ref": "Ezekiel 34:25",
+      "question": "What is the brit shalom (covenant of peace) YHWH promises in Ezekiel 34?",
+      "options": [
+        "A peace treaty between Yisra'el and the nations",
+        "A covenant that removes harmful beasts and brings secure dwelling and blessing to the land",
+        "A covenant that ends all warfare between Yehudah and Efrayim",
+        "A covenant that restores the Davidic dynasty to the throne immediately"
+      ],
+      "correct": 1,
+      "source_quote": "I will make with them a covenant of peace and banish wild beasts from the land, so that they may dwell securely."
+    }
   ],
   "faq": [
     {
-      "question": "How do the dry bones represent the scattered covenant people's restoration?",
-      "answer": "The dry bones vision is not a general resurrection metaphor. YHWH is explicit: 'these bones are the whole house of Yisra'EL' (37:11). The people say: 'our bones are dried up, our hope is lost, we are cut off completely.' This is the condition of a people scattered across the earth, stripped of identity, their covenant connection severed by institutional forces — the Lo-Ammi state described by Hoshea. The bones are very dry — meaning the scattering has gone on so long that the people appear beyond recovery. But YHWH commands the prophet to speak to the bones — and they come together. Bone to bone. Sinew covers them. Flesh grows. Breath enters. They stand on their feet — an exceedingly great army. The restoration is not gradual institutional reform. It is prophetic speech over dead material that YHWH reconstitutes. The two sticks that follow (37:15-28) specify the scope: both Yehudah and Yosef/Efrayim — the southern and northern kingdoms, the known and the lost, the acknowledged and the scattered — are reunited into one nation. Every descendant of the covenant people who was scattered by the Assyrian deportation (722 BCE), the Babylonian exile (586 BCE), the Roman destruction (70 CE), the Arab slave trade, the European slave trade — every bone in that valley is addressed by this prophecy. The dry bones are those whose identity was erased, whose history was stolen, whose connection to the covenant was declared dead by every institution. YHWH says: I will open your graves and raise you up."
+      "question": "What is the significance of the watchman responsibility assigned to Yehezkel?",
+      "answer": "YHWH's appointment of Yehezkel as watchman in Ezekiel 33 establishes personal prophetic accountability: the watchman's job is to warn, not to guarantee results. If Yehezkel delivers the warning and people ignore it, their blood is on their own heads; if he fails to warn, their blood is on his hands. This is a covenant accountability structure: YHWH uses human agents to deliver his covenant word, and those agents are personally responsible for faithful delivery. The watchman metaphor also implies a community responsibility — the people cannot say they were not warned."
     },
     {
-      "question": "What does YHWH's denunciation of false shepherds (chapter 34) mean for institutional religion?",
-      "answer": "YHWH's indictment is specific and devastating: the shepherds eat the fat, clothe themselves with wool, slaughter the fattened sheep — but do not feed the flock (34:2-3). They do not strengthen the weak. They do not heal the sick. They do not bind up the injured. They do not bring back the strayed. They do not seek the lost. They rule with force and harshness. The flock is scattered because there is no shepherd (34:5). YHWH's response is not to reform the shepherds — it is to remove them: 'I am against the shepherds, and I will require my flock at their hand' (34:10). Then YHWH himself becomes the shepherd: 'I myself will search for my sheep and seek them out' (34:11). The institutional religious leadership that profits from the flock while the flock is scattered, sick, and lost is under YHWH's direct judgment. The Great Eraser operates through institutional shepherds who feed themselves — building denominations, accumulating wealth, gatekeeping access to the text — while the covenant people remain scattered and identity-stripped. YHWH does not ask the false shepherds to improve. He removes them."
+      "question": "What is the indictment of the shepherds in Ezekiel 34 and who does it apply to?",
+      "answer": "YHWH's indictment of Yisra'el's shepherds in Ezekiel 34 applies to every kind of leadership — kings, priests, prophets, nobles — anyone entrusted with covenant community care. The failures catalogued are specific: feeding themselves at the community's expense, failing to strengthen the weak, failing to heal the sick, failing to seek the lost and strayed, using force against the flock. YHWH declares he will hold the shepherds accountable and remove them from tending the flock. The indictment is not abstract but describes the actual failure modes of Yehudah's leadership that led to the exile."
     },
     {
-      "question": "What is the Gog and Magog invasion and how does Qumran interpret it?",
-      "answer": "Chapters 38-39 describe a figure called Gog from the land of Magog — chief prince of Meshekh and Tuval — who leads a coalition of nations (Paras, Cush, Put, Gomer, Bet Togarmah) against Yisra'EL in the latter days. YHWH destroys the invasion with earthquake, pestilence, blood, torrential rain, hailstones, fire, and brimstone (38:19-22). The War Scroll at Qumran (1QM) draws on this framework — describing a forty-year eschatological war between the Sons of Light and the Sons of Darkness, with YHWH's direct intervention securing the final victory. The Qumran community understood the Gog prophecy not as past history but as future reality — a final confrontation between the covenant community and the nations aligned against them. Revelation 20:8 reuses the Gog and Magog names for the same eschatological scenario. The prophetic pattern is consistent: a final coalition moves against the covenant people, and YHWH — not human military power — destroys them."
+      "question": "What does YHWH mean by declaring himself the shepherd of Yisra'el in Ezekiel 34?",
+      "answer": "In Ezekiel 34:11-16, YHWH steps in as the shepherd who will do what the human shepherds failed to do: seek the scattered, bring back the strayed, bind the injured, strengthen the weak, feed them in good pasture. This is not simply a metaphor — it is a covenant declaration of YHWH's own direct action on behalf of the scattered exiles. YHWH will not leave the restoration to another human shepherd who might also fail. The language echoes Psalm 23 and the entire covenant tradition of YHWH as the one who provides, protects, and restores."
+    },
+    {
+      "question": "What is the theological meaning of the valley of dry bones vision?",
+      "answer": "The valley of dry bones in Ezekiel 37 is YHWH's direct answer to the exiles' despair: Our bones are dried up, our hope is lost, we are cut off completely. YHWH demonstrates with the vision that there is no death from which YHWH cannot resurrect: bones — very dry, apparently beyond any hope — came together, received flesh and skin, and were given the ruakh (breath/spirit) of life. YHWH's explanation is explicit: the bones are the whole house of Yisra'el in exile. The restoration of the nation will be as miraculous as resurrection from death."
+    },
+    {
+      "question": "What do the two sticks in Ezekiel 37 represent and why does the reunion matter?",
+      "answer": "The two sticks represent the divided kingdom: one stick for Yehudah (the southern kingdom, the exiles in Babylon), one stick for Yosef/Efrayim (the northern kingdom, scattered since 722 BCE). YHWH declares he will join them into one in his hand and make them one nation under one king — YHWH's servant David. The reunion matters because the division of the kingdom after Shlomo was itself a covenant consequence of Solomon's unfaithfulness, and the two-kingdom reality had persisted for centuries. The restoration YHWH promises is not just return from Babylon but complete covenant reunification of all twelve tribes."
+    },
+    {
+      "question": "What is the brit shalom (covenant of peace) promised in Ezekiel 34 and 37?",
+      "answer": "YHWH's covenant of peace promised in Ezekiel 34:25 and 37:26 is the eschatological covenant that fulfills all the earlier covenant promises: YHWH will make a brit shalom with the restored people, remove harmful beasts from the land, cause the people to dwell securely, bless them with rain and agricultural abundance, multiply them, and place his sanctuary among them forever. YHWH's servant David will be their shepherd-king. The brit shalom is not a new covenant separate from Sinai but the fulfillment of the covenant promises that Yisra'el's unfaithfulness had delayed — now given without revocation."
+    },
+    {
+      "question": "Who is Gog of Magog and what is the purpose of this prophecy?",
+      "answer": "Gog of Magog in Ezekiel 38-39 is a future coalition leader who will come against restored Yisra'el dwelling securely in the land. The prophecy does not specify a historical identity — it describes a final assault against the covenant community in the latter days. YHWH declares he will destroy Gog with earthquake, pestilence, fire, and brimstone, and all the nations will see that YHWH is YHWH. The purpose is not primarily about Gog but about the universal witness: YHWH's final act of covenant protection for the restored people will be visible to every nation and cannot be attributed to Yisra'el's own military power."
+    },
+    {
+      "question": "What is the significance of Yehezkel's silence being broken when Yerushalayim fell?",
+      "answer": "In Ezekiel 24:27, YHWH told Yehezkel that on the day the Temple fell, his mouth would be opened. In Ezekiel 33:21-22, the night before a refugee arrived with news of the city's fall, YHWH opened Yehezkel's mouth. When the refugee confirmed the fall, Yehezkel was no longer mute. This marks the structural turning point of the entire book: before the fall, Yehezkel spoke primarily judgment oracles; after the fall, his ministry shifts to restoration prophecy. The silence was itself a sign — it ended when the judgment it had announced was confirmed."
+    },
+    {
+      "question": "How does YHWH's promise to pour out his spirit in Ezekiel 39:29 connect to the restoration?",
+      "answer": "YHWH's promise in Ezekiel 39:29 — I will not hide my face anymore from them, when I pour out my spirit upon the house of Yisra'el — is the culminating covenant promise of the entire restoration section. Throughout the exile, YHWH had hidden his face because of the covenant violation. The pouring out of YHWH's ruakh (spirit) on the restored people is the reversal of everything that caused the exile: not just political return but covenant renewal, with YHWH's own presence dwelling in the people rather than withdrawn from them. This promise becomes the foundation for the vision of the restored Temple in Ezekiel 40-48."
+    },
+    {
+      "question": "What is the brit shalom (covenant of peace) and how does it differ from the Sinai covenant?",
+      "answer": "In Ezekiel 34:25 and 37:26, YHWH promises a brit shalom — a covenant of peace — with the restored Yisra'el. This is not a replacement of the Sinai covenant but its eternal fulfillment: YHWH will make the covenant permanent, place his sanctuary among them forever, make them his people and be their Creator. The difference from Sinai is that this covenant comes after the full playing out of the exile consequences — after the judgment, after the purging, after the wilderness renewal. It is the same covenant obligations (Torah) now written in the heart (echoing Yirmeyahu 31), with YHWH's spirit poured out as the enabling power, and with YHWH's own sanctuary as the permanent dwelling rather than a portable Tabernacle."
+    },
+    {
+      "question": "What does the new heart and new spirit promise in Yehezkel 36 mean?",
+      "answer": "Yehezkel 36:26-27 is the covenant's answer to the reform-apostasy cycle: 'I will give you a new heart, and a new spirit I will put within you. And I will remove the heart of stone from your flesh and give you a heart of flesh. And I will put my spirit within you, and cause you to walk in my statutes.' The problem the entire history of Yehudah exposed — that external covenant law without internal covenant loyalty produces only temporary compliance — is addressed here directly. The new heart is YHWH's initiative, not the community's achievement. The spirit placed within the people causes them to walk in YHWH's statutes; the keeping of Torah becomes an expression of internal transformation, not an external demand resisted by a stone heart. This is the covenant's deepest promise: that the gap between YHWH's standard and the community's capacity will be closed from YHWH's side, not by human effort alone."
     }
   ]
 }

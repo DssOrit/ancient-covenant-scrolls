@@ -1,44 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_65",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_65",
   "label": "Tehillim (Psalms) — Part 1 — Psalms 1–20",
   "volume": 20,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Tehillim opens with the two paths: the righteous who delight in YHWH's Torah, and the wicked who are like chaff. YHWH sets his anointed on Tziyon. The heavens declare the glory of The Creator. YHWH is my shepherd — I shall not want. Psalm 19 declares: the Torah of YHWH is perfect, restoring the soul. Psalm 8 asks: what is man that you are mindful of him? These are prayers, praises, and declarations spoken directly to YHWH.",
   "summary_scholarly": "The ACR reads Tehillim from the Dead Sea Scrolls witnesses (11QPsa, 4QPsa-q, and additional fragments) and the Orit Ge'ez. The DSS Psalms Scroll (11QPsa) preserves a different arrangement than the Masoretic — including additional psalms (151, 154, 155) and a prose composition about David's writings. The Qumran arrangement demonstrates that the Psalter was not yet fixed in the form the Masoretes later standardized. Psalm 14 in the DSS differs from the Masoretic in significant readings.",
   "key_terms": [
-    { "term": "Tehillim", "phonetic": "Teh-hee-LEEM", "definition": "Hebrew for 'Praises' — the Hebrew name for the Psalms. The book is a collection of prayers, hymns, laments, and declarations addressed directly to YHWH." },
-    { "term": "Torah of YHWH", "phonetic": "", "definition": "Psalm 19:7: 'The Torah of YHWH is perfect, restoring the soul.' Torah here means instruction, teaching — YHWH's direct guidance. It is not a burden but a restoration." },
-    { "term": "Mashiach (Anointed)", "phonetic": "Mah-SHEE-akh", "definition": "Psalm 2:2: the kings of the earth set themselves against YHWH and against his anointed. The anointed is a human king — the Davidic ruler. In the DSS framework, mashiach is a functional title for a mortal appointed by YHWH." },
-    { "term": "11QPsa", "phonetic": "", "definition": "The Great Psalms Scroll from Qumran Cave 11. Preserves psalms in a different order than the Masoretic and includes compositions absent from European Bibles — Psalms 151, 154, 155, and others." }
+    {
+      "term": "Psalm 1 Two Ways",
+      "phonetic": "Tehillim 1",
+      "definition": "The Psalter's opening: two ways set before every person — the way of the righteous (meditating on YHWH's Torah, like a tree planted by water) and the way of the wicked (like chaff blown away). No middle ground."
+    },
+    {
+      "term": "Psalm 2 Mashiakh on Tzion",
+      "phonetic": "Tehillim 2",
+      "definition": "YHWH's royal psalm: the nations rage against YHWH's anointed (mashiakh) on Mount Tzion; YHWH laughs at them and declares the mashiakh YHWH's son and king."
+    },
+    {
+      "term": "You Are My Son (Ps.2:7)",
+      "phonetic": "Tehillim 2:7",
+      "definition": "'You are my son; today I have begotten you.' YHWH's declaration over the anointed king at his enthronement. Ancient royal covenant formula; NT writers borrowed it, applying it to the invented figure. The original is an ancient Hebrew royal enthronement text."
+    },
+    {
+      "term": "Psalm 22 My El My El",
+      "phonetic": "Tehillim 22",
+      "definition": "Opens: 'My El, my El, why have you forsaken me?' — a lament of acute abandonment followed by triumphant praise. Contains imagery borrowed wholesale by NT writers: encircling enemies like bulls and dogs, bones out of joint, divided garments by lot. The original ancient text; NT borrowing is documented here."
+    },
+    {
+      "term": "Psalm 23 YHWH My Shepherd",
+      "phonetic": "Tehillim 23",
+      "definition": "The best-known psalm: 'YHWH is my shepherd; I shall not want.' The shepherd imagery, the valley of deep shadow, the anointed head, the table before enemies — all covenant trust expressed through pastoral metaphor."
+    },
+    {
+      "term": "Hallelu-Yah",
+      "phonetic": "hal-leh-loo-YAH",
+      "definition": "Hebrew imperative: 'Praise YHWH!' — a compound of hallelu (praise, pl.) and Yah (the shortened divine name). Appears throughout Tehillim especially in the closing books (Ps.146-150, the final Hallel)."
+    },
+    {
+      "term": "Mizmor le-David",
+      "phonetic": "miz-MOR leh-dah-VEED",
+      "definition": "Common psalm superscription: 'A psalm of/for/by David.' The Hebrew preposition lamed allows multiple meanings — dedicated to David, in David's style, or composed by David."
+    },
+    {
+      "term": "Selah",
+      "phonetic": "SEH-lah",
+      "definition": "A term appearing 71 times in Tehillim and 3 times in Havaqquq; exact meaning uncertain but likely a musical or liturgical pause marker — either a rest in the music or a signal to lift the voice."
+    },
+    {
+      "term": "Superscription",
+      "phonetic": "su-per-SCRIP-shun",
+      "definition": "The header lines added to many psalms identifying the author, the occasion, the musical instrument or tune, or the liturgical use. These headers are considered part of the canonical text in the Hebrew tradition."
+    },
+    {
+      "term": "Psalter",
+      "phonetic": "SAWL-ter",
+      "definition": "The complete collection of 150 (or 151 in some traditions) psalms, organized into five books, each ending with a doxology. The five books parallel the five books of Torah in structure."
+    }
   ],
   "fill_blank": [
-    { "ref": "1:1-2", "prompt": "Blessed is the man who walks not in the counsel of the wicked — but his delight is in the ______ of YHWH.", "answer": "Torah", "source_quote": "Blessed is the man who walks not in the counsel of the wicked, nor stands in the way of sinners, nor sits in the seat of scoffers — but his delight is in the Torah of YHWH, and on his Torah he meditates day and night." },
-    { "ref": "19:1", "prompt": "The heavens declare the glory of The Creator, and the sky above proclaims his ______.", "answer": "handiwork", "source_quote": "The heavens declare the glory of The Creator, and the sky above proclaims his handiwork." },
-    { "ref": "19:7", "prompt": "The Torah of YHWH is perfect, restoring the ______.", "answer": "soul", "source_quote": "The Torah of YHWH is perfect, restoring the soul. The testimony of YHWH is sure, making wise the simple." },
-    { "ref": "8:4", "prompt": "What is man that you are ______ of him, and the son of man that you care for him?", "answer": "mindful", "source_quote": "What is man that you are mindful of him, and the son of man that you care for him?" }
+    {
+      "ref": "Psalm 1:2",
+      "prompt": "But his delight is in the ___ of YHWH, and on his Torah he meditates day and night.",
+      "answer": "Torah",
+      "source_quote": "But his delight is in the Torah of YHWH, and on his Torah he meditates day and night."
+    },
+    {
+      "ref": "Psalm 1:3",
+      "prompt": "He is like a ___ planted by streams of water that yields its fruit in its season.",
+      "answer": "tree",
+      "source_quote": "He is like a tree planted by streams of water that yields its fruit in its season."
+    },
+    {
+      "ref": "Psalm 2:7",
+      "prompt": "YHWH said to me, 'You are my ___; today I have begotten you.'",
+      "answer": "son",
+      "source_quote": "You are my son; today I have begotten you."
+    },
+    {
+      "ref": "Psalm 8:4",
+      "prompt": "What is ___ that you are mindful of him, and the son of man that you care for him?",
+      "answer": "man",
+      "source_quote": "What is man that you are mindful of him, and the son of man that you care for him?"
+    },
+    {
+      "ref": "Psalm 19:1",
+      "prompt": "The heavens declare the ___ of YHWH, and the sky above proclaims his handiwork.",
+      "answer": "glory",
+      "source_quote": "The heavens declare the glory of YHWH, and the sky above proclaims his handiwork."
+    },
+    {
+      "ref": "Psalm 22:1",
+      "prompt": "My El, my El, why have you ___ me? Why are you so far from saving me, from the words of my groaning?",
+      "answer": "forsaken",
+      "source_quote": "My El, my El, why have you forsaken me? Why are you so far from saving me, from the words of my groaning?"
+    },
+    {
+      "ref": "Psalm 22:18",
+      "prompt": "They divide my garments among them, and for my clothing they cast ___.",
+      "answer": "lots",
+      "source_quote": "They divide my garments among them, and for my clothing they cast lots."
+    },
+    {
+      "ref": "Psalm 23:1",
+      "prompt": "YHWH is my ___; I shall not want.",
+      "answer": "shepherd",
+      "source_quote": "YHWH is my shepherd; I shall not want."
+    },
+    {
+      "ref": "Psalm 23:4",
+      "prompt": "Even though I walk through the ___ of the shadow of death, I will fear no evil, for you are with me.",
+      "answer": "valley",
+      "source_quote": "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me."
+    },
+    {
+      "ref": "Psalm 34:8",
+      "prompt": "Oh, ___ and see that YHWH is good! Blessed is the man who takes refuge in him!",
+      "answer": "taste",
+      "source_quote": "Oh, taste and see that YHWH is good! Blessed is the man who takes refuge in him!"
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:1-3", "question": "What is the righteous person compared to in Psalm 1?", "options": ["A mighty warrior", "A tree planted by streams of water", "A mountain fortress", "A burning flame"], "correct": 1, "source_quote": "He is like a tree planted by streams of water that yields its fruit in its season, and its leaf does not wither." },
-    { "ref": "19:7", "question": "What does Psalm 19 say about the Torah of YHWH?", "options": ["It is too difficult to keep", "It is perfect, restoring the soul", "It has been replaced", "It is only for priests"], "correct": 1, "source_quote": "The Torah of YHWH is perfect, restoring the soul." },
-    { "ref": "2:2", "question": "Against whom do the kings of the earth set themselves in Psalm 2?", "options": ["Against each other", "Against YHWH and his anointed", "Against the prophets", "Against the angels"], "correct": 1, "source_quote": "The kings of the earth set themselves, and the rulers take counsel together, against YHWH and against his anointed." },
-    { "ref": "14:1", "question": "What does Psalm 14 say in the DSS reading?", "options": ["The wise seek YHWH", "The fool says in his heart there is no Creator", "The righteous shall never be moved", "The wicked flee when no one pursues"], "correct": 1, "source_quote": "The fool says in his heart: There is no Creator. They are corrupt, they do abominable deeds." }
+    {
+      "ref": "Psalm 1:1",
+      "question": "Who does Psalm 1 declare blessed at its opening?",
+      "options": [
+        "The one who brings many sacrifices",
+        "The one who does not walk in the counsel of the wicked",
+        "The one who rules over many nations",
+        "The one who builds the Temple"
+      ],
+      "correct": 1,
+      "source_quote": "Blessed is the man who walks not in the counsel of the wicked, nor stands in the way of sinners, nor sits in the seat of scoffers."
+    },
+    {
+      "ref": "Psalm 1:3",
+      "question": "To what is the righteous person compared in Psalm 1?",
+      "options": [
+        "A strong fortress on a mountain",
+        "A tree planted by streams of water",
+        "Chaff driven by the wind",
+        "A warrior who cannot be stopped"
+      ],
+      "correct": 1,
+      "source_quote": "He is like a tree planted by streams of water that yields its fruit in its season, and its leaf does not wither."
+    },
+    {
+      "ref": "Psalm 2:2-3",
+      "question": "Against whom do the nations and their rulers conspire in Psalm 2?",
+      "options": [
+        "Against the armies of Yisra'el",
+        "Against YHWH and his anointed",
+        "Against the Temple in Yerushalayim",
+        "Against the Torah of Moshe"
+      ],
+      "correct": 1,
+      "source_quote": "The kings of the earth set themselves, and the rulers take counsel together, against YHWH and against his Anointed."
+    },
+    {
+      "ref": "Psalm 2:7",
+      "question": "What declaration does YHWH make over the anointed king in Psalm 2:7?",
+      "options": [
+        "You are my servant, chosen for this day",
+        "You are my son; today I have begotten you",
+        "You are my messenger; go and prepare the way",
+        "You are my shepherd; tend my flock Yisra'el"
+      ],
+      "correct": 1,
+      "source_quote": "You are my son; today I have begotten you."
+    },
+    {
+      "ref": "Psalm 22:1",
+      "question": "With what cry does Psalm 22 open?",
+      "options": [
+        "YHWH is my strength and my song",
+        "How long, O YHWH, will you forget me?",
+        "My El, my El, why have you forsaken me?",
+        "Bless YHWH O my soul and all that is within me"
+      ],
+      "correct": 2,
+      "source_quote": "My El, my El, why have you forsaken me? Why are you so far from saving me?"
+    },
+    {
+      "ref": "Psalm 22:18",
+      "question": "What do the enemies do with the psalmist's garments in Psalm 22:18?",
+      "options": [
+        "They burn them as a sacrifice",
+        "They divide them and cast lots for them",
+        "They give them to the poor",
+        "They bury them in the ground"
+      ],
+      "correct": 1,
+      "source_quote": "They divide my garments among them, and for my clothing they cast lots."
+    },
+    {
+      "ref": "Psalm 23:1",
+      "question": "What is the opening declaration of Psalm 23?",
+      "options": [
+        "YHWH is my fortress; I shall not be shaken",
+        "YHWH is my shepherd; I shall not want",
+        "Bless YHWH O my soul",
+        "I lift my eyes to the mountains"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH is my shepherd; I shall not want."
+    },
+    {
+      "ref": "Psalm 23:5",
+      "question": "What does the psalmist say YHWH prepares in Psalm 23:5?",
+      "options": [
+        "A place of safety in the wilderness",
+        "A table before me in the presence of my enemies",
+        "A new land flowing with milk and honey",
+        "A throne in Yerushalayim"
+      ],
+      "correct": 1,
+      "source_quote": "You prepare a table before me in the presence of my enemies; you anoint my head with oil; my cup overflows."
+    },
+    {
+      "ref": "Psalm 19:1",
+      "question": "What do the heavens declare according to Psalm 19:1?",
+      "options": [
+        "YHWH's coming judgment",
+        "YHWH's glory",
+        "YHWH's covenant with Yisra'el",
+        "YHWH's law and Torah"
+      ],
+      "correct": 1,
+      "source_quote": "The heavens declare the glory of YHWH, and the sky above proclaims his handiwork."
+    },
+    {
+      "ref": "Psalm 34:8",
+      "question": "What invitation does Psalm 34:8 extend to the reader?",
+      "options": [
+        "Come and hear the Torah of YHWH",
+        "Taste and see that YHWH is good",
+        "Look and see the works of YHWH",
+        "Walk and see that YHWH is my shepherd"
+      ],
+      "correct": 1,
+      "source_quote": "Oh, taste and see that YHWH is good! Blessed is the man who takes refuge in him!"
+    }
   ],
   "faq": [
     {
-      "question": "Why does the DSS Psalms Scroll (11QPsa) differ from the Masoretic Psalter?",
-      "answer": "The 11QPsa preserves psalms in a different order than the Masoretic and includes compositions the Masoretic excludes — Psalms 151, 154, 155, and a prose piece about David's writings. This proves the Psalter was not yet fixed in the Masoretic form when the Qumran community sealed their scrolls in 68 CE. The Masoretic arrangement — assembled by the Ben Asher family in Tiberias between 850 and 950 CE — represents one particular editorial tradition, not the original order. The DSS arrangement is 800-1,000 years older."
+      "question": "What is the significance of Psalm 1 as the opening psalm of the Psalter?",
+      "answer": "Psalm 1 functions as an introduction to the entire Psalter. It sets the binary framework — two ways, two destinies — that runs through the whole collection. The righteous person who meditates on YHWH's Torah is rooted like a tree; the wicked are rootless like chaff. The Psalter begins by grounding all praise, lament, and petition in the covenant relationship defined by Torah faithfulness."
     },
     {
-      "question": "What does Psalm 83 say about the erasure of Yisra'EL's name?",
-      "answer": "Psalm 83:4 (11QPsa): 'They say: Come, let us wipe them out as a nation — let the name of Yisra'EL be remembered no more. For they conspire with one accord — against you they make a covenant.' This is the most precise single-verse description of the systematic identity erasure documented across the Great Eraser research. The coordinated removal of identity. The erasure of the name. Every institution — canon exclusion, Slave Bible, publication delay, content filter — serves the same function the psalm describes: a coalition acting in coordination to ensure the name is remembered no more."
+      "question": "What is Psalm 2 and why is it important for understanding Hebrew covenant kingship?",
+      "answer": "Psalm 2 is a royal enthronement psalm celebrating the anointed (mashiakh) king on Mount Tzion as YHWH's chosen ruler. The nations' conspiracy against him fails because YHWH has established the king and declares him 'my son.' This ancient Hebrew royal covenant language — 'you are my son, today I have begotten you' — was later borrowed by NT writers for their invented figure. The original is about covenantal adoption of the Hebrew king."
     },
     {
-      "question": "What does Psalm 68:4 reveal about the Rider on the Clouds?",
-      "answer": "Psalm 68:4: 'Sing to The Creator, sing praises to his name — lift up a song to him who rides through the deserts — his name is YAH.' The title Rider on the Clouds (Rokev ba-Aravot) is applied to YHWH. This exact epithet — Rkb 'rpt — appears 1,200 years earlier in the Ugaritic Baal Cycle tablets (KTU 1.1-1.6) as the primary title of the Canaanite storm deity Baal. The Hebrew prophetic tradition took the title from Baal and applied it to YHWH — reclaiming it. When Matthew 26:64 later applies the same title to the NT's central figure, it is taking a title that already passed from Ugaritic Baal to YHWH and reassigning it again — a third transfer of the same ancient Afro-Asiatic title."
+      "question": "Why does Psalm 22 matter as an ancient source text?",
+      "answer": "Psalm 22 is a lament psalm that moves from extreme suffering to confident praise. Its specific imagery — enemies circling like bulls and dogs, bones out of joint, strength dried up like a potsherd, garments divided by lot — was borrowed by NT writers to construct their crucifixion narrative. Every detail they describe as 'fulfillment' comes directly from this ancient psalm. The direction is ancient text → NT construction, not prophecy fulfilled."
     },
     {
-      "question": "How does the Hodayot at Qumran relate to Tehillim?",
-      "answer": "The Hodayot (1QH) — Thanksgiving Hymns found at Qumran — are psalm-like compositions written by and for the covenant community. They use the same literary forms as Tehillim: praise, lament, declaration of trust, covenant affirmation. The Hodayot use the specific language of Bachar — to choose, to elect — establishing that covenant identity was understood as YHWH's direct selection, not institutional human recognition. No DNA company, no Rabbinate, no European academic framework can nullify what was established before those institutions existed. The Hodayot are the covenant people's own psalms for the Period of Wrath."
+      "question": "What is the structure of Psalm 23 and what covenant relationship does it express?",
+      "answer": "Psalm 23 uses the pastoral metaphor of a shepherd caring for a sheep through two movements: verses 1-4 describe YHWH as shepherd (green pastures, still waters, valley of shadow, comfort with rod and staff), and verses 5-6 shift to YHWH as host preparing a feast. Together they express total covenant care — YHWH provides, protects, restores, guides, and honors the one who trusts in the divine shepherd."
+    },
+    {
+      "question": "What does Selah mean in the Psalms?",
+      "answer": "Selah appears 71 times in Tehillim and its precise meaning is uncertain. The most likely explanations are that it marks a musical pause (a rest in the performance), a signal to lift the voice to full volume (from the Hebrew root meaning 'to lift'), or a cue for a musical interlude. It likely served a liturgical and musical function in the Temple or synagogue setting."
+    },
+    {
+      "question": "What is a 'Mizmor le-David' superscription and what does it tell us?",
+      "answer": "Many psalm headers read 'Mizmor le-David' — a psalm of/for/by David. The Hebrew preposition lamed is flexible: it can mean dedicated to, in the style of, associated with, or composed by David. The Psalter attributes 73 psalms to David through these superscriptions. Some superscriptions also specify historical occasions (e.g., Ps.51 — 'when Nathan came to him after he had gone into Batsheva')."
+    },
+    {
+      "question": "What is the theological tension in Psalm 22 between abandonment and praise?",
+      "answer": "Psalm 22 opens with the cry of desolation — 'My El, my El, why have you forsaken me?' — and details agonizing suffering. But it pivots in verse 24: YHWH did not despise the affliction, did not hide the face, but heard when the psalmist cried. The psalm ends with universal praise — all nations, all generations, the future seed declaring YHWH's righteousness. The structure models moving through abandonment to trust through the evidence of YHWH's past faithfulness."
+    },
+    {
+      "question": "How does Psalm 8 contribute to Hebrew anthropology?",
+      "answer": "Psalm 8 asks 'What is man that you are mindful of him?' and answers with a stunning affirmation: humanity is made slightly lower than the heavenly beings (elohim), crowned with glory and honor, given dominion over creation. This is the covenant community's self-understanding — not insignificance before the cosmos but honored stewardship given by YHWH. The psalm frames human dignity as a covenant gift, not an inherent claim."
+    },
+    {
+      "question": "What makes Psalm 19 distinctive among the early psalms?",
+      "answer": "Psalm 19 joins two separate hymns: the first (vv.1-6) praises YHWH through creation — the heavens declare YHWH's glory without words, and the sun runs its course like a champion. The second (vv.7-14) praises YHWH through Torah — the Torah is perfect, sure, right, pure, clean, true, and more desirable than gold, sweeter than honey. Creation and Torah are paired as two witnesses to YHWH's character and instruction."
+    },
+    {
+      "question": "Why does Psalm 34:8's invitation — 'taste and see that YHWH is good' — matter?",
+      "answer": "It moves covenant knowledge from intellectual assent to experiential encounter. The invitation is not to hear about YHWH's goodness secondhand but to taste it personally — to discover through one's own lived experience that taking refuge in YHWH is real, not theoretical. The blessing that follows — 'blessed is the man who takes refuge in him' — is a promise backed by the psalmist's own testimony of rescue."
     }
   ]
 }

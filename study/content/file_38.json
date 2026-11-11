@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_38",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_38",
   "label": "Melakhim Bet (2 Kings) — Part 1 — Chapters 1–7",
   "volume": 15,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Melakhim Bet Part 1 continues the history of the divided kingdoms. Eliyahu is taken up to heaven in a whirlwind with a chariot of fire. Elisha takes up his mantle and carries a double portion of his spirit. Elisha purifies the waters of Yericho, multiplies oil for a widow, raises the Shunamite woman's son from death, heals Na'aman the Aramean of tzara'at, and makes an iron axe head float. The king of Aram besieges Shomron — Elisha's servant sees the mountain full of horses and chariots of fire.",
   "summary_scholarly": "The ACR reads from DSS Kings fragments (4QKgs) and the Orit Ge'ez. Elisha's prophetic ministry demonstrates YHWH's direct action through covenant prophets. The Na'aman narrative (chapter 5) is significant for phenotypic analysis: Na'aman the Aramean carries tzara'at, and his healing involves washing in the Yarden seven times until his flesh is restored 'like the flesh of a little child.' The tzara'at-as-phenotypic-mirror pattern documented in Vayikra 13-14 and Bamidbar 12 continues here.",
   "key_terms": [
-    { "term": "Elisha", "phonetic": "Eh-lee-SHAH", "definition": "Prophet who succeeds Eliyahu. Receives a double portion of his spirit. Performs twice as many signs as Eliyahu. Anglicized as Elisha." },
-    { "term": "Na'aman", "phonetic": "Nah-ah-MAHN", "definition": "Commander of the Aramean army who carries tzara'at. Healed by washing in the Yarden seven times at Elisha's instruction. His healing demonstrates YHWH's sovereignty over nations beyond Yisra'EL." },
-    { "term": "Chariot of Fire", "phonetic": "", "definition": "Eliyahu is taken up to heaven in a whirlwind — a chariot of fire and horses of fire separate him from Elisha (2:11). Elisha cries: 'My father, my father! The chariots of Yisra'EL and its horsemen!'" },
-    { "term": "Double Portion", "phonetic": "", "definition": "Elisha asks for a double portion of Eliyahu's spirit (2:9). This is the inheritance portion of the firstborn — Elisha claims the position of Eliyahu's spiritual heir." }
+    {
+      "term": "Eliyahu Taken Up",
+      "phonetic": "",
+      "definition": "In 2 Melakhim 2, Eliyahu and Elisha travel together from Gilgal to Bet-El to Yericho to the Yarden. At each stop, the prophets of that place tell Elisha: 'YHWH is going to take your master from you today.' Elisha refuses to leave. At the Yarden, Eliyahu strikes the water with his cloak and they cross on dry ground. A chariot of fire and horses of fire appear and separate them, and Eliyahu goes up to heaven in a whirlwind. Elisha picks up the fallen cloak."
+    },
+    {
+      "term": "The Double Portion",
+      "phonetic": "",
+      "definition": "Elisha's request to Eliyahu before his departure: 'Let me inherit a double share of your spirit' (2 Melakhim 2:9). Eliyahu says it is a hard thing — but if Elisha sees him being taken, he will have it; if not, he won't. Elisha does see it. The 'double portion' (pi-shenayim) is the inheritance share of the firstborn son in Devarim 21:17 — Elisha is claiming the right of a firstborn heir to his prophetic father's spirit. The subsequent narrative records double the number of miracles attributed to Eliyahu."
+    },
+    {
+      "term": "Elisha Crosses the Yarden",
+      "phonetic": "",
+      "definition": "After Eliyahu is taken up and Elisha picks up his fallen cloak, Elisha strikes the Yarden with the cloak and says 'Where is YHWH, the Creator of Eliyahu?' The waters part and he crosses (2 Melakhim 2:13-14). The other prophets see it and declare 'The spirit of Eliyahu rests on Elisha.' This first miracle establishes Elisha's succession publicly — the same miracle Eliyahu performed, now performed by Elisha, confirming the double-portion transfer."
+    },
+    {
+      "term": "Naaman the Aramean",
+      "phonetic": "na-a-MAN",
+      "definition": "The commander of the Aramean army — a great man, highly regarded, a mighty warrior — but leprous. A captive Israelite girl tells his wife that the prophet in Shomron could cure him (2 Melakhim 5). Naaman arrives with horses and chariots and a letter from the king of Aram to the king of Yisra'el. Elisha sends him to wash seven times in the Yarden. Naaman is furious — he expected a dramatic healing ceremony, not bathing in an ordinary river. His servants persuade him. He washes seven times and is healed."
+    },
+    {
+      "term": "Naaman's Confession",
+      "phonetic": "",
+      "definition": "After being healed, Naaman returns to Elisha and says: 'Now I know that there is no Creator in all the earth except in Yisra'el' (2 Melakhim 5:15). He refuses to let Elisha take payment but asks for two mule-loads of Israelite soil to worship YHWH at home. He asks forgiveness in advance for bowing in the temple of Rimmon with his king. Elisha says 'Go in peace.' Naaman's conversion is the clearest account of a foreign military commander accepting YHWH's exclusive sovereignty."
+    },
+    {
+      "term": "Gehazi's Greed",
+      "phonetic": "ge-HA-zi",
+      "definition": "Elisha's servant Gehazi runs after Naaman after Elisha refused his gift, claims Elisha changed his mind and needs silver and clothing for two prophets. Naaman gives him double what he asked. Elisha confronts Gehazi — YHWH told Elisha what happened. Elisha says: 'Was this the time to receive money and clothing, olive groves and vineyards?' Naaman's leprosy would cling to Gehazi and his descendants forever. Gehazi leaves Elisha's presence 'white as snow' with leprosy. The sin is using YHWH's miraculous power for personal profit."
+    },
+    {
+      "term": "The Floating Axhead",
+      "phonetic": "",
+      "definition": "In 2 Melakhim 6:1-7, the prophets' community needs to build larger quarters and go to the Yarden to cut timber. One man's borrowed axhead falls into the river. Elisha cuts a stick and throws it in the water where the iron had fallen — the axhead floats. The miracle is small and practical but characteristic of Elisha: his ministry addresses immediate, concrete needs — healing, food, debt, lost tools — alongside large-scale military events."
+    },
+    {
+      "term": "Elisha and the Aramean Army",
+      "phonetic": "",
+      "definition": "In 2 Melakhim 6:8-23, Elisha repeatedly warns the king of Yisra'el of Aramean ambushes — YHWH reveals the king of Aram's secret war plans. Aram sends horses, chariots, and a great army to Dotan to capture Elisha. Elisha's servant panics. Elisha prays for his eyes to be opened — he sees the mountains full of horses and chariots of fire. Elisha then strikes the army with blindness, leads them to Shomron, and when their eyes are opened, they are inside the city. Rather than killing them, Elisha has them fed and sent home."
+    },
+    {
+      "term": "The Famine of Shomron",
+      "phonetic": "",
+      "definition": "In 2 Melakhim 6:24-7:20, Ben-Hadad of Aram besieges Shomron with such severity that there is a donkey head sold for 80 shekels of silver and a cup of dove droppings for five shekels. The famine is so extreme that two women agree to eat their children in turns — one mother's child is eaten, the other hides her child. The king of Yisra'el tears his clothes. Elisha prophesies that by the next day, abundant food will be available at the city gate. His prediction is fulfilled when the Arameans flee a panic at night."
+    },
+    {
+      "term": "The Four Lepers",
+      "phonetic": "",
+      "definition": "In 2 Melakhim 7:3-15, four lepers decide: 'If we stay here we die, if we go to the Aramean camp we die — but maybe they'll spare us.' They go at dusk and find the camp abandoned — YHWH had made the Arameans hear the sound of a great army. The Arameans had fled, leaving their tents, horses, donkeys, food, silver, and gold. The lepers eat and plunder. Then they realize: 'This is good news and we're keeping it to ourselves — if we wait until daylight, punishment will come.' They report to the city gatekeepers. The city is saved."
+    }
   ],
   "fill_blank": [
-    { "ref": "2:11", "prompt": "A chariot of fire and horses of fire separated the two of them, and Eliyahu went up by a ______ into heaven.", "answer": "whirlwind", "source_quote": "And as they still went on and talked, behold, chariots of fire and horses of fire separated the two of them. And Eliyahu went up by a whirlwind into heaven." },
-    { "ref": "5:14", "prompt": "So Na'aman went down and dipped himself seven times in the ______, according to the word of the man of The Creator.", "answer": "Yarden", "source_quote": "So he went down and dipped himself seven times in the Yarden, according to the word of the man of The Creator, and his flesh was restored like the flesh of a little child, and he was clean." },
-    { "ref": "6:17", "prompt": "And Elisha prayed: O YHWH, please open his eyes that he may see. And the mountain was full of horses and chariots of ______.", "answer": "fire", "source_quote": "Then YHWH opened the eyes of the young man, and he saw, and behold, the mountain was full of horses and chariots of fire all around Elisha." }
+    {
+      "ref": "2 Melakhim 2:9",
+      "prompt": "Elisha asked for a ___ portion of Eliyahu's spirit — the inheritance share of the firstborn.",
+      "answer": "double",
+      "source_quote": "Let me inherit a double share of your spirit. — 2 Melakhim 2:9"
+    },
+    {
+      "ref": "2 Melakhim 2:11",
+      "prompt": "Eliyahu went up to heaven in a ___ while horses and chariot of fire appeared.",
+      "answer": "whirlwind",
+      "source_quote": "Elijah went up to heaven in a whirlwind. — 2 Melakhim 2:11"
+    },
+    {
+      "ref": "2 Melakhim 2:14",
+      "prompt": "Elisha struck the Yarden with Eliyahu's cloak and said: 'Where is YHWH, the Creator of ___?'",
+      "answer": "Eliyahu",
+      "source_quote": "Where now is the LORD, the God of Elijah? — 2 Melakhim 2:14"
+    },
+    {
+      "ref": "2 Melakhim 5:10",
+      "prompt": "Elisha sent a messenger to Naaman telling him to wash ___ times in the Yarden.",
+      "answer": "seven",
+      "source_quote": "Go, wash yourself seven times in the Jordan. — 2 Melakhim 5:10"
+    },
+    {
+      "ref": "2 Melakhim 5:15",
+      "prompt": "After his healing, Naaman declared: 'Now I know that there is no Creator in all the earth ___ in Yisra'el.'",
+      "answer": "except",
+      "source_quote": "Now I know that there is no God in all the world except in Israel. — 2 Melakhim 5:15"
+    },
+    {
+      "ref": "2 Melakhim 5:27",
+      "prompt": "Elisha told Gehazi: Naaman's ___ will cling to you and your descendants forever.",
+      "answer": "leprosy",
+      "source_quote": "Naaman's leprosy will cling to you and to your descendants forever. — 2 Melakhim 5:27"
+    },
+    {
+      "ref": "2 Melakhim 6:6",
+      "prompt": "Elisha threw a ___ into the water where the iron axhead had fallen, and the axhead floated.",
+      "answer": "stick",
+      "source_quote": "Then the man of God cut a stick and threw it there, and made the iron float. — 2 Melakhim 6:6"
+    },
+    {
+      "ref": "2 Melakhim 6:16",
+      "prompt": "Elisha told his servant: 'Don't be afraid — those who are with ___ are more than those who are with them.'",
+      "answer": "us",
+      "source_quote": "Don't be afraid. Those who are with us are more than those who are with them. — 2 Melakhim 6:16"
+    },
+    {
+      "ref": "2 Melakhim 7:3-4",
+      "prompt": "The four lepers reasoned: 'If we stay here we ___; if we go to the Arameans we may live.'",
+      "answer": "die",
+      "source_quote": "Why stay here until we die? If we say, 'We'll go into the city' — the famine is there... Let us go over to the camp of the Arameans. If they spare us, we live; if they kill us, then we die. — 2 Melakhim 7:3-4"
+    },
+    {
+      "ref": "2 Melakhim 2:15",
+      "prompt": "When the other prophets saw Elisha crossing the Yarden, they said: 'The spirit of ___ rests on Elisha!'",
+      "answer": "Eliyahu",
+      "source_quote": "The spirit of Elijah is resting on Elisha. — 2 Melakhim 2:15"
+    }
   ],
   "multiple_choice": [
-    { "ref": "2:9", "question": "What did Elisha ask from Eliyahu before he was taken up?", "options": ["His cloak", "A double portion of his spirit", "The gift of prophecy", "Authority over Yisra'EL"], "correct": 1, "source_quote": "Elisha said: Please let there be a double portion of your spirit on me." },
-    { "ref": "5:1", "question": "Who was Na'aman?", "options": ["A priest of YHWH", "Commander of the Aramean army", "King of Yisra'EL", "A Levite"], "correct": 1, "source_quote": "Na'aman, commander of the army of the king of Aram, was a great man with his master." },
-    { "ref": "5:14", "question": "How many times did Na'aman dip in the Yarden?", "options": ["Three", "Five", "Seven", "Twelve"], "correct": 2, "source_quote": "He dipped himself seven times in the Yarden." }
+    {
+      "ref": "2 Melakhim 2:9",
+      "question": "What did Elisha ask for before Eliyahu was taken up?",
+      "options": [
+        "Eliyahu's staff and robe",
+        "That he might be taken up with Eliyahu",
+        "A double portion of Eliyahu's spirit",
+        "A written record of all Eliyahu's prophecies"
+      ],
+      "correct": 2,
+      "source_quote": "Please let me inherit a double share of your spirit. — 2 Melakhim 2:9"
+    },
+    {
+      "ref": "2 Melakhim 2:11",
+      "question": "How did Eliyahu leave this world?",
+      "options": [
+        "He died peacefully and was buried by angels",
+        "A chariot of fire and horses of fire appeared and he went up in a whirlwind",
+        "He walked into the desert and was never seen again",
+        "He was taken while standing in the Yarden River"
+      ],
+      "correct": 1,
+      "source_quote": "Suddenly a chariot of fire and horses of fire appeared... and Elijah went up to heaven in a whirlwind. — 2 Melakhim 2:11"
+    },
+    {
+      "ref": "2 Melakhim 5:10-14",
+      "question": "Why was Naaman furious at Elisha's instruction to wash in the Yarden?",
+      "options": [
+        "He believed the Yarden was an unclean river",
+        "He expected Elisha to come out, call on YHWH dramatically, and heal him — not just send a message to bathe",
+        "He had already tried washing in rivers with no result",
+        "He thought bathing seven times was an Israelite ritual mockery of Arameans"
+      ],
+      "correct": 1,
+      "source_quote": "I thought that he would surely come out to me and stand and call on the name of the LORD his God, wave his hand over the spot and cure me of my leprosy. — 2 Melakhim 5:11"
+    },
+    {
+      "ref": "2 Melakhim 5:15",
+      "question": "What did Naaman ask for after being healed?",
+      "options": [
+        "To remain in Yisra'el and become a disciple of Elisha",
+        "Two mule-loads of Israelite soil to worship YHWH at home, and forgiveness for bowing in Rimmon's temple with his king",
+        "To be allowed to build a shrine to YHWH in Aram",
+        "Silver and gold equal to the healing's value"
+      ],
+      "correct": 1,
+      "source_quote": "Please let me, your servant, be given as much earth as a pair of mules can carry, for your servant will never again make burnt offerings and sacrifices to any other god but the LORD. — 2 Melakhim 5:17"
+    },
+    {
+      "ref": "2 Melakhim 5:20-27",
+      "question": "What was Gehazi's sin and its consequence?",
+      "options": [
+        "He worshipped Ba'al in secret",
+        "He ran after Naaman and falsely claimed Elisha had changed his mind and wanted silver and clothing — he was struck with leprosy forever",
+        "He sold Elisha's healing method to the Aramean court",
+        "He reported Naaman's conversion to the king of Yisra'el for a reward"
+      ],
+      "correct": 1,
+      "source_quote": "Naaman's leprosy will cling to you and to your descendants forever. — 2 Melakhim 5:27"
+    },
+    {
+      "ref": "2 Melakhim 6:16-17",
+      "question": "What did Elisha's servant see when his eyes were opened at Dotan?",
+      "options": [
+        "A great army of Israelite warriors hidden in the hills",
+        "Horses and chariots of fire filling the mountains around Elisha",
+        "The Aramean army surrounded and unable to move",
+        "Angels with drawn swords at the city gates"
+      ],
+      "correct": 1,
+      "source_quote": "Then the LORD opened the servant's eyes, and he looked and saw the hills full of horses and chariots of fire all around Elisha. — 2 Melakhim 6:17"
+    },
+    {
+      "ref": "2 Melakhim 6:22-23",
+      "question": "What did Elisha instruct the king to do with the blinded Aramean army once he had led them to Shomron?",
+      "options": [
+        "Imprison them and demand a large ransom",
+        "Execute them as enemies of Yisra'el",
+        "Feed them and send them home — no killing",
+        "Put them to work building Shomron's walls"
+      ],
+      "correct": 2,
+      "source_quote": "Set food and water before them so that they may eat and drink and then go back to their master. So he prepared a great feast for them... and they returned to their master. — 2 Melakhim 6:22-23"
+    },
+    {
+      "ref": "2 Melakhim 7:3-9",
+      "question": "What did the four lepers discover when they went to the Aramean camp at dusk?",
+      "options": [
+        "The Arameans were preparing a final assault at dawn",
+        "The camp was completely abandoned — YHWH had caused the Arameans to hear a great army and flee",
+        "The Aramean king was dying of plague and the army was leaderless",
+        "A single Aramean soldier was guarding an enormous food stockpile"
+      ],
+      "correct": 1,
+      "source_quote": "They had fled for their lives... The LORD had caused the Arameans to hear the sound of chariots and horses and a great army. — 2 Melakhim 7:7, 6"
+    },
+    {
+      "ref": "2 Melakhim 7:9",
+      "question": "Why did the four lepers decide to report their discovery to the city?",
+      "options": [
+        "They were afraid the Arameans would return",
+        "They wanted to be honored by the king",
+        "They realized keeping the good news to themselves was wrong — punishment would come if they waited until daylight",
+        "An angel appeared and commanded them to tell"
+      ],
+      "correct": 2,
+      "source_quote": "This is a day of good news and we are keeping it to ourselves. If we wait until daylight, punishment will overtake us. — 2 Melakhim 7:9"
+    },
+    {
+      "ref": "2 Melakhim 2:19-22",
+      "question": "What was Elisha's first miracle at Yericho?",
+      "options": [
+        "He healed a leper at the city gate",
+        "He struck the Yarden River and parted it",
+        "He threw salt into the bad water spring and healed it — the water has remained wholesome to this day",
+        "He called fire down on the men who mocked him"
+      ],
+      "correct": 2,
+      "source_quote": "Elisha went out to the spring and threw the salt into it, saying, 'This is what the LORD says: I have healed this water.' — 2 Melakhim 2:21"
+    }
   ],
   "faq": [
     {
-      "question": "What does Na'aman's tzara'at reveal about the Levantine phenotype?",
-      "answer": "Na'aman — commander of the Aramean (Syrian) army — carries tzara'at (2 Kings 5). The Aramean population north of Yisra'EL is documented using the same diagnostic category. After washing in the Yarden, his flesh is restored 'like the flesh of a little child' — meaning the tzara'at (which produces whitening of the skin) is reversed. The same phenotypic-mirror pattern from Vayikra 13-14 and Bamidbar 12 (Miriam white as snow) applies across the entire ancient Afro-Asiatic corridor. Both the Israelite and Aramean populations shared a dark-complexioned baseline for which white skin produced by tzara'at was the documented marker of affliction."
+      "question": "Why is the Eliyahu taken-up account significant in Hebrew prophetic tradition?",
+      "answer": "Eliyahu's being taken up without dying is unique in the Hebrew scriptures alongside Chanokh (Bereshit 5:24). The account does not explain it theologically — it simply records the whirlwind, the chariot and horses of fire, and his going up. The significance is multiple: Eliyahu does not die by human hand despite murderous threats; his ministry transitions directly to Elisha without a death or burial; and the expectation of Eliyahu's return before the great Day of YHWH (Mal'akhi 3:23/4:5) is rooted in this incomplete departure. At the same time, the narrative carefully does not claim any theological transformation — the same Eliyahu who fed by ravens and despaired under a broom tree goes up in a whirlwind."
     },
     {
-      "question": "How does the Taharqa-Hezekiah alliance connect to later chapters?",
-      "answer": "In 2 Melakhim 19:9 (Part 3 of this volume), the Cushite Pharaoh Taharqa of the 25th Dynasty brings his army to relieve Yerushalayim from the Assyrian siege of 701 BCE. Without this African military intervention, the Kingdom of Yehudah would have been destroyed 130 years before the Babylonian destruction. The survival of the covenant community through the entire prophetic period — including Yesha'yahu, Yirmeyahu, and the writing of the Qumran texts — depends on this African military alliance. Taharqa's statues, discovered at Kerma by the University of Geneva, are among the finest examples of ancient African royal portraiture. They depict African faces — the faces of the king who saved the covenant community."
+      "question": "What does the double-portion request mean?",
+      "answer": "Elisha's request for 'a double portion of your spirit' (pi-shenayim — literally 'mouth of two') uses the exact language of Devarim 21:17 for the firstborn son's inheritance share. Elisha is not asking for twice Eliyahu's power — he is asking to be recognized as Eliyahu's prophetic heir, the firstborn son of his ministry. Eliyahu says it is a hard thing — only YHWH can determine whether the succession holds. The condition (seeing Eliyahu's departure) is the sign of confirmation. Elisha does see it. The subsequent narrative records approximately twice as many miracles attributed to Elisha as to Eliyahu, which the text seems to treat as the fulfillment."
     },
     {
-      "question": "What does Elisha's servant seeing the chariots of fire mean?",
-      "answer": "When Aram besieges the city where Elisha stays, his servant is terrified. Elisha prays: 'YHWH, open his eyes.' The servant sees the mountain full of horses and chariots of fire surrounding them (6:17). The covenant protection is already present — it requires spiritual sight to perceive. The War Scroll (1QM) describes angels fighting alongside the Sons of Light. The Damascus Document describes YHWH remembering the covenant even when the people are scattered and their identity denied. Elisha's words — 'those who are with us are more than those who are with them' — is the covenant community's declaration in every period of apparent domination."
+      "question": "What does Naaman's healing teach about YHWH's reach beyond Yisra'el?",
+      "answer": "The entire Naaman episode is built around the expectation of boundaries that YHWH then crosses. The captive Israelite girl — the least powerful person in the story — sets the whole thing in motion. The healing occurs in the Yarden, an ordinary river. Naaman, the great Aramean commander — a foreign enemy — is healed and confesses YHWH as the only Creator in all the earth. He asks for Israelite soil so he can worship YHWH in a foreign country. And Elisha refuses any payment — the healing is not a commercial transaction. YHWH's power is not confined to Israelite territory, the Temple, or the prophetic courts."
+    },
+    {
+      "question": "What does the story of the blinded Aramean army reveal about how Elisha handles enemies?",
+      "answer": "Elisha leads a whole Aramean army, blinded by YHWH, right into the capital city of Yisra'el. When the king asks 'Shall I kill them?', Elisha says no — feed them and send them home. 'The bands from Aram stopped raiding Israelite territory.' This is counter-intuitive military logic: showing mercy to a helpless enemy army creates peace more effectively than killing them would. The episode shows Elisha operating at a higher strategic level than the king: the king sees an opportunity to kill enemies; Elisha sees an opportunity to end the raiding cycle. The 'chariots of fire' that protect Elisha (seen by his servant) are YHWH's own military force — which makes Elisha's mercy possible."
+    },
+    {
+      "question": "What is the significance of the Shomron famine narrative?",
+      "answer": "The famine of Shomron in 2 Melakhim 6:24-7:20 reaches its worst point with the account of two women eating children — the ultimate indicator of covenant breakdown (Devarim 28:53-57 specifically listed child-eating as a consequence of siege when the people abandoned the covenant). The king of Yisra'el tears his robes revealing sackcloth underneath — he has already been mourning privately. He blames Elisha for the famine. Elisha predicts plenty by the next day; the king's officer mocks this as impossible ('if YHWH opened the floodgates of heaven'). The officer sees the food but dies trampled in the rush — not eating it. Elisha's prophecy is vindicated exactly."
+    },
+    {
+      "question": "Who are the four lepers and what does their story reveal about how the good news spreads?",
+      "answer": "The four lepers are unnamed — they are outside the city gate because their disease excludes them from the community. They have nothing to lose: 'If we stay here, we die; if we go to the camp, we die — but maybe they'll spare us.' At the camp they find food, drink, silver, gold — and begin hoarding. The conscience check is striking: 'This is a day of good news and we are keeping it to ourselves.' The word 'good news' (besorah) is the same word used in Yesha'yahu for the proclamation of YHWH's salvation. The lepers — excluded from society — become the messengers of salvation for the city. The irony is deliberate: the people least expected to have good news are the ones who bring it."
+    },
+    {
+      "question": "What pattern characterizes Elisha's miracle ministry compared to Eliyahu's?",
+      "answer": "Eliyahu's miracles tend to be dramatic and confrontational: stopping rain for three years, calling fire from heaven, outrunning chariots. Elisha's miracles are more varied and often address ordinary people's concrete needs: purifying a water spring, multiplying a widow's oil to pay off her debts, raising a Shunammite's son, feeding 100 men with 20 small loaves (food miracles that echo Mosheh's manna provisions), healing Naaman, floating an axhead, blinding and feeding an army. The double-portion is expressed in breadth and variety of care, not just power level. Elisha's ministry reaches into households, into foreign armies, into daily economic crisis — not only into royal confrontations."
+    },
+    {
+      "question": "What does Naaman's request for Israelite soil reveal about ancient Near Eastern theology?",
+      "answer": "Naaman's request to take two mule-loads of Israelite soil home to worship YHWH on reflects the ancient understanding that deities were bound to specific territories — divine power was geographical. Naaman has confessed 'there is no Creator in all the earth except in Yisra'el,' but his instinct is to bring a piece of Yisra'el home so he can stand on YHWH's territory when he worships. Elisha does not correct the theology — he simply says 'go in peace.' The request is a sincere attempt to maintain covenant connection across a border that Naaman's culture assumed would prevent it. The theological implication the narrative carries is that YHWH does not need soil boundaries — but Naaman needs the symbol."
+    },
+    {
+      "question": "Why does Gehazi's punishment fit the crime precisely?",
+      "answer": "Gehazi uses Elisha's miracle of healing Naaman — a gift YHWH gave freely through Elisha — as a commercial opportunity. He lies to Naaman (Elisha sent him, Elisha changed his mind), takes silver and clothing, and hides it. When Elisha confronts him, the question is: 'Was this the time to receive money, olive groves, vineyards, flocks, herds, menservants, maidservants?' The expanded list implies Gehazi's real fantasy: leveraging miraculous access to build wealth. Naaman's leprosy is the reversal: Naaman was a great man who became clean; Gehazi is Elisha's trusted servant who becomes unclean. The healing that crossed national and social boundaries is reversed in Gehazi's punishment."
+    },
+    {
+      "question": "What does the 'horses and chariots of fire' imagery mean in the Elisha narratives?",
+      "answer": "The fiery chariots first appear in Eliyahu's departure (2 Melakhim 2:11-12) and again when Elisha's servant's eyes are opened at Dotan (2 Melakhim 6:17) — the mountains full of horses and chariots of fire surrounding Elisha. When Elisha is dying (2 Melakhim 13:14), the king of Yisra'el weeps over him and calls him 'the chariot of Yisra'el and its horsemen' — using the same imagery. The fiery chariots represent YHWH's heavenly army — the same heavenly host described in the divine council passages. Elisha operates under the protection of YHWH's military force, which is invisible to the natural eye but real. The servant at Dotan sees it only when YHWH opens his spiritual sight."
     }
   ]
 }

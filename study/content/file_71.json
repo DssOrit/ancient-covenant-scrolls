@@ -1,34 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_71",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_71",
   "label": "Tehillim (Psalms) — Part 7 — Psalm 119",
   "volume": 20,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Psalm 119 is the longest chapter in all of scripture — 176 verses arranged as an acrostic with each section of eight verses beginning with a successive letter of the Hebrew aleph-bet. The entire psalm is a sustained declaration of devotion to the Torah of YHWH. Your word is a lamp to my feet and a light to my path. I will run in the way of your commandments when you enlarge my heart. Oh how I love your Torah — it is my meditation all the day. The law of your mouth is better to me than thousands of gold and silver pieces.",
   "summary_scholarly": "The ACR reads Psalm 119 from DSS witnesses (11QPsa and fragments) and the Orit Ge'ez. Psalm 119 is the most sustained Torah-devotion text in all of scripture. Its acrostic structure — 22 Hebrew letters, eight verses per letter, 176 verses total — is a literary monument. Every verse uses at least one of eight key terms for YHWH's instruction: Torah, edot (testimonies), piqqudim (precepts), chuqqim (statutes), mitzvot (commandments), mishpatim (judgments), davar (word), and imrah (saying). The psalm demolishes any claim that devotion to Torah was experienced as legalistic burden. The psalmist loves the Torah. He meditates on it. He runs in its path. He finds it sweeter than honey. The Qumran community's own sectarian texts (1QS, CD) demonstrate the same Torah devotion — the DSS community structured their entire communal life around Torah observance. The NT framing of Torah as bondage (Galatians 3:23-25, Romans 7:6) directly contradicts the witness of Psalm 119 and the entire DSS corpus.",
   "key_terms": [
-    { "term": "Aleph-Bet Acrostic", "phonetic": "AH-lef Bet", "definition": "Psalm 119 is structured as a 22-section acrostic: each section begins with the next letter of the Hebrew alphabet. Aleph through Tav — the complete alphabet devoted to the complete Torah. The form itself declares: Torah covers everything from A to Z." },
-    { "term": "Torah", "phonetic": "Toh-RAH", "definition": "Instruction, teaching, guidance — YHWH's direct guidance for the covenant people. Psalm 119 uses Torah as its primary term and treats it as the source of life, light, freedom, and delight. Not burden. Not bondage. Delight." },
-    { "term": "Ner le-Ragli (Lamp to My Feet)", "phonetic": "Ner leh-Rahg-LEE", "definition": "Psalm 119:105: 'Your word is a lamp to my feet and a light to my path.' Torah is not an abstract law code — it is the practical light that guides the covenant person's daily steps." }
+    {
+      "term": "Five Books of Tehillim",
+      "phonetic": "Tehillim 1-150",
+      "definition": "The Psalter is organized into five books, each ending with a closing doxology: Book I (Ps.1-41, closes 41:13), Book II (Ps.42-72, closes 72:18-19), Book III (Ps.73-89, closes 89:52), Book IV (Ps.90-106, closes 106:48), Book V (Ps.107-150, closes 150)."
+    },
+    {
+      "term": "Doxology (book-ending praise)",
+      "phonetic": "dok-SOL-oh-gee",
+      "definition": "Each of the five books of Tehillim ends with a brief doxology of praise to YHWH: 'Blessed be YHWH, the Creator of Yisra'el, from everlasting to everlasting! Amen and Amen.' These serve as editorial markers separating the five books."
+    },
+    {
+      "term": "David Superscriptions (73 psalms)",
+      "phonetic": "leh-dah-VEED",
+      "definition": "73 psalms in the Psalter carry the superscription 'le-David' — attributed to or associated with David. These cluster especially in Books I (most psalms) and II, with a smaller group in Book V. 14 psalms also specify the historical occasion in David's life."
+    },
+    {
+      "term": "Asaph Psalms (12 psalms)",
+      "phonetic": "AH-saf",
+      "definition": "Psalms 50 and 73-83 are attributed to Asaph, a Levitical musician appointed by David. His psalms are concentrated in Book III and are marked by historical reflection, wrestling with injustice, and divine-council imagery."
+    },
+    {
+      "term": "Lament Psalm (literary type)",
+      "phonetic": "ki-NAH",
+      "definition": "The most common psalm type in Tehillim: a formal complaint to YHWH expressing distress, appealing to YHWH's character, requesting rescue, and often moving to trust or vow. Examples: Ps.22, 42, 69, 88 (the darkest — no resolution)."
+    },
+    {
+      "term": "Hymn/Hallel (literary type)",
+      "phonetic": "hal-LEL",
+      "definition": "Psalms of pure praise calling creation and community to celebrate YHWH's character and deeds. Opens with a call to praise, gives reasons, and closes with renewed praise. Examples: Ps.8, 19, 100, 103, 148-150."
+    },
+    {
+      "term": "Royal Psalm (literary type)",
+      "phonetic": "miz-MOR leh-meh-LEKH",
+      "definition": "Psalms focused on the anointed king — his installation (Ps.2), his rule (Ps.72), his military victory (Ps.20-21), or his covenant standing (Ps.89, 132). After the exile, royal psalms became eschatological — hope for future covenant fulfillment."
+    },
+    {
+      "term": "Zion Psalm (literary type)",
+      "phonetic": "tzee-YOHN",
+      "definition": "Psalms celebrating YHWH's dwelling on Mount Tzion and the security of the city of YHWH. Examples: Ps.46, 48, 76, 84, 87, 122, 132. Zion theology centers on YHWH's chosen presence as the community's foundation."
+    },
+    {
+      "term": "1QPsa Great Psalms Scroll",
+      "phonetic": "11QPsa",
+      "definition": "The Great Psalms Scroll from Cave 11 at Qumran, containing 41 canonical psalms plus additional compositions not in the Masoretic Psalter; its psalm ordering differs from the MT. Demonstrates a fluid, still-forming Psalter canon at Qumran."
+    },
+    {
+      "term": "Psalter Ordering (Qumran differs from MT)",
+      "phonetic": "Tehillim / 11QPsa",
+      "definition": "The Qumran Psalms Scroll (11QPsa) arranges the psalms in a different order from the Masoretic Text, especially in Books IV-V. This demonstrates that the Psalter's exact sequence was not yet fixed in the late Second Temple period — different communities may have used different orderings."
+    }
   ],
   "fill_blank": [
-    { "ref": "119:105", "prompt": "Your word is a ______ to my feet and a light to my path.", "answer": "lamp", "source_quote": "Your word is a lamp to my feet and a light to my path." },
-    { "ref": "119:97", "prompt": "Oh how I ______ your Torah — it is my meditation all the day.", "answer": "love", "source_quote": "Oh how I love your Torah — it is my meditation all the day." },
-    { "ref": "119:32", "prompt": "I will run in the way of your commandments when you enlarge my ______.", "answer": "heart", "source_quote": "I will run in the way of your commandments when you enlarge my heart." },
-    { "ref": "119:72", "prompt": "The law of your mouth is better to me than thousands of gold and ______.", "answer": "silver", "source_quote": "The law of your mouth is better to me than thousands of gold and silver." }
+    {
+      "ref": "Psalm 41:13",
+      "prompt": "Blessed be YHWH, the Creator of Yisra'el, from ___ to everlasting! Amen and Amen.",
+      "answer": "everlasting",
+      "source_quote": "Blessed be YHWH, the Creator of Yisra'el, from everlasting to everlasting! Amen and Amen."
+    },
+    {
+      "ref": "Psalm 72:18-19",
+      "prompt": "Blessed be YHWH, the Creator of Yisra'el, who alone does wondrous things. Blessed be his ___ name forever!",
+      "answer": "glorious",
+      "source_quote": "Blessed be YHWH, the Creator of Yisra'el, who alone does wondrous things. Blessed be his glorious name forever!"
+    },
+    {
+      "ref": "Psalm 89:52",
+      "prompt": "Blessed be YHWH ___! Amen and Amen.",
+      "answer": "forever",
+      "source_quote": "Blessed be YHWH forever! Amen and Amen."
+    },
+    {
+      "ref": "Psalm 100:1",
+      "prompt": "Make a joyful ___ to YHWH, all the earth!",
+      "answer": "noise",
+      "source_quote": "Make a joyful noise to YHWH, all the earth!"
+    },
+    {
+      "ref": "Psalm 100:3",
+      "prompt": "Know that YHWH, he is YHWH! It is he who made us, and we are his; we are his people, and the ___ of his pasture.",
+      "answer": "sheep",
+      "source_quote": "It is he who made us, and we are his; we are his people, and the sheep of his pasture."
+    },
+    {
+      "ref": "Psalm 111:10",
+      "prompt": "The fear of YHWH is the beginning of ___; a good understanding have all those who practice it.",
+      "answer": "wisdom",
+      "source_quote": "The fear of YHWH is the beginning of wisdom; a good understanding have all those who practice it."
+    },
+    {
+      "ref": "Psalm 112:1",
+      "prompt": "Hallelu-Yah! Blessed is the man who fears YHWH, who greatly ___ in his commandments!",
+      "answer": "delights",
+      "source_quote": "Blessed is the man who fears YHWH, who greatly delights in his commandments!"
+    },
+    {
+      "ref": "Psalm 145:3",
+      "prompt": "Great is YHWH, and greatly to be praised, and his ___ is unsearchable.",
+      "answer": "greatness",
+      "source_quote": "Great is YHWH, and greatly to be praised, and his greatness is unsearchable."
+    },
+    {
+      "ref": "Psalm 145:9",
+      "prompt": "YHWH is ___ to all, and his mercy is over all that he has made.",
+      "answer": "good",
+      "source_quote": "YHWH is good to all, and his mercy is over all that he has made."
+    },
+    {
+      "ref": "Psalm 150:3",
+      "prompt": "Praise him with ___ blast; praise him with lute and harp!",
+      "answer": "trumpet",
+      "source_quote": "Praise him with trumpet blast; praise him with lute and harp!"
+    }
   ],
   "multiple_choice": [
-    { "ref": "119:1-176", "question": "What is the literary structure of Psalm 119?", "options": ["A chiastic poem of 50 verses", "A 22-section acrostic — one section per Hebrew letter, eight verses per section, 176 verses total", "A dialogue between YHWH and Dawid", "A ten-verse summary of the commandments"], "correct": 1, "source_quote": "Each section of eight verses begins with the successive letter of the Hebrew aleph-bet, from Aleph to Tav." },
-    { "ref": "119:97", "question": "How does the psalmist describe their relationship to Torah?", "options": ["It is a heavy burden", "Oh how I love your Torah — it is my meditation all the day", "It was given only to the priests", "It has been replaced"], "correct": 1, "source_quote": "Oh how I love your Torah — it is my meditation all the day." },
-    { "ref": "119:105", "question": "What does Psalm 119 call YHWH's word?", "options": ["A weapon of war", "A lamp to my feet and a light to my path", "A mystery hidden from the people", "A code that only scholars understand"], "correct": 1, "source_quote": "Your word is a lamp to my feet and a light to my path." }
+    {
+      "ref": "Psalm structure",
+      "question": "How many books make up the Psalter and what marks the end of each book?",
+      "options": [
+        "Three books, each ending with a Hallelu-Yah",
+        "Five books, each ending with a doxology of praise",
+        "Seven books, each ending with a psalm of lament",
+        "Two books — psalms of David and psalms of Asaph"
+      ],
+      "correct": 1,
+      "source_quote": "Blessed be YHWH, the Creator of Yisra'el, from everlasting to everlasting! Amen and Amen."
+    },
+    {
+      "ref": "Psalm attribution",
+      "question": "How many psalms in Tehillim carry David superscriptions?",
+      "options": [
+        "50 psalms",
+        "73 psalms",
+        "100 psalms",
+        "All 150 psalms"
+      ],
+      "correct": 1,
+      "source_quote": "A Psalm of David."
+    },
+    {
+      "ref": "Psalm attribution",
+      "question": "To whom are Psalms 73-83 attributed?",
+      "options": [
+        "The Sons of Korakh",
+        "Shlomo",
+        "Asaph",
+        "Moshe"
+      ],
+      "correct": 2,
+      "source_quote": "A Psalm of Asaph."
+    },
+    {
+      "ref": "Psalm types",
+      "question": "Which type of psalm is most common in Tehillim?",
+      "options": [
+        "Royal psalms celebrating the anointed king",
+        "Wisdom psalms reflecting on Torah",
+        "Lament psalms expressing distress and appealing to YHWH",
+        "Zion psalms celebrating YHWH's dwelling"
+      ],
+      "correct": 2,
+      "source_quote": "How long, O YHWH? Will you forget me forever?"
+    },
+    {
+      "ref": "Psalm 100:1",
+      "question": "What does Psalm 100:1 call all the earth to do?",
+      "options": [
+        "Fear YHWH and keep his commandments",
+        "Make a joyful noise to YHWH",
+        "Gather to Yerushalayim for the festival",
+        "Bow down before YHWH's footstool"
+      ],
+      "correct": 1,
+      "source_quote": "Make a joyful noise to YHWH, all the earth!"
+    },
+    {
+      "ref": "Psalm 111:10",
+      "question": "According to Psalm 111:10, what is the beginning of wisdom?",
+      "options": [
+        "Keeping the Torah of Moshe",
+        "The fear of YHWH",
+        "Meditating on the covenant day and night",
+        "Building the Temple of YHWH"
+      ],
+      "correct": 1,
+      "source_quote": "The fear of YHWH is the beginning of wisdom."
+    },
+    {
+      "ref": "Psalm 145",
+      "question": "What is unique about Psalm 145 among the Davidic psalms?",
+      "options": [
+        "It is the longest psalm in the Psalter",
+        "It is the only Davidic psalm with a doxology",
+        "It is an aleph-bet acrostic attributed to David",
+        "It is the only Davidic psalm that mentions Malkhi-Tzedek"
+      ],
+      "correct": 2,
+      "source_quote": "A Song of Praise. Of David."
+    },
+    {
+      "ref": "11QPsa",
+      "question": "What does the Qumran Great Psalms Scroll (11QPsa) demonstrate about the Psalter?",
+      "options": [
+        "That the Psalter had been completed by the time of David",
+        "That all 150 psalms were finalized before the exile",
+        "That the Psalter's ordering was still fluid in the late Second Temple period",
+        "That the Psalter was organized by Ezra after the return from Babylon"
+      ],
+      "correct": 2,
+      "source_quote": "The Great Psalms Scroll from Cave 11 at Qumran contains psalms in a different order from the Masoretic Text."
+    },
+    {
+      "ref": "Psalm types",
+      "question": "Which psalm type celebrates YHWH's chosen dwelling on Mount Tzion as the community's foundation?",
+      "options": [
+        "Lament psalms",
+        "Royal psalms",
+        "Zion psalms",
+        "Torah psalms"
+      ],
+      "correct": 2,
+      "source_quote": "Great is YHWH and greatly to be praised in the city of our Creator."
+    },
+    {
+      "ref": "Psalter structure",
+      "question": "What literary pattern do the five books of Tehillim parallel?",
+      "options": [
+        "The five sections of the Covenant Renewal ceremony",
+        "The five books of Torah (Bereshit through Devarim)",
+        "The five festivals of the covenant calendar",
+        "The five tabernacle coverings"
+      ],
+      "correct": 1,
+      "source_quote": "The Psalter's five books parallel the five books of the Torah in structure."
+    }
   ],
   "faq": [
     {
-      "question": "How does Psalm 119 contradict the NT framing of Torah as bondage?",
-      "answer": "The NT frames Torah as bondage, curse, and confinement: 'Before faith came, we were held captive under the law, imprisoned until the coming faith would be revealed' (Galatians 3:23). 'Now we are released from the law, having died to that which held us captive' (Romans 7:6). Psalm 119 — the longest chapter in all of scripture, 176 verses — says the exact opposite. The psalmist loves the Torah (119:97). He runs in its way (119:32). It is sweeter than honey (119:103). It is a lamp to his feet (119:105). It gives understanding to the simple (119:130). It is his delight, not his prison. The Qumran community organized their entire communal life around Torah observance (1QS, CD). The Beta Israel maintained Torah practice for millennia in Ethiopia. The Torah-as-bondage framework is a Great Eraser construction — it requires the reader to reject the longest psalm in scripture to accept a Pauline theological claim written centuries later."
+      "question": "Why is the Psalter divided into five books?",
+      "answer": "The five-book structure of Tehillim (Psalms 1-41, 42-72, 73-89, 90-106, 107-150) is an editorial organization that parallels the five books of Torah — sometimes called the Psalter as a 'second Torah.' Each book ends with a closing doxology ('Blessed be YHWH... Amen and Amen'). This structure reflects intentional editorial work to shape the collection as a complete, Torah-parallel covenant text."
     },
     {
-      "question": "Why does the acrostic structure matter?",
-      "answer": "Psalm 119's acrostic structure — 22 Hebrew letters, every letter devoted to Torah — is not decorative. It is theological. The Hebrew alphabet is the building block of all Hebrew expression. By devoting every letter to Torah, the psalm declares: there is no dimension of language, thought, or life that Torah does not cover. From Aleph to Tav — the first letter to the last — everything is Torah. This is the Great Eraser's most fundamental target. If the entire alphabet belongs to Torah, then no external system — Greek philosophy, Roman theology, European Enlightenment rationalism — can claim a domain outside Torah's reach. The psalm's structure is its argument: Torah is total, Torah is beautiful, and Torah is the covenant person's greatest delight."
+      "question": "What is a lament psalm and why are they the most common type?",
+      "answer": "A lament psalm is a formal complaint to YHWH: the psalmist cries out in distress, describes the problem (enemies, illness, abandonment), appeals to YHWH's character and covenant loyalty, and petitions for rescue. Most include a turn toward trust or a vow of praise. Laments are most common because the covenant community's primary need was for a sanctioned, honest place to bring suffering to YHWH rather than away from YHWH. Lament is itself an act of faith."
+    },
+    {
+      "question": "What are royal psalms and how did their meaning change after the exile?",
+      "answer": "Royal psalms (Ps.2, 20, 21, 45, 72, 89, 101, 110, 132, 144) focus on the anointed king — his enthronement, military campaigns, covenant standing, and YHWH's promises to David's line. After the Babylonian exile ended the monarchy, these psalms became eschatological — the community's hope for future covenant fulfillment under a coming anointed figure. This eschatological reading made royal psalms the most heavily borrowed category in the NT."
+    },
+    {
+      "question": "What is a Zion psalm and what does Zion theology represent?",
+      "answer": "Zion psalms (Ps.46, 48, 76, 84, 87, 122, 132) celebrate YHWH's presence on Mount Tzion — the city YHWH chose as the divine dwelling place. Zion theology holds that YHWH's presence is the city's real protection: not its walls or armies but YHWH's indwelling. These psalms were the community's liturgical affirmation that YHWH had chosen a specific place to be near the covenant people, making that place sacred by presence rather than by geography."
+    },
+    {
+      "question": "What makes the Asaph psalms distinctive in the Psalter?",
+      "answer": "The 12 Asaph psalms (Ps.50, 73-83) are marked by: historical recital as teaching (Ps.78), wrestling with the problem of evil and divine silence (Ps.73), divine council imagery where YHWH judges among the elohim (Ps.82), and communal lament over national catastrophe (Ps.74, 79, 80). Asaph is called a 'seer' in 2 Chronicles — his psalms carry a prophetic, visionary quality alongside the liturgical."
+    },
+    {
+      "question": "What does the 11QPsa Qumran Psalms Scroll tell us about the Psalter's formation?",
+      "answer": "The Great Psalms Scroll from Cave 11 at Qumran contains 41 canonical psalms in a different order from the Masoretic Text, plus compositions not in the MT (Psalm 151, the Plea for Deliverance, the Apostrophe to Zion, David's Compositions list). This demonstrates that in the late Second Temple period, the Psalter's sequence was not yet fixed — different communities had different collections. The MT's 150-psalm order was one arrangement among several."
+    },
+    {
+      "question": "What is the difference between a hymn and a lament psalm?",
+      "answer": "A hymn (Hallel) psalm opens with a call to praise and focuses on YHWH's character and deeds as the reason for praise — it is praise for its own sake. A lament psalm opens with a cry of distress and focuses on a specific problem requiring YHWH's intervention — it moves from complaint toward trust. Many psalms contain elements of both; Ps.22, for example, begins as an intense lament and ends as a hymn of universal praise."
+    },
+    {
+      "question": "Why do 14 Davidic psalms include specific historical occasions in their superscriptions?",
+      "answer": "14 Davidic psalms carry superscriptions linking them to specific events in David's life (e.g., Ps.51 — 'when Natan came to him after he had gone to Batsheva'; Ps.3 — 'when he fled from Avshalom'). These historical notes serve as interpretive keys — they show how individual crisis became covenant liturgy. David's personal suffering was turned into prayer forms that the entire community could use in their own crises, with the historical anchor showing that prayer comes from real life."
+    },
+    {
+      "question": "How does Psalm 100 function as a summary psalm?",
+      "answer": "Psalm 100 ('A Psalm for Giving Thanks') is one of the Psalter's most compact and complete summaries: a call to universal joyful worship, the reason (YHWH made us and we are his people), the method (enter with thanksgiving and praise), and the theological foundation (YHWH is good; steadfast love and faithfulness endure forever). It crystallizes the Psalter's core theology — creation, covenant, and worship — into five verses."
+    },
+    {
+      "question": "What is the significance of Psalm 145 as the last Davidic psalm?",
+      "answer": "Psalm 145 is the last psalm with a David superscription and the only one explicitly called 'a song of praise (tehillah)' — giving the entire collection its name (Tehillim). It is also an aleph-bet acrostic, covering YHWH's greatness from every angle. It closes the Davidic collection by affirming YHWH's goodness to all, universal kingdom, and care for the fallen and hungry — before the final five Hallelu-Yah psalms carry the whole Psalter to its doxological end."
     }
   ]
 }

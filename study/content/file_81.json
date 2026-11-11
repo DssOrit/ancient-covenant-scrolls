@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_81",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_81",
   "label": "Ruth — Complete",
   "volume": 25,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Ruth is a Mo'avite woman who clings to her mother-in-law Na'omi after the death of their husbands. She says: Where you go I will go. Where you lodge I will lodge. Your people shall be my people, and your Creator my Creator. Ruth gleans in the fields of Bo'az, a relative of Na'omi's husband. Bo'az acts as the kinsman redeemer. Ruth and Bo'az marry. Their son Oved is the father of Yishai, the father of Dawid. Ruth the Mo'avite is in the direct lineage of King Dawid.",
   "summary_scholarly": "Ruth is preserved in DSS fragments (4QRuth-a, 4QRuth-b) and in the Orit Ge'ez. The text establishes that the Davidic royal lineage includes a non-Israelite woman — a Mo'avite. The kinsman-redeemer (go'el) framework is central to covenant law: the obligation to redeem family property and preserve a deceased relative's name through levirate marriage. Bo'az fulfills this obligation publicly at the gate.",
   "key_terms": [
-    { "term": "Ruth", "phonetic": "Root", "definition": "A Mo'avite woman who joins the covenant people through her declaration to Na'omi. She becomes the great-grandmother of King Dawid." },
-    { "term": "Go'el (Kinsman Redeemer)", "phonetic": "Go-EL", "definition": "The relative with the right and obligation to redeem family property and preserve a deceased kinsman's name. Bo'az acts as go'el for Ruth and Na'omi." },
-    { "term": "Levirate Marriage", "phonetic": "", "definition": "The obligation to marry a deceased brother's or kinsman's widow to preserve his lineage (Devarim 25:5-10). Bo'az fulfills this for Ruth. The practice is documented independently in Igbo and Zulu customary tradition." },
-    { "term": "Gleaning", "phonetic": "", "definition": "The right of the poor, the sojourner, the widow, and the orphan to gather grain left at the edges and corners of the field (Vayikra 19:9, 23:22). Ruth gleans in Bo'az's field under this covenant provision." }
+    {
+      "term": "Rut",
+      "phonetic": "ROOT",
+      "definition": "A Moavite woman who chooses to remain with her mother-in-law Naomi after the death of her husband, declaring loyalty to Naomi's people and to YHWH. Her story is set in the days of the shofetim (judges)."
+    },
+    {
+      "term": "Naomi",
+      "phonetic": "na-o-MI",
+      "definition": "The Bethlehemite woman who loses her husband and two sons in Moav; returns to Beit-Lekhem with Rut; calls herself 'Mara' (bitter) on her return; is ultimately restored through Rut's loyalty and Boaz's redemption."
+    },
+    {
+      "term": "Your People My People",
+      "phonetic": "am-EKH am-I",
+      "definition": "Rut 1:16 — Rut's declaration to Naomi: 'Where you go I will go; where you lodge I will lodge; your people shall be my people and your YHWH my YHWH.' One of the most celebrated loyalty declarations in the Hebrew covenant tradition."
+    },
+    {
+      "term": "Boaz",
+      "phonetic": "BO-az",
+      "definition": "A man of Beit-Lekhem from the clan of Elimelekh, Naomi's deceased husband; a person of standing (gibbor khayil); becomes Rut's kinsman-redeemer, marrying her and restoring the family line."
+    },
+    {
+      "term": "Go'el (Kinsman-Redeemer)",
+      "phonetic": "GO-el",
+      "definition": "The Hebrew legal institution where a close male relative has the right and responsibility to redeem a family member's property or widow; central to the plot of Rut — Boaz acts as go'el for Naomi and Rut, restoring Elimelekh's land and lineage."
+    },
+    {
+      "term": "Levirate Custom",
+      "phonetic": "yi-BUM",
+      "definition": "The practice reflected in Rut (adjacent to Deuteronomy 25 levirate law) where a kinsman marries a widow to raise up the name of the deceased on his inheritance; the nearer kinsman declines, leaving Boaz free to act as go'el."
+    },
+    {
+      "term": "Threshing Floor Scene",
+      "phonetic": "gor-en",
+      "definition": "Rut 3: Naomi instructs Rut to uncover Boaz's feet and lie down at the threshing floor; Boaz wakes and Rut asks him to spread his covering (wing) over her as go'el — a legal appeal to kinsman-redemption using the same 'wing' language as YHWH's redemption (2:12)."
+    },
+    {
+      "term": "Orpah",
+      "phonetic": "or-PAH",
+      "definition": "Naomi's other daughter-in-law, also a Moavite; weeps and kisses Naomi when urged to return to her people, then does return — contrasted with Rut who chooses to stay. Orpah is not condemned; the contrast highlights the extraordinary nature of Rut's loyalty."
+    },
+    {
+      "term": "Rut 4 Genealogy",
+      "phonetic": "yikh-YUS Rut DA-let",
+      "definition": "Rut 4:17-22: Rut bears a son named Oved; he is the father of Yishai; Yishai is the father of David. The genealogy at the book's end reveals that the Moavite Rut is in the direct ancestral line of the Davidic covenant."
+    },
+    {
+      "term": "Khesed",
+      "phonetic": "KHE-sed",
+      "definition": "Hebrew word for covenant loyalty, loving-kindness, faithful love; used three times in Rut to describe both Rut's loyalty to Naomi and YHWH's covenant faithfulness. Khesed is the theological center of the book."
+    }
   ],
   "fill_blank": [
-    { "ref": "1:16", "prompt": "Where you go I will go, and where you lodge I will lodge. Your ______ shall be my ______, and your Creator my Creator.", "answer": "people", "source_quote": "Where you go I will go, and where you lodge I will lodge. Your people shall be my people, and your Creator my Creator." },
-    { "ref": "4:17", "prompt": "They named him Oved. He was the father of Yishai, the father of ______.", "answer": "Dawid", "source_quote": "And they named him Oved. He was the father of Yishai, the father of Dawid." },
-    { "ref": "2:12", "prompt": "YHWH repay you for what you have done, and a full reward be given you by YHWH, The Creator of Yisra'EL, under whose ______ you have come to take refuge.", "answer": "wings", "source_quote": "YHWH repay you for what you have done, and a full reward be given you by YHWH, The Creator of Yisra'EL, under whose wings you have come to take refuge." }
+    {
+      "ref": "Rut 1:16",
+      "prompt": "Rut said: 'Where you go I will go, and where you lodge I will lodge. Your people shall be ___ people, and your YHWH my YHWH.'",
+      "answer": "my",
+      "source_quote": "Where you go I will go, and where you lodge I will lodge. Your people shall be my people, and your YHWH my YHWH — Rut 1:16."
+    },
+    {
+      "ref": "Rut 1:20",
+      "prompt": "Naomi said: 'Do not call me Naomi; call me ___, for the Almighty has dealt very bitterly with me.'",
+      "answer": "Mara",
+      "source_quote": "Do not call me Naomi; call me Mara, for the Almighty has dealt very bitterly with me — Rut 1:20."
+    },
+    {
+      "ref": "Rut 2:4",
+      "prompt": "Then Boaz said to the reapers: 'YHWH be with you!' And they answered: 'YHWH ___ you.'",
+      "answer": "bless",
+      "source_quote": "YHWH be with you! And they answered: YHWH bless you — Rut 2:4."
+    },
+    {
+      "ref": "Rut 2:12",
+      "prompt": "Boaz said to Rut: 'May YHWH repay you for what you have done, and a full ___ be given you by YHWH, the Creator of Yisra'el, under whose wings you have come to take refuge.'",
+      "answer": "reward",
+      "source_quote": "May YHWH repay you for what you have done, and a full reward be given you by YHWH — Rut 2:12."
+    },
+    {
+      "ref": "Rut 3:9",
+      "prompt": "Rut said to Boaz: 'Spread your ___ over your servant, for you are a redeemer (go'el).'",
+      "answer": "wing",
+      "source_quote": "Spread your wing over your servant, for you are a redeemer — Rut 3:9."
+    },
+    {
+      "ref": "Rut 3:13",
+      "prompt": "Boaz said: 'If he will ___ you, good; let him do it. But if he is not willing to redeem you, then as YHWH lives, I will redeem you.'",
+      "answer": "redeem",
+      "source_quote": "If he will redeem you, good; let him do it. But if he is not willing to redeem you, then as YHWH lives, I will redeem you — Rut 3:13."
+    },
+    {
+      "ref": "Rut 4:14",
+      "prompt": "The women said to Naomi: 'Blessed be YHWH, who has not left you this day without a ___, and may his name be renowned in Yisra'el!'",
+      "answer": "redeemer",
+      "source_quote": "Blessed be YHWH, who has not left you this day without a redeemer — Rut 4:14."
+    },
+    {
+      "ref": "Rut 4:17",
+      "prompt": "The women of the neighborhood gave the child a name, saying: 'A son has been born to Naomi.' They named him ___; he was the father of Yishai, the father of David.",
+      "answer": "Oved",
+      "source_quote": "They named him Oved; he was the father of Yishai, the father of David — Rut 4:17."
+    },
+    {
+      "ref": "Rut 1:1",
+      "prompt": "In the days when the ___ ruled, there was a famine in the land, and a man of Beit-Lekhem in Yehudah went to sojourn in the country of Moav.",
+      "answer": "judges (shofetim)",
+      "source_quote": "In the days when the judges ruled, there was a famine in the land — Rut 1:1."
+    },
+    {
+      "ref": "Rut 2:1",
+      "prompt": "Now Naomi had a relative of her husband's, a worthy man of the clan of Elimelekh, whose name was ___.",
+      "answer": "Boaz",
+      "source_quote": "Now Naomi had a relative of her husband's, a worthy man of the clan of Elimelekh, whose name was Boaz — Rut 2:1."
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:16", "question": "What did Ruth declare to Na'omi?", "options": ["I will return to Mo'av", "Your people shall be my people, and your Creator my Creator", "I will find another husband in Mo'av", "I will stay only for the harvest"], "correct": 1, "source_quote": "Where you go I will go. Your people shall be my people, and your Creator my Creator." },
-    { "ref": "4:17", "question": "Who is Ruth's great-grandson?", "options": ["Shelomoh", "Dawid", "Sha'ul", "Yosef"], "correct": 1, "source_quote": "He was the father of Yishai, the father of Dawid." },
-    { "ref": "3:9", "question": "What does Bo'az act as for Ruth?", "options": ["A prophet", "A priest", "A kinsman redeemer (go'el)", "A judge"], "correct": 2, "source_quote": "I am Ruth, your servant. Spread your wings over your servant, for you are a redeemer." }
+    {
+      "ref": "Rut 1:16",
+      "question": "What is the content of Rut's declaration in 1:16?",
+      "options": [
+        "She will return to Moav with Orpah",
+        "She will stay with Naomi: your people my people, your YHWH my YHWH",
+        "She will find a new husband in Moav",
+        "She will serve in YHWH's Temple"
+      ],
+      "correct": 1,
+      "source_quote": "Your people shall be my people, and your YHWH my YHWH — Rut 1:16."
+    },
+    {
+      "ref": "Rut 1:20",
+      "question": "What does Naomi ask to be called on her return to Beit-Lekhem?",
+      "options": [
+        "Rut",
+        "Hadassah",
+        "Mara",
+        "Devorah"
+      ],
+      "correct": 2,
+      "source_quote": "Do not call me Naomi; call me Mara, for the Almighty has dealt very bitterly with me — Rut 1:20."
+    },
+    {
+      "ref": "Rut go'el",
+      "question": "What is the go'el institution that drives the plot of Rut?",
+      "options": [
+        "A priestly office in the Temple",
+        "The kinsman-redeemer — a close male relative responsible for redeeming family property or a widow",
+        "A system of voluntary charity",
+        "The Levitical inheritance law"
+      ],
+      "correct": 1,
+      "source_quote": "You are a redeemer (go'el) — Rut 3:9."
+    },
+    {
+      "ref": "Rut 3:9",
+      "question": "What does Rut ask Boaz to spread over her at the threshing floor?",
+      "options": [
+        "A garment for warmth",
+        "His wing/covering — a legal appeal for kinsman-redemption",
+        "Grain from the harvest",
+        "A sign of betrothal"
+      ],
+      "correct": 1,
+      "source_quote": "Spread your wing over your servant, for you are a redeemer — Rut 3:9."
+    },
+    {
+      "ref": "Rut 4:17",
+      "question": "Who is Rut's son Oved identified as the ancestor of in the closing genealogy?",
+      "options": [
+        "Avraham",
+        "Moshe",
+        "David",
+        "Shlomo"
+      ],
+      "correct": 2,
+      "source_quote": "They named him Oved; he was the father of Yishai, the father of David — Rut 4:17."
+    },
+    {
+      "ref": "Rut 2:12",
+      "question": "How does Boaz describe Rut's refuge in YHWH in 2:12?",
+      "options": [
+        "She has come under YHWH's covenant",
+        "She has come under whose wings to take refuge",
+        "She has entered YHWH's sanctuary",
+        "She has sworn YHWH's oath"
+      ],
+      "correct": 1,
+      "source_quote": "A full reward be given you by YHWH, under whose wings you have come to take refuge — Rut 2:12."
+    },
+    {
+      "ref": "Rut 1:1",
+      "question": "In what era is the book of Rut set?",
+      "options": [
+        "The reign of David",
+        "The days of the shofetim (judges)",
+        "The Babylonian exile",
+        "The return under Cyrus"
+      ],
+      "correct": 1,
+      "source_quote": "In the days when the judges ruled — Rut 1:1."
+    },
+    {
+      "ref": "Rut 1:14",
+      "question": "What does Orpah do when Naomi urges her daughters-in-law to return to their families?",
+      "options": [
+        "She refuses and stays with Naomi like Rut",
+        "She weeps, kisses Naomi, and returns to her people",
+        "She travels to Yerushalayim",
+        "She finds another husband in Moav immediately"
+      ],
+      "correct": 1,
+      "source_quote": "Orpah kissed her mother-in-law, but Rut clung to her — Rut 1:14."
+    },
+    {
+      "ref": "Rut 4:1",
+      "question": "How does Boaz handle the kinsman-redeemer process legally?",
+      "options": [
+        "He petitions the king",
+        "He goes to the city gate with ten elders",
+        "He brings a sacrifice to YHWH",
+        "He sends a written document"
+      ],
+      "correct": 1,
+      "source_quote": "Boaz went up to the gate and sat down there... and took ten men of the elders of the city — Rut 4:1-2."
+    },
+    {
+      "ref": "Rut khesed",
+      "question": "What Hebrew term of covenant loyalty appears three times in Rut to describe both human and divine faithfulness?",
+      "options": [
+        "Emunah",
+        "Khesed",
+        "Tzedakah",
+        "Khen"
+      ],
+      "correct": 1,
+      "source_quote": "Khesed (covenant loyalty/loving-kindness) is used in Rut 1:8, 2:20, and 3:10 to describe both Rut's faithfulness and YHWH's."
+    }
   ],
   "faq": [
     {
-      "question": "What does levirate marriage in Ruth connect to in West African tradition?",
-      "answer": "Levirate marriage — the obligation to marry a deceased kinsman's widow to preserve his lineage (Devarim 25:5-10) — is documented independently in Igbo tradition (in ethnographic scholarship and in Chinua Achebe's works) and in Zulu customary law. Its presence in West and Southern African populations alongside other documented covenant parallels — eighth-day circumcision, dietary restrictions, purification rituals — is part of the cultural fingerprint record connecting the African diaspora to the ancient covenant tradition. These practices were documented by European observers who had no theological motivation to find the parallel."
+      "question": "Why is Rut, a Moavite, the central hero of a book in the Hebrew covenant tradition?",
+      "answer": "Rut demonstrates that covenant loyalty (khesed) is not determined by ethnicity but by faithfulness to YHWH and to the covenant community. Her declaration — 'your people shall be my people and your YHWH my YHWH' — is a full covenant commitment. The book presents her as a model of khesed that surpasses what is required, and YHWH rewards her accordingly. The Davidic lineage running through Rut shows that YHWH works through unexpected paths."
     },
     {
-      "question": "Why does the Davidic lineage include a Mo'avite woman?",
-      "answer": "Ruth the Mo'avite is in the direct lineage of King Dawid — Oved, Yishai, Dawid. The covenant framework includes people who were not born Israelite but who joined through genuine covenant commitment: 'your people shall be my people, your Creator my Creator.' This is not conversion through institutional process — there is no Rabbinical court, no conversion ceremony. Ruth declares her commitment and acts on it. The go'el framework at the gate is a public community witness, not an institutional religious process. The Rabbinical geirut (conversion) requirement imposed on the Beta Israel — the people who preserved 1 Chanokh and Yovelim for over a thousand years — has no basis in this text."
+      "question": "What is the go'el institution and how does it work in Rut?",
+      "answer": "The go'el (kinsman-redeemer) is a close male relative responsible for redeeming family land, freeing enslaved relatives, or marrying a deceased kinsman's widow to continue the family name. In Rut, Naomi's husband Elimelekh had a nearer kinsman who had first right of redemption — but he declines (4:6) because taking Rut's hand would complicate his own inheritance. This clears the path for Boaz to act as go'el, completing the legal ceremony at the city gate with ten elders (4:1-12)."
     },
     {
-      "question": "What does gleaning reveal about the covenant economic system?",
-      "answer": "The gleaning right in Ruth comes directly from Vayikra 19:9 and 23:22 — YHWH's command to leave the corners and edges of the field for the poor, the sojourner, the widow, and the orphan. This is not charity — it is a covenant economic obligation. The landowner does not give from surplus. The poor have a right to what grows at the margins. Combined with the Shemitah (seventh-year land rest) and the Jubilee (fiftieth-year land return), the covenant economic system prevents permanent accumulation and permanent dispossession. The Federal Reserve's 2022 data documents a 6.3:1 white-to-Black wealth ratio in the United States — the compound result of 400 years of the covenant economic system being denied to the covenant people."
+      "question": "What is the significance of Rut's request in 3:9?",
+      "answer": "Rut's request — 'Spread your wing over your servant, for you are a go'el' — echoes Boaz's earlier blessing (2:12) where he said YHWH would reward her for coming under YHWH's wings for refuge. Rut is now asking Boaz to be the human embodiment of YHWH's protective wing through the go'el institution. The same Hebrew word for wing/covering (kanaf) connects YHWH's protection and Boaz's covenant responsibility — Rut is claiming both simultaneously."
+    },
+    {
+      "question": "What is Khesed and why is it the theological center of Rut?",
+      "answer": "Khesed is covenant loyalty — faithful love that goes beyond what is strictly required, persisting through difficulty. Naomi invokes it in 1:8: 'May YHWH deal khesed with you as you have dealt with the dead and with me.' Boaz praises Rut's khesed in 3:10. YHWH is the source of khesed, and both Rut and Boaz model it in human form. The whole story is a demonstration that khesed — divine and human — is the engine of covenant restoration."
+    },
+    {
+      "question": "What does the ending genealogy of Rut reveal?",
+      "answer": "Rut 4:17-22 traces the lineage from Perez through ten generations to David. Oved, born of Rut and Boaz, is the grandfather of David. This genealogy transforms the whole story: what appears to be a small personal story of loyalty and loss in a Moavite field is actually part of the larger covenant story leading to the Davidic covenant. YHWH works through the margins — a widowed Moavite woman — to bring about covenant history."
+    },
+    {
+      "question": "What does the contrast between Rut and Orpah teach?",
+      "answer": "Orpah is not condemned — she weeps, she loved Naomi, and she followed the socially expected path of returning to her family after widowhood. Rut's choice is extraordinary precisely because Orpah represents the normal and understandable option. The contrast highlights that Rut's covenant loyalty is voluntary, not compelled — she chose YHWH and the covenant community when she had every reasonable option to leave. This voluntary covenant commitment is exactly what makes her story a model."
+    },
+    {
+      "question": "How does the book of Rut position itself within the larger Hebrew narrative?",
+      "answer": "Rut opens in the days of the shofetim (judges) — a period described in Shofetim as characterized by everyone doing what was right in their own eyes. The book of Rut is a counternarrative: in the same period, ordinary people practiced extraordinary khesed. It ends with the genealogy of David, connecting directly to the beginning of the Shemu'el/Melakhim narrative. Rut is the bridge from the judges period to the Davidic covenant."
+    },
+    {
+      "question": "What does Rut 1:16-17 teach about covenant commitment?",
+      "answer": "Rut's declaration is not just a loyalty pledge to Naomi personally — it is a full covenant commitment: people, place, YHWH, and even death and burial. 'Where you die I will die, and there I will be buried.' This covers every dimension of covenant identity: community, land, deity, and the final resting place. Rut is not requesting immigrant status — she is fully joining the covenant community. Her words have been used ever since in Jewish conversion contexts precisely because they represent total covenant allegiance."
+    },
+    {
+      "question": "Why does Naomi call herself Mara (bitter)?",
+      "answer": "Naomi returns to Beit-Lekhem after losing her husband Elimelekh and both sons. She says: 'I went away full and YHWH has brought me back empty. Why call me Naomi (pleasant) when YHWH has afflicted me?' (1:21). This honest lament echoes Iyov's honesty with YHWH. Naomi does not pretend faith she doesn't feel — she names the bitterness directly. The book's arc will restore her to fullness, but she must first be allowed to name the loss."
+    },
+    {
+      "question": "What covenant legal elements appear in the city gate scene of Rut 4?",
+      "answer": "Rut 4:1-12 follows the formal legal process: Boaz assembles ten elders as witnesses at the city gate (the legal forum in ancient Hebrew towns); the nearer kinsman is invited to redeem; he initially agrees but withdraws when he learns Rut is part of the transaction; he symbolically removes his sandal (the legal sign of declining the levirate/go'el obligation, related to Devarim 25:9); and Boaz formally declares his redemption of both the land and Rut before all the witnesses. The legal precision of the scene reflects functioning covenant law."
     }
   ]
 }

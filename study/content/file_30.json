@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_30",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_30",
   "label": "Shemu'el Bet (2 Samuel) — Part 1 — Chapters 1–6",
   "volume": 13,
-  "content_version": 1,
+  "content_version": 3,
   "summary_plain": "Dawid mourns Sha'ul and Yonatan — How the mighty have fallen! Dawid is anointed king over Yehudah at Hevron. War between the house of Dawid and the house of Sha'ul. Dawid becomes king over all Yisra'EL. He takes Yerushalayim from the Yevusites and makes it his city — the City of Dawid. Dawid brings the Ark of the Covenant to Yerushalayim with dancing and shouting. Mikhal despises him for dancing before YHWH.",
   "summary_scholarly": "The ACR reads from 4QSam-a, 4QSam-b, and 4QSam-c alongside the Orit Ge'ez. The DSS Samuel manuscripts preserve significant readings absent from the Masoretic. The capture of Yerushalayim (ch 5) establishes the Davidic capital — but this territory sits on the African tectonic plate (Nubian Plate). Dawid's kingdom was physically on African soil. The Ark's procession to Yerushalayim (ch 6) establishes the city as the covenant center — YHWH's presence in the City of Dawid.",
   "key_terms": [
-    { "term": "Dawid", "phonetic": "Dah-VEED", "definition": "Son of Yishai, from the tribe of Yehudah. Anointed king by Shemu'el. King over Yehudah at Hevron, then over all Yisra'EL. Anglicized as David." },
-    { "term": "City of Dawid", "phonetic": "", "definition": "Yerushalayim — captured from the Yevusites (5:6-9). Dawid made it his capital and renamed it the City of Dawid. The Ophel ridge is the original City of Dawid — south of the present-day Temple Mount." },
-    { "term": "Hevron", "phonetic": "Khev-RON", "definition": "Dawid's first capital — he reigned there over Yehudah for seven and a half years before taking Yerushalayim and uniting all Yisra'EL (5:5)." }
+    {
+      "term": "David Anointed King Over All Yisra'el",
+      "phonetic": "",
+      "definition": "After seven years as king over Yehudah in Hevron, all the tribes of Yisra'el come to David at Hevron. The elders anoint him king over all Yisra'el in a covenant ceremony. David was 30 when he became king and reigned 40 years total — 7.5 years in Hevron, 33 in Yerushalayim."
+    },
+    {
+      "term": "Conquest of Yerushalayim",
+      "phonetic": "kibbush Yerushalayim",
+      "definition": "David's first major act as king over all Yisra'el is to take Yerushalayim (then called the Yevus) from the Jebusites. The Jebusites taunted: 'Even the blind and the lame will drive you away.' David took the city of Zion and called it 'the city of David.' He made it his capital — a city not belonging to any tribe, uniting the kingdom above tribal politics."
+    },
+    {
+      "term": "Ark Brought to Yerushalayim",
+      "phonetic": "aliyat ha-aron",
+      "definition": "In 2 Shemu'el 6, David brings the Ark of the Covenant to Yerushalayim. First attempt: the Ark is on a cart, Uzzah reaches out to steady it, YHWH strikes him dead. David is afraid and leaves the Ark at Oved-Edom's house for three months. Second attempt: the Ark is carried correctly on poles by the Levites, with sacrifices every six steps, and David dances with all his might before YHWH."
+    },
+    {
+      "term": "Davidic Covenant",
+      "phonetic": "brit David",
+      "definition": "2 Shemu'el 7: YHWH's covenant promise to David through Natan the prophet. David wants to build a house for YHWH; YHWH reverses it — he will build David a house (a dynasty). Key promises: David's son will build the Temple; YHWH will be his father; his throne will be established forever; even if he sins YHWH will discipline but not remove covenant love. The unconditional, eternal dimension of this covenant is unprecedented."
+    },
+    {
+      "term": "Natan the Prophet",
+      "phonetic": "Natan ha-navi",
+      "definition": "The prophet who delivers YHWH's word to David throughout 2 Shemu'el. He delivers the Davidic covenant promise (ch.7), and later in ch.12 confronts David about Bat-Sheva and Uriyah — entering the king's presence to deliver a parable that exposes the king's sin and pronounces judgment without diplomatic softening."
+    },
+    {
+      "term": "Mephiboshet",
+      "phonetic": "me-fee-BO-shet",
+      "definition": "Yehonatan's son, crippled in both feet (dropped by his nurse when fleeing after the Gilboa battle, 2 Shemu'el 4:4). David seeks him out to honor his covenant with Yehonatan: 'Is there still anyone left of the house of Sha'ul that I may show him kindness for Yehonatan's sake?' He restores Mephiboshet all of Sha'ul's land and brings him to eat at the king's table 'like one of the king's sons.'"
+    },
+    {
+      "term": "Michal's Contempt",
+      "phonetic": "buz Mikhal",
+      "definition": "When David dances before the Ark in minimal clothing, Mikhal (Sha'ul's daughter) despises him in her heart and mocks him: 'How the king of Yisra'el honored himself today, uncovering himself before the eyes of his servants' female servants.' David's response: 'Before YHWH who chose me over your father, I will celebrate before YHWH.' The text notes Mikhal had no child to the day of her death."
+    },
+    {
+      "term": "David's Prayer After the Covenant",
+      "phonetic": "tefillat David",
+      "definition": "2 Shemu'el 7:18-29 — David's response to YHWH's covenant promise. He goes in and sits before YHWH and prays: 'Who am I, YHWH my Creator, and what is my house, that you have brought me this far?' The prayer acknowledges YHWH's initiative, affirms his greatness compared to all other deities, and asks for the covenant promises to be fulfilled. It is a model of covenant gratitude."
+    },
+    {
+      "term": "Uzzah's Death",
+      "phonetic": "mot Uzzah",
+      "definition": "2 Shemu'el 6:7: when the oxen stumbled while moving the Ark on a cart, Uzzah reached out and took hold of the Ark to steady it. YHWH's anger burned and he struck Uzzah dead immediately. David was both angry and afraid. The incident established that the Ark could not be transported on a cart — only on poles, carried by the Levites (Bemidbar 7). Covenant protocol is not casual procedure; it is structurally required."
+    },
+    {
+      "term": "David's Covenant Kindness to Neighboring Nations",
+      "phonetic": "khesed shel David",
+      "definition": "2 Shemu'el 10: David sends messengers to comfort Hanun son of Nakhash of Ammon after his father's death. Hanun shames David's messengers by cutting their garments and shaving half their beards. The humiliation of David's messengers triggers a war. The episode shows that covenant loyalty (David remembered Nakhash's kindness) can be rejected — and that rejection has consequences."
+    }
   ],
   "fill_blank": [
-    { "ref": "1:19", "prompt": "How the mighty have ______! The beauty of Yisra'EL is slain on your high places.", "answer": "fallen", "source_quote": "Your glory, O Yisra'EL, is slain on your high places! How the mighty have fallen!" },
-    { "ref": "5:7", "prompt": "Dawid took the stronghold of Tziyon — that is, the ______ of Dawid.", "answer": "City", "source_quote": "Nevertheless, Dawid took the stronghold of Tziyon — that is, the City of Dawid." },
-    { "ref": "6:14", "prompt": "And Dawid ______ before YHWH with all his might.", "answer": "danced", "source_quote": "And Dawid danced before YHWH with all his might, wearing a linen ephod." }
+    {
+      "ref": "2 Shemu'el 7:16",
+      "prompt": "YHWH promised David: 'Your house and your kingdom shall be made sure before me forever; your throne shall be ___ forever.'",
+      "answer": "established",
+      "source_quote": "Your house and your kingdom shall be made sure forever before me. Your throne shall be established forever. — 2 Shemu'el 7:16"
+    },
+    {
+      "ref": "2 Shemu'el 6:14",
+      "prompt": "David danced before YHWH with ___ might when the Ark was brought to Yerushalayim.",
+      "answer": "all his",
+      "source_quote": "David danced before YHWH with all his might. — 2 Shemu'el 6:14"
+    },
+    {
+      "ref": "2 Shemu'el 7:18",
+      "prompt": "David sat before YHWH and prayed: 'Who am I, YHWH, and what is my house, that you have brought me ___ far?'",
+      "answer": "this",
+      "source_quote": "Who am I, O YHWH God, and what is my house, that you have brought me thus far? — 2 Shemu'el 7:18"
+    },
+    {
+      "ref": "2 Shemu'el 9:7",
+      "prompt": "David told Mephiboshet: 'I will show you ___ for the sake of your father Yehonatan.'",
+      "answer": "kindness",
+      "source_quote": "I will show you kindness for the sake of your father Jonathan. — 2 Shemu'el 9:7"
+    },
+    {
+      "ref": "2 Shemu'el 6:7",
+      "prompt": "YHWH struck ___ dead when he reached out to steady the Ark as the oxen stumbled.",
+      "answer": "Uzzah",
+      "source_quote": "YHWH's anger was kindled against Uzzah, and YHWH struck him down there. — 2 Shemu'el 6:7"
+    },
+    {
+      "ref": "2 Shemu'el 7:14",
+      "prompt": "YHWH promised David about his son: 'I will be to him a ___, and he shall be to me a son.'",
+      "answer": "father",
+      "source_quote": "I will be to him a father, and he shall be to me a son. — 2 Shemu'el 7:14"
+    },
+    {
+      "ref": "2 Shemu'el 6",
+      "prompt": "David left the Ark at Oved-Edom's house for ___ months, and YHWH blessed Oved-Edom's household.",
+      "answer": "three",
+      "source_quote": "The ark of YHWH remained in the house of Obed-edom... three months. — 2 Shemu'el 6:11"
+    },
+    {
+      "ref": "2 Shemu'el 7:5-7",
+      "prompt": "YHWH asked Natan: 'Should you build me a house to dwell in? I have not lived in a house since the day I brought up ___ from Egypt.'",
+      "answer": "the people of Yisra'el / Yisra'el",
+      "source_quote": "I have not lived in a house since the day I brought up the people of Israel from Egypt. — 2 Shemu'el 7:6"
+    },
+    {
+      "ref": "2 Shemu'el 9:11",
+      "prompt": "David had Mephiboshet eat at his table 'like one of the king's ___.'",
+      "answer": "sons",
+      "source_quote": "Mephibosheth ate at David's table, like one of the king's sons. — 2 Shemu'el 9:11"
+    },
+    {
+      "ref": "2 Shemu'el 5",
+      "prompt": "David captured Yerushalayim from the ___, who had taunted that even the blind and lame would stop him.",
+      "answer": "Jebusites / Yevusites",
+      "source_quote": "The Jebusites said... even the blind and the lame will ward you off. — 2 Shemu'el 5:6"
+    }
   ],
   "multiple_choice": [
-    { "ref": "5:4-5", "question": "How long did Dawid reign at Hevron before taking Yerushalayim?", "options": ["Two years", "Seven and a half years", "Twelve years", "Forty years"], "correct": 1, "source_quote": "In Hevron he reigned over Yehudah seven years and six months, and in Yerushalayim he reigned thirty-three years over all Yisra'EL and Yehudah." },
-    { "ref": "1:17-27", "question": "How does Dawid respond to the death of Sha'ul and Yonatan?", "options": ["He celebrates", "He mourns — How the mighty have fallen!", "He immediately claims the throne", "He flees to the Philistines"], "correct": 1, "source_quote": "How the mighty have fallen! The beauty of Yisra'EL is slain on your high places." },
-    { "ref": "6:14-16", "question": "What did Dawid do when the Ark came to Yerushalayim?", "options": ["He built a temple", "He danced before YHWH with all his might", "He offered a burnt offering alone", "He wept and prayed"], "correct": 1, "source_quote": "Dawid danced before YHWH with all his might." }
+    {
+      "ref": "2 Shemu'el 7",
+      "question": "What was YHWH's response when David wanted to build a house for him?",
+      "options": [
+        "YHWH approved the plan and gave David detailed architectural instructions",
+        "YHWH said the plan was premature — Yisra'el needed to be at peace first",
+        "YHWH reversed it: David would not build the house, but YHWH would build David a house (dynasty)",
+        "YHWH said the Ark needed to remain in a tent forever"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH declares to you that YHWH will make you a house. — 2 Shemu'el 7:11"
+    },
+    {
+      "ref": "2 Shemu'el 6:7",
+      "question": "Why did YHWH strike Uzzah dead?",
+      "options": [
+        "Uzzah was a Philistine in disguise who had infiltrated the procession",
+        "Uzzah had previously been declared unclean by the priest Evyatar",
+        "He reached out and took hold of the Ark when the oxen stumbled — touching what was forbidden",
+        "He dropped the Ark on purpose to test YHWH's reaction"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH's anger was kindled against Uzzah, and YHWH struck him down there because he put out his hand to the ark. — 2 Shemu'el 6:7"
+    },
+    {
+      "ref": "2 Shemu'el 9",
+      "question": "Why did David seek out Mephiboshet?",
+      "options": [
+        "Because Mephiboshet had served in his army",
+        "To fulfill his covenant with Yehonatan by showing kindness to his remaining family",
+        "Because he needed someone from Sha'ul's line to legitimize his rule",
+        "Because Mephiboshet had sent David a gift acknowledging him as king"
+      ],
+      "correct": 1,
+      "source_quote": "Is there still anyone left of the house of Saul, that I may show him kindness for Jonathan's sake? — 2 Shemu'el 9:1"
+    },
+    {
+      "ref": "2 Shemu'el 7:14-16",
+      "question": "What unconditional element did YHWH include in the Davidic covenant?",
+      "options": [
+        "That David would never sin again",
+        "That David's military campaigns would always succeed",
+        "That even if David's son sinned, YHWH would discipline but not remove covenant love or the dynasty",
+        "That the Temple David's son built would stand forever without destruction"
+      ],
+      "correct": 2,
+      "source_quote": "When he commits iniquity, I will discipline him... but my steadfast love will not depart from him. — 2 Shemu'el 7:14-15"
+    },
+    {
+      "ref": "2 Shemu'el 6:16-21",
+      "question": "What was Mikhal's response to David's dancing before the Ark?",
+      "options": [
+        "She joined him in worship and praised YHWH",
+        "She brought him a robe so he would be properly clothed",
+        "She despised him in her heart and mocked him for dancing uncovered before his servants",
+        "She was moved to tears by his devotion"
+      ],
+      "correct": 2,
+      "source_quote": "Michal the daughter of Saul looked out of the window and saw King David leaping and dancing before YHWH, and she despised him in her heart. — 2 Shemu'el 6:16"
+    },
+    {
+      "ref": "2 Shemu'el 5",
+      "question": "Where did David establish his capital after conquering the Jebusites?",
+      "options": [
+        "In Hevron, his first capital in Yehudah",
+        "In Shilo, where the Tabernacle had been",
+        "In Yerushalayim, the city of David, belonging to no tribe",
+        "In Shekhem, the site of Yehoshua's covenant renewal"
+      ],
+      "correct": 2,
+      "source_quote": "David captured the stronghold of Zion, that is, the city of David. — 2 Shemu'el 5:7"
+    },
+    {
+      "ref": "2 Shemu'el 7:18",
+      "question": "What was David's immediate response after receiving YHWH's covenant promises?",
+      "options": [
+        "He began designing the Temple that night",
+        "He went in and sat before YHWH and prayed in humility and gratitude",
+        "He organized a national festival in Yerushalayim",
+        "He wrote the covenant terms in a scroll and placed it beside the Ark"
+      ],
+      "correct": 1,
+      "source_quote": "Then David went in and sat before YHWH and said, Who am I, O YHWH God, and what is my house... — 2 Shemu'el 7:18"
+    },
+    {
+      "ref": "2 Shemu'el 9:11",
+      "question": "What was Mephiboshet's permanent covenant status after David's restoration?",
+      "options": [
+        "He was given a territory in Binyamin separate from David's court",
+        "He ate at David's table like one of the king's sons",
+        "He became the chief administrator of Sha'ul's former estates",
+        "He was given a ceremonial role at the Temple"
+      ],
+      "correct": 1,
+      "source_quote": "So Mephibosheth ate at David's table, like one of the king's sons. — 2 Shemu'el 9:11"
+    },
+    {
+      "ref": "2 Shemu'el 6",
+      "question": "What happened at Oved-Edom's house while the Ark stayed there?",
+      "options": [
+        "Three of his sons died suddenly, frightening David away",
+        "Nothing — the Ark remained inert until David came for it",
+        "YHWH blessed Oved-Edom and his entire household",
+        "The Ark was stolen by Philistine agents during the three months"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH blessed Obed-edom and all his household. — 2 Shemu'el 6:11"
+    },
+    {
+      "ref": "2 Shemu'el 7:5",
+      "question": "What question did YHWH ask Natan about David's plan to build the Temple?",
+      "options": [
+        "Why has David not asked me first before planning to build?",
+        "Shall you build me a house to dwell in?",
+        "Does David believe I cannot live without a house?",
+        "Has David forgotten that his hands have shed blood?"
+      ],
+      "correct": 1,
+      "source_quote": "Are you the one to build me a house to dwell in? — 2 Shemu'el 7:5"
+    }
   ],
   "faq": [
     {
-      "question": "What does it mean that Dawid's kingdom was on the African tectonic plate?",
-      "answer": "The City of Dawid — Yerushalayim — sits on the Nubian Plate, physically African soil. The Jordan Rift Valley is the geological boundary between Africa and the Arabian Plate. Everything west of the Jordan — including Yerushalayim, Hevron, Beit-Lehem, the Negev, the Galilee, and the coastal plain — is on the African continent geologically. The Davidic kingdom was an African kingdom. The term 'Middle East' was invented in 1902 by a US naval strategist. Before that date, no such geographic category existed. Every ancient cartographic framework placed this territory within or at the boundary of the African geographic zone."
+      "question": "What makes the Davidic covenant different from the Mosaic covenant?",
+      "answer": "The Mosaic covenant at Sinai was conditional — 'if you obey, I will bless; if you disobey, I will curse.' The Davidic covenant in 2 Shemu'el 7 has an unconditional core: YHWH will not remove his covenant love from David's dynasty even when individual kings sin. 'If he commits iniquity, I will discipline him with the rod of men — but my steadfast love will not depart from him.' The Mosaic covenant structures Israel's national life; the Davidic covenant structures the dynasty through which YHWH will work. Both are real covenant commitments, but their conditionality structures differ. The unconditional promise to David's line is what YHWH's later prophets will invoke repeatedly during the exile — the dynasty is not permanently abandoned even though the land is lost."
     },
     {
-      "question": "What does the Dawid-Golyat narrative (1 Shemu'el 17) establish about the Davidic line?",
-      "answer": "Dawid — a shepherd boy from Beit-Lehem — defeats Golyat the Philistine with a sling and a stone. He declares: 'I come to you in the name of YHWH of hosts, The Creator of the armies of Yisra'EL' (1 Sam 17:45). The covenant framework is clear: victory comes through YHWH's name, not through human military power. The Qumran War Scroll (1QM) preserves this exact framework — weapons inscribed with YHWH's name, victory belonging to YHWH, the battle itself an act of covenant faith. Dawid's lineage — through Yehudah, through Ruth the Mo'avite, through Yishai — leads to the kingly messiah the DSS community awaited: a mortal human king, not a divine incarnation."
+      "question": "Why did YHWH strike Uzzah dead for touching the Ark?",
+      "answer": "The Ark was not a sacred object to be handled casually — it was the designated meeting point between YHWH and his covenant community, governed by specific protocols in Bemidbar 4 and 7. The Levites were commanded to carry it on poles; touching it directly was forbidden, even for them. When the Ark was placed on a cart (a Philistine-style transport the Philistines had used in 1 Shemu'el 6), the error was already there. Uzzah's death came when he compounded the error by reaching out to steady it. YHWH is not punishing Uzzah's good intention; the covenant protocol was not about intention but about structure. David's response — fear, then anger — shows the disconnect between human intuition and covenant structural logic. The lesson: covenant access is not improved by the worshipper's good instincts."
     },
     {
-      "question": "Why does the Ophel matter for the Temple location question?",
-      "answer": "The original City of Dawid is on the Ophel ridge — south of the present-day Temple Mount platform. The Gihon Spring — the city's only natural water source — is at the base of the Ophel. Josephus describes the Temple precinct as approximately 600 feet on a side. The current Temple Mount platform is approximately 1,500 feet by 1,000 feet — nearly three times larger. Ernest Martin's archaeological analysis documents that the massive platform may be the Roman Antonia Fortress. The actual Second Temple may have sat on the Ophel ridge adjacent to the Gihon Spring — which would have supplied the ritual water purification the Temple required. No functioning Temple can exist without a reliable water source for the mikveh."
+      "question": "What does the Mephiboshet story teach about covenant loyalty?",
+      "answer": "Mephiboshet is lame in both feet, living in Lo-Debar ('a place of no pasture' — the name itself signals marginality), the last of Sha'ul's house in an era when destroying remaining claimants to the previous dynasty was standard practice. David seeks him out not for political calculation but because of the covenant with Yehonatan. He restores all of Sha'ul's land, provides a permanent place at the king's table, and treats Mephiboshet 'like one of the king's sons.' This is covenant kindness (hesed) — loyalty to the terms of a covenant made with someone who is dead, applied to their descendant who can offer nothing in return. The Mephiboshet story is a living illustration of YHWH's own character: kindness that extends to those who have no claim except the covenant."
+    },
+    {
+      "question": "What is the significance of David choosing Yerushalayim as his capital?",
+      "answer": "Yerushalayim (the Yevus) was not assigned to any tribe in Yehoshua's allotments. By taking an unassigned city and making it his capital, David established the seat of power in neutral territory — belonging to the king rather than to any tribal inheritance. This was politically shrewd: a capital in Yehudah would have been seen as Yehudah's advantage over the northern tribes; a capital in Binyamin (the most logical alternative after Sha'ul's tribe) would have been a constant reminder of the transition. Yerushalayim was David's city, taken by his effort, sitting above tribal politics. The same logic applies to the Ark's presence there: placing the covenant symbol in the royal city tied the covenant community's center to David's dynastic city."
+    },
+    {
+      "question": "What does Mikhal's contempt for David's dancing reveal?",
+      "answer": "Mikhal's contempt is framed as a Sha'ul-daughter response: 'the daughter of Sha'ul looked out the window and despised him.' Her objection — that the king uncovered himself before servant women — is a royal dignity argument. David's response cuts to the covenant: 'Before YHWH who chose me over your father and over all his house... I will celebrate before YHWH.' The anointing replaced Sha'ul's dynasty; the same covenant act that placed David also displaced Sha'ul. Mikhal's contempt for David's worship is ultimately contempt for YHWH's choice. The text's note — she had no child to the day of her death — is not casual; it means the Sha'ul-line legacy through Mikhal ended, while the Davidic covenant continued."
+    },
+    {
+      "question": "What does David's prayer after the Davidic covenant reveal about covenant gratitude?",
+      "answer": "David's prayer (2 Shemu'el 7:18-29) begins in pure humility: 'Who am I?' It then expands to theological confession: 'There is no Creator except you.' Then it moves to covenant claim: YHWH has spoken, let his word stand. The prayer holds three movements — personal humility, theological acknowledgment, covenant faith — in one continuous act of sitting before YHWH. David did not go out and begin building. He went in and sat. The covenant response to receiving extraordinary promises is not action but presence — acknowledgment of who YHWH is and what he has done, before anything else happens. The prayer is a model of covenant reception: grateful, theologically grounded, forward-looking in faith."
+    },
+    {
+      "question": "What does YHWH's response to David's Temple plan reveal about the covenant structure?",
+      "answer": "David's desire to build YHWH a house was genuine piety. YHWH's response was not rebuke but reversal: 'I have not asked for a house since the day I brought up Yisra'el from Egypt — I have been moving about in a tent.' YHWH lived in movement with his people; he was not waiting to be installed in a building. The reversal — 'YHWH will make you a house' — reframes the entire relationship. David cannot do YHWH a favor; YHWH is the giver, David is the receiver. The Temple that Shelomoh will build is not Shelomoh's gift to YHWH but YHWH's gift to Yisra'el — a designated meeting place, not a dwelling that domesticates YHWH."
+    },
+    {
+      "question": "What covenant principle does the Ark's correct transport represent?",
+      "answer": "The Ark was given specific transport instructions in the Torah: carried on poles by the Levites, covered before moving, with specific personnel assigned. When David's first transport attempt used a cart — the method the Philistines had used to return the Ark — the structure was wrong before Uzzah even reached out. The covenant is not served by adapting its protocols to what works in other contexts. The Philistines put the Ark on a cart and it worked — for them, in their context. For Yisra'el, the protocol was specific and not transferable. David's second attempt corrected the method: poles, Levites, sacrifices every six steps. The covenant's specific requirements are not arbitrary — they are part of the covenant structure itself."
+    },
+    {
+      "question": "Who was Natan and how does he function in 2 Shemu'el?",
+      "answer": "Natan is the prophet who stands beside David as his covenant counterpart — the human voice of YHWH's accountability to the king. In ch.7, he delivers the greatest covenant promise in the former prophets. In ch.12, he delivers the sharpest personal judgment: a parable about a rich man stealing a poor man's lamb, designed to have David condemn himself before Natan reveals 'you are the man.' Natan's role is irreplaceable: a covenant king needs a prophetic voice that will speak the truth regardless of consequences. David's acceptance of Natan's rebuke (without executing the prophet, as a typical ancient king would) is itself a covenant marker — a king who submits to YHWH's word through his prophet."
+    },
+    {
+      "question": "What does 'your throne shall be established forever' mean in the Davidic covenant?",
+      "answer": "YHWH's promise to David in 2 Shemu'el 7:16 — 'your house and your kingdom shall be made sure forever before me; your throne shall be established forever' — is the foundation of Yisra'el's messianic hope. The prophets (Yesha'yahu, Yirmeyahu, Yehezkel) return to this promise repeatedly during the monarchy's decline and the exile. The Davidic covenant's forever-promise is what makes the exile survivable: the dynasty may be in captivity but the covenant is not revoked. This promise — an eternal throne, a sure house — becomes the scaffolding for every later covenant expectation about YHWH's restoration of Yisra'el. It is the most consequential covenant statement between Avraham's covenant and the exile prophets."
     }
   ]
 }

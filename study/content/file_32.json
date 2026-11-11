@@ -1,31 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_32",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_32",
   "label": "Shemu'el Bet (2 Samuel) — Part 3 — Chapters 13–18",
   "volume": 13,
-  "content_version": 1,
+  "content_version": 3,
   "summary_plain": "Amnon rapes his half-sister Tamar. Dawid is angry but does nothing. Avshalom waits two years, then kills Amnon. Avshalom flees to Geshur for three years. Yo'av arranges his return through the wise woman of Teqo'a. Avshalom conspires to take the throne — he steals the hearts of the men of Yisra'EL. Avshalom declares himself king at Hevron. Dawid flees Yerushalayim on foot, weeping, head covered. Chushai the Arkite defeats the counsel of Achitofel. Avshalom pursues Dawid across the Yarden. In the forest of Efrayim, Avshalom's hair catches in a terebinth tree. Yo'av kills Avshalom against Dawid's explicit orders. Dawid weeps: O my son Avshalom, my son, my son Avshalom! Would I had died instead of you!",
   "summary_scholarly": "The ACR reads from 4QSam-a and the Orit Ge'ez. The Avshalom rebellion (chs 13-18) is the direct consequence of Natan's prophecy: 'the sword shall never depart from your house' (12:10). YHWH's word operates through cause and effect — Dawid's sin with Bat-Sheva produces generational consequences. The rape of Tamar (ch 13) exposes the failure of patriarchal power: Dawid is angry but does nothing, leaving Avshalom to take justice into his own hands. 4QSam-a preserves textual variants in the Avshalom narrative. The Orit Ge'ez provides independent witness to the account. Avshalom's rebellion follows the pattern of contested kingship — he goes to Hevron, the same city where Dawid was first anointed, to declare his own kingship.",
   "key_terms": [
-    { "term": "Avshalom", "phonetic": "Av-shah-LOHM", "definition": "Son of Dawid. Kills Amnon for raping Tamar. Rebels against Dawid and declares himself king at Hevron. Dies when his hair catches in a tree and Yo'av strikes him. His name means 'father of peace' — an ironic name for a man whose life is defined by violence and rebellion. Anglicized as Absalom." },
-    { "term": "Tamar", "phonetic": "Tah-MAHR", "definition": "Daughter of Dawid, sister of Avshalom. Raped by her half-brother Amnon (ch 13). She tears her long-sleeved robe — the garment of royal virgin daughters — and puts ashes on her head. Dawid is angry but takes no action. Her name means 'date palm.'" },
-    { "term": "Yo'av", "phonetic": "Yo-AHV", "definition": "Commander of Dawid's army. Arranges Avshalom's return from exile through the wise woman of Teqo'a. Later kills Avshalom in the forest of Efrayim against Dawid's orders. Anglicized as Joab." }
+    {
+      "term": "David Restored to Yerushalayim",
+      "phonetic": "",
+      "definition": "After Avshalom's death, a new revolt breaks out under Sheva ben Bikhri of Binyamin. Yoav pursues Sheva; a wise woman in Avel negotiates to deliver Sheva's head over the wall to avoid the city's destruction. David returns to his throne but in a weakened, divided kingdom."
+    },
+    {
+      "term": "Yoav ben Tseruya",
+      "phonetic": "yo-AV ben tse-ru-YAH",
+      "definition": "David's nephew and chief general — ruthless, effective, loyal to David's survival above David's express commands. He killed Avner, killed Avshalom against David's direct orders, and killed Amasa. At the end of David's reign he supports Adoni-Yah's bid for the throne."
+    },
+    {
+      "term": "Mephiboshet's Ambiguity",
+      "phonetic": "",
+      "definition": "When David returns, Mephiboshet meets him unkempt — unwashed since the day David fled. His servant Tsiva had told David during the flight that Mephiboshet was hoping to regain the kingdom. Mephiboshet denies it. David, unable to determine truth, splits Sha'ul's land between Tsiva and Mephiboshet."
+    },
+    {
+      "term": "David's Covenant Song",
+      "phonetic": "shir David",
+      "definition": "2 Shemu'el 22 — David's psalm of deliverance, essentially the same as Tehillim 18. It opens: 'YHWH is my rock, my fortress, and my deliverer.' It closes with the Davidic covenant affirmation: 'He shows steadfast love to his anointed, to David and his offspring forever.'"
+    },
+    {
+      "term": "David's Mighty Men",
+      "phonetic": "gibborim shel David",
+      "definition": "2 Shemu'el 23 — a formal list of David's elite warriors. It includes Uriyah the Hittite in the list — the man David had killed. This is the former prophets' honest accounting: the same record that celebrates the kingdom includes evidence of the king's greatest crime."
+    },
+    {
+      "term": "The Census and Plague",
+      "phonetic": "ha-mifqad ve-ha-dever",
+      "definition": "2 Shemu'el 24: David commands a census of the fighting men. After the census is done, David's heart struck him: 'I have sinned greatly.' YHWH offers three punishments; David chooses three days of plague rather than human enemies. 70,000 die."
+    },
+    {
+      "term": "Threshing Floor of Araunah",
+      "phonetic": "goren Aravnah",
+      "definition": "The plague-angel stops at Araunah the Jebusite's threshing floor on Mount Moriah. David purchases the site and declares: 'I will not offer to YHWH my Creator that which costs me nothing.' This site becomes the Temple Mount."
+    },
+    {
+      "term": "YHWH Is My Rock",
+      "phonetic": "YHWH tsuri",
+      "definition": "The opening of David's psalm in 2 Shemu'el 22: 'YHWH is my rock, my fortress, my deliverer; my Creator my rock, in whom I take refuge, my shield and the horn of my salvation, my stronghold and my refuge, my savior, you save me from violence.' Ten metaphors for covenant protection."
+    },
+    {
+      "term": "Last Words of David",
+      "phonetic": "divrei David ha-acharonim",
+      "definition": "2 Shemu'el 23:1-7 — a formal oracle. David identifies himself as 'the anointed of the Creator of Ya'akov, the sweet psalmist of Yisra'el.' He describes the righteous ruler: 'He who rules over humans justly, who rules in the fear of YHWH, is like the morning light.'"
+    },
+    {
+      "term": "Shimei's Reinstatement",
+      "phonetic": "",
+      "definition": "When David returns, Shimei (who had cursed him during the flight) rushes to beg forgiveness. Avishai wants to execute him. David pardons him — but on his deathbed he instructs Shelomoh to deal with Shimei in his own time."
+    }
   ],
   "fill_blank": [
-    { "ref": "18:33", "prompt": "And the king was deeply moved and went up to the chamber over the gate and wept. And as he went, he said: O my son Avshalom, my son, my son Avshalom! Would I had died instead of ______!", "answer": "you", "source_quote": "O my son Avshalom, my son, my son Avshalom! Would I had died instead of you, O Avshalom, my son, my son!" },
-    { "ref": "15:6", "prompt": "So Avshalom stole the ______ of the men of Yisra'EL.", "answer": "hearts", "source_quote": "So Avshalom stole the hearts of the men of Yisra'EL." }
+    {
+      "ref": "2 Shemu'el 22:2",
+      "prompt": "David's covenant song opens: 'YHWH is my ___, my fortress, and my deliverer.'",
+      "answer": "rock",
+      "source_quote": "YHWH is my rock and my fortress and my deliverer. — 2 Shemu'el 22:2"
+    },
+    {
+      "ref": "2 Shemu'el 24:24",
+      "prompt": "David told Araunah: 'I will not offer to YHWH my Creator that which costs me ___.",
+      "answer": "nothing",
+      "source_quote": "I will not offer burnt offerings to YHWH my God that cost me nothing. — 2 Shemu'el 24:24"
+    },
+    {
+      "ref": "2 Shemu'el 24:10",
+      "prompt": "After the census, David's heart struck him and he said: 'I have sinned ___ in what I have done.'",
+      "answer": "greatly",
+      "source_quote": "I have sinned greatly in what I have done. — 2 Shemu'el 24:10"
+    },
+    {
+      "ref": "2 Shemu'el 22:51",
+      "prompt": "David's psalm closes: 'YHWH shows steadfast love to his ___, to David and his offspring forever.'",
+      "answer": "anointed",
+      "source_quote": "Great salvation he brings to his king, and shows steadfast love to his anointed, to David and his offspring forever. — 2 Shemu'el 22:51"
+    },
+    {
+      "ref": "2 Shemu'el 23:3",
+      "prompt": "David's last words speak of the righteous ruler: 'He who rules justly over humans, who rules in the ___ of YHWH...'",
+      "answer": "fear",
+      "source_quote": "The one who rules justly over people, who rules in the fear of YHWH. — 2 Shemu'el 23:3"
+    },
+    {
+      "ref": "2 Shemu'el 24",
+      "prompt": "YHWH offered David three punishments for the census; David chose ___ days of plague.",
+      "answer": "three",
+      "source_quote": "Let me fall into the hand of YHWH, for his mercy is great. — 2 Shemu'el 24:14"
+    },
+    {
+      "ref": "2 Shemu'el 23:1",
+      "prompt": "David describes himself in his last words as 'the sweet ___ of Yisra'el.'",
+      "answer": "psalmist / singer",
+      "source_quote": "The sweet psalmist of Israel. — 2 Shemu'el 23:1"
+    },
+    {
+      "ref": "2 Shemu'el 24",
+      "prompt": "The plague-angel stopped at the threshing floor of ___ the Jebusite, which became the Temple Mount.",
+      "answer": "Araunah",
+      "source_quote": "The angel of YHWH was by the threshing floor of Araunah the Jebusite. — 2 Shemu'el 24:16"
+    },
+    {
+      "ref": "2 Shemu'el 23:39",
+      "prompt": "David's list of mighty men includes ___ the Hittite — the man David had killed — among the thirty-seven.",
+      "answer": "Uriyah",
+      "source_quote": "Uriah the Hittite: thirty-seven in all. — 2 Shemu'el 23:39"
+    },
+    {
+      "ref": "2 Shemu'el 24:14",
+      "prompt": "David said: 'Let me fall into the hand of ___, for his mercy is great; let me not fall into human hands.'",
+      "answer": "YHWH",
+      "source_quote": "Let me fall into the hand of YHWH, for his mercy is great; but let me not fall into human hands. — 2 Shemu'el 24:14"
+    }
   ],
   "multiple_choice": [
-    { "ref": "13:28-29", "question": "Why did Avshalom kill Amnon?", "options": ["For the throne", "Because Amnon raped Tamar and Dawid did nothing", "Over a land dispute", "YHWH commanded it"], "correct": 1, "source_quote": "Avshalom commanded his servants: Mark when Amnon's heart is merry with wine, and when I say to you, strike Amnon, then kill him." },
-    { "ref": "18:9-15", "question": "How did Avshalom die?", "options": ["He fell in battle", "His hair caught in a tree and Yo'av struck him", "He was captured and executed", "He drowned in the Yarden"], "correct": 1, "source_quote": "Avshalom's head caught fast in the oak, and he was suspended between heaven and earth, while the mule that was under him went on. And Yo'av took three darts in his hand and thrust them into the heart of Avshalom." }
+    {
+      "ref": "2 Shemu'el 22:2",
+      "question": "What is the opening image of David's covenant song in chapter 22?",
+      "options": [
+        "YHWH is my shepherd and my strength",
+        "YHWH is my rock, my fortress, and my deliverer",
+        "YHWH is my king and my covenant partner",
+        "YHWH is my tower and my shield against the nations"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH is my rock and my fortress and my deliverer. — 2 Shemu'el 22:2"
+    },
+    {
+      "ref": "2 Shemu'el 24",
+      "question": "Why was David's census sinful?",
+      "options": [
+        "Censuses were prohibited by the Torah in all circumstances",
+        "A military census required a ransom payment per person — doing it without this reflected pride not covenant consultation",
+        "The northern tribes had not given permission for the census",
+        "David did it on a Shabbat, violating the rest law"
+      ],
+      "correct": 1,
+      "source_quote": "David's heart struck him after he had numbered the people. — 2 Shemu'el 24:10"
+    },
+    {
+      "ref": "2 Shemu'el 24:14",
+      "question": "Why did David choose the plague over the other punishments YHWH offered?",
+      "options": [
+        "The plague would affect only the fighting men who had been counted",
+        "He knew YHWH's mercy was great and preferred to fall into YHWH's hand rather than human enemies",
+        "A plague would end quickly while a famine or defeat could last years",
+        "He believed YHWH would relent before 70,000 died"
+      ],
+      "correct": 1,
+      "source_quote": "Let me fall into the hand of YHWH, for his mercy is great; but let me not fall into human hands. — 2 Shemu'el 24:14"
+    },
+    {
+      "ref": "2 Shemu'el 24:24",
+      "question": "What principle did David declare when purchasing Araunah's threshing floor?",
+      "options": [
+        "The Temple site must belong to no tribe so all Yisra'el could share it",
+        "Worship must be based on covenant law, not personal emotion",
+        "He would not offer to YHWH something that cost him nothing",
+        "The site's connection to Avraham's binding of Yitzhak made it sacred already"
+      ],
+      "correct": 2,
+      "source_quote": "I will not offer burnt offerings to YHWH my God that cost me nothing. — 2 Shemu'el 24:24"
+    },
+    {
+      "ref": "2 Shemu'el 23:39",
+      "question": "What is the irony embedded in David's list of mighty men?",
+      "options": [
+        "Several of the men listed had fought against Yisra'el at some point",
+        "Yoav, who killed Avshalom against David's orders, is listed as the first commander",
+        "Uriyah the Hittite — the man David had murdered — is listed among the heroes",
+        "David's own brothers are absent from the list despite their service"
+      ],
+      "correct": 2,
+      "source_quote": "Uriah the Hittite: thirty-seven in all. — 2 Shemu'el 23:39"
+    },
+    {
+      "ref": "2 Shemu'el 20",
+      "question": "How was the revolt of Sheva ben Bikhri ended?",
+      "options": [
+        "Yoav's army defeated Sheva in open battle",
+        "A wise woman in the city of Avel negotiated to deliver Sheva's head over the wall",
+        "David personally pardoned Sheva in exchange for his surrender",
+        "Sheva fled across the Jordan and was never captured"
+      ],
+      "correct": 1,
+      "source_quote": "Then the woman went to all the people in her wisdom. And they cut off the head of Sheba the son of Bichri and threw it out to Joab. — 2 Shemu'el 20:22"
+    },
+    {
+      "ref": "2 Shemu'el 23:3-4",
+      "question": "What image does David use in his last words for the righteous ruler?",
+      "options": [
+        "A cedar planted beside still waters",
+        "The morning light — like the sun rising on a cloudless morning",
+        "A warrior who conquers enemies for his people's peace",
+        "A shepherd who carries the weak on his shoulders"
+      ],
+      "correct": 1,
+      "source_quote": "He dawns on them like the morning light, like the sun shining forth on a cloudless morning. — 2 Shemu'el 23:4"
+    },
+    {
+      "ref": "2 Shemu'el 22:51",
+      "question": "What does David's psalm affirm about YHWH's covenant loyalty?",
+      "options": [
+        "YHWH is loyal to those who keep all commandments without fault",
+        "YHWH shows steadfast love to his anointed — to David and his offspring forever",
+        "YHWH protects those who worship at the Temple",
+        "YHWH gives victory to Yisra'el when their armies are largest"
+      ],
+      "correct": 1,
+      "source_quote": "He shows steadfast love to his anointed, to David and his offspring forever. — 2 Shemu'el 22:51"
+    },
+    {
+      "ref": "2 Shemu'el 24",
+      "question": "What happened to cause the plague-angel to stop at Araunah's threshing floor?",
+      "options": [
+        "The angel completed its three-day assignment exactly there",
+        "David and his elders lay prostrate in the angel's path",
+        "YHWH relented of the calamity when David built an altar and offered sacrifices there",
+        "Araunah himself prayed and the angel withdrew"
+      ],
+      "correct": 2,
+      "source_quote": "David built there an altar to YHWH and offered burnt offerings and peace offerings. So YHWH responded to the plea for the land, and the plague was averted. — 2 Shemu'el 24:25"
+    },
+    {
+      "ref": "2 Shemu'el 19",
+      "question": "What was David's response when Avishai wanted to execute Shimei?",
+      "options": [
+        "He agreed but delayed the execution until after his restoration was complete",
+        "He said today was a day of rejoicing; no one would be put to death — he swore not to kill Shimei",
+        "He ordered Shimei permanently exiled from Yerushalayim instead",
+        "He turned the judgment over to the elders of Binyamin"
+      ],
+      "correct": 1,
+      "source_quote": "Shall anyone be put to death in Israel this day? The king swore to him. — 2 Shemu'el 19:21-23"
+    }
   ],
   "faq": [
     {
-      "question": "What does the rape of Tamar reveal about justice systems and institutional failure?",
-      "answer": "Amnon rapes Tamar. Dawid — the king, the father, the covenant leader — is angry but does nothing (13:21). The institution of the monarchy fails to deliver justice for the violated woman. Avshalom takes justice into his own hands after two years of waiting. The pattern: when the institution charged with justice fails to act, individuals resort to vigilante justice, which produces further cycles of violence. The Qumran community documented this same pattern in the Jerusalem priesthood — institutional corruption that went unaddressed, leading to the community's withdrawal. The Great Eraser operates within this dynamic: institutional systems that fail to deliver justice also control the narrative. Tamar's rape is in the text, but how many sermons, church studies, or academic curricula address it? The institution decides which parts of the text are taught and which are silenced."
+      "question": "Why was David's census sinful?",
+      "answer": "The covenant law in Shemot 30:12 specified that when the people are counted, each person must give a ransom for their life — 'so that no plague comes upon them when you number them.' The census in 2 Shemu'el 24 did not follow this protocol. Beyond the procedural violation, the deeper issue was what drove it: Yoav's objection suggests it was motivated by pride in military might — wanting to know the size of Yisra'el's army as a measure of David's power, not for covenant purposes. Even David recognized it immediately: 'I have sinned greatly.' The covenant king's strength should be YHWH, not counted soldiers."
     },
     {
-      "question": "How does Avshalom's rebellion connect to the African and Indigenous experience of contested sovereignty?",
-      "answer": "Avshalom goes to Hevron — the city where Dawid was first anointed — to declare his counter-kingship. He uses the language of justice: 'If only I were made judge in the land, then every man who has a dispute could come to me, and I would give him justice' (15:4). He critiques the ruling power's failure to deliver justice — and uses that critique to seize power for himself. This is the pattern of every colonial and neo-colonial power that claimed to bring 'civilization' and 'justice' to African and Indigenous peoples while actually extracting resources and consolidating control. The language of justice used to seize unjust power is one of the Great Eraser's primary tools. Avshalom's rebellion fails because YHWH's covenant choice — Dawid — cannot be overturned by human political manipulation."
+      "question": "What is significant about Araunah's threshing floor becoming the Temple site?",
+      "answer": "The site on Mount Moriah where the plague-angel stopped is where David purchases ground for YHWH's altar. David's declaration — 'I will not offer to YHWH something that costs me nothing' — means the Temple's future site was purchased, not received as a gift. Mount Moriah is also identified in 2 Divrei HaYamim 3:1 as the place where Avraham bound Yitzhak. The Temple Mount thus carries three covenant resonances: the Akeida, the plague-halting altar of David, and the Temple Shelomoh built. The site is not chosen arbitrarily — it is where covenant events have already marked the ground."
+    },
+    {
+      "question": "What does the covenant song of chapter 22 declare about YHWH?",
+      "answer": "The psalm opens with ten metaphors for YHWH's protective presence — rock, fortress, deliverer, shield, horn of salvation, stronghold, refuge, savior. It then narrates YHWH's violent intervention when David cried out: earthquakes, smoke, fire, darkness, hailstones, thunder, lightning, depths of the sea laid bare. The cosmic imagery describes YHWH entering human history through catastrophic force on behalf of his anointed. It closes with the Davidic covenant affirmation: 'He shows steadfast love to his anointed, to David and his offspring forever.'"
+    },
+    {
+      "question": "What does Uriyah's presence in the mighty men list mean?",
+      "answer": "The list of David's thirty-seven mighty men in 2 Shemu'el 23 ends with 'Uriyah the Hittite.' This man, whom David had murdered, is listed with honor in the official record. The text does not explain the irony; it simply lists him. This is the former prophets' honest accounting: the same record that celebrates the kingdom includes the evidence of its king's greatest crime. Uriyah was loyal, brave, and covenant-faithful — he refused to go home while his comrades fought. He is in the official record because he belonged there."
+    },
+    {
+      "question": "What does David's last words oracle reveal about covenant kingship?",
+      "answer": "David's last words (2 Shemu'el 23:1-7) are framed as a divine oracle. He describes the ideal ruler: 'He who rules over humans justly, who rules in the fear of YHWH, is like the morning light' — bringing clarity, warmth, life. The oracle is both backward-looking (David's own covenant rule as the standard) and forward-looking (the dynasty's future). The 'morning light' image for covenant kingship becomes the template for YHWH's future anointed."
+    },
+    {
+      "question": "What does the Mephiboshet uncertainty at David's return reveal?",
+      "answer": "David cannot determine whether Mephiboshet was innocent or whether Tsiva's accusation was true. He splits the land — a compromise that satisfies no one. Mephiboshet's response — 'let him take everything, since my lord the king has come home in peace' — sounds either like genuine gratitude or calculated statement. The text leaves it unresolved. This ambiguity is realistic: covenant loyalty cannot always be verified, and the covenant community must sometimes operate in the face of genuine uncertainty."
+    },
+    {
+      "question": "What does Yoav's career reveal about covenant governance?",
+      "answer": "Yoav killed Avner in revenge, killed Avshalom against David's direct command, killed Amasa treacherously, and supported the wrong succession candidate at David's end. Yet he was effective and militarily indispensable. David never executed him. On his deathbed, David instructed Shelomoh to deal with Yoav for the bloodguilt David had been unable to address. Yoav illustrates the difficulty of covenant governance: the most effective instrument is sometimes the most morally problematic, and dependency on that instrument can delay justice indefinitely."
+    },
+    {
+      "question": "What does David's choice of plague over human enemies reveal?",
+      "answer": "YHWH offers three options: famine, enemy pursuit, or plague. David's response — 'let me fall into YHWH's hand, for his mercy is great; let me not fall into human hands' — reflects mature covenant faith. He has experienced YHWH's mercy directly. The choice is not calculation about which punishment is smallest — 70,000 died. It is a declaration about YHWH's character: even in judgment, YHWH is preferable to human cruelty. The plague ends at Araunah's threshing floor before the full period expired — YHWH did relent. David's trust in YHWH's mercy was vindicated."
+    },
+    {
+      "question": "What covenant principle does Shimei's pardon reveal?",
+      "answer": "David pardoned Shimei on the day of his return to power. The pardon was genuine in the moment but carried a private instruction: on his deathbed David told Shelomoh 'do not hold him guiltless.' The two acts are not contradictory: the oath not to kill Shimei was real and kept. The covenant accountability Shimei bore for cursing YHWH's anointed did not disappear with the pardon; it was transferred to the next administration. David kept his oath while ensuring the underlying justice was not permanently abandoned."
+    },
+    {
+      "question": "What does 2 Shemu'el as a whole say about the Davidic dynasty?",
+      "answer": "2 Shemu'el opens with the most transcendent covenant promise in the former prophets (the Davidic covenant) and closes with David purchasing the Temple site through covenant principle. Between these two bookends is a sustained record of human failure: murder, adultery, rape, rebellion, plague. The book's argument is not that David was great and therefore the covenant is real. It is that YHWH's covenant with David was real in spite of David being human. The dynasty survived Avshalom's rebellion and David's own crimes — not because David earned it but because YHWH swore it. The covenant is reliable precisely because it is not based on the human recipient's performance."
     }
   ]
 }

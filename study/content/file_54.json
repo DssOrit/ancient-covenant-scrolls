@@ -1,38 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_54",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_54",
   "label": "Yehezkel (Ezekiel) — Part 1 — Chapters 1–11",
   "volume": 18,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Yehezkel sees the heavens opened by the river Kevar in Babylon. He sees four living creatures with four faces — man, lion, ox, eagle — and wheels within wheels full of eyes. Above them is a throne of sapphire, and on the throne a figure like the appearance of a man surrounded by fire and radiance. YHWH sends Yehezkel to speak to the rebellious house. He eats a scroll. He lies on his side for 390 days. He sees the elders of Yisra'EL worshipping abominations in the Temple — including women weeping for Tammuz at the north gate.",
   "summary_scholarly": "The ACR reads from the DSS Ezekiel fragments (4QEzek-a, 4QEzek-b, 4QEzek-c, 11QEzek) and the Orit Ge'ez. The throne vision (Merkavah) in chapter 1 is the most elaborate divine throne description in the covenant literature — more detailed than Yesha'yahu 6 or Chanokh 14. Chapter 8:14 documents women weeping for Tammuz at the north gate of the Temple — the Babylonian dying-rising deity whose mourning cycle structurally parallels the Easter death-resurrection tradition.",
   "key_terms": [
-    { "term": "Yehezkel", "phonetic": "Yeh-KHEZ-kel", "definition": "A priest and prophet exiled to Babylon. He receives visions by the river Kevar. His name means 'El strengthens.' Anglicized as Ezekiel." },
-    { "term": "Merkavah (Throne Chariot)", "phonetic": "Mer-kah-VAH", "definition": "The divine throne-chariot vision of chapter 1. Four living creatures, wheels within wheels, a sapphire throne, and the glory of YHWH. The most detailed divine throne description in the Hebrew canon." },
-    { "term": "Tammuz", "phonetic": "Tah-MOOZ", "definition": "A Babylonian dying-rising deity. Chapter 8:14 records women weeping for Tammuz at the Temple's north gate — presented as an abomination. The same dying-rising deity cycle was later adopted by Roman Christianity." },
-    { "term": "Kevar", "phonetic": "Keh-VAR", "definition": "The river in Babylon where Yehezkel receives his visions. The covenant community is in exile — and YHWH appears to them there. The divine presence is not confined to the Temple." }
+    {
+      "term": "Merkavah",
+      "phonetic": "mer-KA-vah",
+      "definition": "The divine chariot-throne in Yehezkel 1; YHWH's mobile throne borne by four living creatures with wheels; this vision launched one of the most significant traditions in Jewish mysticism — merkavah mysticism."
+    },
+    {
+      "term": "Four Living Creatures (Khayot)",
+      "phonetic": "kha-YOT",
+      "definition": "The four living beings in Yehezkel 1: each has four faces (human, lion, ox, eagle), four wings, and straight legs; they carry YHWH's chariot-throne; they form the foundation of the heavenly transport."
+    },
+    {
+      "term": "Wheels Within Wheels (Ophanim)",
+      "phonetic": "o-fa-NIM",
+      "definition": "The interlocked wheels in Yehezkel 1:15-21 that go in any direction without turning; they are full of eyes all around and are the chariot's mobility system; 'the spirit of the living creatures was in the wheels.'"
+    },
+    {
+      "term": "Khashmal",
+      "phonetic": "KHASH-mal",
+      "definition": "An untranslatable Hebrew word in Yehezkel 1:4,27 — describing the gleaming substance or luminous fire around YHWH's form on the chariot-throne; associated with brilliance and electrum or polished bronze."
+    },
+    {
+      "term": "Yehezkel's Call",
+      "phonetic": "chs 2-3",
+      "definition": "YHWH addresses Yehezkel as 'Ben Adam' (son of man/human) throughout the book; at his call, Yehezkel is given a scroll with lamentations and woe written on it, which he eats and finds as sweet as honey."
+    },
+    {
+      "term": "'Son of Man' (Ben Adam) Address",
+      "phonetic": "Ben A-DAM",
+      "definition": "YHWH addresses Yehezkel as 'ben adam' (son of man/human) over 90 times in the book — an emphatic contrast between the human prophet and the divine glory he stands before; the term underscores Yehezkel's creaturely status before YHWH."
+    },
+    {
+      "term": "Sign-Acts",
+      "phonetic": "chs 4-5",
+      "definition": "YHWH commands Yehezkel to perform elaborate enacted prophecies: lying on his left side 390 days (Yisra'el's punishment) and right side 40 days (Yehudah's), cooking bread over dung, shaving his head and dividing the hair to signify Yerushalayim's fate."
+    },
+    {
+      "term": "390 Days Lying on Side",
+      "phonetic": "ch.4:5",
+      "definition": "Yehezkel was commanded to lie on his left side 390 days bearing the iniquity of the house of Yisra'el (one day per year of punishment) and on his right side 40 days for the house of Yehudah — a prolonged embodied prophecy of the exile's duration."
+    },
+    {
+      "term": "YHWH's Glory Departing",
+      "phonetic": "chs 10-11",
+      "definition": "In a devastating vision, Yehezkel watches YHWH's glory (kavod YHWH) leave the Temple in stages: from the inner sanctuary to the threshold (10:4), then to the east gate (10:19), then to the Mount of Olives (11:23) — YHWH withdrawing his presence from the doomed Temple."
+    },
+    {
+      "term": "Khevaron (Chebar River)",
+      "phonetic": "khe-BAR",
+      "definition": "The river or canal in Babylonia where Yehezkel received his initial visions among the Babylonian exile community; 'by the Chebar canal' opens the first chapter and several subsequent visions."
+    }
   ],
   "fill_blank": [
-    { "ref": "1:1", "prompt": "The heavens were opened, and I saw visions of The ______.", "answer": "Creator", "source_quote": "The heavens were opened, and I saw visions of The Creator." },
-    { "ref": "2:1", "prompt": "And he said to me: Son of man, stand on your ______, and I will speak with you.", "answer": "feet", "source_quote": "And he said to me: Son of man, stand on your feet, and I will speak with you." },
-    { "ref": "3:3", "prompt": "Son of man, feed your belly with this ______ that I give you and fill your stomach with it.", "answer": "scroll", "source_quote": "Son of man, feed your belly with this scroll that I give you and fill your stomach with it. Then I ate it, and it was in my mouth as sweet as honey." }
+    {
+      "ref": "Yehezkel 1:1",
+      "prompt": "Yehezkel was among the exiles by the _____ canal in the land of the Chaldeans when the heavens were opened and he saw visions of YHWH.",
+      "answer": "Chebar",
+      "source_quote": "As I was among the exiles by the Chebar canal, the heavens were opened, and I saw visions of YHWH."
+    },
+    {
+      "ref": "Yehezkel 1:4",
+      "prompt": "As Yehezkel watched, a stormy wind came out of the north, and a great cloud with _____ flashing continually, and brightness around it.",
+      "answer": "fire",
+      "source_quote": "As I looked, behold, a stormy wind came out of the north, and a great cloud, with brightness around it, and fire flashing forth continually."
+    },
+    {
+      "ref": "Yehezkel 1:10",
+      "prompt": "Each of the four living creatures had four faces: the face of a human, the face of a _____, the face of an ox, and the face of an eagle.",
+      "answer": "lion",
+      "source_quote": "As for the likeness of their faces, each had a human face. The four had the face of a lion on the right side, the four had the face of an ox on the left side, and the four had the face of an eagle."
+    },
+    {
+      "ref": "Yehezkel 1:18",
+      "prompt": "The rims of the wheels were tall and awesome, and the rims of all four were full of _____ all around.",
+      "answer": "eyes",
+      "source_quote": "Their rims were tall and awesome, and the rims of all four were full of eyes all around."
+    },
+    {
+      "ref": "Yehezkel 2:9-10",
+      "prompt": "YHWH extended a hand to Yehezkel with a scroll that was written on both front and back with _____, mourning, and woe.",
+      "answer": "lamentations",
+      "source_quote": "And when I looked, behold, a hand was stretched out to me, and behold, a scroll of a book was in it. And he spread it before me. And it had writing on the front and on the back, and there were written on it words of lamentation and mourning and woe."
+    },
+    {
+      "ref": "Yehezkel 3:3",
+      "prompt": "YHWH commanded Yehezkel: 'Son of man, eat this scroll that I give you and fill your stomach with it.' So he ate it, and it was in his mouth as _____ as honey.",
+      "answer": "sweet",
+      "source_quote": "And he said to me, Son of man, feed your belly with this scroll that I give you and fill your stomach with it. Then I ate it, and it was in my mouth as sweet as honey."
+    },
+    {
+      "ref": "Yehezkel 4:5",
+      "prompt": "YHWH commanded: 'For I assign to you a number of days, _____ days, equal to the number of the years of their punishment. So long shall you bear the punishment of the house of Yisra'el.'",
+      "answer": "390",
+      "source_quote": "For I assign to you a number of days, 390 days, equal to the number of the years of their punishment. So long shall you bear the punishment of the house of Yisra'el."
+    },
+    {
+      "ref": "Yehezkel 10:4",
+      "prompt": "YHWH's glory lifted up from the _____ and moved to the threshold of the house; and the house was filled with the cloud.",
+      "answer": "cherubim",
+      "source_quote": "And the glory of YHWH went up from the cherub to the threshold of the house, and the house was filled with the cloud, and the court was filled with the brightness of the glory of YHWH."
+    },
+    {
+      "ref": "Yehezkel 11:23",
+      "prompt": "YHWH's glory went up from the midst of the city and stood on the _____ that is on the east side of the city — the final departure from Yerushalayim.",
+      "answer": "mountain",
+      "source_quote": "And the glory of YHWH went up from the midst of the city and stood on the mountain that is on the east side of the city."
+    },
+    {
+      "ref": "Yehezkel 3:17",
+      "prompt": "'Son of man, I have made you a _____ for the house of Yisra'el. Whenever you hear a word from my mouth, you shall give them warning from me.'",
+      "answer": "watchman",
+      "source_quote": "Son of man, I have made you a watchman for the house of Yisra'el. Whenever you hear a word from my mouth, you shall give them warning from me."
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:5-10", "question": "What did the four living creatures in the throne vision have?", "options": ["Two wings each", "Four faces each — man, lion, ox, eagle", "Crowns of gold", "Swords of fire"], "correct": 1, "source_quote": "Each had four faces, and each of them had four wings — the face of a man, the face of a lion, the face of an ox, and the face of an eagle." },
-    { "ref": "8:14", "question": "What abomination did Yehezkel see at the Temple's north gate?", "options": ["Idol worship of Baal", "Women weeping for Tammuz", "A golden calf", "Burning incense to the sun"], "correct": 1, "source_quote": "Then he brought me to the entrance of the north gate of the house of YHWH, and behold, there sat women weeping for Tammuz." },
-    { "ref": "1:26", "question": "What was above the throne in the Merkavah vision?", "options": ["A burning mountain", "A figure like the appearance of a man surrounded by fire", "A golden menorah", "A seraph with six wings"], "correct": 1, "source_quote": "And above the likeness of a throne was a likeness with the appearance of a man, from his waist upward with fire, and from his waist downward with fire — and there was brightness around him." }
+    {
+      "ref": "Yehezkel 1:1",
+      "question": "Where was Yehezkel when he received the chariot-throne vision?",
+      "options": [
+        "Among the exiles by the Chebar canal in the land of the Chaldeans",
+        "In the Temple in Yerushalayim",
+        "In the wilderness on the way to Babylon",
+        "At the Jordan River near Yericho"
+      ],
+      "correct": 0,
+      "source_quote": "As I was among the exiles by the Chebar canal, the heavens were opened, and I saw visions of YHWH."
+    },
+    {
+      "ref": "Yehezkel 1:10",
+      "question": "What four faces did each of the four living creatures have in the chariot-throne vision?",
+      "options": [
+        "Human, lion, ox, and eagle",
+        "Human, bear, serpent, and eagle",
+        "Lion, ox, horse, and eagle",
+        "Human, lion, eagle, and serpent"
+      ],
+      "correct": 0,
+      "source_quote": "As for the likeness of their faces, each had a human face. The four had the face of a lion on the right side, the four had the face of an ox on the left side, and the four had the face of an eagle."
+    },
+    {
+      "ref": "Yehezkel 2:1-3",
+      "question": "What address does YHWH use for Yehezkel throughout the entire book?",
+      "options": [
+        "Ben Adam (son of man/human)",
+        "My servant Yehezkel",
+        "Prophet of the exile",
+        "Priest of the covenant"
+      ],
+      "correct": 0,
+      "source_quote": "And he said to me, Son of man, stand on your feet, and I will speak with you."
+    },
+    {
+      "ref": "Yehezkel 4:4-6",
+      "question": "In Yehezkel's sign-act of lying on his sides, what do the 390 days on his left side and 40 days on his right side represent?",
+      "options": [
+        "The years of punishment for the house of Yisra'el (390) and the house of Yehudah (40)",
+        "The years until Babylon would fall (390) and the years of exile (40)",
+        "The number of exiles from the northern kingdom (390) and southern kingdom (40)",
+        "The years of the wilderness wandering (40) and the years of divided monarchy (390)"
+      ],
+      "correct": 0,
+      "source_quote": "For I assign to you a number of days, 390 days, equal to the number of the years of their punishment. So long shall you bear the punishment of the house of Yisra'el."
+    },
+    {
+      "ref": "Yehezkel 5:1-4",
+      "question": "In the sign-act with the shaved head, what did the three portions of hair represent?",
+      "options": [
+        "A third burned in fire (pestilence/famine), a third struck with a sword, a third scattered to the winds (the sword pursuing them)",
+        "A third for Babylon, a third for Mitzrayim, a third for Yehudah",
+        "A third of the priests, a third of the nobles, and a third of the common people",
+        "Past judgment, present exile, and future restoration"
+      ],
+      "correct": 0,
+      "source_quote": "A third part you shall burn in the fire in the midst of the city, when the days of the siege are completed. And a third part you shall take and strike with the sword all around the city. And a third part you shall scatter to the wind."
+    },
+    {
+      "ref": "Yehezkel 10:1-4",
+      "question": "In what direction did YHWH's glory depart from the Temple in stages?",
+      "options": [
+        "From the inner sanctuary to the threshold, then to the east gate, then to the Mount of Olives",
+        "From the Temple roof to the city walls, then out through the north gate",
+        "From the Holy of Holies to the Temple court, then into the wilderness",
+        "Directly from the Temple to the Chebar River in Babylon"
+      ],
+      "correct": 0,
+      "source_quote": "And the glory of YHWH went up from the cherub to the threshold of the house. Then the glory of YHWH went out from the threshold of the house."
+    },
+    {
+      "ref": "Yehezkel 3:1-3",
+      "question": "What was Yehezkel told to do with the scroll given to him, and what did it taste like?",
+      "options": [
+        "Eat it; it tasted as sweet as honey in his mouth",
+        "Read it aloud; it burned his lips with fire",
+        "Copy it; each letter shone with light",
+        "Burn it; the smoke ascended to YHWH"
+      ],
+      "correct": 0,
+      "source_quote": "Then I ate it, and it was in my mouth as sweet as honey."
+    },
+    {
+      "ref": "Yehezkel 8:1-6",
+      "question": "In Yehezkel 8, YHWH transported Yehezkel in a vision to Yerushalayim and showed him what?",
+      "options": [
+        "The abominations of idolatry in the Temple: the idol of jealousy at the north gate, elders burning incense to creatures, women weeping for Tammuz, men bowing to the sun",
+        "The glory of YHWH departing from the Temple",
+        "A vision of Yerushalayim's destruction by Babylonian armies",
+        "The desecrated altar with foreign offerings"
+      ],
+      "correct": 0,
+      "source_quote": "He said to me, Son of man, do you see what they are doing, the great abominations that the house of Yisra'el are committing here, to drive me far from my sanctuary?"
+    },
+    {
+      "ref": "Yehezkel 9:4",
+      "question": "In Yehezkel 9, YHWH commanded a heavenly being to put a mark on the foreheads of whom?",
+      "options": [
+        "Those who sighed and groaned over the abominations in Yerushalayim — they would be spared",
+        "Those who were still faithful to the Temple worship",
+        "The priests who had not defiled themselves",
+        "The elders of the city who refused to participate in idolatry"
+      ],
+      "correct": 0,
+      "source_quote": "And YHWH said to him, Pass through the city, through Yerushalayim, and put a mark on the foreheads of the men who sigh and groan over all the abominations that are committed in it."
+    },
+    {
+      "ref": "Yehezkel 11:19-20",
+      "question": "What does YHWH promise to do for the exiles in Yehezkel 11:19-20?",
+      "options": [
+        "Give them one heart and put a new spirit within them, removing the heart of stone and giving a heart of flesh",
+        "Bring them back to Yerushalayim within a generation",
+        "Make them a great nation in Babylon",
+        "Give them a new covenant sealed with blood"
+      ],
+      "correct": 0,
+      "source_quote": "And I will give them one heart, and a new spirit I will put within them. I will remove the heart of stone from their flesh and give them a heart of flesh."
+    }
   ],
   "faq": [
     {
-      "question": "Why does Yehezkel 8:14 matter for understanding Roman Christianity?",
-      "answer": "Yehezkel 8:14 records women weeping for Tammuz at the north gate of the Temple — and YHWH presents this as an abomination. Tammuz is a Sumerian-Babylonian dying-rising deity whose mourning cycle follows the agricultural seasons: death in winter, resurrection in spring. The structural parallel with the Easter death-resurrection celebration is documented across centuries of comparative religion scholarship. The Hebrew prophetic tradition specifically identified the worship of a dying-rising god as an abomination in YHWH's Temple. The Roman Church then built its central celebration on the same dying-rising framework the prophets condemned — and named it Easter, after Eostre/Ishtar, the spring fertility goddess documented in Bede's De Temporum Ratione (725 CE)."
+      "question": "What is the Merkavah vision in Yehezkel 1?",
+      "answer": "The Merkavah (chariot-throne) vision in Yehezkel 1 is the most elaborate divine-throne vision in the Hebrew corpus. YHWH's glory appears on a mobile chariot-throne borne by four living creatures (Khayot) with four faces, four wings, and wheels-within-wheels. The vision was given in Babylonia — demonstrating that YHWH's presence is not confined to the Temple or the land of Yehudah."
     },
     {
-      "question": "What does the Merkavah vision reveal about YHWH's presence in exile?",
-      "answer": "Yehezkel receives the throne vision by the river Kevar in Babylon — not in the Temple, not in the land, but in exile. YHWH's glory appears to the covenant community where they are scattered. The Damascus Document (CD) at Qumran makes the same point: YHWH remembers the covenant even when the people are in exile, and from the scattered remnant raises up those who hold the covenant outside the corrupt institutional center. The divine presence is not confined to a building or a geographic coordinate. It follows the covenant people wherever they are."
+      "question": "Why is Yehezkel called 'Ben Adam' (son of man) throughout the book?",
+      "answer": "YHWH addresses Yehezkel as 'ben adam' — literally 'son of man/human' — over 90 times. This is not a title but an emphatic contrast: in the presence of overwhelming divine glory, Yehezkel is continually reminded of his creaturely, human status. It is the same phrase used in Tehillim 8:4 ('what is a human being that you are mindful of him?') — the creature before the Creator."
     },
     {
-      "question": "What are the DSS witnesses for Yehezkel?",
-      "answer": "The Dead Sea Scrolls preserve Yehezkel in fragments from Cave 4 (4QEzek-a, 4QEzek-b, 4QEzek-c) and Cave 11 (11QEzek). The Orit Ge'ez preserves the full text. The DSS fragments confirm readings that differ from the Masoretic in significant places. The Masoretic is noted as a variant only — not primary authority. The three-witness method compares DSS, Orit, and Septuagint readings to recover the oldest recoverable form of the text."
+      "question": "What did the scroll that Yehezkel ate represent?",
+      "answer": "In Yehezkel 2:8-3:3, YHWH gives Yehezkel a scroll written with lamentations, mourning, and woe, and commands him to eat it. The scroll represents YHWH's word of judgment; eating it means fully internalizing that word before speaking it. The paradox: it is bitter content (lamentation and woe) but it tastes sweet as honey — YHWH's word is always good, even when its content is judgment."
+    },
+    {
+      "question": "What is the theological significance of YHWH's glory departing the Temple in Yehezkel 10-11?",
+      "answer": "The departure of YHWH's glory from the Temple is the most devastating event in Yehezkel's entire vision: YHWH is withdrawing his protecting presence before the Babylonians arrive. The departure is in stages — giving time for the vision to be fully grasped. The city is not destroyed by an invasion alone; YHWH leaves before the walls fall. His presence, not the building, was the city's true protection."
+    },
+    {
+      "question": "What is Yehezkel 11:19-20's 'heart of stone / heart of flesh' promise?",
+      "answer": "YHWH promises to give the exiles one heart and a new spirit, removing the heart of stone (stubbornness, inability to respond to YHWH) and replacing it with a heart of flesh (responsive, capable of covenant faithfulness). This anticipates Yirmeyahu 31's new covenant with Torah written on the heart — both texts describe the same transformation of covenant capacity."
+    },
+    {
+      "question": "Why did YHWH command Yehezkel to perform sign-acts rather than simply speak prophecy?",
+      "answer": "Sign-acts in Yehezkel communicate through embodied reality: 390 days lying on his side, 40 days, cooking bread over dung, dividing shaved hair into thirds. These enacted prophecies make the word visible and experiential — the prophet's body becomes the message. For an audience that dismissed the spoken word, the prolonged, public, physical acts could not be ignored or explained away."
+    },
+    {
+      "question": "What are the Ophanim (wheels) in Yehezkel 1?",
+      "answer": "The Ophanim are the wheels of YHWH's chariot-throne. Each wheel is described as a 'wheel within a wheel' — an interlocking design that allows movement in any of four directions without turning. Their rims are full of eyes, and the spirit of the living creatures is in the wheels — the wheels move wherever the creatures go, as one unified divine transport system."
+    },
+    {
+      "question": "What is the significance of the mark on the foreheads in Yehezkel 9?",
+      "answer": "In Yehezkel 9, before the slaughter of Yerushalayim's inhabitants begins, YHWH commands a heavenly scribe to put a mark (tav — the last letter of the Hebrew alphabet) on the foreheads of those who sighed and groaned over the abominations. These are spared; everyone else is killed. The mark identifies those who maintained moral grief in the midst of systemic idolatry — a covenant remnant within the condemned city."
+    },
+    {
+      "question": "Why does the Merkavah vision appear in Babylonia rather than in Yerushalayim?",
+      "answer": "The vision appearing in Babylonia — not in the Temple — is itself a theological statement: YHWH is not confined to his Temple. He can appear on a mobile chariot-throne beside the Chebar canal in Chaldea. This was essential comfort and commission for the exiles: YHWH did not abandon them when they were exiled; he went with them, mobile throne and all."
+    },
+    {
+      "question": "What abominations does Yehezkel 8 describe in the Temple?",
+      "answer": "In a transported vision of Yerushalayim, Yehezkel 8 shows four escalating abominations in the Temple: (1) the idol of jealousy at the north gate; (2) seventy elders burning incense to animal-images in a hidden room; (3) women weeping for Tammuz at the Temple gate; (4) twenty-five men with their backs to the Temple bowing east to the sun. Each abomination is worse than the last — total syncretistic corruption."
+    },
+    {
+      "question": "What does Yehezkel 3:17 mean when YHWH calls Yehezkel a watchman?",
+      "answer": "YHWH appoints Yehezkel as a watchman (tzofeh) for the house of Yisra'el. If the watchman does not warn when the sword comes, the people die in their iniquity but their blood is on the watchman. If Yehezkel warns and they do not listen, they die in their iniquity but Yehezkel is cleared. The watchman metaphor defines prophetic accountability: the obligation is to deliver the warning, not to control the response."
     }
   ]
 }

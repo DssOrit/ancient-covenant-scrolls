@@ -1,38 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_85",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_85",
   "label": "Daniyel (Daniel) — Part 1 — Chapters 1–6",
   "volume": 29,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Daniyel and his companions are taken captive to Babylon. They refuse the king's food and drink — they keep the covenant dietary laws in exile. Daniyel interprets Nevukhadnetzar's dream of a great image — head of gold, chest of silver, belly of bronze, legs of iron, feet of iron and clay. A stone cut without hands strikes the image and becomes a great mountain filling the whole earth. Chananyah, Misha'el, and Azaryah refuse to bow to the golden image and are thrown into the furnace — YHWH delivers them. Daniyel reads the writing on the wall for Belshatzar. Daniyel is thrown into the lion's den — YHWH shuts the lions' mouths.",
   "summary_scholarly": "The ACR reads from eight DSS Daniel manuscripts (4QDan-a through 4QDan-e, 1QDan-a, 1QDan-b, and 6QDan) and the Orit Ge'ez. The DSS Daniel manuscripts are among the oldest found at Qumran. Chapters 1-6 are court narratives set in Babylon demonstrating that covenant identity and YHWH's sovereignty are maintained even in the deepest exile under the most powerful empire. The dietary refusal (ch 1), the furnace (ch 3), and the lion's den (ch 6) are all tests of covenant faithfulness under imperial pressure.",
   "key_terms": [
-    { "term": "Daniyel", "phonetic": "Dah-nee-YEL", "definition": "A young man from the Judean royal family, taken captive to Babylon. His name means 'El is my judge.' He maintains covenant practice in exile and receives visions. Anglicized as Daniel." },
-    { "term": "Nevukhadnetzar", "phonetic": "Neh-voo-khad-NETZ-ar", "definition": "King of Babylon who conquered Yerushalayim in 586 BCE. He dreams of a great image representing four successive kingdoms. Anglicized as Nebuchadnezzar." },
-    { "term": "The Stone Cut Without Hands", "phonetic": "", "definition": "In the dream (2:34-35), a stone cut without human hands strikes the image's feet and becomes a great mountain filling the whole earth. This is YHWH's kingdom replacing all human empires — without human military intervention." },
-    { "term": "Mene Mene Tekel Upharsin", "phonetic": "", "definition": "The writing on the wall at Belshatzar's feast (5:25-28). Daniyel interprets: your kingdom has been numbered, weighed, and divided. That night Belshatzar is slain." }
+    {
+      "term": "Daniyel",
+      "phonetic": "da-nee-YEL",
+      "definition": "The Hebrew exile in Babylon whose visions and faithfulness under empire are recorded in the book bearing his name; his name means 'YHWH is my judge'; he and his companions Hananyah, Misha'el, and Azaryah refuse to compromise their covenant practice under Babylonian rule."
+    },
+    {
+      "term": "Nebukhadnetsar / Nevukhadnetsar",
+      "phonetic": "ne-vukh-ad-NET-sar",
+      "definition": "The Babylonian king who conquers Yerushalayim and exiles the Yehudim; appears in Daniyel 1-4; in ch.4 he is humiliated — driven mad for seven years — until he acknowledges YHWH as the Most High who rules the kingdoms of human beings."
+    },
+    {
+      "term": "Shadrakh, Meshakh, Aved-Nego",
+      "phonetic": "sha-DRAKH, me-SHAKH, a-ved-NE-go",
+      "definition": "Hebrew names given by the Babylonians to Hananyah, Misha'el, and Azaryah — Daniyel's three companions who refuse to bow to Nebukhadnetsar's golden image and are thrown into the furnace but emerge unharmed; Daniyel 3."
+    },
+    {
+      "term": "The Fiery Furnace",
+      "phonetic": "ha-kivshan ha-esh",
+      "definition": "The furnace into which Shadrakh, Meshakh, and Aved-Nego are thrown for refusing to bow to the golden image (Daniyel 3); they emerge unharmed; Nebukhadnetsar sees a fourth figure in the fire 'like a son of the gods' — the text does not identify who this figure is."
+    },
+    {
+      "term": "Belteshazzar",
+      "phonetic": "bel-te-SHA-zar",
+      "definition": "The Babylonian name given to Daniyel (1:7); in ch.4 Nebukhadnetsar calls on Daniyel by this name to interpret his dream of the great tree; the name links Daniyel to the Babylonian deity Bel (Marduk)."
+    },
+    {
+      "term": "The Handwriting on the Wall",
+      "phonetic": "ha-ketav al ha-kir",
+      "definition": "The mysterious inscription that appears on the palace wall during Belshazzar's feast (Daniyel 5): MENE MENE TEKEL UFARSIN; interpreted by Daniyel as YHWH's verdict: the king's days are numbered, he has been weighed and found wanting, his kingdom is divided and given to the Medes and Persians; Belshazzar is killed that night."
+    },
+    {
+      "term": "MENE MENE TEKEL UFARSIN",
+      "phonetic": "me-NE me-NE te-KEL u-far-SIN",
+      "definition": "The four Aramaic words written on the wall at Belshazzar's feast (Daniyel 5:25): MENE = numbered/counted (twice for emphasis); TEKEL = weighed; UFARSIN = divided/broken. Daniyel interprets: YHWH has numbered the days of Belshazzar's kingdom; he has been weighed and found wanting; his kingdom is divided and given to Media and Persia."
+    },
+    {
+      "term": "The Lions' Den",
+      "phonetic": "gob ha-aryot",
+      "definition": "Daniyel 6: Daniyel continues praying to YHWH three times daily despite a royal decree forbidding it; he is thrown into the den of lions but emerges unharmed; King Darius acknowledges the living Creator who delivers. The story parallels the furnace narrative of ch.3 — YHWH's protection of covenant faithfulness under empire."
+    },
+    {
+      "term": "Darius the Mede",
+      "phonetic": "Dar-ya-VESH ha-Ma-di",
+      "definition": "The king in Daniyel 6 under whose rule the lions' den incident occurs; not independently identified outside the book of Daniyel; the text presents him as ruling Babylon after Belshazzar's death; he issues the decree against prayer, then deeply regrets it, and honors YHWH after Daniyel's deliverance."
+    },
+    {
+      "term": "The Dream of the Great Tree (ch.4)",
+      "phonetic": "khalom ha-ilan ha-gadol",
+      "definition": "Nebukhadnetsar's dream of a great tree reaching to heaven, cut down on the command of a watcher/holy one until seven seasons pass; Daniyel interprets it as applying to Nebukhadnetsar himself — he will be humiliated, living like a beast for seven years until he acknowledges that YHWH rules the kingdoms of human beings and gives them to whomever he chooses."
+    }
   ],
   "fill_blank": [
-    { "ref": "2:44", "prompt": "The Creator of heaven will set up a kingdom that shall never be ______.", "answer": "destroyed", "source_quote": "And in the days of those kings the Creator of heaven will set up a kingdom that shall never be destroyed, nor shall the kingdom be left to another people." },
-    { "ref": "1:8", "prompt": "Daniyel resolved that he would not ______ himself with the king's food or with the wine that he drank.", "answer": "defile", "source_quote": "But Daniyel resolved in his heart that he would not defile himself with the king's food, or with the wine that he drank." },
-    { "ref": "3:17-18", "prompt": "Our Creator whom we serve is able to deliver us from the burning fiery furnace. But if not, be it known to you, O king, that we will not serve your ______.", "answer": "gods", "source_quote": "If this be so, our Creator whom we serve is able to deliver us from the burning fiery furnace, and he will deliver us out of your hand, O king. But if not, be it known to you, O king, that we will not serve your gods." }
+    {
+      "ref": "Daniyel 1:8",
+      "prompt": "Daniyel resolved that he would not ___ himself with the king's food, or with the wine that he drank.",
+      "answer": "defile",
+      "source_quote": "Daniyel resolved that he would not defile himself with the king's food — Daniyel 1:8."
+    },
+    {
+      "ref": "Daniyel 2:28",
+      "prompt": "Daniyel answered the king: 'There is a Creator in heaven who reveals ___, and he has made known to King Nebukhadnetsar what will be in the latter days.'",
+      "answer": "mysteries",
+      "source_quote": "There is a Creator in heaven who reveals mysteries — Daniyel 2:28."
+    },
+    {
+      "ref": "Daniyel 3:17-18",
+      "prompt": "The three companions said: 'Our Creator whom we serve is able to deliver us from the burning fiery furnace... But if not, let it be known that we will not serve your gods or worship the golden ___ you have set up.'",
+      "answer": "image",
+      "source_quote": "If not, let it be known that we will not serve your gods or worship the golden image you have set up — Daniyel 3:18."
+    },
+    {
+      "ref": "Daniyel 4:17",
+      "prompt": "'The Most High rules the kingdom of men and gives it to whom he will and sets over it the ___ of men.'",
+      "answer": "lowliest",
+      "source_quote": "The Most High rules the kingdom of men and gives it to whom he will and sets over it the lowliest of men — Daniyel 4:17."
+    },
+    {
+      "ref": "Daniyel 5:25",
+      "prompt": "The inscription written on the wall was: ___ MENE TEKEL UFARSIN.",
+      "answer": "MENE",
+      "source_quote": "This is the writing that was inscribed: MENE MENE TEKEL UFARSIN — Daniyel 5:25."
+    },
+    {
+      "ref": "Daniyel 5:27",
+      "prompt": "TEKEL: you have been ___ in the balances and found wanting.",
+      "answer": "weighed",
+      "source_quote": "TEKEL: you have been weighed in the balances and found wanting — Daniyel 5:27."
+    },
+    {
+      "ref": "Daniyel 6:10",
+      "prompt": "Daniyel knew that the document had been signed, but he went to his house... he got down on his ___ three times a day and prayed.",
+      "answer": "knees",
+      "source_quote": "He got down on his knees three times a day and prayed and gave thanks before his Creator — Daniyel 6:10."
+    },
+    {
+      "ref": "Daniyel 6:26",
+      "prompt": "Darius decreed: 'People are to tremble and fear before the Creator of Daniyel, for he is the ___ Creator, enduring forever.'",
+      "answer": "living",
+      "source_quote": "For he is the living Creator, enduring forever — Daniyel 6:26."
+    },
+    {
+      "ref": "Daniyel 1:17",
+      "prompt": "As for these four youths, the Creator gave them ___ and skill in all literature and wisdom.",
+      "answer": "knowledge",
+      "source_quote": "The Creator gave them knowledge and skill in all literature and wisdom — Daniyel 1:17."
+    },
+    {
+      "ref": "Daniyel 4:34",
+      "prompt": "At the end of the days, Nebukhadnetsar said: 'I blessed the Most High, and praised and honored him who lives ___.'",
+      "answer": "forever",
+      "source_quote": "I blessed the Most High, and praised and honored him who lives forever — Daniyel 4:34."
+    }
   ],
   "multiple_choice": [
-    { "ref": "2:31-35", "question": "What did the stone cut without hands do to the great image?", "options": ["Polished it", "Struck its feet and the whole image broke — then the stone became a mountain filling the earth", "Placed a crown on its head", "Stood beside it"], "correct": 1, "source_quote": "A stone was cut out by no human hand, and it struck the image on its feet of iron and clay, and broke them in pieces." },
-    { "ref": "1:8", "question": "Why did Daniyel refuse the king's food?", "options": ["He was not hungry", "He would not defile himself — he kept the covenant dietary laws", "The food was poisoned", "He was fasting for a vision"], "correct": 1, "source_quote": "Daniyel resolved in his heart that he would not defile himself with the king's food." },
-    { "ref": "6:22", "question": "How did YHWH save Daniyel in the lion's den?", "options": ["He removed the lions", "He sent an angel who shut the lions' mouths", "He made Daniyel invisible", "He opened the den walls"], "correct": 1, "source_quote": "My Creator sent his angel and shut the lions' mouths, and they have not harmed me." }
+    {
+      "ref": "Daniyel 1:8",
+      "question": "Why does Daniyel refuse the king's food in Daniyel 1?",
+      "options": [
+        "He is ill and cannot eat rich food",
+        "He resolves not to defile himself with the king's food",
+        "He is fasting as part of a vow",
+        "He prefers the food his companions brought from Yerushalayim"
+      ],
+      "correct": 1,
+      "source_quote": "Daniyel resolved that he would not defile himself with the king's food — Daniyel 1:8."
+    },
+    {
+      "ref": "Daniyel 3:17-18",
+      "question": "What do Shadrakh, Meshakh, and Aved-Nego say before entering the furnace?",
+      "options": [
+        "YHWH will certainly deliver us",
+        "Our Creator is able to deliver us — but if not, we still will not serve your gods",
+        "We will serve your gods this once to save our lives",
+        "We place ourselves in YHWH's hands and accept death if it comes"
+      ],
+      "correct": 1,
+      "source_quote": "If not, let it be known that we will not serve your gods or worship the golden image you have set up — Daniyel 3:18."
+    },
+    {
+      "ref": "Daniyel 4:17",
+      "question": "What does Nebukhadnetsar's ch.4 dream teach according to Daniyel's interpretation?",
+      "options": [
+        "Babylon will rule forever",
+        "The Most High rules the kingdom of men and gives it to whom he will",
+        "Nebukhadnetsar will be restored after seven days",
+        "A great empire will rise from the east"
+      ],
+      "correct": 1,
+      "source_quote": "The Most High rules the kingdom of men and gives it to whom he will — Daniyel 4:17."
+    },
+    {
+      "ref": "Daniyel 5",
+      "question": "What happens to Belshazzar the night of the handwriting on the wall?",
+      "options": [
+        "He repents and is spared",
+        "He flees to Egypt",
+        "He is killed and his kingdom given to the Medes",
+        "He is imprisoned for seven years like his father"
+      ],
+      "correct": 2,
+      "source_quote": "That very night Belshazzar the Chaldean king was killed — Daniyel 5:30."
+    },
+    {
+      "ref": "Daniyel 5:27",
+      "question": "What does TEKEL mean in the wall inscription?",
+      "options": [
+        "Your kingdom is ended",
+        "Your days are numbered",
+        "You have been weighed in the balances and found wanting",
+        "Your kingdom is divided"
+      ],
+      "correct": 2,
+      "source_quote": "TEKEL: you have been weighed in the balances and found wanting — Daniyel 5:27."
+    },
+    {
+      "ref": "Daniyel 6",
+      "question": "Why is Daniyel thrown into the lions' den?",
+      "options": [
+        "He refuses to interpret the king's dream",
+        "He continues to pray three times daily to YHWH despite a royal decree forbidding it",
+        "He publicly condemns the king's idolatry",
+        "He refuses to serve in the king's court"
+      ],
+      "correct": 1,
+      "source_quote": "He got down on his knees three times a day and prayed and gave thanks before his Creator — Daniyel 6:10."
+    },
+    {
+      "ref": "Daniyel 1:17",
+      "question": "What does YHWH give to Daniyel and his three companions in Daniyel 1?",
+      "options": [
+        "Visions of the future only",
+        "Strength to endure the king's food",
+        "Knowledge and skill in all literature and wisdom",
+        "Power over the king's advisors"
+      ],
+      "correct": 2,
+      "source_quote": "The Creator gave them knowledge and skill in all literature and wisdom — Daniyel 1:17."
+    },
+    {
+      "ref": "Daniyel 3 fourth figure",
+      "question": "What does Nebukhadnetsar see in the furnace alongside the three men in Daniyel 3?",
+      "options": [
+        "An angel of YHWH calling their names",
+        "A fourth figure like a son of the gods",
+        "Nothing — only the three men walking",
+        "A pillar of fire"
+      ],
+      "correct": 1,
+      "source_quote": "He answered: 'But I see four men unbound, walking in the midst of the fire... and the appearance of the fourth is like a son of the gods' — Daniyel 3:25."
+    },
+    {
+      "ref": "Daniyel 4",
+      "question": "What is Nebukhadnetsar's condition during the seven years of his humiliation?",
+      "options": [
+        "He is imprisoned in a tower",
+        "He lives like a beast — his hair grows like eagles' feathers and his nails like birds' claws",
+        "He is blinded and cannot see",
+        "He loses all memory of his kingdom"
+      ],
+      "correct": 1,
+      "source_quote": "He was driven from among men and ate grass like an ox, and his body was wet with the dew of heaven, till his hair grew as long as eagles' feathers, and his nails were like birds' claws — Daniyel 4:33."
+    },
+    {
+      "ref": "Daniyel 6:26",
+      "question": "What does Darius decree about YHWH after Daniyel's deliverance from the lions?",
+      "options": [
+        "YHWH is the greatest among the gods of Babylon",
+        "People are to tremble and fear before the Creator of Daniyel, who is the living Creator enduring forever",
+        "Daniyel is to be honored as a priest in the temple",
+        "YHWH and Marduk are to be worshiped equally"
+      ],
+      "correct": 1,
+      "source_quote": "For he is the living Creator, enduring forever — Daniyel 6:26."
+    }
   ],
   "faq": [
     {
-      "question": "What does the four-kingdom vision reveal about covenant history?",
-      "answer": "Nevukhadnetzar's dream (ch 2) shows four successive empires — gold (Babylon), silver (Persia), bronze (Greece), iron (Rome). Each is inferior to the last in quality but wider in reach. The stone cut without human hands — YHWH's kingdom — strikes the image at its weakest point (the iron-clay feet) and replaces all human empires. The Qumran community identified Rome as the fourth kingdom (the Kittim in the War Scroll). The NT construction of a pacified messianic figure who says 'render unto Caesar' directly contradicts this vision — the stone destroys the image, it does not render unto it."
+      "question": "What is the main theme of Daniyel chapters 1-6?",
+      "answer": "Covenant faithfulness under empire. Daniyel and his companions live as exiles in Babylon under Nebukhadnetsar, Belshazzar, and Darius, and in each narrative they face a choice: compromise their covenant practice to survive, or remain faithful to YHWH at great personal risk. In each case, YHWH protects the faithful — the food test, the furnace, the lions' den — and the foreign king is ultimately confronted with YHWH's sovereignty."
     },
     {
-      "question": "What does Daniyel's dietary refusal in exile reveal?",
-      "answer": "Daniyel refuses the king's food in Babylon — the most powerful empire on earth (1:8). He maintains covenant dietary laws under maximum imperial pressure. The Beta Israel of Ethiopia maintained covenant dietary laws for over a thousand years in Africa — in isolation from both Rabbinical Judaism and Roman Christianity. Plantation records from South Carolina and Virginia document that enslaved 'Heebos' (Igbo) refused swine's flesh at the risk of starvation. Three independent populations across three continents maintaining the same dietary restrictions without institutional coordination — Daniyel in Babylon, the Beta Israel in Ethiopia, enslaved Africans in the Americas. The covenant practice survived every empire it passed through."
+      "question": "What does the four-metal statue in Daniyel 2 represent?",
+      "answer": "Nebukhadnetsar dreams of a great statue with a head of gold, chest of silver, belly of bronze, legs of iron, and feet of iron mixed with clay. Daniyel interprets it as a succession of empires, each less glorious than the last, ending with a stone cut without hands that strikes the statue and becomes a great mountain filling the earth. The stone represents YHWH's kingdom that will ultimately overturn all human empires."
     },
     {
-      "question": "What do the eight DSS Daniel manuscripts prove?",
-      "answer": "Daniyel is preserved in eight Dead Sea Scrolls manuscripts — among the most attested books at Qumran. The manuscripts date to the 2nd-1st centuries BCE, proving the text was in circulation and treated as authoritative scripture by the Qumran community centuries before the Masoretic standardization. The DSS Daniel manuscripts include both the Hebrew and Aramaic portions of the text (Daniyel switches between Hebrew and Aramaic at 2:4 and back at 8:1). Both languages are Afro-Asiatic Semitic languages — sister tongues within the same African-origin language family."
+      "question": "What does the furnace narrative in Daniyel 3 teach about covenant faithfulness?",
+      "answer": "The three companions refuse to bow to Nebukhadnetsar's golden image, knowing the penalty is death. Their statement — 'our Creator is able to deliver us... but if not, we still will not serve your gods' — is one of the most direct expressions of covenant faithfulness in the Hebrew scriptures: YHWH may or may not intervene physically, but the covenant community does not compromise either way. YHWH does deliver them, and the fourth figure in the fire remains unidentified."
+    },
+    {
+      "question": "What is the significance of Nebukhadnetsar's humiliation in Daniyel 4?",
+      "answer": "Nebukhadnetsar is at the height of his power, claiming credit for Babylon's greatness, when YHWH strikes him with madness. He lives like a beast for seven years until he acknowledges: 'The Most High rules the kingdom of men and gives it to whom he will.' His restoration and declaration (4:34-37) is one of the most explicit acknowledgments by a foreign king of YHWH's sovereignty in the entire Hebrew corpus."
+    },
+    {
+      "question": "What does MENE MENE TEKEL UFARSIN mean?",
+      "answer": "The four Aramaic words on the wall (Daniyel 5:25-28): MENE = numbered/counted (twice, for emphasis) — YHWH has numbered the days of Belshazzar's kingdom and brought it to an end; TEKEL = weighed — Belshazzar has been weighed in the balances and found wanting; UFARSIN = divided/broken — his kingdom is divided and given to the Medes and Persians. Belshazzar is killed that same night."
+    },
+    {
+      "question": "What is the connection between Daniyel's visions and the broader DSS tradition?",
+      "answer": "The DSS Qumran community preserved and intensely studied the book of Daniyel. Fragments from at least eight copies of Daniyel were found at Qumran (4QDaniel manuscripts), making it one of the most heavily represented books in the DSS collection. The community interpreted Daniyel's visions — especially the seventy weeks and the Son of Man — as applying to their own situation under foreign empire, treating Daniyel's visions as a framework for understanding their own period."
+    },
+    {
+      "question": "What is the difference between the Hebrew and Aramaic sections of Daniyel?",
+      "answer": "Daniyel is unique in the Hebrew scriptures: it switches languages mid-text. Daniyel 1:1-2:4a is in Hebrew; 2:4b-7:28 is in Aramaic; 8:1 returns to Hebrew. This bilingual structure has been interpreted as deliberate: the Aramaic court narratives (chs 2-7) concern universal empires and are written in the lingua franca; the Hebrew visions (chs 8-12) are addressed to the covenant people specifically. The DSS fragments preserve both languages."
+    },
+    {
+      "question": "Who is Darius the Mede in Daniyel 6?",
+      "answer": "Darius the Mede (6:1) is presented as ruling Babylon after Belshazzar's death. This figure has not been independently confirmed in Babylonian records; historians have proposed various identifications (Cyrus, a Median commander, a composite figure). The book of Daniyel presents him as a real king who issues the prayer decree, is distressed by Daniyel's condemnation, and honors YHWH after the deliverance. The text is primarily theological: regardless of the historical question, the narrative establishes YHWH's authority over the Medo-Persian transition of power."
+    },
+    {
+      "question": "What does the lions' den parallel with the furnace narrative?",
+      "answer": "Both stories follow the same pattern: (1) a faithful Hebrew refuses a command that compromises covenant loyalty; (2) the foreign king is personally unwilling but bound by the law he has established; (3) the Hebrew is thrown into lethal danger; (4) YHWH protects the faithful; (5) the foreign king acknowledges YHWH's sovereignty in a formal decree. The two narratives bracket the Babylonian and Medo-Persian transitions, demonstrating that YHWH's protection of the covenant community persists across changing empires."
+    },
+    {
+      "question": "What is the significance of Daniyel's refusal to eat the king's food in ch.1?",
+      "answer": "Daniyel resolves not to defile himself with the king's food (1:8). This is a covenant-identity act: the food regulations of the Hebrew community marked separation from surrounding nations and dedication to YHWH. Eating the king's food would signal assimilation into Babylonian culture. YHWH honors Daniyel's faithfulness: after ten days of vegetables and water, the four youths are healthier than those eating the royal food, and YHWH gives them knowledge, wisdom, and — specifically to Daniyel — the ability to understand visions and dreams."
+    },
+    {
+      "question": "What does the book of Daniyel have to do with the seventy-year exile and return?",
+      "answer": "Daniyel 9 (in Part 2) is the clearest engagement with the seventy-year period — Daniyel reads Yirmeyahu's prophecy of seventy years (Yirmeyahu 25:11-12) and prays in response, then receives the vision of seventy weeks of years (490 years). The ch.1-6 narratives establish the exile setting: Daniyel lives through the transition from Babylonian to Medo-Persian rule, positioning the covenant community at the threshold of the promised return while remaining faithful throughout."
     }
   ]
 }

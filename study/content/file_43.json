@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_43",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_43",
   "label": "Yesha'yahu (Isaiah) — 1QIsa-a — Part 2 — Chapters 13–27",
   "volume": 16,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Yesha'yahu delivers oracles against the nations. The burden against Babylon — YHWH musters the host for battle. The burden against Moav. The burden against Dameshek. The burden against Cush — the land shadowing with wings beyond the rivers of Ethiopia sends ambassadors by sea. The burden against Mitsrayim. The burden against the desert of the sea. The burden against Tsor. Yesha'yahu's apocalypse: YHWH will punish the host of heaven on high and the kings of the earth. On this mountain he will swallow up death forever and wipe away tears from all faces.",
   "summary_scholarly": "The ACR reads from the Great Isaiah Scroll (1QIsa-a) and the Orit Ge'ez. The oracle cycle (chapters 13-23) positions YHWH as sovereign over all nations — not a tribal deity but the judge of the entire earth. Yesha'yahu 18 is critical: the 'land shadowing with wings beyond the rivers of Ethiopia' that sends ambassadors by sea to 'a nation scattered and peeled' is a geographic description with no parallel in the ancient Near Eastern prophetic corpus. The apocalyptic section (chapters 24-27) describes universal judgment and the swallowing of death — language the Qumran community read as eschatological but not as a divine incarnation event.",
   "key_terms": [
-    { "term": "Massa (Burden/Oracle)", "phonetic": "Mah-SAH", "definition": "The Hebrew term for the prophetic oracle against a nation. Each massa is a judgment pronouncement from YHWH against a specific people. Chapters 13-23 contain the massa cycle." },
-    { "term": "Yesha'yahu 18", "phonetic": "", "definition": "The oracle concerning the land beyond the rivers of Cush — a land shadowing with wings that sends ambassadors by sea to a nation scattered and peeled, a people terrible from their beginning. This chapter describes a geographic location and a scattered people using language found nowhere else in the prophetic literature." },
-    { "term": "Tsor (Tyre)", "phonetic": "TSOR", "definition": "Phoenician coastal city whose oracle appears in chapter 23. Tsor controlled Mediterranean trade routes and was allied with Yisra'EL under Shelomoh. YHWH pronounces judgment on its commercial empire." }
+    {
+      "term": "Oracles Against Nations",
+      "phonetic": "chs 13-23",
+      "definition": "A series of judgment pronouncements in Yesha'yahu 13-23 against Babylon, Assyria, Plishtim, Moav, Damascus, Mitzrayim, and others; YHWH's sovereignty extends over all peoples."
+    },
+    {
+      "term": "Day of YHWH",
+      "phonetic": "yom YHWH",
+      "definition": "A theme running through Yesha'yahu's oracles: a day when YHWH intervenes decisively to judge the proud and exalt the lowly; Babylon's fall is a paradigm of this day."
+    },
+    {
+      "term": "Yesha'yahu Apocalypse",
+      "phonetic": "chs 24-27",
+      "definition": "Chapters 24-27 of Yesha'yahu — a cosmic vision of the earth laid waste, kings imprisoned, death swallowed, and the dead rising; among the earliest resurrection texts in the Hebrew corpus."
+    },
+    {
+      "term": "He Will Swallow Up Death",
+      "phonetic": "ch.25:8",
+      "definition": "Yesha'yahu 25:8 declares that YHWH will swallow up death forever and wipe tears from all faces; this ancient Hebrew text is the source the NT borrowed its resurrection language from."
+    },
+    {
+      "term": "Resurrection Hope",
+      "phonetic": "26:19",
+      "definition": "Yesha'yahu 26:19 — 'Your dead shall live; their bodies shall rise'; one of the earliest explicit statements of bodily resurrection in the pre-Rabbinic corpus."
+    },
+    {
+      "term": "Fallen Tyrant",
+      "phonetic": "ch.14",
+      "definition": "Yesha'yahu 14:12 addresses the king of Babylon: 'How you have fallen from heaven, O shining one, son of the dawn!' — a taunt over a human tyrant's pride and fall, not a cosmic being."
+    },
+    {
+      "term": "Nations Coming to Yerushalayim",
+      "phonetic": "ch.25",
+      "definition": "Yesha'yahu 25:6-10 describes YHWH hosting a feast on Mount Tziyon for all peoples; the nations stream to Yerushalayim to receive YHWH's salvation."
+    },
+    {
+      "term": "Sealed Vision",
+      "phonetic": "ch.22",
+      "definition": "Yesha'yahu 22 describes the Valley of Vision — a lament over Yerushalayim's leaders who celebrate while the city faces destruction; Shevna the steward is condemned."
+    },
+    {
+      "term": "Mitzrayim Oracle",
+      "phonetic": "ch.19",
+      "definition": "Yesha'yahu 19 pronounces judgment on Mitzrayim — the Nile dries up, its wisdom fails — but ends with Mitzrayim, Assyria, and Yisra'el as a threefold blessing in the earth."
+    },
+    {
+      "term": "Babylon Oracle",
+      "phonetic": "chs 13-14",
+      "definition": "Yesha'yahu 13-14 pronounces Babylon's downfall on the Day of YHWH; the great city will become like Sodom and Amora — never inhabited again."
+    }
   ],
   "fill_blank": [
-    { "ref": "18:1", "prompt": "Woe to the land shadowing with wings, which is beyond the rivers of ______.", "answer": "Ethiopia", "source_quote": "Woe to the land shadowing with wings, which is beyond the rivers of Ethiopia." },
-    { "ref": "25:8", "prompt": "He will swallow up ______ forever, and YHWH will wipe away tears from all faces.", "answer": "death", "source_quote": "He will swallow up death forever, and YHWH will wipe away tears from all faces." },
-    { "ref": "18:2", "prompt": "Go, swift messengers, to a nation scattered and ______, to a people terrible from their beginning onward.", "answer": "peeled", "source_quote": "Go, swift messengers, to a nation scattered and peeled, to a people terrible from their beginning onward, a nation meted out and trodden down." }
+    {
+      "ref": "Yesha'yahu 25:8",
+      "prompt": "YHWH will _____ up death forever; and the Creator YHWH will wipe away tears from all faces.",
+      "answer": "swallow",
+      "source_quote": "He will swallow up death forever; and the Creator YHWH will wipe away tears from all faces."
+    },
+    {
+      "ref": "Yesha'yahu 26:19",
+      "prompt": "Your dead shall live; their _____ shall rise. You who dwell in the dust, awake and sing for joy!",
+      "answer": "bodies",
+      "source_quote": "Your dead shall live; their bodies shall rise. You who dwell in the dust, awake and sing for joy!"
+    },
+    {
+      "ref": "Yesha'yahu 14:12",
+      "prompt": "The taunt over Babylon's king begins: 'How you have _____ from heaven, O shining one, son of the dawn!'",
+      "answer": "fallen",
+      "source_quote": "How you have fallen from heaven, O shining one, son of the dawn! How you are cut down to the ground, you who laid the nations low!"
+    },
+    {
+      "ref": "Yesha'yahu 24:1",
+      "prompt": "The Yesha'yahu Apocalypse opens: 'Behold, YHWH will empty the earth and make it _____, and he will twist its surface and scatter its inhabitants.'",
+      "answer": "desolate",
+      "source_quote": "Behold, YHWH will empty the earth and make it desolate, and he will twist its surface and scatter its inhabitants."
+    },
+    {
+      "ref": "Yesha'yahu 25:6",
+      "prompt": "On this mountain YHWH of Hosts will make for all peoples a feast of rich food, a feast of well-aged _____, of rich food full of marrow.",
+      "answer": "wine",
+      "source_quote": "On this mountain YHWH of Hosts will make for all peoples a feast of rich food, a feast of well-aged wine, of rich food full of marrow, of aged wine well refined."
+    },
+    {
+      "ref": "Yesha'yahu 13:11",
+      "prompt": "YHWH declares: 'I will punish the _____ for its evil, and the wicked for their iniquity; I will put an end to the pride of the arrogant.'",
+      "answer": "world",
+      "source_quote": "I will punish the world for its evil, and the wicked for their iniquity; I will put an end to the pride of the arrogant."
+    },
+    {
+      "ref": "Yesha'yahu 19:24",
+      "prompt": "In that day Yisra'el will be the _____ of a blessing in the midst of the earth, whom YHWH of Hosts has blessed.",
+      "answer": "third",
+      "source_quote": "In that day Yisra'el will be the third with Mitzrayim and Assyria, a blessing in the midst of the earth."
+    },
+    {
+      "ref": "Yesha'yahu 24:5",
+      "prompt": "The earth lies defiled under its inhabitants; for they have transgressed the _____, violated the statutes, broken the everlasting covenant.",
+      "answer": "laws",
+      "source_quote": "The earth lies defiled under its inhabitants; for they have transgressed the laws, violated the statutes, broken the everlasting covenant."
+    },
+    {
+      "ref": "Yesha'yahu 27:1",
+      "prompt": "In that day YHWH with his hard and great and strong sword will punish _____, the fleeing serpent, Leviathan the twisting serpent.",
+      "answer": "Leviathan",
+      "source_quote": "In that day YHWH with his hard and great and strong sword will punish Leviathan the fleeing serpent, Leviathan the twisting serpent, and he will slay the dragon that is in the sea."
+    },
+    {
+      "ref": "Yesha'yahu 26:3",
+      "prompt": "YHWH keeps in perfect _____ those whose minds are stayed on him, because they trust in him.",
+      "answer": "peace",
+      "source_quote": "You keep him in perfect peace whose mind is stayed on you, because he trusts in you."
+    }
   ],
   "multiple_choice": [
-    { "ref": "18:1-2", "question": "How does Yesha'yahu 18 describe the land beyond the rivers of Cush?", "options": ["A land of milk and honey", "A land shadowing with wings that sends ambassadors by sea", "A land of darkness and deep shadow", "A land of gold and incense"], "correct": 1, "source_quote": "Woe to the land shadowing with wings, which is beyond the rivers of Ethiopia, that sends ambassadors by the sea." },
-    { "ref": "25:8", "question": "What does YHWH promise in the apocalyptic section?", "options": ["A new temple will be built", "He will swallow up death forever", "The nations will bring tribute", "A new king will arise"], "correct": 1, "source_quote": "He will swallow up death forever, and YHWH will wipe away tears from all faces." },
-    { "ref": "13:1", "question": "Which nation receives the first burden oracle in this section?", "options": ["Mitsrayim", "Moav", "Babylon", "Cush"], "correct": 2, "source_quote": "The burden of Babylon which Yesha'yahu the son of Amots saw." }
+    {
+      "ref": "Yesha'yahu 25:8",
+      "question": "The statement 'He will swallow up death forever' in Yesha'yahu 25:8 is an ancient source text; which tradition later borrowed this resurrection language?",
+      "options": [
+        "The NT borrowed from this ancient text",
+        "This text borrowed from the NT",
+        "Both were written at the same time",
+        "Babylon was the original source"
+      ],
+      "correct": 0,
+      "source_quote": "He will swallow up death forever; and the Creator YHWH will wipe away tears from all faces."
+    },
+    {
+      "ref": "Yesha'yahu 14:12",
+      "question": "The 'shining one, son of the dawn' who has fallen from heaven in Yesha'yahu 14:12 is addressed as a taunt to whom?",
+      "options": [
+        "The king of Babylon",
+        "A cosmic adversary figure",
+        "The king of Assyria",
+        "The prince of Tyre"
+      ],
+      "correct": 0,
+      "source_quote": "How you have fallen from heaven, O shining one, son of the dawn! How you are cut down to the ground, you who laid the nations low!"
+    },
+    {
+      "ref": "Yesha'yahu 24:5",
+      "question": "According to Yesha'yahu 24:5, why does the earth lie defiled?",
+      "options": [
+        "Its inhabitants transgressed the laws and broke the everlasting covenant",
+        "They built idols on the high places",
+        "They failed to keep the Sabbath",
+        "They oppressed the poor"
+      ],
+      "correct": 0,
+      "source_quote": "The earth lies defiled under its inhabitants; for they have transgressed the laws, violated the statutes, broken the everlasting covenant."
+    },
+    {
+      "ref": "Yesha'yahu 19:24-25",
+      "question": "In Yesha'yahu 19's unexpected conclusion, which three nations form a blessed triad in the earth?",
+      "options": [
+        "Mitzrayim, Assyria, and Yisra'el",
+        "Babylon, Mitzrayim, and Yisra'el",
+        "Yisra'el, Moav, and Edom",
+        "Yisra'el, Plishtim, and Mitzrayim"
+      ],
+      "correct": 0,
+      "source_quote": "In that day Yisra'el will be the third with Mitzrayim and Assyria, a blessing in the midst of the earth."
+    },
+    {
+      "ref": "Yesha'yahu 13:1",
+      "question": "Yesha'yahu 13 is specifically titled as the oracle concerning which city?",
+      "options": [
+        "Babylon",
+        "Nineveh",
+        "Damascus",
+        "Tyre"
+      ],
+      "correct": 0,
+      "source_quote": "The oracle concerning Babylon which Yesha'yahu the son of Amoz saw."
+    },
+    {
+      "ref": "Yesha'yahu 26:19",
+      "question": "Yesha'yahu 26:19 is significant because it contains what?",
+      "options": [
+        "An explicit statement of bodily resurrection",
+        "A vision of YHWH's throne",
+        "A covenant renewal ceremony",
+        "A list of the tribes of Yisra'el"
+      ],
+      "correct": 0,
+      "source_quote": "Your dead shall live; their bodies shall rise. You who dwell in the dust, awake and sing for joy!"
+    },
+    {
+      "ref": "Yesha'yahu 25:6",
+      "question": "Where does YHWH host the feast for all peoples described in Yesha'yahu 25:6?",
+      "options": [
+        "On Mount Tziyon",
+        "In the wilderness",
+        "At the Temple court",
+        "In Yerushalayim's lower city"
+      ],
+      "correct": 0,
+      "source_quote": "On this mountain YHWH of Hosts will make for all peoples a feast of rich food, a feast of well-aged wine."
+    },
+    {
+      "ref": "Yesha'yahu 22:15-19",
+      "question": "Which royal official does Yesha'yahu 22 condemn for carving a tomb for himself?",
+      "options": [
+        "Shevna the steward",
+        "Eliakim son of Khilkiyahu",
+        "Yoav the army commander",
+        "Uriyahu the priest"
+      ],
+      "correct": 0,
+      "source_quote": "Thus says YHWH of Hosts: Come, go to this steward, to Shevna, who is over the household, and say to him: What have you to do here?"
+    },
+    {
+      "ref": "Yesha'yahu 27:1",
+      "question": "In the climax of the Yesha'yahu Apocalypse, YHWH's sword punishes what creature?",
+      "options": [
+        "Leviathan the fleeing and twisting serpent",
+        "The great dragon of Mitzrayim",
+        "The bull of the earth",
+        "The eagle of Babylon"
+      ],
+      "correct": 0,
+      "source_quote": "In that day YHWH with his hard and great and strong sword will punish Leviathan the fleeing serpent, Leviathan the twisting serpent."
+    },
+    {
+      "ref": "Yesha'yahu 24:21",
+      "question": "In Yesha'yahu 24:21, YHWH will punish 'the host of heaven in heaven and the kings of the earth on earth'; where are the heavenly host imprisoned?",
+      "options": [
+        "In a pit for many days",
+        "In the abyss below the earth",
+        "In the city of chaos",
+        "Under the foundations of Tziyon"
+      ],
+      "correct": 0,
+      "source_quote": "On that day YHWH will punish the host of heaven, in heaven, and the kings of the earth, on the earth. They will be gathered together as prisoners in a pit."
+    }
   ],
   "faq": [
     {
-      "question": "What does Yesha'yahu 18 reveal about the covenant people's geography?",
-      "answer": "Yesha'yahu 18:1-2 in 1QIsa-a: 'Woe to the land shadowing with wings which is beyond the rivers of Ethiopia — that sends ambassadors by the sea — go swift messengers to a nation scattered and peeled — to a people terrible from their beginning onward — a nation meted out and trodden down.' The directional reference 'beyond the rivers of Ethiopia' means further than the rivers of Cush — beyond the African interior. From the ancient Near Eastern geographic perspective, this direction points west across the Atlantic. 'A nation scattered and peeled' — scattered (dispersed from their homeland) and peeled (stripped of identity, language, name). 'Meted out and trodden down' — measured for labor and trampled. This is in the oldest complete prophetic manuscript on earth, written centuries before the Common Era."
+      "question": "What is the 'Yesha'yahu Apocalypse' in chapters 24-27?",
+      "answer": "Yesha'yahu 24-27 is a cosmic vision unlike anything in the surrounding chapters. The earth is emptied and twisted, the heavenly host imprisoned, kings judged, and death itself swallowed. Chapter 26:19 contains one of the earliest resurrection texts in Hebrew scripture. These chapters share imagery with the Enochic tradition and the DSS, confirming pre-Corruption Hebrew roots."
     },
     {
-      "question": "How does the 1QIsa-a text of chapters 13-27 differ from the Masoretic?",
-      "answer": "The Great Isaiah Scroll (1QIsa-a) preserves multiple variant readings in the oracle cycle that differ from the Masoretic text standardized centuries later. The 1QIsa-a scribes wrote YHWH in Paleo-Hebrew script (𐤉𐤄𐤅𐤄) within the square-script text — visually marking the Name as distinct. The Masoretic tradition later introduced vowel pointing for Adonai over the YHWH consonants, training readers to say a substitute. The 1QIsa-a shows no evidence of this substitution practice. The Name was written to be read as written. The entire 'LORD' substitution tradition — which governs every major English translation — has no basis in the oldest complete Isaiah manuscript."
+      "question": "Is the 'shining one, son of the dawn' in Yesha'yahu 14 a cosmic being?",
+      "answer": "No. Yesha'yahu 14:12 is explicitly a taunt-song over the king of Babylon (14:4). The shining star language is a poetic exaggeration of the tyrant's pride: he thought himself exalted to heaven, but he has fallen to Sheol. This is a human ruler mocked after his downfall, not a cosmic adversary. Later Rabbinic and Christian traditions imposed a cosmic reading that the text does not support."
     },
     {
-      "question": "Why do Western maps erase the geographic unity between Africa and the Levant?",
-      "answer": "Modern cartography places the Levant in the 'Middle East' — a category invented by European colonial geography. The tectonic reality: the Arabian Plate separated from the African Plate along the Red Sea rift, but the Sinai Peninsula remains the land bridge connecting the African and Levantine landmasses. Mitsrayim (Egypt) is in Africa. The Nile corridor runs from the Great Lakes of central Africa to the Mediterranean coast. The 25th Dynasty ruled from Napata in Nubia to the Nile Delta. Yesha'yahu's oracle cycle treats Cush, Mitsrayim, Ashur, Babylon, Moav, and Tsor as a continuous geographic system — not as separate 'continents.' The modern division of this region into 'Africa' and 'the Middle East' is a cartographic erasure that severs the covenant people from their African geographic context."
+      "question": "What does Yesha'yahu 25:8 teach about death?",
+      "answer": "YHWH will swallow up death forever and wipe away tears from every face. This ancient Hebrew declaration is the source for all later resurrection hope. The NT borrowed its language from this text; the direction of borrowing is ancient-to-later, not the reverse."
+    },
+    {
+      "question": "Why is Yesha'yahu 19's ending about Mitzrayim unexpected?",
+      "answer": "After pronouncing severe judgment on Mitzrayim (the Nile drying, wisdom failing, the people turning to idols), Yesha'yahu 19 ends with a remarkable promise: Mitzrayim will know YHWH, build an altar to him, and together with Assyria and Yisra'el become a triple blessing in the earth (19:24-25). This affirms YHWH's sovereignty over all nations, including traditional enemies."
+    },
+    {
+      "question": "What is the 'everlasting covenant' broken in Yesha'yahu 24:5?",
+      "answer": "Yesha'yahu 24:5 says the earth is defiled because its inhabitants broke the everlasting covenant. The DSS community understood this as the covenant given at Sinai and before, embedded in creation order. Breaking it defiles the land itself, not just individual people — a covenant accountability spanning all humanity, not only Yisra'el."
+    },
+    {
+      "question": "What is the Day of YHWH in Yesha'yahu 13?",
+      "answer": "The Day of YHWH in Yesha'yahu 13:6-13 is described as a day of wrath when YHWH destroys sinners from the earth. It comes 'as destruction from the Almighty.' The stars and sun and moon are darkened; the heavens are shaken. Babylon is the immediate target, but the Day is cosmic in scope."
+    },
+    {
+      "question": "How does Yesha'yahu 26:19 relate to the DSS resurrection texts?",
+      "answer": "Yesha'yahu 26:19 — 'Your dead shall live; their bodies shall rise' — is among the Hebrew corpus's earliest explicit bodily resurrection statements. The DSS community at Qumran preserved and cited this tradition, and the Enochic corpus develops the same theme. These are all pre-Rabbinic, pre-Christian texts; the resurrection tradition originates in this ancient Hebrew stream."
+    },
+    {
+      "question": "What judgment does Yesha'yahu 24:21 announce for the heavenly host?",
+      "answer": "YHWH will punish 'the host of heaven in heaven' as well as earthly kings. They will be gathered as prisoners in a pit and shut up in a prison for many days. This is a parallel to the Enochic tradition of the Watchers imprisoned in an abyss — both texts draw on the same pre-Corruption Hebrew theology of cosmic judgment."
+    },
+    {
+      "question": "What is the significance of the threefold holiness cry in context of Yesha'yahu 6?",
+      "answer": "The seraphim's cry in Yesha'yahu 6:3 — 'Holy, holy, holy is YHWH of Hosts; the whole earth is full of his glory' — is the acclamation of YHWH's cosmic kingship. It contrasts with the human King Uzziyahu who died (6:1): YHWH's throne endures. The threefold repetition is an intensifier in Hebrew idiom expressing the absolute completeness of YHWH's holiness."
+    },
+    {
+      "question": "What nations are covered in the oracles of Yesha'yahu 13-23?",
+      "answer": "The oracles cover Babylon (13-14), Assyria (14:24-27), Plishtim (14:28-32), Moav (15-16), Damascus and Efrayim (17), Kush (18), Mitzrayim (19-20), Edom and Arabia (21), Tyre (23), and the Valley of Vision (Yerushalayim, 22). YHWH's judgment extends over every political power of the ancient world."
     }
   ]
 }

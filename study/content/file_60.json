@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_60",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_60",
   "label": "The Twelve — Part 1 — Hoshea",
   "volume": 19,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Hoshea is commanded by YHWH to marry a woman of harlotry — Gomer — as a sign of Yisra'EL's unfaithfulness to YHWH. Their children are given names that are judgments: Yizre'el, Lo-Ruchamah (Not Pitied), Lo-Ammi (Not My People). But YHWH also promises restoration: 'I will say to Lo-Ammi — You are my people, and he shall say — You are my Creator.' YHWH declares: I will betroth you to me forever.",
   "summary_scholarly": "The ACR reads from the Minor Prophets Scroll (4QXII) at Qumran and the Orit Ge'ez. Hoshea is the first of the Twelve (Trei Asar). The marriage metaphor structures the entire book: YHWH as husband, Yisra'EL as unfaithful wife, the children's names as prophetic signs, and the ultimate restoration as remarriage. The judgment-restoration pattern in Hoshea parallels the Damascus Document's Period of Wrath followed by Period of Visitation.",
   "key_terms": [
-    { "term": "Hoshea", "phonetic": "Ho-SHAY-ah", "definition": "Prophet to the Northern Kingdom before the Assyrian deportation (722 BCE). His name means 'salvation.' Anglicized as Hosea." },
-    { "term": "Lo-Ammi", "phonetic": "Lo-Ah-MEE", "definition": "'Not My People' — the name YHWH gives to Hoshea's third child (1:9). YHWH declares: you are not my people and I am not your Creator. But the reversal follows: 'I will say to Lo-Ammi — You are my people' (2:23)." },
-    { "term": "Lo-Ruchamah", "phonetic": "Lo-Roo-KHAH-mah", "definition": "'Not Pitied' — the name of Hoshea's daughter (1:6). YHWH withdraws his rachamim (womb-love) from the Northern Kingdom. Rachamim — from rechem (womb) — is the most intimate mercy in Hebrew." }
+    {
+      "term": "Hoshea",
+      "phonetic": "hoh-SHAY-ah",
+      "definition": "Prophet in the northern kingdom; YHWH commanded him to marry Gomer as a living allegory of Yisra'el's unfaithfulness to the covenant."
+    },
+    {
+      "term": "Gomer Allegory",
+      "phonetic": "GOH-mer",
+      "definition": "Hoshea's marriage to Gomer, a woman of unfaithfulness, used by YHWH as a living picture of Yisra'el's covenant betrayal through idol worship."
+    },
+    {
+      "term": "Perish for lack of knowledge",
+      "phonetic": "Hoshea 4:6",
+      "definition": "YHWH's indictment: 'My people are destroyed for lack of knowledge; because you have rejected knowledge, I reject you from being a priest to me.'"
+    },
+    {
+      "term": "Yoel",
+      "phonetic": "yoh-EL",
+      "definition": "Prophet who interprets a devastating locust plague as a foretaste of the Day of YHWH and calls for communal repentance."
+    },
+    {
+      "term": "Day of YHWH (Yoel)",
+      "phonetic": "Yoel 1–2",
+      "definition": "Yoel's central theme: a coming day of cosmic judgment and darkness, preceded by the locust invasion; the people are urged to return to YHWH before it arrives."
+    },
+    {
+      "term": "Pour out my spirit (Yoel 2:28)",
+      "phonetic": "Yoel 2:28",
+      "definition": "YHWH's promise: 'I will pour out my spirit on all flesh; your sons and daughters shall prophesy.' Ancient source text; the NT (Acts 2) borrowed from Yoel."
+    },
+    {
+      "term": "Amos of Teqoa",
+      "phonetic": "AY-mos, teh-KOH-ah",
+      "definition": "A herdsman and dresser of sycamore figs from Teqoa, called by YHWH to prophesy against Yisra'el's social injustice and hollow religious observance."
+    },
+    {
+      "term": "Justice like waters (Amos 5:24)",
+      "phonetic": "Amos 5:24",
+      "definition": "'But let justice roll down like waters, and righteousness like an ever-flowing stream.' YHWH rejects empty festivals while oppression persists."
+    },
+    {
+      "term": "Plumb Line Vision",
+      "phonetic": "Amos 7:7-9",
+      "definition": "YHWH stands with a plumb line beside a wall, measuring Yisra'el for structural failure; judgment is set and cannot be turned back."
+    },
+    {
+      "term": "Like the Kushim to me (Amos 9:7)",
+      "phonetic": "Amos 9:7",
+      "definition": "'Are you not like the Kushim (Cushites) to me, O children of Yisra'el?' — YHWH establishes that covenant status does not make Yisra'el exempt from accountability."
+    }
   ],
   "fill_blank": [
-    { "ref": "2:23", "prompt": "I will say to Lo-Ammi — You are my ______, and he shall say — You are my Creator.", "answer": "people", "source_quote": "And I will say to Lo-Ammi — You are my people, and he shall say — You are my Creator." },
-    { "ref": "6:6", "prompt": "For I desire steadfast love and not ______, the knowledge of The Creator rather than burnt offerings.", "answer": "sacrifice", "source_quote": "For I desire steadfast love and not sacrifice, the knowledge of The Creator rather than burnt offerings." },
-    { "ref": "2:19", "prompt": "I will betroth you to me ______. I will betroth you to me in righteousness and in justice.", "answer": "forever", "source_quote": "And I will betroth you to me forever. I will betroth you to me in righteousness and in justice, in steadfast love and in mercy." }
+    {
+      "ref": "Hoshea 1:2",
+      "prompt": "YHWH told Hoshea: 'Go, take for yourself a wife of ___', for the land commits great whoredom by forsaking YHWH.",
+      "answer": "whoredom",
+      "source_quote": "Go, take for yourself a wife of whoredom and have children of whoredom, for the land commits great whoredom by forsaking YHWH."
+    },
+    {
+      "ref": "Hoshea 4:6",
+      "prompt": "My people are ___ for lack of knowledge; because you have rejected knowledge, I reject you from being a priest to me.",
+      "answer": "destroyed",
+      "source_quote": "My people are destroyed for lack of knowledge; because you have rejected knowledge, I reject you from being a priest to me."
+    },
+    {
+      "ref": "Hoshea 11:1",
+      "prompt": "When Yisra'el was a child, I loved him, and out of ___ I called my son.",
+      "answer": "Mitzrayim",
+      "source_quote": "When Yisra'el was a child, I loved him, and out of Mitzrayim I called my son."
+    },
+    {
+      "ref": "Hoshea 14:1",
+      "prompt": "Return, O Yisra'el, to ___ your Creator, for you have stumbled because of your iniquity.",
+      "answer": "YHWH",
+      "source_quote": "Return, O Yisra'el, to YHWH your Creator, for you have stumbled because of your iniquity."
+    },
+    {
+      "ref": "Yoel 2:12",
+      "prompt": "'Yet even now,' declares YHWH, 'return to me with all your heart, with ___, with weeping, and with mourning.'",
+      "answer": "fasting",
+      "source_quote": "Yet even now, declares YHWH, return to me with all your heart, with fasting, with weeping, and with mourning."
+    },
+    {
+      "ref": "Yoel 2:28",
+      "prompt": "And it shall come to pass afterward, that I will pour out my ___ on all flesh; your sons and your daughters shall prophesy.",
+      "answer": "spirit",
+      "source_quote": "And it shall come to pass afterward, that I will pour out my spirit on all flesh; your sons and your daughters shall prophesy."
+    },
+    {
+      "ref": "Yoel 3:10",
+      "prompt": "Beat your ___ into swords, and your pruning hooks into spears; let the weak say, 'I am a warrior.'",
+      "answer": "plowshares",
+      "source_quote": "Beat your plowshares into swords, and your pruning hooks into spears; let the weak say, 'I am a warrior.'"
+    },
+    {
+      "ref": "Amos 5:24",
+      "prompt": "But let ___ roll down like waters, and righteousness like an ever-flowing stream.",
+      "answer": "justice",
+      "source_quote": "But let justice roll down like waters, and righteousness like an ever-flowing stream."
+    },
+    {
+      "ref": "Amos 7:8",
+      "prompt": "YHWH said: 'Behold, I am setting a ___ in the midst of my people Yisra'el; I will never again pass by them.'",
+      "answer": "plumb line",
+      "source_quote": "Behold, I am setting a plumb line in the midst of my people Yisra'el; I will never again pass by them."
+    },
+    {
+      "ref": "Amos 9:7",
+      "prompt": "'Are you not like the ___ to me, O children of Yisra'el?' declares YHWH.",
+      "answer": "Kushim",
+      "source_quote": "Are you not like the Kushim to me, O children of Yisra'el? declares YHWH."
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:9", "question": "What does the name Lo-Ammi mean?", "options": ["My people", "Not my people", "Beloved", "Faithful"], "correct": 1, "source_quote": "Call his name Lo-Ammi, for you are not my people, and I am not your Creator." },
-    { "ref": "6:6", "question": "What does YHWH desire more than sacrifice?", "options": ["Temple worship", "Steadfast love and the knowledge of The Creator", "Burnt offerings and incense", "Fasting and prayer"], "correct": 1, "source_quote": "For I desire steadfast love and not sacrifice, the knowledge of The Creator rather than burnt offerings." },
-    { "ref": "2:23", "question": "What does YHWH promise about Lo-Ammi?", "options": ["He will be punished forever", "He will become Not My People permanently", "YHWH will say to him — You are my people", "He will be forgotten"], "correct": 2, "source_quote": "I will say to Lo-Ammi — You are my people." }
+    {
+      "ref": "Hoshea 1:2",
+      "question": "Why did YHWH command Hoshea to marry Gomer?",
+      "options": [
+        "As a reward for his faithfulness",
+        "As a living allegory of Yisra'el's unfaithfulness to YHWH",
+        "To strengthen the northern kingdom politically",
+        "To demonstrate YHWH's approval of Hoshea"
+      ],
+      "correct": 1,
+      "source_quote": "Go, take for yourself a wife of whoredom, for the land commits great whoredom by forsaking YHWH."
+    },
+    {
+      "ref": "Hoshea 4:6",
+      "question": "According to Hoshea 4:6, why are YHWH's people destroyed?",
+      "options": [
+        "Military invasion from Assyria",
+        "Lack of knowledge",
+        "Drought and famine",
+        "Failure to build the Temple"
+      ],
+      "correct": 1,
+      "source_quote": "My people are destroyed for lack of knowledge."
+    },
+    {
+      "ref": "Hoshea 11:1",
+      "question": "Hoshea 11:1 states that YHWH called 'my son' out of which land?",
+      "options": [
+        "Kena'an",
+        "Babylon",
+        "Mitzrayim",
+        "Assyria"
+      ],
+      "correct": 2,
+      "source_quote": "Out of Mitzrayim I called my son."
+    },
+    {
+      "ref": "Yoel 1:4",
+      "question": "What natural disaster does Yoel use as the opening sign of the Day of YHWH?",
+      "options": [
+        "Earthquake",
+        "Drought",
+        "Locust invasion",
+        "Flood"
+      ],
+      "correct": 2,
+      "source_quote": "What the cutting locust left, the swarming locust has eaten. What the swarming locust left, the hopping locust has eaten."
+    },
+    {
+      "ref": "Yoel 2:28",
+      "question": "What does YHWH promise to pour out on all flesh according to Yoel 2:28?",
+      "options": [
+        "YHWH's wrath",
+        "YHWH's spirit",
+        "Cleansing water",
+        "Fire from heaven"
+      ],
+      "correct": 1,
+      "source_quote": "I will pour out my spirit on all flesh; your sons and your daughters shall prophesy."
+    },
+    {
+      "ref": "Yoel 3:10",
+      "question": "Yoel 3:10 reverses a famous peace image. What are the people told to beat into swords?",
+      "options": [
+        "Shields",
+        "Pruning hooks",
+        "Plowshares",
+        "Chariots"
+      ],
+      "correct": 2,
+      "source_quote": "Beat your plowshares into swords, and your pruning hooks into spears."
+    },
+    {
+      "ref": "Amos 1:1",
+      "question": "What was Amos's occupation before YHWH called him to prophesy?",
+      "options": [
+        "Priest in Yerushalayim",
+        "Levite serving in Beit-El",
+        "Herdsman and dresser of sycamore figs from Teqoa",
+        "Court scribe to King Yerov'am"
+      ],
+      "correct": 2,
+      "source_quote": "The words of Amos, who was among the shepherds of Teqoa."
+    },
+    {
+      "ref": "Amos 5:24",
+      "question": "What does Amos 5:24 compare justice to?",
+      "options": [
+        "A consuming fire",
+        "Rolling waters and an ever-flowing stream",
+        "A tree planted by rivers",
+        "A plumb line set in a wall"
+      ],
+      "correct": 1,
+      "source_quote": "Let justice roll down like waters, and righteousness like an ever-flowing stream."
+    },
+    {
+      "ref": "Amos 7:7-8",
+      "question": "What does the plumb line vision in Amos 7 signify?",
+      "options": [
+        "That Yisra'el has been measured and found to be righteous",
+        "That YHWH is about to build a new temple",
+        "That Yisra'el has failed YHWH's standard and judgment cannot be turned back",
+        "That Amos himself is called to rebuild the walls"
+      ],
+      "correct": 2,
+      "source_quote": "I am setting a plumb line in the midst of my people Yisra'el; I will never again pass by them."
+    },
+    {
+      "ref": "Amos 9:7",
+      "question": "In Amos 9:7, YHWH compares Yisra'el to the Kushim to make what point?",
+      "options": [
+        "That Kushim will replace Yisra'el as YHWH's covenant people",
+        "That Yisra'el's covenant status does not exempt them from accountability",
+        "That the Kushim are inferior to Yisra'el",
+        "That YHWH has abandoned both peoples equally"
+      ],
+      "correct": 1,
+      "source_quote": "Are you not like the Kushim to me, O children of Yisra'el? declares YHWH."
+    }
   ],
   "faq": [
     {
-      "question": "What does Lo-Ammi ('Not My People') mean for the scattered covenant people?",
-      "answer": "YHWH declares to the Northern Kingdom through Hoshea: 'You are not my people and I am not your Creator' (1:9). This is the most devastating covenant statement possible. But the reversal immediately follows: 'In the place where it was said to them — You are not my people — it shall be said to them — Children of the living Creator' (1:10). The covenant people's current condition — scattered, identity denied, called 'not my people' by every institution — is the Lo-Ammi state. The restoration is YHWH reversing that declaration. The Damascus Document at Qumran describes this as the transition from the Period of Wrath to the Period of Visitation."
+      "question": "Who is Hoshea and what made his prophetic ministry unusual?",
+      "answer": "Hoshea was a prophet in the northern kingdom of Yisra'el. YHWH commanded him to marry a woman named Gomer and to have children with her as a living allegory — the marriage itself became the message, embodying how Yisra'el had abandoned the covenant relationship with YHWH for other gods."
     },
     {
-      "question": "What does rachamim (mercy) mean at its root?",
-      "answer": "Lo-Ruchamah means 'Not Pitied' — YHWH withdraws his rachamim. The Hebrew word rachamim (mercy/compassion) comes from rechem — womb. The divine mercy in the ancient Afro-Asiatic covenant framework is described through the image of the mother's womb — involuntary, instinctive, pre-rational protective love. Not the Latin Misericordia (pity for the miserable) but womb-love. When YHWH withdraws rachamim, he withdraws the most intimate biological protective instinct. When he restores it — 'I will have rachamim on Lo-Ruchamah' (2:23) — the womb-love returns."
+      "question": "What is the central message of Hoshea 4:6?",
+      "answer": "YHWH declares that the people are being destroyed because they have rejected knowledge of YHWH and the covenant. This rejection is not ignorance but a deliberate turning away — the priests who should have taught the Torah abandoned their responsibility, so YHWH rejected them from the priestly function."
     },
     {
-      "question": "How does Hoshea connect to the Assyrian deportation?",
-      "answer": "Hoshea prophesied to the Northern Kingdom before the Assyrian deportation of 722 BCE. Sargon II's own inscriptions document the deportation of approximately 27,290 inhabitants. The deported populations were settled in Halah, Habor, and the river of Gozan in Mesopotamia. Josephus documents the ten tribes as beyond the Euphrates in 'countless myriads.' The migration paths documented in Arabic medieval sources, in the Beta Israel oral tradition, and in Josephus point southward and eastward from Mesopotamia — through the Afro-Asiatic corridor into East and West Africa. Hoshea's Lo-Ammi declaration describes a people who would lose their identity as YHWH's people — and the restoration promise applies to wherever they are scattered."
+      "question": "Why is Hoshea 11:1 significant as an ancient source text?",
+      "answer": "Hoshea 11:1 reads 'Out of Mitzrayim I called my son,' referring to YHWH's redemption of Yisra'el from bondage. This ancient source text about Yisra'el's national history was later borrowed by NT writers who applied it to their invented figure — the direction of borrowing is from the ancient Hebrew text outward."
+    },
+    {
+      "question": "What event prompted Yoel's prophetic message?",
+      "answer": "A devastating locust invasion that stripped the land bare became the occasion for Yoel's prophecy. He interpreted it as a foretaste of the coming Day of YHWH and called the entire community to genuine repentance — fasting, weeping, and returning to YHWH with their whole hearts."
+    },
+    {
+      "question": "What does YHWH promise to do 'afterward' in Yoel 2:28?",
+      "answer": "YHWH promises to pour out the divine spirit on all flesh — sons, daughters, old and young, and servants alike will prophesy, see visions, and dream dreams. This ancient promise in Yoel became the source text the NT borrowed for its Pentecost narrative; Yoel is the original."
+    },
+    {
+      "question": "Who was Amos and why was he an unexpected prophetic voice?",
+      "answer": "Amos was a herdsman and dresser of sycamore figs from Teqoa in the southern territory. He had no prophetic credentials or priestly lineage. YHWH took him from his agricultural work and sent him to the northern kingdom of Yisra'el to deliver a sharp indictment of its social injustice and hollow worship."
+    },
+    {
+      "question": "What does Amos mean when he says YHWH rejects Yisra'el's festivals and assemblies?",
+      "answer": "In Amos 5:21-24, YHWH declares 'I hate, I despise your feasts' — not because festivals are wrong, but because the same community that gathered for religious observance was oppressing the poor, taking bribes, and denying justice. YHWH demanded that justice and righteousness flow like water before religious performance had any value."
+    },
+    {
+      "question": "What does the plumb line vision in Amos 7 mean?",
+      "answer": "YHWH stands beside a wall holding a plumb line — a measuring instrument. YHWH is measuring Yisra'el against the straight standard of the covenant and finds it crooked beyond repair. The pronouncement is that YHWH will no longer pass over the structural failure; judgment is set."
+    },
+    {
+      "question": "What is the significance of Amos 9:7 and the comparison to the Kushim?",
+      "answer": "YHWH asks Yisra'el: 'Are you not like the Kushim to me?' — meaning that covenant status does not create automatic exemption from YHWH's standards. YHWH governed the movements of other nations just as YHWH brought Yisra'el out of Mitzrayim. This text asserts YHWH's universal governance and rebukes national complacency."
+    },
+    {
+      "question": "How does the locust imagery in Yoel relate to the Day of YHWH concept?",
+      "answer": "Yoel describes the locust invasion in terms that escalate into cosmic imagery — darkness, fire, an army without number. The locust plague is both a literal event and a living symbol of what the Day of YHWH will be like. YHWH uses the immediate crisis to call the people to return before the final Day arrives."
     }
   ]
 }

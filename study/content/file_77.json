@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_77",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_77",
   "label": "Iyov (Job) — Part 1 — Chapters 1–14",
   "volume": 21,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Iyov is a righteous man — blameless and upright, fearing The Creator and turning away from evil. The adversary challenges YHWH: does Iyov fear The Creator for nothing? YHWH permits the adversary to test Iyov. Everything is taken — children, livestock, health. Iyov sits in ashes scraping his sores. Three friends come — Elifaz, Bildad, Tzofar. They argue that suffering proves guilt. Iyov refuses to accept their theology. He maintains his innocence and demands an audience with The Creator.",
   "summary_scholarly": "Chapters 1-14 establish the covenant lawsuit framework. The ACR reads from Dead Sea Scrolls witnesses (4QJob-a, 4QJob-b, 4QpaleoJob-c, and the Targum 11QtgJob) and the Orit Ge'ez. The prose prologue (ch 1-2) establishes the heavenly court scene. The poetry (ch 3-14) begins Iyov's legal complaint against the covenant terms. Iyov 30:30 — 'my skin is black upon me' — uses shachar, the same root as Shir HaShirim 1:5, as a first-person phenotypic statement.",
   "key_terms": [
-    { "term": "Iyov", "phonetic": "ee-YOV", "definition": "A righteous man from the land of Utz. Described as blameless and upright, fearing The Creator and turning away from evil. Anglicized as Job." },
-    { "term": "The Adversary (HaSatan)", "phonetic": "hah-sah-TAHN", "definition": "In the Iyov prologue, HaSatan is not a proper name but a title — 'the adversary' or 'the accuser.' He appears among the sons of The Creator in the heavenly court and challenges YHWH's assessment of Iyov." },
-    { "term": "Elifaz, Bildad, Tzofar", "phonetic": "", "definition": "Iyov's three friends who come to comfort him but argue that suffering is always the result of sin. Their theology — that the righteous always prosper and the wicked always suffer — is directly challenged by Iyov and ultimately rejected by YHWH (42:7)." },
-    { "term": "11QtgJob", "phonetic": "", "definition": "The Qumran Job Targum — an Aramaic translation/interpretation of Iyov found in Cave 11. One of the most important Aramaic texts from Qumran, preserving the text as it was read in Aramaic-speaking covenant communities." }
+    {
+      "term": "Iyov",
+      "phonetic": "ee-YOV",
+      "definition": "Hebrew name for Job; a blameless and upright man who fears YHWH and turns away from evil, whose suffering becomes the central question of the book bearing his name."
+    },
+    {
+      "term": "Ha-Satan as Adversary Role",
+      "phonetic": "ha-sa-TAN",
+      "definition": "In Iyov 1-2, ha-satan (the adversary/accuser) is not an independent evil deity but a member of YHWH's court with a prosecutorial role — presenting himself before YHWH and challenging Iyov's integrity. This ancient text documents a legal-court function, not a rival deity."
+    },
+    {
+      "term": "Heavenly Court Scene",
+      "phonetic": "sod ba-sha-MA-yim",
+      "definition": "Iyov 1-2: the 'sons of Elohim' (divine council members) present themselves before YHWH; ha-satan challenges Iyov's motives; YHWH permits the testing. This divine-council scene is the ancient Hebrew primary text; later traditions (including NT) borrowed and re-shaped it."
+    },
+    {
+      "term": "Elifaz the Temanite",
+      "phonetic": "E-li-faz ha-te-ma-NI",
+      "definition": "The first of Iyov's three friends; speaks three times (chs 4-5, 15, 22); argues from experience and visions that suffering must result from sin — 'Who, being innocent, has ever perished?' (4:7). His theology is ultimately rebuked by YHWH."
+    },
+    {
+      "term": "Bildad the Shuhite",
+      "phonetic": "bil-DAD ha-shu-KHI",
+      "definition": "The second of Iyov's three friends; speaks three times (chs 8, 18, 25); argues from tradition that YHWH does not reject a blameless person — but his application to Iyov is wrong. His theology is ultimately rebuked by YHWH."
+    },
+    {
+      "term": "Tzofar the Na'amathite",
+      "phonetic": "tzo-FAR ha-na-a-ma-TI",
+      "definition": "The third of Iyov's three friends; speaks twice (chs 11, 20); the most forceful in asserting that Iyov must be guilty: 'Know then that YHWH exacts of you less than your guilt deserves' (11:6). His theology is ultimately rebuked by YHWH."
+    },
+    {
+      "term": "Retribution Theology",
+      "phonetic": "te-o-lo-gi-AT ga-MUL",
+      "definition": "The view held by Iyov's three friends: suffering proves sin, and righteousness leads to prosperity. The whole book of Iyov is a sustained challenge to this simplistic equation, ultimately rejected by YHWH himself (42:7-8)."
+    },
+    {
+      "term": "Though He Slay Me",
+      "phonetic": "hen yik-te-LE-ni",
+      "definition": "Iyov 13:15: 'Though he slay me, yet I will trust in him' — Iyov's declaration of covenant faithfulness even in the face of apparent divine abandonment; a defining statement of persisting covenant loyalty beyond suffering."
+    },
+    {
+      "term": "My Redeemer Lives",
+      "phonetic": "go-a-LI khai",
+      "definition": "Iyov 19:25: 'I know that my Redeemer (go'el) lives' — Iyov's climactic declaration of confidence that someone will vindicate him. This ancient text is the source; NT writings borrowed from Iyov 19:25."
+    },
+    {
+      "term": "Wisdom Chapter",
+      "phonetic": "pe-REK khokh-MAH",
+      "definition": "Iyov 28: a standalone poem on the inaccessibility of wisdom — 'Where shall wisdom be found? Where is the place of understanding?' YHWH alone knows its way; for humanity, the fear of YHWH is wisdom (28:28)."
+    }
   ],
   "fill_blank": [
-    { "ref": "1:1", "prompt": "There was a man in the land of Utz, whose name was Iyov, and that man was blameless and ______, one who feared The Creator and turned away from evil.", "answer": "upright", "source_quote": "There was a man in the land of Utz, whose name was Iyov, and that man was blameless and upright, one who feared The Creator and turned away from evil." },
-    { "ref": "1:21", "prompt": "YHWH gave, and YHWH has taken away — blessed be the ______ of YHWH.", "answer": "name", "source_quote": "And he said: Naked I came from my mother's womb, and naked shall I return. YHWH gave, and YHWH has taken away — blessed be the name of YHWH." },
-    { "ref": "13:15", "prompt": "Though he slay me, I will ______ in him.", "answer": "hope", "source_quote": "Though he slay me, I will hope in him — yet I will argue my ways to his face." }
+    {
+      "ref": "Iyov 1:1",
+      "prompt": "There was a man in the land of Uz whose name was Iyov; that man was ___ and upright.",
+      "answer": "blameless",
+      "source_quote": "There was a man in the land of Uz whose name was Iyov; that man was blameless and upright, one who feared YHWH and turned away from evil."
+    },
+    {
+      "ref": "Iyov 1:6",
+      "prompt": "Now there was a day when the sons of YHWH came to present themselves before YHWH, and ___ also came among them.",
+      "answer": "ha-satan (the adversary)",
+      "source_quote": "Now there was a day when the sons of YHWH came to present themselves before YHWH, and ha-satan also came among them."
+    },
+    {
+      "ref": "Iyov 1:8",
+      "prompt": "And YHWH said to ha-satan: 'Have you considered my servant Iyov, that there is none like him on the earth, a ___ and upright man?'",
+      "answer": "blameless",
+      "source_quote": "Have you considered my servant Iyov, that there is none like him on the earth, a blameless and upright man, one who fears YHWH and turns away from evil?"
+    },
+    {
+      "ref": "Iyov 1:21",
+      "prompt": "Iyov said: 'YHWH gave, and YHWH has ___; blessed be the name of YHWH.'",
+      "answer": "taken away",
+      "source_quote": "YHWH gave, and YHWH has taken away; blessed be the name of YHWH."
+    },
+    {
+      "ref": "Iyov 3:3",
+      "prompt": "Iyov opened his mouth and cursed the ___ of his birth.",
+      "answer": "day",
+      "source_quote": "After this Iyov opened his mouth and cursed the day of his birth."
+    },
+    {
+      "ref": "Iyov 13:15",
+      "prompt": "Though he ___ me, yet I will trust in him; I will argue my ways to his face.",
+      "answer": "slay",
+      "source_quote": "Though he slay me, yet I will trust in him; I will argue my ways to his face."
+    },
+    {
+      "ref": "Iyov 19:25",
+      "prompt": "For I know that my ___ lives, and at the last he will stand upon the earth.",
+      "answer": "Redeemer",
+      "source_quote": "For I know that my Redeemer lives, and at the last he will stand upon the earth."
+    },
+    {
+      "ref": "Iyov 28:12",
+      "prompt": "But where shall ___ be found? And where is the place of understanding?",
+      "answer": "wisdom",
+      "source_quote": "But where shall wisdom be found? And where is the place of understanding?"
+    },
+    {
+      "ref": "Iyov 28:28",
+      "prompt": "And he said to man: 'Behold, the ___ of YHWH, that is wisdom, and to turn away from evil is understanding.'",
+      "answer": "fear",
+      "source_quote": "Behold, the fear of YHWH, that is wisdom, and to turn away from evil is understanding."
+    },
+    {
+      "ref": "Iyov 4:7",
+      "prompt": "Elifaz said: 'Who that was innocent has ever ___? Or where were the upright cut off?'",
+      "answer": "perished",
+      "source_quote": "Who that was innocent has ever perished? Or where were the upright cut off? — Iyov 4:7."
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:1", "question": "How does the text describe Iyov?", "options": ["A wealthy king", "A blameless and upright man who feared The Creator", "A priest in the temple", "A prophet of YHWH"], "correct": 1, "source_quote": "There was a man in the land of Utz, whose name was Iyov, and that man was blameless and upright, one who feared The Creator and turned away from evil." },
-    { "ref": "1:9", "question": "What does the adversary challenge?", "options": ["Whether Iyov exists", "Whether Iyov fears The Creator for nothing", "Whether YHWH is just", "Whether the covenant is valid"], "correct": 1, "source_quote": "Then the adversary answered YHWH and said: Does Iyov fear The Creator for nothing?" },
-    { "ref": "2:13", "question": "How long did Iyov's three friends sit with him in silence?", "options": ["One day", "Three days", "Seven days and seven nights", "Forty days"], "correct": 2, "source_quote": "And they sat with him on the ground seven days and seven nights, and no one spoke a word to him, for they saw that his suffering was very great." }
+    {
+      "ref": "Iyov 1:1",
+      "question": "How is Iyov described in the opening verse of the book?",
+      "options": [
+        "Wealthy but sinful",
+        "Blameless and upright, fearing YHWH",
+        "A prophet of Yisra'el",
+        "A priest in the Temple"
+      ],
+      "correct": 1,
+      "source_quote": "There was a man in the land of Uz whose name was Iyov; that man was blameless and upright, one who feared YHWH and turned away from evil."
+    },
+    {
+      "ref": "Iyov 1:6",
+      "question": "In Iyov 1:6, who presents themselves before YHWH in the heavenly court?",
+      "options": [
+        "The prophets of Yisra'el",
+        "The souls of the righteous",
+        "The sons of YHWH (divine council members)",
+        "The angels of fire"
+      ],
+      "correct": 2,
+      "source_quote": "The sons of YHWH came to present themselves before YHWH, and ha-satan also came among them."
+    },
+    {
+      "ref": "Iyov 1-2",
+      "question": "What is ha-satan's role in the heavenly court scenes of Iyov 1-2?",
+      "options": [
+        "An independent evil deity opposing YHWH",
+        "A member of YHWH's court with an adversarial/prosecutorial role",
+        "A prophet delivering YHWH's message",
+        "An angel guarding the garden"
+      ],
+      "correct": 1,
+      "source_quote": "Ha-satan came among the sons of YHWH to present himself before YHWH — the role is that of an adversary/accuser in YHWH's court."
+    },
+    {
+      "ref": "Iyov 1:21",
+      "question": "What does Iyov say after losing his wealth and children?",
+      "options": [
+        "Why have you forsaken me, YHWH?",
+        "YHWH gave, and YHWH has taken away; blessed be the name of YHWH",
+        "I will trust though he slay me",
+        "Righteousness has no reward"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH gave, and YHWH has taken away; blessed be the name of YHWH."
+    },
+    {
+      "ref": "Iyov 13:15",
+      "question": "What does Iyov declare in 13:15 even though YHWH may slay him?",
+      "options": [
+        "He will curse YHWH and die",
+        "He will trust in YHWH",
+        "He will flee from YHWH's presence",
+        "He will seek counsel from the wise"
+      ],
+      "correct": 1,
+      "source_quote": "Though he slay me, yet I will trust in him."
+    },
+    {
+      "ref": "Iyov 19:25",
+      "question": "What does Iyov declare about his go'el (redeemer) in 19:25?",
+      "options": [
+        "He has abandoned me",
+        "My redeemer lives, and at the last will stand on the earth",
+        "My redeemer is hidden from me",
+        "My redeemer is Elifaz my friend"
+      ],
+      "correct": 1,
+      "source_quote": "For I know that my Redeemer lives, and at the last he will stand upon the earth."
+    },
+    {
+      "ref": "Iyov 28:28",
+      "question": "According to Iyov 28:28, what is wisdom for humanity?",
+      "options": [
+        "The accumulation of knowledge",
+        "Finding all answers in scripture",
+        "The fear of YHWH",
+        "Understanding the mysteries of creation"
+      ],
+      "correct": 2,
+      "source_quote": "Behold, the fear of YHWH, that is wisdom, and to turn away from evil is understanding."
+    },
+    {
+      "ref": "Iyov 42:7",
+      "question": "Whose theology does YHWH ultimately rebuke at the end of the book?",
+      "options": [
+        "Iyov's",
+        "Elihu's",
+        "The three friends (Elifaz, Bildad, Tzofar)",
+        "Ha-satan's"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH said to Elifaz the Temanite: My anger burns against you and against your two friends, for you have not spoken of me what is right, as my servant Iyov has — Iyov 42:7."
+    },
+    {
+      "ref": "Iyov 3:3",
+      "question": "After his suffering begins, what does Iyov curse in chapter 3?",
+      "options": [
+        "His friends who failed him",
+        "The day of his birth",
+        "The land of Uz",
+        "Ha-satan who afflicted him"
+      ],
+      "correct": 1,
+      "source_quote": "After this Iyov opened his mouth and cursed the day of his birth."
+    },
+    {
+      "ref": "Iyov 11:6",
+      "question": "What does Tzofar the Na'amathite say in Iyov 11:6 about Iyov's guilt?",
+      "options": [
+        "Iyov is innocent and YHWH tests the righteous",
+        "YHWH exacts of Iyov less than his guilt deserves",
+        "Iyov's suffering is a mystery beyond human understanding",
+        "Iyov should repent and be restored"
+      ],
+      "correct": 1,
+      "source_quote": "Know then that YHWH exacts of you less than your guilt deserves — Iyov 11:6."
+    }
   ],
   "faq": [
     {
-      "question": "What does Iyov 30:30 reveal about the covenant people's phenotype?",
-      "answer": "Iyov 30:30 is a first-person statement: 'my skin is black (shachar) upon me, and my bones are burned with heat.' The Hebrew root shachar — shin-chet-resh — is the same root used in Shir HaShirim 1:5 (shechorah ani ve-na'vah — I am black and lovely). In both texts, shachar is a phenotypic descriptor — a physical description of skin color, not a metaphor for spiritual condition. Iyov describes a change: his skin has darkened further and his bones burn with heat — meaning his already dark baseline complexion has intensified through suffering. The text records the covenant people's normal phenotype through direct first-person statement."
+      "question": "What is the land of Uz and what does it tell us about Iyov's identity?",
+      "answer": "The land of Uz is located to the east — associated in the Hebrew texts with the region of Edom or the Arabian steppe. Iyov is not an Israelite from the covenant community in the narrow sense; he is a figure from the broader ancient world who nonetheless fears YHWH and lives blamelessly. The book's scope is universal: YHWH's covenant accountability extends beyond the borders of Yisra'el."
     },
     {
-      "question": "What does the heavenly court scene reveal about covenant justice?",
-      "answer": "The prologue of Iyov (chapters 1-2) shows the adversary appearing among the sons of The Creator in the heavenly court. He does not act independently — he requires YHWH's permission before touching Iyov. This framework is consistent with Yovelim 15: every nation is under angelic jurisdiction, but Yisra'EL is under YHWH's direct governance. The adversary operates within YHWH's covenant justice system, not outside it. Iyov's friends argue that suffering proves guilt — YHWH ultimately rejects this theology (42:7). Suffering within the covenant is not proof of wrongdoing. The covenant people's suffering under domination is addressed in the War Scroll (1QM) and the Damascus Document (CD) — both describe bounded periods of affliction within YHWH's plan."
+      "question": "What is the significance of ha-satan's role in Iyov 1-2?",
+      "answer": "In Iyov 1-2, ha-satan (meaning 'the adversary' or 'the accuser') is not an independent evil deity but a member of YHWH's divine court (among the sons of YHWH) with a legal/prosecutorial function. His role is to challenge and test — with YHWH's permission. This ancient Hebrew primary text documents the accuser as a court official, not a rival deity. Later traditions re-shaped this into an independent evil being, but that is the manipulation, not the original."
     },
     {
-      "question": "Why is the Qumran Job Targum (11QtgJob) significant?",
-      "answer": "The 11QtgJob is an Aramaic translation of Iyov found in Qumran Cave 11. It shows how the text was read in Aramaic-speaking covenant communities before the Masoretic standardization. Aramaic and Hebrew are both Afro-Asiatic Semitic languages — sister languages within the same family as Ge'ez, Amharic, and ancient Egyptian. The Targum preserves pronunciation and interpretation that the consonantal Hebrew text alone does not convey — similar to how the Ge'ez Fidel (abugida) preserves unambiguous pronunciation through its vowel system, while the Hebrew abjad was vulnerable to the Masoretic vowel-pointing intervention of the 7th-10th centuries CE."
+      "question": "Why does YHWH ultimately rebuke Iyov's three friends rather than Iyov?",
+      "answer": "In Iyov 42:7, YHWH says to Elifaz: 'My anger burns against you and your two friends, for you have not spoken of me what is right, as my servant Iyov has.' The three friends spoke theologically neat answers that were factually wrong about YHWH's nature. Iyov argued, wrestled, complained, and demanded answers — but he spoke honestly from genuine relationship with YHWH. Honest wrestling is more faithful than comfortable theological formulas."
+    },
+    {
+      "question": "What is Iyov's declaration in 19:25 and what ancient source is it drawn from?",
+      "answer": "Iyov 19:25: 'I know that my Redeemer (go'el) lives, and at the last he will stand upon the earth.' This is Iyov's climactic declaration of confidence that YHWH (or YHWH's representative) will ultimately vindicate him. This ancient Hebrew text is the source; NT writings that speak of a living redeemer drew from this tradition. The direction of borrowing runs from Iyov's ancient text outward, not inward."
+    },
+    {
+      "question": "What is Iyov 28 about and how does it function in the book?",
+      "answer": "Iyov 28 is a standalone wisdom poem — sometimes called 'the Wisdom Hymn' — that asks: 'Where shall wisdom be found?' The poem surveys all creation: mining the depths, searching the sea, asking death itself — none knows wisdom's place. Only YHWH knows its way (28:23). For humanity, the answer is: 'Behold, the fear of YHWH, that is wisdom' (28:28). This chapter stands as a kind of centerpiece between the debate cycles and YHWH's answer from the whirlwind."
+    },
+    {
+      "question": "What is retribution theology and why does Iyov challenge it?",
+      "answer": "Retribution theology is the belief that suffering proves sin and righteousness guarantees prosperity — a neat equation of behavior and outcome. Iyov's three friends hold this view rigidly. The book of Iyov is a sustained challenge: Iyov is blameless (confirmed by YHWH in 1:8), yet he suffers intensely. The book does not resolve this by giving a human explanation; instead YHWH speaks from the whirlwind (chs 38-41) and reveals the limits of human understanding, never providing the simple answer the friends demanded."
+    },
+    {
+      "question": "What covenant language does Iyov use that ties him to the Hebrew tradition?",
+      "answer": "Despite living outside Yisra'el proper, Iyov uses the covenant divine name YHWH and the concept of go'el (kinsman-redeemer) — both deeply Hebrew covenant terms. His language in ch.31 (the oath of innocence) mirrors covenant accountability language. The book portrays Iyov as someone who lives by YHWH's covenant standards even without the specific Sinaitic context — suggesting the covenant's reach extends to all who fear YHWH."
+    },
+    {
+      "question": "How does Iyov 1:21 demonstrate mature covenant trust?",
+      "answer": "'YHWH gave, and YHWH has taken away; blessed be the name of YHWH' (1:21) — spoken after Iyov loses his wealth and children. This is not passive resignation but active acknowledgment of YHWH's sovereign ownership of all things. The blessing of YHWH's name in the moment of devastating loss is a covenant statement: YHWH's worth is not conditional on his gifts. This is what ha-satan's challenge (1:9: 'Does Iyov fear YHWH for nothing?') set out to disprove."
+    },
+    {
+      "question": "What is the significance of the opening heavenly court scene for understanding suffering?",
+      "answer": "The heavenly court scene in Iyov 1-2 gives readers information that Iyov never receives: his suffering is not punishment for sin. It is a testing of genuine covenant loyalty — YHWH's confidence in Iyov expressed through permission for testing. This gap between what the reader knows and what Iyov knows is the source of the book's theological power: Iyov must maintain covenant faithfulness without the information that would make it easy."
+    },
+    {
+      "question": "What does Iyov 13:15 mean and how is it a covenant statement?",
+      "answer": "'Though he slay me, yet I will trust in him' — Iyov declares covenant faithfulness even at the point of death, even if YHWH himself is the one who kills him. This is not suicidal submission but the ultimate test of genuine covenant relationship: does Iyov's trust depend on outcomes, or is it unconditional? The statement answers ha-satan's challenge (1:9) definitively: Iyov fears YHWH for nothing material — the relationship itself is the foundation."
     }
   ]
 }

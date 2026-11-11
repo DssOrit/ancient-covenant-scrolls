@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_84",
-  "label": "Esther \u2014 Orit Ge\u2019ez Primary \u2014 Complete",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_84",
+  "label": "Esther — Orit Ge’ez Primary — Complete",
   "volume": 27,
-  "content_version": 1,
-  "summary_plain": "Esther tells of the covenant people\u2019s survival in exile under the Persian empire. Mordekhai refuses to bow to Haman. Haman plots to destroy all the Yehudim in every province of the kingdom. Esther, who is queen, risks her life to approach the king without being summoned. She reveals Haman\u2019s plot. The decree is reversed. The Yehudim are given the right to defend themselves. Haman is hanged on the gallows he built for Mordekhai. The days of Purim are established as a memorial \u2014 days of feasting and gladness, of sending portions to one another and gifts to the poor.",
-  "summary_scholarly": "The ACR reads from the Orit Ge\u2019ez as the primary witness for Esther, supplemented by DSS fragments (4QEsther). The Orit Ge\u2019ez text preserves a longer version that includes explicit prayers to YHWH by Mordekhai and Esther \u2014 prayers absent from the Masoretic Hebrew text. The Masoretic Esther is the only book in the Hebrew canon that never mentions the name of YHWH. The Orit Ge\u2019ez corrects this omission: YHWH is named directly in the prayers. The Greek Septuagint additions also include these prayers, confirming that the shorter Masoretic text is a truncation. The Qumran evidence is fragmentary but significant: Esther was the last canonical book to be attested at Qumran, and its absence from certain Qumran collections may reflect sectarian discomfort with Persian-era political theology rather than rejection of the text itself.",
+  "content_version": 2,
+  "summary_plain": "Esther tells of the covenant people’s survival in exile under the Persian empire. Mordekhai refuses to bow to Haman. Haman plots to destroy all the Yehudim in every province of the kingdom. Esther, who is queen, risks her life to approach the king without being summoned. She reveals Haman’s plot. The decree is reversed. The Yehudim are given the right to defend themselves. Haman is hanged on the gallows he built for Mordekhai. The days of Purim are established as a memorial — days of feasting and gladness, of sending portions to one another and gifts to the poor.",
+  "summary_scholarly": "The ACR reads from the Orit Ge’ez as the primary witness for Esther, supplemented by DSS fragments (4QEsther). The Orit Ge’ez text preserves a longer version that includes explicit prayers to YHWH by Mordekhai and Esther — prayers absent from the Masoretic Hebrew text. The Masoretic Esther is the only book in the Hebrew canon that never mentions the name of YHWH. The Orit Ge’ez corrects this omission: YHWH is named directly in the prayers. The Greek Septuagint additions also include these prayers, confirming that the shorter Masoretic text is a truncation. The Qumran evidence is fragmentary but significant: Esther was the last canonical book to be attested at Qumran, and its absence from certain Qumran collections may reflect sectarian discomfort with Persian-era political theology rather than rejection of the text itself.",
   "key_terms": [
-    { "term": "Purim", "phonetic": "POO-reem", "definition": "The festival established to commemorate the deliverance of the Yehudim from Haman\u2019s plot. The name comes from \u2018pur\u2019 (lot) \u2014 Haman cast lots to determine the day of destruction. The lot intended for death became the day of deliverance." },
-    { "term": "Mordekhai", "phonetic": "Mor-de-KHAI", "definition": "A Yehudi of the tribe of Binyamin living in Shushan (Susa), the Persian capital. He raised Esther and refused to bow to Haman. His refusal triggered the crisis and his faithfulness secured the deliverance. Anglicized as Mordecai." },
-    { "term": "Orit Ge\u2019ez", "phonetic": "Oh-REET Geh-EZ", "definition": "The Ethiopic scriptural tradition preserved by the Beta Yisra\u2019el and the Ethiopian church. For Esther, the Orit Ge\u2019ez preserves prayers to YHWH that are absent from the Masoretic Hebrew text, making it the more complete primary witness." }
+    {
+      "term": "Esther / Hadassah",
+      "phonetic": "ES-ter / Ha-DA-sah",
+      "definition": "The Hebrew woman Hadassah, known by her Persian name Esther; becomes queen to King Akhashverosh; risks her life to intercede for the Yehudim condemned by Haman's decree; the book's central figure of covenant courage."
+    },
+    {
+      "term": "Mordekhai",
+      "phonetic": "mor-de-KHAI",
+      "definition": "Esther's older cousin and guardian, a Yehudi in Shushan who refuses to bow to Haman; uncovers and reports a plot against the king; persuades Esther to intercede; is ultimately honored while Haman is executed."
+    },
+    {
+      "term": "Akhashverosh",
+      "phonetic": "a-khash-ve-ROSH",
+      "definition": "The Persian king in Esther's story; identified with Xerxes I (486-465 BCE); holds a 180-day feast, deposes Queen Vashti, crowns Esther; initially unaware of Haman's plot against the Yehudim."
+    },
+    {
+      "term": "Haman",
+      "phonetic": "HA-man",
+      "definition": "The Agagite official elevated by Akhashverosh; enraged by Mordekhai's refusal to bow; casts lots (purim) to choose the day for the destruction of all Yehudim in the Persian empire; hanged on the very gallows he built for Mordekhai."
+    },
+    {
+      "term": "Vashti",
+      "phonetic": "Vash-TI",
+      "definition": "Queen before Esther; deposed by Akhashverosh when she refuses to display herself before his guests; her removal opens the way for Esther to become queen. The text does not condemn Vashti explicitly."
+    },
+    {
+      "term": "Such a Time as This",
+      "phonetic": "le-et ka-ZOT",
+      "definition": "Esther 4:14 — Mordekhai's question to Esther: 'And who knows whether you have not come to the kingdom for such a time as this?' — the defining statement of purposeful covenant action at a critical moment."
+    },
+    {
+      "term": "Purim Festival",
+      "phonetic": "kha-GAG ha-pu-RIM",
+      "definition": "The festival established in Esther 9:26-28 to commemorate the deliverance of the Yehudim from Haman's decree; named after the lots (purim) that Haman cast to determine the date of destruction."
+    },
+    {
+      "term": "The Lots (Purim = lots)",
+      "phonetic": "pu-RIM",
+      "definition": "The Hebrew word pur means a lot or dice used for divination; Haman cast purim to determine the best day to destroy the Yehudim (3:7); the festival of Purim is named from this — YHWH's providence overturned the lot's intended outcome."
+    },
+    {
+      "term": "YHWH Absent in MT Esther",
+      "phonetic": "YHWH ne-e-DAR be-Es-TER",
+      "definition": "The name YHWH does not appear in the Masoretic Text of Esther — a unique feature among Hebrew books; however, the Greek versions (LXX, Alpha-Text) add prayers by Mordekhai and Esther that explicitly name YHWH, and the Greek additions restore the theological framework explicit in those versions."
+    },
+    {
+      "term": "Alpha-Text and B-Text",
+      "phonetic": "al-FA-tekst u-B-tekst",
+      "definition": "Two Greek versions of Esther (the Alpha-Text and the Septuagint B-Text) that differ significantly from the MT; both include prayers by Mordekhai and Esther naming YHWH; both were circulating in the Second Temple period and represent distinct transmission streams of the Esther story."
+    }
   ],
   "fill_blank": [
-    { "ref": "4:14", "prompt": "For if you remain silent at this time, relief and deliverance will arise for the Yehudim from another place, but you and your father\u2019s house will ______.", "answer": "perish", "source_quote": "For if you remain silent at this time, relief and deliverance will arise for the Yehudim from another place, but you and your father\u2019s house will perish." },
-    { "ref": "4:16", "prompt": "Go, gather all the Yehudim in Shushan, and fast for me. Do not eat or drink for ______ days, night or day.", "answer": "three", "source_quote": "Go, gather all the Yehudim to be found in Shushan, and hold a fast on my behalf. Do not eat or drink for three days, night or day." },
-    { "ref": "9:22", "prompt": "The days on which the Yehudim got relief from their enemies, and the month that was turned from sorrow to ______.", "answer": "gladness", "source_quote": "The days on which the Yehudim got relief from their enemies, and the month that had been turned for them from sorrow to gladness and from mourning into a holiday." }
+    {
+      "ref": "Esther 1:9",
+      "prompt": "___ the queen gave a feast for the women in the palace that belonged to King Akhashverosh.",
+      "answer": "Vashti",
+      "source_quote": "Vashti the queen gave a feast for the women in the palace — Esther 1:9."
+    },
+    {
+      "ref": "Esther 2:7",
+      "prompt": "Mordekhai had brought up Hadassah, that is ___, his uncle's daughter, for she had neither father nor mother.",
+      "answer": "Esther",
+      "source_quote": "Mordekhai had brought up Hadassah, that is Esther, his uncle's daughter — Esther 2:7."
+    },
+    {
+      "ref": "Esther 3:2",
+      "prompt": "All the king's servants at the king's gate bowed and paid homage to Haman, but Mordekhai did not ___ or pay homage.",
+      "answer": "bow",
+      "source_quote": "All the king's servants at the king's gate bowed and paid homage to Haman, but Mordekhai did not bow or pay homage — Esther 3:2."
+    },
+    {
+      "ref": "Esther 4:14",
+      "prompt": "'And who knows whether you have not come to the kingdom for ___ a time as this?'",
+      "answer": "such",
+      "source_quote": "And who knows whether you have not come to the kingdom for such a time as this? — Esther 4:14."
+    },
+    {
+      "ref": "Esther 4:16",
+      "prompt": "Esther said: 'Go, gather all the Yehudim to be found in Shushan, and hold a fast on my behalf... and I will go to the king, though it is against the law, and if I ___, I perish.'",
+      "answer": "perish",
+      "source_quote": "If I perish, I perish — Esther 4:16."
+    },
+    {
+      "ref": "Esther 7:3",
+      "prompt": "Esther answered: 'If I have found favor in your sight, O king, let my life be granted me for my wish, and my people for my ___.'",
+      "answer": "request",
+      "source_quote": "Let my life be granted me for my wish, and my people for my request — Esther 7:3."
+    },
+    {
+      "ref": "Esther 7:9",
+      "prompt": "Haman was hanged on the gallows that he had prepared for ___.",
+      "answer": "Mordekhai",
+      "source_quote": "Haman was hanged on the gallows that he had prepared for Mordekhai — Esther 7:10."
+    },
+    {
+      "ref": "Esther 9:26",
+      "prompt": "Therefore they called these days ___, after the word pur (lot), because of all that was written in this letter.",
+      "answer": "Purim",
+      "source_quote": "Therefore they called these days Purim, after the word pur — Esther 9:26."
+    },
+    {
+      "ref": "Esther 3:7",
+      "prompt": "In the first month... they cast ___ before Haman day after day and month after month, till it fell in the twelfth month.",
+      "answer": "Pur (the lot)",
+      "source_quote": "They cast Pur (that is, they cast lots) before Haman day after day — Esther 3:7."
+    },
+    {
+      "ref": "Esther 2:17",
+      "prompt": "The king loved Esther more than all the women, and she won ___ in his sight more than all the virgins, so that he set the royal crown on her head.",
+      "answer": "grace and favor",
+      "source_quote": "She won grace and favor in his sight more than all the virgins, so that he set the royal crown on her head — Esther 2:17."
+    }
   ],
   "multiple_choice": [
-    { "ref": "3:2-5", "question": "Why did Haman plot to destroy all the Yehudim?", "options": ["Because the Yehudim rebelled against the king", "Because Mordekhai refused to bow to him", "Because Esther insulted him at a banquet", "Because the Yehudim refused to pay taxes"], "correct": 1, "source_quote": "And all the king\u2019s servants who were at the king\u2019s gate bowed down and paid homage to Haman. But Mordekhai did not bow down or pay homage." },
-    { "ref": "4:14", "question": "What did Mordekhai say would happen if Esther remained silent?", "options": ["The Yehudim would be destroyed permanently", "Relief and deliverance would arise from another place, but Esther\u2019s house would perish", "The king would protect them regardless", "Haman would change his mind"], "correct": 1, "source_quote": "For if you remain silent at this time, relief and deliverance will arise for the Yehudim from another place, but you and your father\u2019s house will perish." },
-    { "ref": "Orit Ge\u2019ez addition", "question": "What does the Orit Ge\u2019ez text of Esther preserve that the Masoretic Hebrew text does not?", "options": ["Additional chapters about the Persian wars", "Explicit prayers to YHWH by Mordekhai and Esther", "A genealogy of Haman", "A description of the Second Temple"], "correct": 1, "source_quote": "The Orit Ge\u2019ez preserves prayers to YHWH that are absent from the Masoretic Hebrew text." }
+    {
+      "ref": "Esther 4:14",
+      "question": "What question does Mordekhai put to Esther in 4:14?",
+      "options": [
+        "Why do you not pray to YHWH for help?",
+        "Who knows whether you have not come to the kingdom for such a time as this?",
+        "Will you sacrifice your position to save your people?",
+        "Do you remember the covenant of your ancestors?"
+      ],
+      "correct": 1,
+      "source_quote": "Who knows whether you have not come to the kingdom for such a time as this? — Esther 4:14."
+    },
+    {
+      "ref": "Esther 4:16",
+      "question": "What does Esther say when she decides to go to the king unsummoned?",
+      "options": [
+        "YHWH will protect me",
+        "I will trust in YHWH my Creator",
+        "If I perish, I perish",
+        "My life is in your hands, O king"
+      ],
+      "correct": 2,
+      "source_quote": "If I perish, I perish — Esther 4:16."
+    },
+    {
+      "ref": "Esther Purim",
+      "question": "What does the word Purim mean?",
+      "options": [
+        "Days of remembrance",
+        "Lots (dice used for divination)",
+        "Days of feasting and gladness",
+        "The name of Esther's deliverer"
+      ],
+      "correct": 1,
+      "source_quote": "Purim — from the word pur (lot), because Haman cast lots to determine the date of destruction — Esther 9:26."
+    },
+    {
+      "ref": "Esther MT YHWH",
+      "question": "What is unique about the Masoretic Text of Esther compared to other Hebrew books?",
+      "options": [
+        "It was written in Aramaic",
+        "The name YHWH does not appear in the MT",
+        "It has no historical setting",
+        "It was added to the canon last"
+      ],
+      "correct": 1,
+      "source_quote": "The name YHWH does not appear in the Masoretic Text of Esther — a unique feature; the Greek versions add prayers naming YHWH explicitly."
+    },
+    {
+      "ref": "Esther 7:9-10",
+      "question": "What is Haman's fate at the end of the story?",
+      "options": [
+        "He is exiled from the kingdom",
+        "He is hanged on the gallows he built for Mordekhai",
+        "He is thrown into prison for life",
+        "He repents and is forgiven"
+      ],
+      "correct": 1,
+      "source_quote": "Haman was hanged on the gallows that he had prepared for Mordekhai — Esther 7:10."
+    },
+    {
+      "ref": "Esther 3:2",
+      "question": "Why does Haman want to destroy all the Yehudim?",
+      "options": [
+        "He wants to seize their property",
+        "He is enraged by Mordekhai's refusal to bow or pay him homage",
+        "He believes they are plotting against the king",
+        "He has a religious dispute with their customs"
+      ],
+      "correct": 1,
+      "source_quote": "Mordekhai did not bow or pay homage, and all the king's servants told Haman... then Haman... sought to destroy all the Yehudim — Esther 3:2-6."
+    },
+    {
+      "ref": "Esther 2:7",
+      "question": "What is Esther's Hebrew name?",
+      "options": [
+        "Miryam",
+        "Rivkah",
+        "Hadassah",
+        "Avigayil"
+      ],
+      "correct": 2,
+      "source_quote": "Mordekhai had brought up Hadassah, that is Esther — Esther 2:7."
+    },
+    {
+      "ref": "Esther Greek versions",
+      "question": "What do the Greek Alpha-Text and B-Text (LXX) of Esther add that the MT lacks?",
+      "options": [
+        "The story of Vashti's refusal in detail",
+        "Prayers by Mordekhai and Esther that explicitly name YHWH",
+        "A historical appendix about Xerxes",
+        "A list of all the Jewish communities in Persia"
+      ],
+      "correct": 1,
+      "source_quote": "The Greek versions of Esther (Alpha-Text and LXX B-Text) add prayers by Mordekhai and Esther naming YHWH, present in the Second Temple period."
+    },
+    {
+      "ref": "Esther 9:27",
+      "question": "What do the Yehudim establish regarding the days of Purim in Esther 9:27?",
+      "options": [
+        "A fast to remember the suffering",
+        "Annual days of feasting, gladness, and sending gifts",
+        "A pilgrimage to Yerushalayim",
+        "A new sacrifice at the Temple"
+      ],
+      "correct": 1,
+      "source_quote": "They would keep these two days according to what was written at the appointed time every year... as days of feasting and gladness, of sending gifts of food to one another and gifts to the poor — Esther 9:22."
+    },
+    {
+      "ref": "Esther 1",
+      "question": "Why is Vashti deposed in Esther 1?",
+      "options": [
+        "She was found with another man",
+        "She refused King Akhashverosh's command to display herself before his guests",
+        "She plotted against the king",
+        "She insulted Haman at the feast"
+      ],
+      "correct": 1,
+      "source_quote": "Vashti refused to come at the king's command — Esther 1:12."
+    }
   ],
   "faq": [
     {
-      "question": "Why does the ACR use the Orit Ge\u2019ez as the primary witness for Esther?",
-      "answer": "The Masoretic Hebrew text of Esther is the only book in the Hebrew canon that never mentions the name YHWH. Not once. The Orit Ge\u2019ez text preserves explicit prayers by Mordekhai and Esther that name YHWH directly \u2014 prayers that the Greek Septuagint additions also confirm. The Masoretic text\u2019s silence about YHWH is not original \u2014 it is a truncation. Someone removed the prayers. The Orit Ge\u2019ez, preserved by the Beta Yisra\u2019el in Ethiopia far from the Masoretic editorial tradition, retained what was cut. This is the Great Eraser operating within the canon itself: the name of YHWH was removed from the very text meant to celebrate his deliverance. The ACR restores the primary witness by reading from the text that preserves the name."
+      "question": "Why does the name YHWH not appear in the Masoretic Text of Esther?",
+      "answer": "The MT of Esther is unique in the Hebrew scriptures: YHWH's name does not appear. Various explanations exist — some suggest it was deliberately written without the Name to allow it to be read in secular settings, or that the Name was replaced in the MT transmission. The Greek versions (Alpha-Text and LXX B-Text) add extended prayers by Mordekhai and Esther that name YHWH explicitly, suggesting that YHWH's presence was always understood to be behind the story, whether named or not."
     },
     {
-      "question": "How does Purim relate to the Great Eraser framework?",
-      "answer": "Purim is the festival of failed erasure. Haman\u2019s decree was total: destroy, kill, and annihilate all the Yehudim \u2014 young and old, women and children \u2014 in a single day (3:13). This is the template for every subsequent attempt at covenant-people erasure: the Seleucid persecution, the Roman destruction, the medieval expulsions, the Inquisition, the transatlantic slave trade, the colonial renaming campaigns. Each follows Haman\u2019s pattern: identify the people, issue the decree, set the date. But Purim also records the template for survival: Mordekhai does not bow, Esther approaches the throne, the decree is reversed. The lot (pur) cast for destruction becomes the day of deliverance. The Great Eraser casts lots. YHWH overturns them. Purim is the annual reminder that the erasure will not succeed."
+      "question": "What is the significance of Haman being an Agagite?",
+      "answer": "Haman is identified as an Agagite (3:1), meaning a descendant of Agag, king of Amalek — the nation that attacked Yisra'el in the wilderness (Shemot 17) and whom Sha'ul was commanded to destroy entirely (1 Shemu'el 15) but did not. Mordekhai is from the tribe of Binyamin (Sha'ul's tribe). The conflict in Esther thus echoes the unfinished ancient conflict — Sha'ul's failure completed at last when Mordekhai (a Benjaminite) defeats Haman (an Agagite)."
     },
     {
-      "question": "Why was Esther the last canonical book attested at Qumran?",
-      "answer": "Esther fragments are the rarest biblical texts at Qumran. Some scholars note that the Qumran community may have had reservations about Esther because of its Persian court setting and (in the Masoretic version) its silence about YHWH. But the Orit Ge\u2019ez text resolves this: when the prayers to YHWH are included, Esther is fully covenant-aligned. The Qumran sectarians may have known a shorter version that troubled them \u2014 or the fragmentary evidence may simply reflect the accidents of preservation. Either way, the Orit Ge\u2019ez witness demonstrates that the original Esther tradition included direct appeals to YHWH, and the Masoretic truncation is the anomaly, not the Ge\u2019ez expansion."
+      "question": "What does 'If I perish, I perish' (Esther 4:16) reveal about Esther's character?",
+      "answer": "Esther's decision to approach the king unsummoned — an act punishable by death — is a turning point. After Mordekhai's challenge (4:14), she calls a fast among all the Yehudim, then acts: 'I will go to the king, though it is against the law, and if I perish, I perish.' This is not fatalism but covenant courage: she accepts the risk of her position for the sake of her people. The same YHWH who brought her to the throne for such a time as this will determine the outcome."
+    },
+    {
+      "question": "What is the significance of the lots (purim) that Haman cast?",
+      "answer": "Haman cast purim (lots) to determine the best day to destroy the Yehudim (3:7). The lot fell on the twelfth month — giving nearly a year before the decree would be executed. This delay, governed by chance, became the window in which Esther could act. The irony is that Haman trusted chance (the lot) to plan the destruction, but the festival of Purim celebrates that YHWH's providence overturned the lot's intended outcome. The name of the festival eternally commemorates the inversion."
+    },
+    {
+      "question": "What does the Greek versions' addition of prayers to Esther tell us?",
+      "answer": "The Alpha-Text and B-Text (LXX) of Esther include extensive prayers by Mordekhai and Esther that explicitly invoke YHWH, describe the history of the covenant, and frame the story as YHWH's deliverance. These additions were circulating in the Second Temple period and represent a fuller theological version of the story. They show that readers in that period understood the story as a YHWH-deliverance narrative even where the MT left it implicit."
+    },
+    {
+      "question": "What does Esther's story have to do with the covenant tradition?",
+      "answer": "Esther's story — a Yehudite woman in exile who risks death to save her people — is a covenant story of loyalty and providential deliverance. Even without YHWH's name being spoken (in the MT), the pattern is recognizable: the people are threatened with destruction; a faithful person acts at great personal risk; the enemies of the covenant are overturned; the people are preserved. This is the pattern of Mitzrayim, the wilderness, and the exile — YHWH working through human covenant loyalty."
+    },
+    {
+      "question": "What does the Purim festival celebrate and how is it observed?",
+      "answer": "Purim celebrates the deliverance of the Yehudim from Haman's decree. Esther 9:22 prescribes: days of feasting and gladness; sending portions of food to one another; and giving gifts to the poor. Esther 9:27-28 establishes these as perpetual days. The book of Esther is read publicly; the community actively responds to Haman's name. The festival is deliberately joyful — a celebration of reversal and survival."
+    },
+    {
+      "question": "What is the relationship between Vashti and Esther in the structure of the story?",
+      "answer": "Vashti's refusal to display herself (ch.1) and her subsequent deposition create the vacancy that Esther fills. The two women model different responses to power: Vashti refused a demeaning command at personal cost; Esther accepted her position in a foreign court and then risked it to serve her people. The book does not condemn Vashti — her refusal has its own dignity. The two women together represent the complexity of living faithfully under empire."
+    },
+    {
+      "question": "What does Mordekhai's refusal to bow to Haman represent?",
+      "answer": "Mordekhai's refusal to bow (3:2) is the trigger for the entire conflict. He does not explain his reason in the text, but the narrative framing (his identity as a Yehudi, 3:4) suggests it is a matter of covenant loyalty — refusing to give divine-like honor to a human official. This connects to the broader Hebrew prohibition against bowing to those who claim inappropriate status. His refusal costs nearly everything — but the story vindicates it completely."
+    },
+    {
+      "question": "What is the textual history of Esther and what does it tell us about the canon?",
+      "answer": "Esther exists in three distinct textual forms: the Hebrew MT, the Greek Alpha-Text (AT), and the Greek B-Text (LXX). These differ significantly in content, tone, and theology. The MT is the base of the later Rabbinic canon; the Greek versions with their theological additions were circulating in the Second Temple period. This demonstrates the fluid text tradition of the Second Temple period — before Rabbinic canonization fixed a single form — consistent with the DSS evidence across other books."
     }
   ]
 }

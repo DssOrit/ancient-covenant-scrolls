@@ -1,33 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_69",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_69",
   "label": "Tehillim (Psalms) — Part 5 — Psalms 90–106",
   "volume": 20,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Psalms 90 through 106 open with the only psalm attributed to Moshe: YHWH, you have been our dwelling place in all generations. Before the mountains were brought forth, from everlasting to everlasting, you are El. Psalm 91 promises shelter under the wings of the Most High. Psalm 100 calls all the earth to serve YHWH with gladness. Psalm 103 declares YHWH's compassion: as far as the east is from the west, so far does he remove our transgressions. Psalm 104 is the great creation hymn — YHWH stretches out the heavens like a tent, makes the clouds his chariot, rides on the wings of the wind. Psalm 106 recounts the covenant history from Mitzrayim through the wilderness to the land.",
   "summary_scholarly": "The ACR reads Psalms 90-106 from DSS witnesses and the Orit Ge'ez. Psalm 90 is attributed to Moshe — the only psalm with this attribution — connecting the Tehillim to the Torah itself. Psalm 104 has long been compared to the Egyptian Great Hymn to the Aten (c. 1350 BCE), attributed to Akhenaten. Both texts praise the creator for the orderly provision of the natural world in strikingly parallel language. This is not borrowing but shared inheritance — both emerge from the same Afro-Asiatic intellectual tradition. The ACR places these texts in conversation. Psalm 104 is Hebrew praise; the Hymn to the Aten is Egyptian praise. Both come from the African continent's monotheistic impulse. The DSS fragments preserve variant readings in Psalm 104 and throughout this section that demonstrate the Masoretic is not the original form.",
   "key_terms": [
-    { "term": "Tefillah le-Moshe (Prayer of Moshe)", "phonetic": "Teh-fee-LAH leh-Moh-SHEH", "definition": "Psalm 90's superscription — 'A prayer of Moshe, the man of The Creator.' The only psalm attributed to Moshe. It establishes YHWH as the dwelling place of the covenant people across all generations." },
-    { "term": "El Elyon (Most High)", "phonetic": "El El-YOHN", "definition": "Title used in Psalm 91:1 — 'He who dwells in the shelter of the Most High.' El Elyon is the supreme designation, placing YHWH above all other powers. The title appears in the DSS and in the Bereshit narrative of Malki-Tzedeq." },
-    { "term": "Hymn to the Aten", "phonetic": "", "definition": "The Egyptian Great Hymn to the Aten (c. 1350 BCE), attributed to Akhenaten, shares striking parallels with Psalm 104 — both praise the creator for light, water, provision of food, and the orderly sustaining of life. Both emerge from the African monotheistic intellectual tradition." }
+    {
+      "term": "Psalm 110 Sit at My Right Hand",
+      "phonetic": "Tehillim 110",
+      "definition": "'YHWH says to my lord: Sit at my right hand, until I make your enemies your footstool.' Ancient source text; NT writers borrowed more from Psalm 110 than any other psalm in Tehillim — it is the most cited ancient text in the NT. The direction is ancient text → NT, not prophecy fulfilled."
+    },
+    {
+      "term": "Malkhi-Tzedek Priesthood (110:4)",
+      "phonetic": "Tehillim 110:4",
+      "definition": "'You are a priest forever after the order of Malkhi-Tzedek.' YHWH's oath establishing the anointed king as a priest in the line of the ancient Malkhi-Tzedek figure from Bereshit 14. Ancient source; NT writers borrowed this for the high-priesthood claims in the letter to the Hebrews."
+    },
+    {
+      "term": "Psalm 118 Stone the Builders Rejected",
+      "phonetic": "Tehillim 118:22",
+      "definition": "'The stone that the builders rejected has become the cornerstone.' Ancient wisdom about unexpected reversal — what human builders discarded, YHWH made the foundation. NT writers borrowed this extensively."
+    },
+    {
+      "term": "Hoshiana (118:25)",
+      "phonetic": "hoh-SHEE-ah-nah",
+      "definition": "'Hoshiana! Save us now, O YHWH! O YHWH, please grant us success!' A cry of appeal and acclamation at the festival procession. Ancient source; NT writers borrowed 'Hosanna' directly from this Psalm 118 cry."
+    },
+    {
+      "term": "Psalm 119 Aleph-Bet Acrostic",
+      "phonetic": "Tehillim 119",
+      "definition": "The longest psalm and the longest chapter in the Hebrew scriptures: 176 verses in 22 stanzas, each stanza corresponding to a letter of the Hebrew aleph-bet. All eight verses in each stanza contain one of eight synonyms for YHWH's Torah/instruction."
+    },
+    {
+      "term": "Your Word a Lamp (119:105)",
+      "phonetic": "Tehillim 119:105",
+      "definition": "'Your word is a lamp to my feet and a light to my path.' YHWH's Torah as the guide through darkness — not distant or theoretical but immediately practical for each step."
+    },
+    {
+      "term": "Songs of Ascent (Ps.120-134)",
+      "phonetic": "shir ha-ma-ah-LOT",
+      "definition": "Fifteen psalms (Ps.120-134) carrying the superscription 'A Song of Ascents' — pilgrim songs sung while ascending to Yerushalayim for the three festivals. Their brevity and memorable nature suited the journey."
+    },
+    {
+      "term": "Acrostic Psalm pattern",
+      "phonetic": "ah-KROS-tik",
+      "definition": "Several psalms use the Hebrew aleph-bet as an organizing structure: each verse or stanza begins with the next letter. Besides Psalm 119 (the longest), Psalms 9-10, 25, 34, 37, 111, 112, and 145 also use acrostic forms."
+    },
+    {
+      "term": "This Is the Day YHWH Made (118:24)",
+      "phonetic": "Tehillim 118:24",
+      "definition": "'This is the day that YHWH has made; let us rejoice and be glad in it.' A liturgical acclamation at YHWH's saving act — the specific 'day' in context is the day of rescue from affliction referenced throughout Psalm 118."
+    },
+    {
+      "term": "Great Hallel",
+      "phonetic": "hal-LEL",
+      "definition": "Psalm 136, which repeats 'for his steadfast love endures forever' (ki le'olam khasdo) after every one of its 26 verses. Called the Great Hallel to distinguish it from the Egyptian Hallel (Ps.113-118). Used at Pesakh and Shabbat."
+    }
   ],
   "fill_blank": [
-    { "ref": "90:1-2", "prompt": "YHWH, you have been our dwelling place in all ______. Before the mountains were brought forth, from everlasting to everlasting, you are El.", "answer": "generations", "source_quote": "YHWH, you have been our dwelling place in all generations. Before the mountains were brought forth, or ever you had formed the earth and the world, from everlasting to everlasting, you are El." },
-    { "ref": "104:2", "prompt": "He stretches out the heavens like a ______, he makes the clouds his chariot.", "answer": "tent", "source_quote": "Covering yourself with light as with a garment, stretching out the heavens like a tent." },
-    { "ref": "103:12", "prompt": "As far as the east is from the west, so far does he remove our ______ from us.", "answer": "transgressions", "source_quote": "As far as the east is from the west, so far does he remove our transgressions from us." }
+    {
+      "ref": "Psalm 107:1",
+      "prompt": "Oh give ___ to YHWH, for he is good, for his steadfast love endures forever!",
+      "answer": "thanks",
+      "source_quote": "Oh give thanks to YHWH, for he is good, for his steadfast love endures forever!"
+    },
+    {
+      "ref": "Psalm 110:1",
+      "prompt": "YHWH says to my lord: 'Sit at my right hand, until I make your enemies your ___.'",
+      "answer": "footstool",
+      "source_quote": "YHWH says to my lord: Sit at my right hand, until I make your enemies your footstool."
+    },
+    {
+      "ref": "Psalm 110:4",
+      "prompt": "YHWH has sworn and will not change his mind, 'You are a priest forever after the order of ___.'",
+      "answer": "Malkhi-Tzedek",
+      "source_quote": "YHWH has sworn and will not change his mind, You are a priest forever after the order of Malkhi-Tzedek."
+    },
+    {
+      "ref": "Psalm 118:22",
+      "prompt": "The ___ that the builders rejected has become the cornerstone.",
+      "answer": "stone",
+      "source_quote": "The stone that the builders rejected has become the cornerstone."
+    },
+    {
+      "ref": "Psalm 118:24",
+      "prompt": "This is the ___ that YHWH has made; let us rejoice and be glad in it.",
+      "answer": "day",
+      "source_quote": "This is the day that YHWH has made; let us rejoice and be glad in it."
+    },
+    {
+      "ref": "Psalm 118:25",
+      "prompt": "Save us, we pray, O YHWH! O YHWH, we pray, give us ___!",
+      "answer": "success",
+      "source_quote": "Save us, we pray, O YHWH! O YHWH, we pray, give us success!"
+    },
+    {
+      "ref": "Psalm 119:9",
+      "prompt": "How can a young man keep his way ___? By guarding it according to your word.",
+      "answer": "pure",
+      "source_quote": "How can a young man keep his way pure? By guarding it according to your word."
+    },
+    {
+      "ref": "Psalm 119:11",
+      "prompt": "I have ___ your word in my heart, that I might not sin against you.",
+      "answer": "stored up",
+      "source_quote": "I have stored up your word in my heart, that I might not sin against you."
+    },
+    {
+      "ref": "Psalm 119:97",
+      "prompt": "Oh how I love your ___! It is my meditation all the day.",
+      "answer": "Torah",
+      "source_quote": "Oh how I love your Torah! It is my meditation all the day."
+    },
+    {
+      "ref": "Psalm 119:105",
+      "prompt": "Your word is a ___ to my feet and a light to my path.",
+      "answer": "lamp",
+      "source_quote": "Your word is a lamp to my feet and a light to my path."
+    }
   ],
   "multiple_choice": [
-    { "ref": "90:1-2", "question": "What is unique about Psalm 90?", "options": ["It is the shortest psalm", "It is the only psalm attributed to Moshe — a prayer of the man of The Creator", "It was written by Shelomoh", "It is a wedding psalm"], "correct": 1, "source_quote": "A prayer of Moshe, the man of The Creator. YHWH, you have been our dwelling place in all generations." },
-    { "ref": "104:1-5", "question": "What does Psalm 104 celebrate?", "options": ["The conquest of Canaan", "YHWH's creation — stretching out the heavens, making clouds his chariot, establishing the earth", "The building of the temple", "Dawid's victories in battle"], "correct": 1, "source_quote": "Bless YHWH, O my soul! O YHWH my Creator, you are very great! You are clothed with splendor and majesty, covering yourself with light as with a garment, stretching out the heavens like a tent." },
-    { "ref": "91:1-2", "question": "What does Psalm 91 promise?", "options": ["Riches and prosperity", "Shelter under the wings of the Most High — YHWH is my refuge and my fortress", "A kingdom in this world", "Victory in war"], "correct": 1, "source_quote": "He who dwells in the shelter of the Most High will abide in the shadow of the Almighty. I will say to YHWH: My refuge and my fortress, my Creator, in whom I trust." }
+    {
+      "ref": "Psalm 107:1-3",
+      "question": "Psalm 107 opens by calling which group to give thanks to YHWH?",
+      "options": [
+        "All who fear YHWH and keep the Torah",
+        "The redeemed of YHWH whom he gathered from the lands",
+        "Warriors who fought and defeated the enemies",
+        "Priests and Levites serving in the Temple"
+      ],
+      "correct": 1,
+      "source_quote": "Let the redeemed of YHWH say so, whom he has redeemed from trouble and gathered in from the lands."
+    },
+    {
+      "ref": "Psalm 110:1",
+      "question": "What does YHWH declare to 'my lord' in Psalm 110:1?",
+      "options": [
+        "I have made you king over all the earth",
+        "Sit at my right hand until I make your enemies your footstool",
+        "You are my son; today I have begotten you",
+        "I will establish your throne forever"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH says to my lord: Sit at my right hand, until I make your enemies your footstool."
+    },
+    {
+      "ref": "Psalm 110:4",
+      "question": "What priesthood order does YHWH assign the anointed king in Psalm 110:4?",
+      "options": [
+        "The Levitical priesthood of Aaron",
+        "The order of Zadok the priest",
+        "The order of Malkhi-Tzedek",
+        "The priesthood of Natan the prophet"
+      ],
+      "correct": 2,
+      "source_quote": "You are a priest forever after the order of Malkhi-Tzedek."
+    },
+    {
+      "ref": "Psalm 118:22",
+      "question": "What has become the cornerstone according to Psalm 118:22?",
+      "options": [
+        "The Torah of Moshe",
+        "The city of Yerushalayim",
+        "The stone the builders rejected",
+        "The covenant written at Sinai"
+      ],
+      "correct": 2,
+      "source_quote": "The stone that the builders rejected has become the cornerstone."
+    },
+    {
+      "ref": "Psalm 118:25",
+      "question": "What is 'Hoshiana' in Psalm 118:25?",
+      "options": [
+        "A declaration of praise meaning 'YHWH is great'",
+        "A cry of appeal meaning 'save us now'",
+        "A priestly blessing spoken at the altar",
+        "A term for the gathering of nations at Yerushalayim"
+      ],
+      "correct": 1,
+      "source_quote": "Save us, we pray, O YHWH! O YHWH, we pray, give us success!"
+    },
+    {
+      "ref": "Psalm 119:1",
+      "question": "Who does Psalm 119:1 declare blessed?",
+      "options": [
+        "Those who build the Temple of YHWH",
+        "Those who offer many sacrifices",
+        "Those who bring tithes faithfully",
+        "Those whose way is blameless, who walk in YHWH's Torah"
+      ],
+      "correct": 3,
+      "source_quote": "Blessed are those whose way is blameless, who walk in the Torah of YHWH!"
+    },
+    {
+      "ref": "Psalm 119:11",
+      "question": "Why does the psalmist store YHWH's word in the heart according to Psalm 119:11?",
+      "options": [
+        "To memorize it for recitation in the Temple",
+        "To have wisdom greater than the elders",
+        "That the psalmist might not sin against YHWH",
+        "To teach it to future generations"
+      ],
+      "correct": 2,
+      "source_quote": "I have stored up your word in my heart, that I might not sin against you."
+    },
+    {
+      "ref": "Psalm 119:97",
+      "question": "What does the psalmist declare loving in Psalm 119:97?",
+      "options": [
+        "The house of YHWH where the ark is kept",
+        "The Torah of YHWH, meditated on all day",
+        "The testimonies given to the servants of YHWH",
+        "The assembly of those who fear YHWH"
+      ],
+      "correct": 1,
+      "source_quote": "Oh how I love your Torah! It is my meditation all the day."
+    },
+    {
+      "ref": "Psalm 119:105",
+      "question": "To what does the psalmist compare YHWH's word in Psalm 119:105?",
+      "options": [
+        "A strong tower of refuge",
+        "A well of water in a dry land",
+        "A lamp to the feet and a light to the path",
+        "A fire that refines and purifies"
+      ],
+      "correct": 2,
+      "source_quote": "Your word is a lamp to my feet and a light to my path."
+    },
+    {
+      "ref": "Psalm 136:1",
+      "question": "What refrain is repeated after every verse in Psalm 136 (the Great Hallel)?",
+      "options": [
+        "His name endures forever",
+        "For his steadfast love endures forever",
+        "YHWH is one and his name is one",
+        "Hallelu-Yah, praise his holy name"
+      ],
+      "correct": 1,
+      "source_quote": "Oh give thanks to YHWH, for he is good, for his steadfast love endures forever."
+    }
   ],
   "faq": [
     {
-      "question": "What is the connection between Psalm 104 and the Egyptian Hymn to the Aten?",
-      "answer": "Psalm 104 and the Egyptian Great Hymn to the Aten (c. 1350 BCE, attributed to Akhenaten) share striking structural and thematic parallels: light as the creator's garment, the provision of water and food for all creatures, the distinction of day and night, the dependence of all life on the creator's sustaining will. Western scholarship typically frames this as Hebrew 'borrowing' from Egypt — placing Egypt as the source and Israel as the derivative. The ACR framework rejects this hierarchy. Both texts emerge from the same Afro-Asiatic intellectual tradition — the African continent's monotheistic impulse. Moshe was 'learned in all the wisdom of the Egyptians' (Acts 7:22). Hebrew and Egyptian are both Afro-Asiatic languages. The two traditions share a common ancestor. Psalm 104 is not borrowed — it is cognate. Two branches of the same African tree."
+      "question": "Why is Psalm 110 called the most-cited psalm in the NT?",
+      "answer": "NT writers borrowed from Psalm 110 more than from any other single psalm: 'Sit at my right hand' appears in multiple NT narratives and letters, 'the order of Malkhi-Tzedek' is the foundation of the entire priesthood argument in the Letter to the Hebrews, and 'until I make your enemies your footstool' recurs throughout NT polemic. All of this material is ancient. The NT is the borrower; Psalm 110 is the ancient source text."
     },
     {
-      "question": "Why does a psalm attributed to Moshe appear in the Psalter?",
-      "answer": "Psalm 90 is attributed to Moshe — the man of The Creator. This is the only psalm with this attribution. Its placement opens Book IV of the Psalter (Psalms 90-106), which follows the lament at the end of Book III (Psalm 89's cry that the Dawid covenant appears broken). The response to the apparent failure of the Dawid covenant is to go back further — to Moshe, to YHWH as the dwelling place of the covenant people in all generations, before the mountains, before the earth itself. The Great Eraser mechanism frequently disconnects Moshe from his African context — Moshe was raised in the Egyptian royal court, married a Cushite woman (Bemidbar 12:1), and operated in Northeast Africa for the first 80 years of his life. Psalm 90 connects the Torah and the Tehillim through the same African-rooted figure."
+      "question": "What is the Malkhi-Tzedek priesthood order in Psalm 110:4?",
+      "answer": "Malkhi-Tzedek ('king of righteousness') appears in Bereshit 14:18-20 as the king-priest of Shalem who blessed Avraham and received a tenth from him. Psalm 110:4 uses this ancient figure to describe a combined royal-priestly role for YHWH's anointed — priest and king, not through Levitical descent but through YHWH's own oath. This ancient Hebrew royal-priestly concept was borrowed wholesale by NT writers for their invented figure's role in Hebrews."
+    },
+    {
+      "question": "What does Psalm 118's 'stone the builders rejected' mean in its original context?",
+      "answer": "Psalm 118 is a liturgical thanksgiving for YHWH's rescue from great affliction and near-death. The 'stone the builders rejected' is the psalmist/community that was dismissed and overlooked by the powerful, only to be vindicated by YHWH as foundational. The image is about unexpected reversal — the discarded becomes central. NT writers borrowed this for their crucifixion/resurrection narrative. The original is about covenant vindication, not a person."
+    },
+    {
+      "question": "What is Psalm 119 and why was it composed as an acrostic?",
+      "answer": "Psalm 119 is 176 verses organized as 22 stanzas of 8 verses each, with every stanza assigned to a successive letter of the aleph-bet. Every verse in a stanza uses words beginning with that letter. Additionally, every verse contains at least one of eight synonyms for YHWH's instruction (Torah, edot, piqqudim, khuqqim, mishpatim, mitzvot, devarim, 'imrot). The acrostic form communicates that praise of YHWH's Torah covers everything — from aleph to tav, the whole scope of existence."
+    },
+    {
+      "question": "What does 'your word is a lamp to my feet' mean in Psalm 119:105?",
+      "answer": "The image is of walking in darkness with only a lamp — YHWH's word illuminates not the whole landscape at once but the immediate next step. It is practical covenant guidance for each moment, not abstract theological knowledge. The lamp metaphor emphasizes the lived, daily dependence on YHWH's instruction for navigating specific decisions, not just general principles."
+    },
+    {
+      "question": "What are the Songs of Ascent and how were they used?",
+      "answer": "The 15 Songs of Ascent (Ps.120-134) were pilgrim psalms sung while ascending to Yerushalayim for the three annual festivals — Pesakh, Shavuot, and Sukkot. The 'ascent' refers both to the physical ascent up to Yerushalayim (which sits at elevation) and to the liturgical procession. Their brevity, memorable refrains, and community focus made them suitable for group singing on the journey."
+    },
+    {
+      "question": "What is the Great Hallel (Psalm 136) and how is it structured?",
+      "answer": "Psalm 136 is called the Great Hallel — 26 verses each ending with the identical refrain: 'for his steadfast love endures forever' (ki le'olam khasdo). The first verses praise YHWH as Creator; the middle verses recount the Exodus and wilderness; the later verses thank YHWH for deliverance and provision. The unvarying refrain trains the community to anchor every act of YHWH in the same bedrock truth: loyal covenant love that does not end."
+    },
+    {
+      "question": "How does Psalm 107 open Book V of Tehillim?",
+      "answer": "Psalm 107 opens Book V with four scenes of rescue — lost travelers found by YHWH, prisoners freed, the sick healed, sailors saved from storm. Each ends with the same refrain: 'Let them thank YHWH for his steadfast love, for his wondrous works to the children of man.' Book V begins with a universal call to give thanks to the rescuing YHWH, connecting to the exile and return experience of the whole community."
+    },
+    {
+      "question": "Why does Psalm 110 describe the anointed as both king and priest?",
+      "answer": "In standard Hebrew practice, the roles of king and priest were separate — the king from Yehudah/David, the priests from Levi/Aaron. Psalm 110 describes an anointed figure who holds both roles, legitimated not by lineage but by YHWH's direct oath ('YHWH has sworn and will not change his mind'). This models the ancient pre-Levitical royal-priestly figure Malkhi-Tzedek as the template for a new kind of combined authority directly from YHWH."
+    },
+    {
+      "question": "What makes Psalm 119 unique as a Torah psalm?",
+      "answer": "Psalm 119 is entirely devoted to praising and meditating on YHWH's Torah — no plea for military victory, no historical recital, no lament about enemies primarily. Its 176 verses explore every angle of the covenant person's relationship to YHWH's instruction: loving it, being afflicted and comforted by it, being guided by it, longing for it when persecuted, treasuring it above wealth. It is the Psalter's fullest statement that YHWH's Torah is not a burden but a delight."
     }
   ]
 }

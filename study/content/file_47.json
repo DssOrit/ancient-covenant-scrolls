@@ -1,42 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_47",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_47",
   "label": "Yirmeyahu (Jeremiah) — Part 1 — Chapters 1–7",
   "volume": 17,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "YHWH calls Yirmeyahu: Before I formed you in the womb I knew you. Before you were born I consecrated you. I appointed you a prophet to the nations. Yirmeyahu is shown two visions — an almond branch and a boiling pot tilting from the north. YHWH's case against Yisra'EL: they have forsaken me, the fountain of living waters, and hewn out broken cisterns that can hold no water. Chapter 7 is the temple sermon: do not trust in the words 'the temple of YHWH' — amend your ways.",
   "summary_scholarly": "The ACR reads from the DSS Jeremiah manuscripts (4QJer-a through 4QJer-e). The Qumran Jeremiah (4QJer-b) is substantially shorter than the Masoretic Jeremiah — confirming that the Masoretic contains significant later additions. The shorter DSS recession is the primary authority. The Orit Ge'ez preserves the full text as a second witness. Yirmeyahu 10:2-4 describes and condemns the practice of cutting a tree, bringing it indoors, and decorating it with silver and gold — structurally identical to the modern Christmas tree tradition.",
   "key_terms": [
-    { "term": "Yirmeyahu", "phonetic": "Yir-meh-YAH-hoo", "definition": "Called by YHWH before birth. A prophet to the nations. He preached during the final decades before the Babylonian destruction of Yerushalayim (586 BCE). Anglicized as Jeremiah." },
-    { "term": "Almond Branch (Shaqed)", "phonetic": "Shah-KED", "definition": "YHWH's first vision to Yirmeyahu (1:11-12). The Hebrew word shaqed (almond) sounds like shoqed (watching). YHWH says: I am watching (shoqed) over my word to perform it." },
-    { "term": "Living Waters", "phonetic": "", "definition": "YHWH describes himself as 'the fountain of living waters' (2:13). The people have forsaken this fountain and hewn broken cisterns. Living water versus dead storage." },
-    { "term": "Temple Sermon", "phonetic": "", "definition": "Chapter 7: Yirmeyahu stands at the gate of the temple and says — do not trust in deceptive words: 'the temple of YHWH, the temple of YHWH.' The building itself does not save. Only amended conduct does." }
+    {
+      "term": "Yirmeyahu's Call",
+      "phonetic": "ch.1",
+      "definition": "YHWH called Yirmeyahu before birth: 'Before I formed you in the womb I knew you, before you were born I consecrated you; I appointed you a prophet to the nations.' Yirmeyahu protests his youth; YHWH sends him."
+    },
+    {
+      "term": "'Before I Formed You'",
+      "phonetic": "1:5",
+      "definition": "Yirmeyahu 1:5 — the divine appointment precedes birth; YHWH's purposes for Yirmeyahu were set before he existed, establishing the prophetic calling as rooted in YHWH's foreknowledge."
+    },
+    {
+      "term": "The Almond Branch",
+      "phonetic": "ch.1:11-12",
+      "definition": "YHWH shows Yirmeyahu a branch of an almond tree (shaqed) and says: 'I am watching (shoqed) over my word to perform it.' A wordplay on the almond/watching — YHWH is alert to fulfill his word."
+    },
+    {
+      "term": "The Boiling Pot",
+      "phonetic": "ch.1:13-15",
+      "definition": "A boiling pot tilting from the north: the sign of disaster coming from the north against Yehudah. The northern kingdoms and Babylon will pour judgment on Yerushalayim."
+    },
+    {
+      "term": "Temple Sermon",
+      "phonetic": "ch.7",
+      "definition": "Yirmeyahu stands at the Temple gate and condemns those who say 'The Temple of YHWH, the Temple of YHWH, the Temple of YHWH' as if the building guarantees protection; YHWH will abandon it as he abandoned Shiloh."
+    },
+    {
+      "term": "'Temple of YHWH' False Trust",
+      "phonetic": "7:4",
+      "definition": "Yirmeyahu 7:4 — 'Do not trust in these deceptive words: This is the Temple of YHWH, the Temple of YHWH, the Temple of YHWH.' The building offers no protection when the people practice injustice and idolatry."
+    },
+    {
+      "term": "Two Evils",
+      "phonetic": "ch.2:13",
+      "definition": "Yirmeyahu 2:13 — 'My people have committed two evils: they have forsaken me, the fountain of living waters, and hewed out cisterns for themselves, broken cisterns that can hold no water.'"
+    },
+    {
+      "term": "Broken Cisterns",
+      "phonetic": "2:13",
+      "definition": "The image in Yirmeyahu 2:13 of broken cisterns unable to hold water: human substitutes for YHWH (foreign gods, political alliances) cannot provide life the way YHWH — the fountain of living waters — does."
+    },
+    {
+      "term": "Backsliding Yisra'el",
+      "phonetic": "chs 2-4",
+      "definition": "Yirmeyahu's early chapters repeatedly address Yisra'el's unfaithfulness: she followed Baal, burned incense to foreign gods, and refused to return; yet YHWH calls: 'Return, O backsliding Yisra'el.'"
+    },
+    {
+      "term": "The North's Threat",
+      "phonetic": "chs 1-6",
+      "definition": "YHWH repeatedly warns Yirmeyahu that disaster will come 'from the north' — the direction from which Babylonian armies will approach Yerushalayim. This is the dominant threat in Yirmeyahu's early ministry."
+    }
   ],
   "fill_blank": [
-    { "ref": "1:5", "prompt": "Before I formed you in the womb I ______ you, and before you were born I consecrated you.", "answer": "knew", "source_quote": "Before I formed you in the womb I knew you, and before you were born I consecrated you. I appointed you a prophet to the nations." },
-    { "ref": "2:13", "prompt": "They have forsaken me, the fountain of ______ waters, and hewn out cisterns, broken cisterns that can hold no water.", "answer": "living", "source_quote": "For my people have committed two evils: they have forsaken me, the fountain of living waters, and hewn out cisterns for themselves, broken cisterns that can hold no water." },
-    { "ref": "7:4", "prompt": "Do not trust in these deceptive words: The ______ of YHWH, the ______ of YHWH.", "answer": "temple", "source_quote": "Do not trust in these deceptive words: The temple of YHWH, the temple of YHWH, the temple of YHWH." }
+    {
+      "ref": "Yirmeyahu 1:5",
+      "prompt": "'Before I _____ you in the womb I knew you, and before you were born I consecrated you; I appointed you a prophet to the nations.'",
+      "answer": "formed",
+      "source_quote": "Before I formed you in the womb I knew you, and before you were born I consecrated you; I appointed you a prophet to the nations."
+    },
+    {
+      "ref": "Yirmeyahu 1:11-12",
+      "prompt": "YHWH asked: 'What do you see, Yirmeyahu?' He replied: 'I see an almond branch.' YHWH said: 'You have seen well, for I am _____ over my word to perform it.'",
+      "answer": "watching",
+      "source_quote": "And YHWH said to me, You have seen well, for I am watching over my word to perform it."
+    },
+    {
+      "ref": "Yirmeyahu 2:13",
+      "prompt": "'My people have committed two evils: they have forsaken me, the fountain of living _____, and hewed out cisterns for themselves.'",
+      "answer": "waters",
+      "source_quote": "For my people have committed two evils: they have forsaken me, the fountain of living waters, and hewed out cisterns for themselves, broken cisterns that can hold no water."
+    },
+    {
+      "ref": "Yirmeyahu 7:4",
+      "prompt": "'Do not trust in these deceptive words: This is the _____ of YHWH, the Temple of YHWH, the Temple of YHWH.'",
+      "answer": "Temple",
+      "source_quote": "Do not trust in these deceptive words: This is the Temple of YHWH, the Temple of YHWH, the Temple of YHWH."
+    },
+    {
+      "ref": "Yirmeyahu 7:11",
+      "prompt": "'Has this house, which is called by my name, become a _____ of robbers in your eyes? Behold, I myself have seen it, declares YHWH.'",
+      "answer": "den",
+      "source_quote": "Has this house, which is called by my name, become a den of robbers in your eyes? Behold, I myself have seen it, declares YHWH."
+    },
+    {
+      "ref": "Yirmeyahu 7:12",
+      "prompt": "YHWH commands: 'Go now to my place that was in _____, where I made my name dwell at first, and see what I did to it because of the evil of my people.'",
+      "answer": "Shiloh",
+      "source_quote": "Go now to my place that was in Shiloh, where I made my name dwell at first, and see what I did to it because of the evil of my people Yisra'el."
+    },
+    {
+      "ref": "Yirmeyahu 3:12",
+      "prompt": "YHWH calls: 'Return, faithless Yisra'el, declares YHWH. I will not look on you in _____, for I am merciful, declares YHWH; I will not be angry forever.'",
+      "answer": "anger",
+      "source_quote": "Return, faithless Yisra'el, declares YHWH. I will not look on you in anger, for I am merciful, declares YHWH; I will not be angry forever."
+    },
+    {
+      "ref": "Yirmeyahu 1:14",
+      "prompt": "'Out of the _____ disaster shall be let loose upon all the inhabitants of the land.' YHWH gives the sign of the boiling pot.",
+      "answer": "north",
+      "source_quote": "Then YHWH said to me, Out of the north disaster shall be let loose upon all the inhabitants of the land."
+    },
+    {
+      "ref": "Yirmeyahu 6:16",
+      "prompt": "YHWH says: 'Ask for the ancient _____, and walk in it, and find rest for your souls. But they said, We will not walk in it.'",
+      "answer": "paths",
+      "source_quote": "Thus says YHWH: Stand by the roads, and look, and ask for the ancient paths, where the good way is; and walk in it, and find rest for your souls."
+    },
+    {
+      "ref": "Yirmeyahu 2:2",
+      "prompt": "YHWH remembers Yisra'el's devotion in youth: 'I remember the _____ of your youth, your love as a bride, how you followed me in the wilderness.'",
+      "answer": "devotion",
+      "source_quote": "I remember the devotion of your youth, your love as a bride, how you followed me in the wilderness, in a land not sown."
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:5", "question": "When did YHWH say he knew Yirmeyahu?", "options": ["When he began prophesying", "Before he formed him in the womb", "After the exile", "At the temple dedication"], "correct": 1, "source_quote": "Before I formed you in the womb I knew you, and before you were born I consecrated you." },
-    { "ref": "2:13", "question": "What does YHWH call himself in 2:13?", "options": ["The Rock", "The fountain of living waters", "The shepherd", "The fire"], "correct": 1, "source_quote": "They have forsaken me, the fountain of living waters." },
-    { "ref": "4QJer-b", "question": "How does the Qumran Jeremiah differ from the Masoretic?", "options": ["It is identical", "It is substantially shorter — the Masoretic has later additions", "It is substantially longer", "It is in Greek"], "correct": 1, "source_quote": "The Qumran Jeremiah (4QJer-b) is substantially shorter than the Masoretic Jeremiah — confirming significant later additions." }
+    {
+      "ref": "Yirmeyahu 1:6",
+      "question": "What was Yirmeyahu's protest when YHWH called him as a prophet?",
+      "options": [
+        "He said he did not know how to speak, for he was only a youth",
+        "He said he was unworthy and of unclean lips",
+        "He said he was afraid of the king",
+        "He said he wanted to return to his family first"
+      ],
+      "correct": 0,
+      "source_quote": "Then I said, Ah, Creator YHWH! Behold, I do not know how to speak, for I am only a youth."
+    },
+    {
+      "ref": "Yirmeyahu 1:11-12",
+      "question": "The almond branch vision in Yirmeyahu 1:11-12 uses a Hebrew wordplay between what two words?",
+      "options": [
+        "Shaqed (almond) and Shoqed (watching)",
+        "Maqqel (staff) and Malakh (messenger)",
+        "Mizrakh (east) and Zarakh (rise)",
+        "Shemen (oil) and Shomea (hearing)"
+      ],
+      "correct": 0,
+      "source_quote": "And YHWH said to me, You have seen well, for I am watching over my word to perform it."
+    },
+    {
+      "ref": "Yirmeyahu 7:12",
+      "question": "To illustrate that the Temple's presence offers no guarantee, Yirmeyahu points to what earlier sanctuary YHWH abandoned?",
+      "options": [
+        "Shiloh",
+        "Beit El",
+        "Gilgal",
+        "Khevron"
+      ],
+      "correct": 0,
+      "source_quote": "Go now to my place that was in Shiloh, where I made my name dwell at first, and see what I did to it because of the evil of my people Yisra'el."
+    },
+    {
+      "ref": "Yirmeyahu 2:13",
+      "question": "What two evils does YHWH charge his people with in Yirmeyahu 2:13?",
+      "options": [
+        "Forsaking YHWH the fountain of living waters, and making broken cisterns",
+        "Worshipping Baal and refusing to pay tithes",
+        "Rejecting the Torah and oppressing the poor",
+        "Burning incense and building high places"
+      ],
+      "correct": 0,
+      "source_quote": "For my people have committed two evils: they have forsaken me, the fountain of living waters, and hewed out cisterns for themselves, broken cisterns that can hold no water."
+    },
+    {
+      "ref": "Yirmeyahu 1:13-15",
+      "question": "What does the boiling pot tilting from the north in Yirmeyahu 1:13-15 signify?",
+      "options": [
+        "Disaster coming from the north against Yehudah and Yerushalayim",
+        "Drought in the northern territories",
+        "A political alliance with Babylon",
+        "A famine coming to the land"
+      ],
+      "correct": 0,
+      "source_quote": "And YHWH said to me, Out of the north disaster shall be let loose upon all the inhabitants of the land."
+    },
+    {
+      "ref": "Yirmeyahu 7:9-10",
+      "question": "In the Temple Sermon, what list of sins does Yirmeyahu say the people are committing before coming to stand in the Temple?",
+      "options": [
+        "Stealing, murdering, adultery, false swearing, burning incense to Baal",
+        "Neglecting the Sabbath and failing to pay tithes",
+        "Eating unclean food and marrying foreign women",
+        "Failing to observe the feasts and forgetting the Exodus"
+      ],
+      "correct": 0,
+      "source_quote": "Will you steal, murder, commit adultery, swear falsely, make offerings to Baal, and go after other gods that you have not known, and then come and stand before me in this house?"
+    },
+    {
+      "ref": "Yirmeyahu 3:6-10",
+      "question": "In Yirmeyahu 3, which 'sister' does YHWH say proved more righteous — Yisra'el or Yehudah?",
+      "options": [
+        "Faithless Yisra'el proved more righteous than treacherous Yehudah",
+        "Treacherous Yehudah proved more righteous than faithless Yisra'el",
+        "Both were equally wicked",
+        "Neither was compared; both were equally condemned"
+      ],
+      "correct": 0,
+      "source_quote": "She saw that for all the adulteries of that faithless one, Yisra'el, I had sent her away with a decree of divorce. Yet her treacherous sister Yehudah did not fear, but she too went and played the whore. Faithless Yisra'el has shown herself more righteous than treacherous Yehudah."
+    },
+    {
+      "ref": "Yirmeyahu 6:14",
+      "question": "What charge does Yirmeyahu make against the false prophets and priests in chapter 6:14?",
+      "options": [
+        "They healed the wound of his people lightly, saying 'Peace, peace' when there is no peace",
+        "They accepted bribes for oracles",
+        "They prophesied by Baal and led people astray",
+        "They sold Temple positions to the highest bidder"
+      ],
+      "correct": 0,
+      "source_quote": "They have healed the wound of my people lightly, saying, Peace, peace, when there is no peace."
+    },
+    {
+      "ref": "Yirmeyahu 4:4",
+      "question": "What does Yirmeyahu 4:4 demand the people of Yehudah circumcise?",
+      "options": [
+        "Their hearts and not only the flesh",
+        "Their lips from false words",
+        "Their hands from wickedness",
+        "Their feet from the high places"
+      ],
+      "correct": 0,
+      "source_quote": "Circumcise yourselves to YHWH; remove the foreskin of your hearts, O men of Yehudah and inhabitants of Yerushalayim."
+    },
+    {
+      "ref": "Yirmeyahu 2:32",
+      "question": "What rhetorical comparison does Yirmeyahu use in 2:32 to highlight Yisra'el's forgetfulness of YHWH?",
+      "options": [
+        "Can a virgin forget her ornaments or a bride her attire? Yet my people have forgotten me",
+        "Can a mother forget her nursing child? Yet my people have forgotten me",
+        "Can a man forget his ancestral land? Yet my people have forgotten their covenant",
+        "Can the eagle forget its nest? Yet my people have abandoned their YHWH"
+      ],
+      "correct": 0,
+      "source_quote": "Can a virgin forget her ornaments, or a bride her attire? Yet my people have forgotten me days without number."
+    }
   ],
   "faq": [
     {
-      "question": "What does Yirmeyahu 10:2-4 condemn?",
-      "answer": "Yirmeyahu 10:2-4 in the Qumran fragments: 'Do not learn the way of the nations — for the customs of the peoples are vanity. A tree from the forest is cut down, the work of craftsmen with the axe. They adorn it with silver and gold, they fasten it with hammer and nails so that it does not move.' The practice condemned — cutting a tree, bringing it indoors, decorating it with precious metals — is structurally identical to the modern Christmas tree tradition. The practice was condemned in the DSS-era Hebrew text and then standardized as the primary domestic celebration of the Roman Christian calendar. The Hebrew prophets condemned it. The institution that claimed to succeed them adopted it."
+      "question": "What is the key message of Yirmeyahu's Temple Sermon?",
+      "answer": "In Yirmeyahu 7, the prophet stands at the Temple gate and attacks the idea that the Temple's physical presence guarantees YHWH's protection. The people chant 'The Temple of YHWH' three times as a magical formula, while simultaneously stealing, murdering, committing adultery, and burning incense to Baal. YHWH says: I will do to this house what I did to Shiloh."
     },
     {
-      "question": "Why is the shorter Qumran Jeremiah the primary authority?",
-      "answer": "The Qumran Jeremiah (4QJer-b) is substantially shorter than the Masoretic Jeremiah. Emanuel Tov's definitive analysis in Textual Criticism of the Hebrew Bible (Fortress Press, 2012) documents that the Masoretic Jeremiah contains significant later additions. The Septuagint — translated before the Masoretic standardization — also preserves a shorter Jeremiah, confirming that the shorter text is older. Where the DSS and the Septuagint agree against the Masoretic, the Masoretic is the later expansion. The three-witness method (DSS + Orit + Septuagint) identifies the shorter text as primary."
+      "question": "What is the significance of YHWH knowing Yirmeyahu before birth?",
+      "answer": "Yirmeyahu 1:5 establishes that YHWH's purposes for his prophet were set before conception. This is not a general statement about all humans but about Yirmeyahu's specific prophetic appointment: he was consecrated and appointed to the nations before he entered the world. It grounds his calling in YHWH's sovereign foreknowledge, not Yirmeyahu's own worthiness."
     },
     {
-      "question": "What does Ebed-Melek the Cushite reveal about African presence in the covenant community?",
-      "answer": "Ebed-Melek — documented in Yirmeyahu 38-39, confirmed in Qumran fragments — is a Cushite (Ethiopian/Nubian) court official serving at the highest level of the Judean royal court. He rescued the prophet Yirmeyahu from the cistern where the officials had thrown him to die. He is named, textually confirmed, high-status, African, and integrated at the apex of Judean political life in the 6th century BCE. YHWH specifically promises Ebed-Melek personal protection during the coming destruction (39:15-18). An African man rescues the prophet of YHWH, and YHWH personally guarantees his survival. This is in the primary text."
+      "question": "What is the almond branch vision about?",
+      "answer": "YHWH shows Yirmeyahu an almond branch (shaqed) and uses a Hebrew wordplay: 'I am watching (shoqed) over my word to perform it.' The almond tree was the first tree to blossom in spring, known for being early and alert. The vision assures Yirmeyahu that YHWH is alert and ready to execute his word — the disaster he has announced will not be delayed."
     },
     {
-      "question": "What does Yirmeyahu prophesy about the nations that enslaved the covenant people?",
-      "answer": "Yirmeyahu 50-51 (ACR Part 7) contains the most detailed judgment prophecy against Babylon — the enslaving nation. 51:13: 'O you that dwell upon many waters, abundant in treasures — your end is come.' 50:23: 'How is the hammer of the whole earth cut asunder.' 51:7: 'Babylon has been a golden cup in YHWH's hand that made all the earth drunk.' The covenant framework in Bereshit 15:14 states YHWH will judge the enslaving nation. Yirmeyahu provides the detailed description of that judgment. The pattern applies to every nation that holds the covenant people in bondage."
+      "question": "What are the 'two evils' in Yirmeyahu 2:13?",
+      "answer": "YHWH charges his people with two interconnected evils: first, abandoning him — the fountain of living waters; second, digging broken cisterns that cannot hold water. The first evil is the rejection of the Source; the second is the futile substitution — foreign gods and political alliances that cannot provide what YHWH gives."
+    },
+    {
+      "question": "Why does Yirmeyahu point to Shiloh in chapter 7?",
+      "answer": "Shiloh was where the Ark of the Covenant resided before the Philistines captured it (1 Shemu'el 4). YHWH abandoned Shiloh despite it being his dwelling place, because of Yisra'el's wickedness. Yirmeyahu uses Shiloh as proof that YHWH can and will abandon the Temple in Yerushalayim too if the people continue in their sin."
+    },
+    {
+      "question": "What is the significance of 'return' language in Yirmeyahu 3-4?",
+      "answer": "The Hebrew root shuv (return/repent) dominates Yirmeyahu 3-4. YHWH addresses both the northern kingdom (faithless Yisra'el) and the southern kingdom (treacherous Yehudah) with repeated calls to return. YHWH's willingness to restore is real, but the response must be genuine heart-circumcision (4:4), not ritual performance."
+    },
+    {
+      "question": "What does the boiling pot from the north represent in Yirmeyahu 1?",
+      "answer": "The boiling pot tilting from the north in Yirmeyahu 1:13-15 is a vision of impending invasion. 'From the north' is the direction from which Babylon will approach Yehudah. The boiling pot pouring out is an image of the northern armies pouring down into the land — YHWH is the one calling these armies as his instrument of judgment on Yerushalayim."
+    },
+    {
+      "question": "How does Yirmeyahu 2:2 frame Yisra'el's history?",
+      "answer": "YHWH remembers the devotion of Yisra'el's youth — the love-like-a-bride period of following YHWH through the wilderness. This frames the subsequent chapters' accusations: the people have abandoned a genuine relationship, not just violated an abstract law. The contrast between the wilderness devotion and present unfaithfulness sharpens the indictment."
+    },
+    {
+      "question": "What are the 'ancient paths' in Yirmeyahu 6:16?",
+      "answer": "YHWH commands through Yirmeyahu: 'Ask for the ancient paths, where the good way is, and walk in it, and find rest for your souls.' The ancient paths are the covenant ways established from the beginning — the paths the ancestors walked in faithfulness to YHWH. The people's response — 'We will not walk in it' — is the refusal that seals the coming judgment."
+    },
+    {
+      "question": "What does Yirmeyahu 6:14 mean by healing the wound lightly?",
+      "answer": "The false prophets and priests in Yirmeyahu 6:14 (and 8:11) offer superficial reassurance — 'Peace, peace' — when YHWH has pronounced judgment. They treat a mortal wound with a bandage. This is the indictment of prophetic malpractice: telling people what they want to hear instead of YHWH's true word, leaving the wound of sin untreated while disaster approaches."
     }
   ]
 }
