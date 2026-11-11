@@ -1,37 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_88",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_88",
   "label": "Ezra-Nekhemyah — Part 2 — Nekhemyah",
   "volume": 30,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Nekhemyah is cupbearer to the Persian king Artachshasta. He hears that the walls of Yerushalayim are broken down and its gates burned. He weeps, fasts, and prays — then asks the king for permission to return and rebuild. Despite opposition from Sanvallat, Toviyah, and Geshem, the wall is rebuilt in 52 days. Ezra the scribe reads the Torah of Moshe before all the people — men and women and all who can understand. The people weep when they hear the words of the Torah. Nekhemyah and the Levites say: Do not weep — this day is holy to YHWH. The people make a covenant to walk in the Torah of YHWH.",
   "summary_scholarly": "The ACR reads Nekhemyah from DSS witnesses and the Orit Ge'ez. Nekhemyah records the physical rebuilding of Yerushalayim's walls and the covenant renewal ceremony. The Torah reading in chapter 8 is among the most significant moments in scriptural history — Ezra reads the Torah before the entire assembly, the Levites translate and explain, and the people hear their own covenant text for the first time after generations of exile. The weeping is recognition: they hear who they are and how far they have fallen. The covenant renewal in chapter 10 lists the families who seal the agreement to keep Torah. The genealogical lists (chapters 7, 11, 12) are tribal records — they document biological lineage, not institutional membership. Nekhemyah's opposition to intermarriage (chapter 13) and Shabbat violation is covenant enforcement — maintaining the biological and practical distinctiveness of the returned community.",
   "key_terms": [
-    { "term": "Nekhemyah", "phonetic": "Nekh-em-YAH", "definition": "Cupbearer to Artachshasta (Artaxerxes) king of Persia. He returns to Yerushalayim to rebuild the walls. His name means 'YHWH comforts.' Anglicized as Nehemiah." },
-    { "term": "Qeri'at HaTorah (Torah Reading)", "phonetic": "Keh-ree-AHT hah-Toh-RAH", "definition": "Nekhemyah 8: Ezra reads the Torah before the entire assembly — men, women, and all who can understand. The Levites translate and explain. This is the covenant community hearing its own text — the foundation of public Torah reading." },
-    { "term": "Sanvallat and Toviyah", "phonetic": "San-vah-LAHT / Toh-vee-YAH", "definition": "Opponents of the wall-rebuilding. Sanvallat was governor of Shomron (Samaria); Toviyah was an Ammonite official. They mocked, threatened, and conspired to stop the rebuilding. The opposition to covenant restoration is always institutional and political." }
+    {
+      "term": "Nekhemyah",
+      "phonetic": "ne-khe-MYA",
+      "definition": "The cupbearer to King Artaxerxes I who is appointed governor of Yehudah; he leads the third wave of return and rebuilds the walls of Yerushalayim in fifty-two days (Nekhemyah 6:15) despite intense opposition from Sanvalat, Toviyah, and Geshem; he implements social and economic reforms and enforces covenant practice."
+    },
+    {
+      "term": "The Wall Rebuilding",
+      "phonetic": "binyan ha-khoma",
+      "definition": "Nekhemyah's central project: rebuilding the broken walls of Yerushalayim. Nekhemyah 2-6 describes the opposition from Sanvalat, Toviyah, and Geshem, the community organization for the building, the threats of attack, and the completion of the entire wall in fifty-two days (6:15). The wall is both physical protection and covenant identity: Yerushalayim re-established as a living city."
+    },
+    {
+      "term": "Sanvalat, Toviyah, Geshem",
+      "phonetic": "san-VAL-at, to-vi-YAH, GE-shem",
+      "definition": "The three opponents who resist Nekhemyah's wall rebuilding: Sanvalat the Horonite (governor of Samaria), Toviyah the Ammonite official, and Geshem the Arab. They mock, threaten military attack, and attempt to lure Nekhemyah into a trap; Nekhemyah resists all tactics, famously answering: 'I am doing a great work and cannot come down' (6:3)."
+    },
+    {
+      "term": "'I Am Doing a Great Work and Cannot Come Down'",
+      "phonetic": "ma-ase gedol ani oseh ve-lo ukhal la-redet",
+      "definition": "Nekhemyah 6:3 — Nekhemyah's response to Sanvalat and Geshem's repeated attempts to draw him away from the work: 'I am doing a great work and I cannot come down. Why should the work stop while I leave it and come down to you?' — a statement of focused covenant purpose under opposition."
+    },
+    {
+      "term": "The Torah Reading and Covenant Renewal (Nekhemyah 8-10)",
+      "phonetic": "keriat ha-Torah ve-khidush ha-brit",
+      "definition": "The climax of the Ezra-Nekhemyah narrative: Ezra reads the Torah publicly for the assembly from morning to midday (ch.8); the people weep; Ezra, Nekhemyah, and the Levites declare the day holy; the Sukkot festival is kept; the community confesses (ch.9); and they sign a written covenant commitment (ch.10). This is the formal covenant-renewal of the returned community."
+    },
+    {
+      "term": "Confession of Nekhemyah 9",
+      "phonetic": "vidui Nekhemyah tet",
+      "definition": "The long covenant confession in Nekhemyah 9 — a recitation of the history of YHWH's faithfulness and the community's repeated breach: from creation through Avraham, Mitzrayim, the wilderness, the land, the judges, the prophets, the exile. It is one of the longest historical prayers in the Hebrew scriptures and frames all of YHWH's acts as covenant faithfulness against Israel's consistent failure."
+    },
+    {
+      "term": "The Fifty-Two Day Wall",
+      "phonetic": "khomot khamsim u-shtayim yom",
+      "definition": "Nekhemyah 6:15: 'The wall was finished on the twenty-fifth day of the month of Elul, in fifty-two days.' The speed is deliberate — Nekhemyah attributes the completion to YHWH's support; the enemies 'perceived that this work had been accomplished with the help of our Creator' (6:16). Fifty-two days to rebuild the walls of a destroyed city is extraordinary."
+    },
+    {
+      "term": "The Social Reforms (Nekhemyah 5)",
+      "phonetic": "ha-tikkunim ha-khevratiyim be-Nekhemyah",
+      "definition": "Nekhemyah 5: during the wall rebuilding, Nekhemyah discovers that wealthy members of the community are charging interest to their own people, forcing them into debt servitude. He confronts the nobles and officials, demands restitution, and himself refuses the governor's food allowance to avoid burdening the people. His reforms enact the Torah's debt-release provisions within the community."
+    },
+    {
+      "term": "Nekhemyah's Memoir Style",
+      "phonetic": "signon ha-zikhronot shel Nekhemyah",
+      "definition": "Nekhemyah is unique in the Hebrew scriptures for its first-person memoir style — Nekhemyah speaks throughout in his own voice, including prayers directly to YHWH in the narrative (e.g., 'Remember me, O my Creator'). This personal, direct address to YHWH while narrating events gives the book a distinctive intimacy absent from most other biblical historiography."
+    },
+    {
+      "term": "Separation from Foreign Peoples",
+      "phonetic": "havdalah mi-am ha-nekhar",
+      "definition": "Nekhemyah 10 and 13: Nekhemyah enforces separation from the surrounding peoples, Sabbath observance, and the prohibition on mixed marriages — the same covenant-loyalty issues as Ezra 9-10. In ch.13 Nekhemyah returns from Persia to find violations of these commitments and personally enforces them again. His methods are direct and confrontational; he does not delegate enforcement."
+    }
   ],
   "fill_blank": [
-    { "ref": "8:1-3", "prompt": "Ezra the scribe stood on a wooden ______ and read from the Torah of Moshe before all the people — men and women and all who could understand.", "answer": "platform", "source_quote": "And Ezra the scribe stood on a wooden platform that they had made for the purpose... He read from it facing the square before the Water Gate from early morning until midday, in the presence of the men and the women and those who could understand." },
-    { "ref": "6:15", "prompt": "So the wall was finished on the twenty-fifth day of Elul, in ______ days.", "answer": "fifty-two", "source_quote": "So the wall was finished on the twenty-fifth day of the month Elul, in fifty-two days." },
-    { "ref": "8:9", "prompt": "This day is holy to YHWH your Creator. Do not mourn or ______.", "answer": "weep", "source_quote": "This day is holy to YHWH your Creator. Do not mourn or weep. For all the people wept as they heard the words of the Torah." }
+    {
+      "ref": "Nekhemyah 1:4",
+      "prompt": "When Nekhemyah heard the words about Yerushalayim's broken walls, he sat down and wept and mourned for days, and he continued ___ and praying before the Creator of heaven.",
+      "answer": "fasting",
+      "source_quote": "He sat down and wept and mourned for days, and continued fasting and praying before the Creator of heaven — Nekhemyah 1:4."
+    },
+    {
+      "ref": "Nekhemyah 2:17",
+      "prompt": "Nekhemyah said: 'You see the trouble we are in, how Yerushalayim lies in ruins with its gates ___ with fire.'",
+      "answer": "burned",
+      "source_quote": "You see the trouble we are in, how Yerushalayim lies in ruins with its gates burned with fire — Nekhemyah 2:17."
+    },
+    {
+      "ref": "Nekhemyah 2:18",
+      "prompt": "They said: 'Let us rise up and build.' So they ___ their hands for the good work.",
+      "answer": "strengthened",
+      "source_quote": "They said, Let us rise up and build. So they strengthened their hands for the good work — Nekhemyah 2:18."
+    },
+    {
+      "ref": "Nekhemyah 4:14",
+      "prompt": "Nekhemyah said: 'Do not be afraid of them. Remember the Creator, who is ___ and awesome, and fight for your brothers, your sons, your daughters, your wives, and your homes.'",
+      "answer": "great",
+      "source_quote": "Remember the Creator, who is great and awesome, and fight for your brothers, your sons, your daughters, your wives, and your homes — Nekhemyah 4:14."
+    },
+    {
+      "ref": "Nekhemyah 6:3",
+      "prompt": "Nekhemyah replied: 'I am doing a great work and I cannot come ___. Why should the work stop while I leave it and come down to you?'",
+      "answer": "down",
+      "source_quote": "I am doing a great work and I cannot come down — Nekhemyah 6:3."
+    },
+    {
+      "ref": "Nekhemyah 6:15",
+      "prompt": "The wall was finished on the twenty-fifth day of the month of Elul, in ___ days.",
+      "answer": "fifty-two",
+      "source_quote": "The wall was finished on the twenty-fifth day of the month of Elul, in fifty-two days — Nekhemyah 6:15."
+    },
+    {
+      "ref": "Nekhemyah 8:8",
+      "prompt": "They read from the book, from the Law of the Creator, clearly, and they gave the ___ so that the people understood what was read.",
+      "answer": "sense",
+      "source_quote": "They read from the book, from the Law of the Creator, clearly, and they gave the sense, so that the people understood what was read — Nekhemyah 8:8."
+    },
+    {
+      "ref": "Nekhemyah 8:10",
+      "prompt": "Nekhemyah said: 'Go your way, eat the fat and drink sweet wine... this day is ___ to our YHWH. Do not be grieved, for the joy of YHWH is your strength.'",
+      "answer": "holy",
+      "source_quote": "This day is holy to our YHWH. Do not be grieved, for the joy of YHWH is your strength — Nekhemyah 8:10."
+    },
+    {
+      "ref": "Nekhemyah 9:17",
+      "prompt": "They refused to obey and were not ___ of the wonders that you performed among them. But you are a Creator ready to forgive.",
+      "answer": "mindful",
+      "source_quote": "They refused to obey and were not mindful of the wonders that you performed among them. But you are a Creator ready to forgive — Nekhemyah 9:17."
+    },
+    {
+      "ref": "Nekhemyah 5:11",
+      "prompt": "Nekhemyah told the nobles: 'Return to them this very day their fields, their vineyards, their olive orchards, and their houses, and the hundredth part of the ___ and wine and oil.'",
+      "answer": "money",
+      "source_quote": "Return to them this very day their fields, their vineyards, their olive orchards, and their houses, and the hundredth part of the money — Nekhemyah 5:11."
+    }
   ],
   "multiple_choice": [
-    { "ref": "8:1-8", "question": "What happens when Ezra reads the Torah before the assembly?", "options": ["The people reject it", "The people weep when they hear the words — the Levites translate and explain", "Only the priests are allowed to listen", "The people already know every word"], "correct": 1, "source_quote": "All the people wept as they heard the words of the Torah. And Nekhemyah and Ezra the priest and scribe and the Levites who taught the people said: Do not weep." },
-    { "ref": "2:17-18", "question": "What did Nekhemyah do when he arrived in Yerushalayim?", "options": ["Built a new palace", "Inspected the broken walls and called the people to rebuild them", "Appointed a new king", "Fled to Egypt"], "correct": 1, "source_quote": "You see the trouble we are in, how Yerushalayim lies in ruins with its gates burned. Come, let us build the wall of Yerushalayim, that we may no longer suffer derision." },
-    { "ref": "6:15-16", "question": "How long did it take to rebuild the wall of Yerushalayim?", "options": ["Seven years", "Fifty-two days", "One hundred twenty days", "Three years"], "correct": 1, "source_quote": "So the wall was finished on the twenty-fifth day of the month Elul, in fifty-two days." }
+    {
+      "ref": "Nekhemyah 1:4",
+      "question": "What is Nekhemyah's response when he hears that Yerushalayim's walls are broken and its gates burned?",
+      "options": [
+        "He immediately asks permission from the king to return",
+        "He sits down, weeps, fasts, and prays for days",
+        "He sends a delegation ahead to begin the work",
+        "He reads Yirmeyahu's prophecy and trusts YHWH to restore"
+      ],
+      "correct": 1,
+      "source_quote": "He sat down and wept and mourned for days, and continued fasting and praying before the Creator of heaven — Nekhemyah 1:4."
+    },
+    {
+      "ref": "Nekhemyah 6:3",
+      "question": "What is Nekhemyah's answer to Sanvalat and Geshem's requests for a meeting?",
+      "options": [
+        "He sends them a written response with his terms",
+        "I am doing a great work and cannot come down",
+        "He sends the wall-builders in his place",
+        "He refuses and reports them to Artaxerxes"
+      ],
+      "correct": 1,
+      "source_quote": "I am doing a great work and I cannot come down — Nekhemyah 6:3."
+    },
+    {
+      "ref": "Nekhemyah 6:15",
+      "question": "How long does the wall rebuilding take according to Nekhemyah 6:15?",
+      "options": [
+        "Seven years",
+        "One hundred days",
+        "Fifty-two days",
+        "Fourteen months"
+      ],
+      "correct": 2,
+      "source_quote": "The wall was finished... in fifty-two days — Nekhemyah 6:15."
+    },
+    {
+      "ref": "Nekhemyah 8:8",
+      "question": "What do the Levites do when Ezra reads the Torah in Nekhemyah 8?",
+      "options": [
+        "They sing responses to each section of the Torah",
+        "They give the sense of what is read so the people understand",
+        "They distribute written copies to each family",
+        "They stand guard around the assembly"
+      ],
+      "correct": 1,
+      "source_quote": "They read from the book, from the Law of the Creator, clearly, and they gave the sense, so that the people understood what was read — Nekhemyah 8:8."
+    },
+    {
+      "ref": "Nekhemyah 8:10",
+      "question": "What does Nekhemyah declare about the people's weeping on the Torah reading day?",
+      "options": [
+        "The day is a day of mourning and fasting",
+        "This day is holy — do not be grieved, for the joy of YHWH is your strength",
+        "Let the weeping continue until the community has heard the whole Torah",
+        "The tears honor YHWH and all offerings are accepted"
+      ],
+      "correct": 1,
+      "source_quote": "This day is holy to our YHWH. Do not be grieved, for the joy of YHWH is your strength — Nekhemyah 8:10."
+    },
+    {
+      "ref": "Nekhemyah 5",
+      "question": "What social injustice does Nekhemyah discover and address in ch.5?",
+      "options": [
+        "Sabbath trading in the markets",
+        "Wealthy community members charging interest and causing debt bondage among their own people",
+        "Priests eating offerings set aside for the poor",
+        "Foreign merchants controlling the Temple commerce"
+      ],
+      "correct": 1,
+      "source_quote": "Now our flesh is as the flesh of our brothers, our children are as their children. Yet we are forcing our sons and daughters to be slaves — Nekhemyah 5:5."
+    },
+    {
+      "ref": "Nekhemyah 9",
+      "question": "What is the structure of the long prayer in Nekhemyah 9?",
+      "options": [
+        "It is a psalm of praise for the return from exile",
+        "A recitation of YHWH's faithfulness throughout history alongside Yisra'el's repeated breach of the covenant",
+        "A vision of the future restoration of the Temple",
+        "A list of covenant obligations the people must fulfill"
+      ],
+      "correct": 1,
+      "source_quote": "Nekhemyah 9 is a historical covenant confession: YHWH's faithfulness from creation to the present, against Yisra'el's repeated failure."
+    },
+    {
+      "ref": "Nekhemyah 4:14",
+      "question": "What does Nekhemyah tell the people when they fear attack during the wall building?",
+      "options": [
+        "Pray and YHWH will protect you",
+        "Remember YHWH who is great and awesome, and fight for your families and homes",
+        "I will stand before you and YHWH will give us victory",
+        "The wall will be built by night when no one can see you"
+      ],
+      "correct": 1,
+      "source_quote": "Remember the Creator, who is great and awesome, and fight for your brothers, your sons, your daughters, your wives, and your homes — Nekhemyah 4:14."
+    },
+    {
+      "ref": "Nekhemyah memoir",
+      "question": "What literary style makes Nekhemyah unique among the historical books?",
+      "options": [
+        "It is written entirely in Aramaic",
+        "It is narrated in first person in Nekhemyah's own voice, including direct prayers to YHWH",
+        "It includes no dates or genealogies, unlike other historical books",
+        "It is structured as a series of visions rather than events"
+      ],
+      "correct": 1,
+      "source_quote": "Nekhemyah is unique for its first-person memoir style and direct prayer addresses to YHWH within the narrative."
+    },
+    {
+      "ref": "Nekhemyah 2:17-18",
+      "question": "How does Nekhemyah motivate the community to begin the wall-building in Nekhemyah 2?",
+      "options": [
+        "He shows them the king's written authorization",
+        "He tells them of YHWH's command revealed to him in a vision",
+        "He shows them the trouble they are in and how YHWH had favored him, and they resolve to rise up and build",
+        "He reads Yirmeyahu's prophecy about Yerushalayim's restoration"
+      ],
+      "correct": 2,
+      "source_quote": "They said, Let us rise up and build. So they strengthened their hands for the good work — Nekhemyah 2:18."
+    }
   ],
   "faq": [
     {
-      "question": "Why did the people weep when they heard the Torah read?",
-      "answer": "Nekhemyah 8:9 records that 'all the people wept as they heard the words of the Torah.' These were the returned exiles and their descendants — people who had spent generations in Babylon without the full public reading of the Torah. When Ezra read the text and the Levites translated and explained, the people heard their own covenant identity for the first time in living memory. The weeping was recognition and grief — recognition of who they were, grief at how far they had fallen from it. This moment repeats across every era: when a displaced covenant community encounters its own primary text, the response is the same. The Beta Israel wept when they first encountered the Dead Sea Scrolls material confirming their own traditions. Enslaved Africans who encountered the Exodus narrative recognized their own condition. The Great Eraser works by preventing this encounter — by hiding the text, mistranslating it, paywalling it, or framing it through institutional theology so the reader never meets the text directly."
+      "question": "What is the central message of the book of Nekhemyah?",
+      "answer": "Covenant restoration under empire. Nekhemyah demonstrates that covenant faithfulness requires not only spiritual renewal (Torah reading, confession, covenant signing) but also physical rebuilding (walls), social justice (debt reform), and sustained leadership against opposition. He embodies a model of covenant governance: servant-leadership that refuses personal privilege, confronts injustice directly, and maintains focus on the covenant purpose against persistent opposition."
     },
     {
-      "question": "What does the return to Yerushalayim reveal about who returned and who didn't?",
-      "answer": "Nekhemyah 7 lists the returning families — the same list as Ezra 2, with minor variations. These are families from Yehudah, Binyamin, and the Levitical clans. The total is approximately 42,360 (Nekhemyah 7:66). The northern tribes are absent. The population of the northern kingdom before the Assyrian exile was far larger than the southern kingdom. The majority of Yisra'EL did not return. They could not — they were scattered across Assyrian territory and beyond. The genealogical lists in Nekhemyah are biological records — they trace family descent, not institutional membership. You are in the list or you are not. No conversion process, no rabbinical court, no DNA company determines inclusion. The family record is the record. The Great Eraser mechanism replaces biological lineage with institutional gatekeeping — 'Who is a Jew?' becomes an institutional question rather than a genealogical one."
+      "question": "Why does it matter that the wall is rebuilt in fifty-two days?",
+      "answer": "The speed (Nekhemyah 6:15) is a theological statement. Nekhemyah's enemies — Sanvalat, Toviyah, and Geshem — attribute the completion to YHWH (6:16): 'they perceived that this work had been accomplished with the help of our Creator.' What the enemies intended as proof of impossibility becomes proof of YHWH's direct involvement. The wall was not just infrastructure; it was the sign that Yerushalayim's covenant identity was being re-established under YHWH's authority."
     },
     {
-      "question": "How does the wall-rebuilding connect to covenant identity?",
-      "answer": "Nekhemyah rebuilds the walls of Yerushalayim in 52 days despite active opposition from Sanvallat, Toviyah, and Geshem — political leaders who did not want the covenant community reconstituted. The wall is not merely defensive architecture — it is the physical boundary of covenant identity. Without walls, the city has no definition. Without boundaries, the people have no distinction. Nekhemyah's insistence on separation — from foreign wives, from Shabbat violation, from mixed commerce — is the same principle as the wall: covenant identity requires definition. The Great Eraser dissolves boundaries — it universalizes Israelite identity into 'Judeo-Christian values,' merges the covenant people into a generic 'humanity,' and treats any assertion of distinct Israelite identity as exclusionary. Nekhemyah's wall says the opposite: boundaries are the condition of survival."
+      "question": "What is the significance of the Torah reading in Nekhemyah 8?",
+      "answer": "The public Torah reading in Nekhemyah 8 — Ezra reading from morning to midday, Levites giving the sense so the people understand — is a covenant formation event. The people weep; Ezra and Nekhemyah declare the day holy and command joy. What follows is not just individual piety but communal covenant action: keeping Sukkot (8:14-18), corporate confession (ch.9), and signing a written covenant commitment (ch.10). The Torah reading is the beginning of a full covenant renewal sequence."
+    },
+    {
+      "question": "What does Nekhemyah 5's social reform reveal about covenant economics?",
+      "answer": "Nekhemyah discovers that wealthy members of the community are using the economic pressure of the wall-building period (people have had to neglect their fields) to charge interest and even take children as debt-servants. His response is from the Torah: interest from your own people is forbidden (Devarim 23:20); debt-slavery of Hebrews by Hebrews re-creates the Mitzrayim situation. He forces public restitution. This is covenant economics applied to governance — the Torah's provisions are not abstract but enforceable."
+    },
+    {
+      "question": "What does the long confession in Nekhemyah 9 accomplish?",
+      "answer": "Nekhemyah 9 is the community's honest reckoning with their entire history: YHWH's faithfulness in creation, in the Avraham covenant, in Mitzrayim, in the wilderness, in the land — and Yisra'el's repeated breach at every stage. The prayer does not minimize the breach or blame the exile on bad luck; it names it as covenant failure. This is necessary before the covenant signing in ch.10: the community that knows exactly what it failed to do is the community that can commit to doing it. Confession grounds commitment."
+    },
+    {
+      "question": "What is the relationship between Nekhemyah and Ezra in the narrative?",
+      "answer": "Nekhemyah and Ezra appear together in Nekhemyah 8:9 — both present at the Torah reading. They represent two aspects of post-exile covenant restoration: Ezra is the Torah teacher and scribe (the religious-textual authority); Nekhemyah is the governor and builder (the civic-physical authority). Their collaboration on the covenant renewal of chs 8-10 models how Torah teaching and practical governance work together to restore the community. Neither alone is sufficient."
+    },
+    {
+      "question": "Who were Sanvalat, Toviyah, and Geshem, and what tactics did they use?",
+      "answer": "Sanvalat was the governor of Samaria; Toviyah was an Ammonite official (possibly also with connections inside the Yerushalayim community, since his son married a daughter of a prominent Yehudim family); Geshem was an Arab leader. Their tactics were layered: mockery (Nekhemyah 2:19; 4:1-3), threat of military attack (4:7-8), repeated invitations to negotiation designed to remove Nekhemyah from the work (6:2-4), written accusations to the king (6:5-7), and a hired prophet telling Nekhemyah to hide in the Temple (6:10-13). Nekhemyah refuses each tactic systematically."
+    },
+    {
+      "question": "What does Nekhemyah's prayer style reveal about his theology?",
+      "answer": "Nekhemyah inserts short, direct prayers to YHWH throughout the narrative: 'Remember me, O my Creator' (5:19; 13:14,22,29,31); 'O my Creator, strengthen my hands' (6:9). These are not formal liturgical prayers but working prayers — brief requests made mid-action. This reflects a theology of continuous direct access to YHWH in daily life, not mediated through a priestly structure. YHWH is immediately present in the governor's work, not distant."
+    },
+    {
+      "question": "What does the keeping of Sukkot in Nekhemyah 8 signify?",
+      "answer": "After the Torah reading, the people discover that the festival of Sukkot had not been kept since the days of Yeshua bin Nun (Nekhemyah 8:17). They immediately build booths and keep the festival — a direct application of what was just read. This is the covenant's intent: hearing Torah leads to doing it. The festival of Sukkot, with its memory of the wilderness journey and YHWH's provision, is the appropriate festival for a community that has just returned from their own wilderness of exile."
+    },
+    {
+      "question": "What is the signed covenant document in Nekhemyah 10?",
+      "answer": "Nekhemyah 10 records a written covenant commitment signed by Nekhemyah the governor, the priests, Levites, and community leaders. The specific commitments: not to give daughters to or take daughters from the surrounding peoples; to observe the Sabbath strictly; to keep the Sabbath year (shemitah); and to maintain the Temple service and offerings. This is a formal covenant document — not just a spiritual aspiration but specific, named obligations with named signatories."
+    },
+    {
+      "question": "How does Nekhemyah fit into the Source Integrity standard?",
+      "answer": "Nekhemyah (with Ezra) is a post-exile text from the Persian period (c. 445 BCE and after). It carries the Torah of Moshe as its foundational authority — explicitly named and read (Nekhemyah 8) — and the covenant structure of Devarim (breach, confession, renewal) as its governing framework. The community's practices (Sukkot observance, Sabbath, shemitah, Temple service) are all pre-Corruption First Temple covenant practice. The book predates Rabbinic canonization and carries pre-Rabbinic covenant tradition throughout."
     }
   ]
 }

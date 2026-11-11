@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_59",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_59",
   "label": "Yehezkel (Ezekiel) — Part 6 — Chapters 40–48",
   "volume": 18,
-  "content_version": 1,
+  "content_version": 6,
   "summary_plain": "In the twenty-fifth year of exile, YHWH sets Yehezkel on a very high mountain and shows him a man with a measuring reed. The man measures the future Temple — its gates, courts, chambers, walls, and the altar. The glory of YHWH enters the Temple from the east: the earth shone with his glory. The east gate is shut because YHWH has entered through it — no one shall enter by it. YHWH establishes new statutes for the priests — the sons of Tsadoq who kept charge of the sanctuary. A river flows from under the threshold of the Temple, going eastward. It deepens from ankle-deep to knee-deep to waist-deep to a river that cannot be crossed. Wherever the river flows, everything lives. The trees on its banks bear fruit every month. The land is divided among the twelve tribes, and the name of the city from that day shall be: YHWH Shammah — YHWH is there.",
   "summary_scholarly": "The ACR reads from the DSS Ezekiel fragments and the Orit Ge'ez, with particular attention to the 11QEzek fragment and the Temple Scroll (11QT) from Qumran, which presents an alternative temple plan attributed directly to YHWH. Chapters 40-48 describe a temple vision that corresponds to no historical structure — neither the First Temple, the Second Temple, nor Herod's renovation. The Qumran community's Temple Scroll (11QT) provides a parallel but distinct ideal temple plan, suggesting multiple covenant traditions about the restored sanctuary. The river of life (chapter 47) flowing from the Temple eastward toward the Dead Sea — transforming salt water into fresh and producing trees with leaves for healing — is reused in Revelation 22:1-2. The land division (chapter 48) redistributes the territory among all twelve tribes, including the northern tribes scattered by Assyria.",
   "key_terms": [
-    { "term": "Temple Vision (Mikdash)", "phonetic": "Mik-DAHSH", "definition": "Chapters 40-43: a detailed architectural vision of a future temple measured by a heavenly figure with a reed. This temple matches no historical building — it is YHWH's blueprint for the restored sanctuary." },
-    { "term": "River of Life (Nachal HaChayyim)", "phonetic": "NAH-khal Hah-khah-YEEM", "definition": "Chapter 47: a river flows from the threshold of the Temple, growing deeper as it goes eastward. Wherever the river flows, everything lives. Trees on its banks bear fruit every month with leaves for healing. The Dead Sea becomes fresh." },
-    { "term": "Sons of Tsadoq", "phonetic": "Beh-NAY Tsah-DOQ", "definition": "The priestly line that YHWH designates as legitimate ministers of the sanctuary (44:15). They kept charge of the sanctuary when Yisra'EL went astray. The Qumran community identified themselves with the sons of Tsadoq — the name 'Sadducee' (Tsadoqi) derives from this lineage." },
-    { "term": "YHWH Shammah", "phonetic": "YHWH SHAHM-mah", "definition": "The name of the city from that day shall be YHWH Shammah — 'YHWH is there' (48:35). The final word of the entire book of Yehezkel. The defining characteristic of the restored city is not its walls, its temple, or its governance — it is that YHWH is present." }
+    {
+      "term": "The Man with the Measuring Reed (Ezekiel 40)",
+      "phonetic": "ish be-yed qaneh ha-midah",
+      "definition": "In the twenty-fifth year of exile, in a vision, YHWH set Yehezkel on a very high mountain in the land of Yisra'el. There was a man whose appearance was like bronze, holding a measuring reed. He measured every part of the vision of the future Temple systematically — gates, courts, chambers, walls, and proportions."
+    },
+    {
+      "term": "YHWH's Glory Returns to the Temple (Ezekiel 43)",
+      "phonetic": "kavod YHWH",
+      "definition": "In the vision, Yehezkel saw YHWH's glory coming from the east — the same vision of the chariot he had seen by the river Kevar. YHWH's glory filled the Temple. YHWH spoke: Son of man, this is the place of my throne and the place of the soles of my feet, where I will dwell in the midst of Yisra'el forever. The return of the kavod is the reversal of Ezekiel 10 where it departed."
+    },
+    {
+      "term": "YHWH's Glory Departs in Ezekiel 10-11 (prior vision for context)",
+      "phonetic": "kavod YHWH yoreid",
+      "definition": "Earlier in the book (Ezekiel 10-11), Yehezkel watched YHWH's glory depart from the Temple: first to the threshold, then to the east gate, then to the mountain east of the city. That departure was the covenant catastrophe. The return of the glory in Ezekiel 43 is the fulfillment that reverses the departure — YHWH returning to dwell with his covenant people."
+    },
+    {
+      "term": "East Gate — Shut Because YHWH Entered (Ezekiel 44)",
+      "phonetic": "sha'ar ha-kedem",
+      "definition": "After YHWH's glory entered through the east gate, YHWH commanded: This gate shall remain shut; it shall not be opened, and no one shall enter by it, for YHWH, the Creator of Yisra'el, has entered by it; therefore it shall remain shut. Only the prince may sit in the gate to eat bread before YHWH."
+    },
+    {
+      "term": "The Levites and Priests in the Restored Temple (Ezekiel 44)",
+      "phonetic": "Leviim / kohanim",
+      "definition": "YHWH gives detailed regulations for the Levites and priests in the vision: the Levites who went far from YHWH during Yisra'el's rebellion will serve in the outer court but not approach YHWH's table. The sons of Tzadok, who kept the sanctuary when others went astray, will serve at YHWH's altar and approach his table."
+    },
+    {
+      "term": "The Sacred Allotment of Land (Ezekiel 45-48)",
+      "phonetic": "terumah / khevel ha-aretz",
+      "definition": "In the vision, the restored land is allotted in horizontal strips: a sacred portion for the sanctuary and priests, a portion for the Levites, a portion for the city, the prince's land on east and west. The twelve tribes each receive allotments in parallel horizontal strips from north to south — an idealized re-division that supersedes the original tribal boundaries."
+    },
+    {
+      "term": "The River Flowing from the Temple (Ezekiel 47)",
+      "phonetic": "nahal min ha-bayit",
+      "definition": "Water flowed from under the threshold of the Temple eastward, deepening as it went: ankle-deep, knee-deep, waist-deep, then too deep to cross — a river. On both banks grew trees for food and healing. Where the river reached the Dead Sea, the waters became fresh. The river is the life-giving presence of YHWH flowing outward from the dwelling place to heal the land."
+    },
+    {
+      "term": "New Boundaries of the Land (Ezekiel 47:13-23)",
+      "phonetic": "gevulot ha-aretz",
+      "definition": "YHWH gives the new boundaries of the restored land: from the northern border near Damascus and the Hauran down to the southern border at Merivat-Qadesh and the Brook of Mitzrayim. The land is allocated to all twelve tribes — including restored northern tribes. Significantly, the alien who lives among Yisra'el is to receive an inheritance among the tribe where he resides."
+    },
+    {
+      "term": "The City Named YHWH Is There (Ezekiel 48:35)",
+      "phonetic": "YHWH shammah",
+      "definition": "The final words of the entire book of Yehezkel are the name of the city: YHWH shammah — YHWH Is There. The city's new name declares that the covenant promise has been fulfilled: YHWH's presence in the midst of the city is the city's identity and protection. This reverses the horror of Ezekiel 10 when the kavod departed."
+    },
+    {
+      "term": "Prince (Nasi) in the Vision (Ezekiel 44-48)",
+      "phonetic": "na-SI",
+      "definition": "Throughout the vision of the restored Temple and land, a figure called the prince (nasi) appears: he receives the east gate as his place, makes offerings, and receives a territory on both sides of the sacred allotment. The prince is not given the title king — a deliberate distinction. Some read the nasi as a coming Davidic figure; the vision withholds the word king, placing authority firmly with YHWH dwelling in the Temple."
+    }
   ],
   "fill_blank": [
-    { "ref": "47:9", "prompt": "And wherever the river goes, every living creature that swarms will ______, and there will be very many fish.", "answer": "live", "source_quote": "And wherever the river goes, every living creature that swarms will live, and there will be very many fish. For this water goes there, that the waters of the sea may become fresh — so everything will live where the river goes." },
-    { "ref": "48:35", "prompt": "And the name of the city from that day shall be: YHWH ______.", "answer": "Shammah", "source_quote": "And the name of the city from that day shall be: YHWH Shammah — YHWH is there." },
-    { "ref": "44:15", "prompt": "But the Levitical priests, the sons of ______, who kept charge of my sanctuary when the people of Yisra'EL went astray from me, shall come near to me to minister to me.", "answer": "Tsadoq", "source_quote": "But the Levitical priests, the sons of Tsadoq, who kept charge of my sanctuary when the people of Yisra'EL went astray from me, shall come near to me to minister to me." }
+    {
+      "ref": "Ezekiel 43:7",
+      "prompt": "YHWH said: Son of man, this is the place of my ___ and the place of the soles of my feet, where I will dwell in the midst of Yisra'el forever.",
+      "answer": "throne",
+      "source_quote": "This is the place of my throne and the place of the soles of my feet, where I will dwell in the midst of Yisra'el forever."
+    },
+    {
+      "ref": "Ezekiel 43:5",
+      "prompt": "The ___ of YHWH filled the Temple.",
+      "answer": "glory",
+      "source_quote": "The glory of YHWH filled the Temple."
+    },
+    {
+      "ref": "Ezekiel 44:2",
+      "prompt": "YHWH said: This gate shall remain ___, it shall not be opened... for YHWH has entered by it.",
+      "answer": "shut",
+      "source_quote": "This gate shall remain shut; it shall not be opened."
+    },
+    {
+      "ref": "Ezekiel 47:1",
+      "prompt": "Water was flowing from below the ___ of the Temple on the south side of the altar.",
+      "answer": "threshold",
+      "source_quote": "Water was flowing from below the threshold of the Temple on the south side of the altar."
+    },
+    {
+      "ref": "Ezekiel 47:5",
+      "prompt": "Again he measured a thousand, and it was a ___ that I could not pass through, for the water had risen.",
+      "answer": "river",
+      "source_quote": "It was a river that I could not pass through, for the water had risen."
+    },
+    {
+      "ref": "Ezekiel 47:9",
+      "prompt": "And wherever the river goes, every living creature that swarms will live... for this water goes there, that the ___ may become fresh.",
+      "answer": "waters",
+      "source_quote": "Wherever the river goes, every living creature that swarms will live."
+    },
+    {
+      "ref": "Ezekiel 47:22",
+      "prompt": "You shall allot it as an inheritance for yourselves and for the ___ who sojourn among you and have had children among you.",
+      "answer": "aliens",
+      "source_quote": "You shall allot it as an inheritance for yourselves and for the aliens who sojourn among you."
+    },
+    {
+      "ref": "Ezekiel 48:35",
+      "prompt": "And the name of the city from that time on shall be: YHWH ___.",
+      "answer": "Is There (Shammah)",
+      "source_quote": "The name of the city from that time on shall be: YHWH Is There."
+    },
+    {
+      "ref": "Ezekiel 43:2",
+      "prompt": "And behold, the glory of the Creator of Yisra'el was coming from the ___.",
+      "answer": "east",
+      "source_quote": "The glory of the Creator of Yisra'el was coming from the east."
+    },
+    {
+      "ref": "Ezekiel 44:28",
+      "prompt": "They shall have no inheritance; I am their ___. You shall give them no possession in Yisra'el; I am their possession.",
+      "answer": "inheritance",
+      "source_quote": "They shall have no inheritance; I am their inheritance."
+    }
   ],
   "multiple_choice": [
-    { "ref": "47:1-12", "question": "What happens to the water flowing from the Temple?", "options": ["It dries up in the desert", "It deepens from ankles to an uncrossable river — wherever it flows, everything lives", "It turns to blood", "It floods the city"], "correct": 1, "source_quote": "When the man went eastward with a measuring line in his hand, he measured a thousand cubits — it was ankle-deep. He measured a thousand — knee-deep. He measured a thousand — waist-deep. He measured a thousand — it was a river that I could not cross." },
-    { "ref": "48:35", "question": "What is the final name given to the city?", "options": ["Yerushalayim the Golden", "Tziyon of YHWH", "YHWH Shammah — YHWH is there", "City of David"], "correct": 2, "source_quote": "And the name of the city from that day shall be: YHWH Shammah." },
-    { "ref": "43:1-5", "question": "How does the glory of YHWH enter the Temple?", "options": ["Through the north gate", "From above in a cloud", "From the east — the earth shone with his glory", "Through the Holy of Holies"], "correct": 2, "source_quote": "And behold, the glory of the Creator of Yisra'EL was coming from the east. His voice was like the sound of many waters, and the earth shone with his glory." }
+    {
+      "ref": "Ezekiel 43:7",
+      "question": "What does YHWH declare the restored Temple to be in Ezekiel 43?",
+      "options": [
+        "The place of Yisra'el's national assembly",
+        "A gift from YHWH to be maintained by the Levitical priests",
+        "The place of YHWH's throne and the soles of his feet, where he will dwell forever",
+        "A temporary dwelling until the full restoration of Yisra'el is complete"
+      ],
+      "correct": 2,
+      "source_quote": "This is the place of my throne and the place of the soles of my feet, where I will dwell in the midst of Yisra'el forever."
+    },
+    {
+      "ref": "Ezekiel 43",
+      "question": "From which direction does YHWH's glory return to fill the restored Temple?",
+      "options": [
+        "From the north, over the mountains of Yisra'el",
+        "From the west, from across the great sea",
+        "From the south, from the direction of Mitzrayim",
+        "From the east, as it had departed in the earlier vision"
+      ],
+      "correct": 3,
+      "source_quote": "The glory of the Creator of Yisra'el was coming from the east."
+    },
+    {
+      "ref": "Ezekiel 44:2",
+      "question": "Why does YHWH command that the east gate of the Temple remain permanently shut?",
+      "options": [
+        "Because it faces the direction from which enemies will come",
+        "Because the Levites are not permitted to use the east entrance",
+        "Because YHWH entered through it and it is consecrated to that entry alone",
+        "Because the outer court must remain closed to Gentile nations"
+      ],
+      "correct": 2,
+      "source_quote": "For YHWH, the Creator of Yisra'el, has entered by it; therefore it shall remain shut."
+    },
+    {
+      "ref": "Ezekiel 44",
+      "question": "What distinction does YHWH make between the Levites and the sons of Tzadok in the vision?",
+      "options": [
+        "Levites may enter the inner court but not the sons of Tzadok",
+        "The sons of Tzadok went astray so they serve in the outer court; Levites serve at the altar",
+        "Levites who went astray serve in the outer court; sons of Tzadok who stayed faithful serve at the altar",
+        "Both serve identically but on alternating weeks"
+      ],
+      "correct": 2,
+      "source_quote": "The Levites who went far from me... shall bear their punishment. But the Levitical priests, the sons of Tzadok, who kept the charge of my sanctuary... they shall come near to me."
+    },
+    {
+      "ref": "Ezekiel 47:1",
+      "question": "In which direction does the river flowing from the Temple flow?",
+      "options": [
+        "Westward toward the great sea",
+        "Northward toward the mountains",
+        "Southward toward the desert",
+        "Eastward toward the Dead Sea"
+      ],
+      "correct": 3,
+      "source_quote": "Water was flowing from below the threshold of the Temple eastward."
+    },
+    {
+      "ref": "Ezekiel 47:9",
+      "question": "What happens to the Dead Sea in the vision of the river from the Temple?",
+      "options": [
+        "It dries up completely",
+        "Its waters become fresh wherever the river reaches",
+        "It doubles in size and floods the surrounding land",
+        "It remains salt as a sign of past judgment"
+      ],
+      "correct": 1,
+      "source_quote": "Wherever the river goes, every living creature that swarms will live... for this water goes there, that the waters may become fresh."
+    },
+    {
+      "ref": "Ezekiel 47:22",
+      "question": "Who, unexpectedly, receives a land inheritance in the restored land allocation of Ezekiel 47?",
+      "options": [
+        "The Babylonian exiles who return with Yisra'el",
+        "Levites who had formerly been excluded",
+        "Aliens who have sojourned among Yisra'el and had children among them",
+        "The prophets and their descendants as a priestly allotment"
+      ],
+      "correct": 2,
+      "source_quote": "You shall allot it as an inheritance for yourselves and for the aliens who sojourn among you and have had children among you."
+    },
+    {
+      "ref": "Ezekiel 48:35",
+      "question": "What is the name given to the city at the end of Ezekiel's vision?",
+      "options": [
+        "Yerushalayim HaKedoshah — the Holy City",
+        "Ir YHWH — City of YHWH",
+        "YHWH Shammah — YHWH Is There",
+        "Tzion ha-Netzakh — Eternal Zion"
+      ],
+      "correct": 2,
+      "source_quote": "The name of the city from that time on shall be: YHWH Is There."
+    },
+    {
+      "ref": "Ezekiel 44:28",
+      "question": "What does YHWH declare will be the inheritance of the Zadokite priests?",
+      "options": [
+        "A specific city of refuge in each tribal allotment",
+        "A tithe of all agricultural produce from every tribe",
+        "Cities dedicated to priestly service throughout the land",
+        "YHWH himself is their inheritance — they shall have no land allotment"
+      ],
+      "correct": 3,
+      "source_quote": "They shall have no inheritance; I am their inheritance."
+    },
+    {
+      "ref": "Ezekiel 40-48",
+      "question": "How does the restored land distribution in Ezekiel 47-48 differ from the original tribal boundaries?",
+      "options": [
+        "Each tribe receives the same territory as originally, now fully cleansed",
+        "Twelve tribes are merged into four large administrative regions",
+        "Land is allocated in idealized horizontal strips from north to south regardless of original tribal locations",
+        "Only seven tribes are restored; the other five remain in Babylon permanently"
+      ],
+      "correct": 2,
+      "source_quote": "The land is allocated in horizontal strips from north to south — an idealized re-division superseding the original tribal boundaries."
+    }
   ],
   "faq": [
     {
-      "question": "How does the Temple Scroll at Qumran relate to Yehezkel's temple vision?",
-      "answer": "The Temple Scroll (11QT) from Qumran presents an ideal temple plan written as direct divine speech — YHWH speaking in first person about how the sanctuary should be built. Yehezkel 40-48 presents a different ideal temple shown in vision. Neither matches the historical Second Temple or Herod's renovation. The existence of two distinct ideal temple traditions at Qumran demonstrates that the covenant community debated and preserved multiple visions of the restored sanctuary. The Qumran community rejected the Second Temple's priesthood as illegitimate — the Wicked Priest, the Man of the Lie, the Spouter of Lies are all figures within the corrupt temple establishment documented in the Pesharim. The Great Eraser collapsed the diversity of Second Temple Judaism into a monolithic 'Judaism' that either accepted or rejected the Christian claims. In reality, the covenant community had vigorous internal debates about the Temple, the priesthood, and the calendar — all preserved at Qumran and systematically minimized by both rabbinic and Christian institutional narratives."
+      "question": "What is the significance of YHWH's glory returning from the east in Ezekiel 43?",
+      "answer": "The return of YHWH's glory from the east in Ezekiel 43 is the structural reversal of Ezekiel 10-11, where the kavod departed from the Temple eastward before the city fell. The departure was the most catastrophic covenant moment in the book: YHWH's presence leaving Yerushalayim. The return comes from the same direction, through the same gate, in the same glory-cloud. YHWH declares: Son of man, this is the place of my throne and the soles of my feet, where I will dwell forever. The restoration is complete only when YHWH's presence returns — without the kavod, any rebuilt Temple is just a building."
     },
     {
-      "question": "What does the river of life (chapter 47) reveal about restoration?",
-      "answer": "The river flows from the threshold of the Temple — from YHWH's presence — and goes eastward. It starts ankle-deep and deepens progressively until it becomes an uncrossable river. Wherever it goes, everything lives. The Dead Sea — the lowest point on earth, so salty nothing can survive — becomes fresh. Trees on the banks produce fruit every month and leaves for healing (47:12). The image is total ecological transformation flowing from YHWH's presence. This is not metaphor for individual spiritual experience — it is the physical restoration of creation itself. Revelation 22:1-2 directly quotes this passage: the river of the water of life flowing from the throne, the tree of life with leaves for the healing of the nations. The prophetic vision is: YHWH's restored presence does not merely save individual souls — it transforms the entire created order. The river cannot be contained by institutional channels. It flows where YHWH sends it."
+      "question": "Why does the east gate remain permanently shut after YHWH enters?",
+      "answer": "YHWH commands the east gate shut permanently after his glory enters through it: for YHWH has entered by it, therefore it shall remain shut. The east gate is consecrated by the divine entry — to open it again for ordinary traffic would treat the most sacred covenant act as routine. The only figure permitted to sit in the gateway is the prince, who may eat bread before YHWH there. The shut gate is a permanent covenant marker: YHWH has come and will not depart again, and the entry point of that dwelling is set apart forever."
     },
     {
-      "question": "Why does YHWH Shammah — 'YHWH is there' — end the book?",
-      "answer": "The entire book of Yehezkel moves from the departure of YHWH's glory (chapters 8-11, the glory leaves the Temple) through judgment, exile, and restoration, to the return of the glory (chapter 43, the glory enters the new Temple from the east). The final word — the name of the city is YHWH Shammah, 'YHWH is there' — is the resolution. The defining characteristic of the restored city is not its architecture, its military strength, its economic power, or its institutional religion. It is simply: YHWH is there. Every system the Great Eraser built — cathedrals, denominations, theological institutions, publishing empires — can exist without YHWH being there. The prophetic standard for the covenant community is not institutional impressiveness. It is YHWH's actual presence. Where YHWH is — that is the city. Where YHWH is not — no matter how elaborate the structure — it is empty."
+      "question": "What does the river flowing from the Temple in Ezekiel 47 represent?",
+      "answer": "The river flowing from the Temple's threshold eastward, deepening as it goes, represents YHWH's life-giving presence flowing outward from the covenant dwelling into the land and world. As the river deepens, it becomes a river no one can cross. When it reaches the Dead Sea, the salt waters become fresh. Trees grow on both banks bearing fruit for food and leaves for healing. The imagery is of YHWH's presence as the source of all life: everything the river touches is restored, cleansed, made alive. The covenant community organized around YHWH's dwelling becomes the source of healing for the entire region."
+    },
+    {
+      "question": "Why does Ezekiel's vision call the restored leader a prince (nasi) rather than king?",
+      "answer": "The deliberate use of nasi (prince) rather than melekh (king) for the leader in Ezekiel 44-48 is theologically significant. In the vision, YHWH dwelling in the Temple is the true king. The human leader serves before YHWH, makes offerings, sits in the east gate to eat bread before YHWH, and receives a territory — but is never called king. This avoids the theological problem the monarchy created: human kings who competed with YHWH's sovereignty. In the vision of restoration, the community is ordered around YHWH's presence at the center, with a human leader who is explicitly a servant-prince rather than an independent royal authority."
+    },
+    {
+      "question": "What is the significance of the idealized land distribution in Ezekiel 47-48?",
+      "answer": "The restored land in Ezekiel 47-48 is distributed in horizontal strips from north to south rather than following the irregular historical tribal boundaries from the conquest period. The seven northern tribes receive the northern strips; the five southern tribes the southern strips; the sacred portion with the Temple and city sits in the middle. This idealized geometry declares that the restored land is YHWH's gift renewed, not a continuation of the flawed historical allocation. Every tribe has an equal share in the new order. Even aliens who have lived among Yisra'el receive an inheritance — the covenant community is defined by covenant relationship, not purely by descent."
+    },
+    {
+      "question": "Why does YHWH declare I am their inheritance for the Zadokite priests?",
+      "answer": "YHWH's declaration in Ezekiel 44:28 — I am their inheritance, they shall have no land allotment — echoes the original Levitical provision from the Torah (Numbers 18): the Levites receive no tribal territory because YHWH is their portion. In the vision of restoration, this principle is reaffirmed and deepened: the priests who serve at YHWH's altar are sustained by the offerings and tithes rather than land income. Their inheritance is YHWH's own presence, which they serve and from which they eat. This is not deprivation but the highest covenant standing: direct relationship with YHWH as the source of life rather than land as a secondary mediation."
+    },
+    {
+      "question": "What is the theological meaning of the city's name YHWH Shammah (YHWH Is There)?",
+      "answer": "The final words of Yehezkel — YHWH shammah, YHWH Is There — are the theological endpoint of the entire book. The book began with the departure of YHWH's glory and the fall of a city whose covenant name was Yerushalayim. It ends with a city whose name is not Yerushalayim but YHWH Is There. The city's identity is no longer geographical or political but covenantal: it is the place where YHWH dwells. The name is both declaration and promise — YHWH's presence is the only protection that matters, the only identity worth having, and the fulfillment of every covenant promise from Bereshit forward."
+    },
+    {
+      "question": "How does the distinction between Levites and sons of Tzadok function in the vision?",
+      "answer": "In Ezekiel 44, YHWH distinguishes between Levites who went far from YHWH during Yisra'el's rebellion (they will serve in the outer court, keeping the gates and slaughtering offerings, but cannot approach the altar) and the sons of Tzadok, who kept the sanctuary faithful when others went astray (they will serve at YHWH's altar and approach his table). This distinction serves as a covenant principle: covenant faithfulness in the crisis determines future covenant access. The vision does not erase the Levites who failed — it differentiates service, not identity. Faithfulness in the most difficult moment has covenant consequences."
+    },
+    {
+      "question": "How does Ezekiel's Temple vision connect to the chariot vision of Ezekiel 1?",
+      "answer": "The vision of the restored Temple in Ezekiel 40-48 is explicitly connected to the chariot (merkavah) vision of Ezekiel 1: in Ezekiel 43:3, Yehezkel says the glory he saw entering the new Temple was like the vision he had seen by the river Kevar when he came to destroy the city. The same divine presence that appeared in fiery glory in Babylon, in exile, over the pagan river — that same kavod returns to fill the restored Temple. This connection confirms the central theological claim of the entire book: YHWH is not a local deity tied to the Jerusalem Temple site. YHWH's presence moves, appears in exile, and returns to fill the new Temple by YHWH's own sovereign choice."
+    },
+    {
+      "question": "How does the measurement of the Temple in Ezekiel 40 communicate its holiness?",
+      "answer": "The man with the measuring reed in Ezekiel 40 measures every element of the vision — gates, walls, courts, chambers — in precise, equal proportions. This systematic measurement is not an architect's blueprint but a covenant statement: YHWH's dwelling is ordered, defined, and holy in every dimension. In the ancient world, to measure something was to claim it, establish its boundaries, declare its ownership. YHWH's Temple is measured by YHWH's own appointed agent — every cubit is YHWH's. The precision of measurement also communicates the sharp boundary between holy and common, between the dwelling of YHWH and the surrounding space — a boundary the restored community is commanded to maintain and never violate again."
     }
   ]
 }

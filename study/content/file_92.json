@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_92",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_92",
   "label": "Divrei HaYamim Bet (2 Chronicles) — Part 2 — Chapters 19–36",
   "volume": 32,
-  "content_version": 1,
+  "content_version": 3,
   "summary_plain": "Divrei HaYamim Bet chapters 19 through 36 trace the southern kingdom from Yehoshafat through the destruction of Yerushalayim. Yehoshafat establishes judges and says: Consider what you do — for you judge not for man but for YHWH. Chizkiyahu (Hezekiah) cleanse the temple, restores Pesach, and trusts YHWH against Sennacherib of Ashur. Yoshiyahu (Josiah) finds the Torah scroll in the temple and tears his garments — he renews the covenant and celebrates the greatest Pesach since Shemu'el. But the decline continues. Yerushalayim falls to Nevukhadnetzar. The temple is burned. The people are exiled to Babylon. The final verse is Koresh's decree: let the exiles go up.",
   "summary_scholarly": "The ACR reads from DSS fragments and the Orit Ge'ez. The Chronicler's account of the southern kingdom emphasizes a cycle: reform, apostasy, judgment. Chizkiyahu (chapters 29-32) and Yoshiyahu (chapters 34-35) represent the high points — both kings cleanse the temple, restore Torah observance, and celebrate Pesach. Yoshiyahu's discovery of the Torah scroll (34:14-21) is critical: the Torah was lost within the temple itself. The book of the covenant had to be rediscovered. This is the Great Eraser pattern within the covenant community's own history — the text can be lost even when the institution that houses it still stands. The Chronicler's final verse (36:23) is Koresh's decree — the same decree that opens Ezra. The destruction is not the final word. The exile is not permanent. YHWH moves a Persian king to restore what Babylon destroyed.",
   "key_terms": [
-    { "term": "Chizkiyahu", "phonetic": "Khiz-kee-YAH-hoo", "definition": "King of Yehudah who cleansed the temple, restored Pesach, and trusted YHWH when Sennacherib of Ashur besieged Yerushalayim. YHWH sent an angel and destroyed the Assyrian army. Anglicized as Hezekiah." },
-    { "term": "Yoshiyahu", "phonetic": "Yoh-shee-YAH-hoo", "definition": "King of Yehudah who found the Torah scroll in the temple and renewed the covenant. He celebrated the greatest Pesach since Shemu'el the prophet. Anglicized as Josiah." },
-    { "term": "Sefer HaTorah (The Torah Scroll)", "phonetic": "SEH-fer hah-Toh-RAH", "definition": "2 Chronicles 34:14: Chilqiyahu the priest found the book of the Torah of YHWH given by the hand of Moshe. The Torah had been lost inside the temple. Finding it triggered national repentance and covenant renewal." },
-    { "term": "Koresh Decree", "phonetic": "KOH-resh", "definition": "2 Chronicles 36:23: 'YHWH the Creator of heaven has given me all the kingdoms of the earth, and he has charged me to build him a house at Yerushalayim. Whoever is among you of all his people — YHWH his Creator be with him. Let him go up.' The book's final word: restoration." }
+    {
+      "term": "Khizkiyahu's Passover",
+      "phonetic": "2 Divrei HaYamim 30",
+      "definition": "Khizkiyahu invites all Yisra'el and Yehudah to a great Passover in Yerushalayim — the greatest celebration since the days of Shlomo, drawing even from the northern tribes"
+    },
+    {
+      "term": "Yoshiyahu's Reforms",
+      "phonetic": "2 Divrei HaYamim 34-35",
+      "definition": "Yoshiyahu begins seeking YHWH at age sixteen, tears down the high places and altars of Ba'al, and purges idolatry throughout Yehudah and even into the northern territories"
+    },
+    {
+      "term": "Book of Torah Found",
+      "phonetic": "2 Divrei HaYamim 34:14-15",
+      "definition": "The high priest Khilqiyahu finds the Book of Torah in the Temple while it is being repaired — Yoshiyahu tears his clothes in distress when it is read to him"
+    },
+    {
+      "term": "Yoshiyahu's Passover",
+      "phonetic": "2 Divrei HaYamim 35",
+      "definition": "The Passover Yoshiyahu celebrates is declared the greatest since the days of Shemu'el the prophet — Divrei HaYamim rates it higher than Khizkiyahu's"
+    },
+    {
+      "term": "Yoshiyahu's Death at Megiddo",
+      "phonetic": "2 Divrei HaYamim 35:20-24",
+      "definition": "Yoshiyahu goes out to fight Pharaoh Nekho at Megiddo against the word of YHWH — he is fatally wounded and dies in Yerushalayim; all Yehudah and Yerushalayim mourn for him"
+    },
+    {
+      "term": "Fall of Yerushalayim",
+      "phonetic": "2 Divrei HaYamim 36",
+      "definition": "The final chapter narrates the last four kings (Yehoakhaz, Yehoyaqim, Yehoyakhin, Tzidkiyahu), Nebukhadnetzar's invasions, the destruction of the Temple, and the exile to Babylon"
+    },
+    {
+      "term": "'YHWH Sent Persistently by Messengers'",
+      "phonetic": "2 Divrei HaYamim 36:15-16",
+      "definition": "YHWH's compassion on his people before the destruction: he sent his messengers again and again, but the people mocked the messengers and despised his words until there was no remedy"
+    },
+    {
+      "term": "Cyrus Decree",
+      "phonetic": "2 Divrei HaYamim 36:22-23",
+      "definition": "The final verses of Divrei HaYamim are identical to the opening of Ezra — Cyrus king of Persia declares YHWH has given him all the kingdoms and commands rebuilding the Temple in Yerushalayim"
+    },
+    {
+      "term": "70-Year Exile Fulfilled",
+      "phonetic": "2 Divrei HaYamim 36:21",
+      "definition": "The exile fulfills the word of YHWH through Yirmeyahu — the land enjoys its Shabbat rests for 70 years, until the land had made up its full Shabbat debt"
+    },
+    {
+      "term": "Tzidkiyahu",
+      "phonetic": "tzid-ki-YA-hoo",
+      "definition": "The last king of Yehudah — installed by Nebukhadnetzar; did evil; refused to humble himself before YHWH or Yirmeyahu the prophet; rebelled against Babylon, bringing the final destruction"
+    }
   ],
   "fill_blank": [
-    { "ref": "34:15", "prompt": "Chilqiyahu said to Shafan the scribe: I have found the book of the ______ in the house of YHWH.", "answer": "Torah", "source_quote": "Then Chilqiyahu answered and said to Shafan the secretary: I have found the book of the Torah in the house of YHWH." },
-    { "ref": "20:15", "prompt": "Thus says YHWH to you: Do not be afraid and do not be dismayed at this great multitude, for the battle is not yours but ______.", "answer": "The Creator's", "source_quote": "Thus says YHWH to you: Do not be afraid and do not be dismayed at this great multitude, for the battle is not yours but The Creator's." },
-    { "ref": "36:23", "prompt": "Whoever is among you of all his people — YHWH his Creator be with him. Let him go ______.", "answer": "up", "source_quote": "Whoever is among you of all his people, YHWH his Creator be with him. Let him go up." }
+    {
+      "ref": "2 Divrei HaYamim 30:26",
+      "prompt": "So there was great joy in Yerushalayim, for since the time of _____ the son of David king of Yisra'el there had been nothing like this in Yerushalayim",
+      "answer": "Shlomo",
+      "source_quote": "So there was great joy in Yerushalayim, for since the time of Shlomo the son of David king of Yisra'el there had been nothing like this in Yerushalayim"
+    },
+    {
+      "ref": "2 Divrei HaYamim 34:1-3",
+      "prompt": "Yoshiyahu was _____ years old when he began to reign, and he reigned thirty-one years in Yerushalayim",
+      "answer": "eight",
+      "source_quote": "Yoshiyahu was eight years old when he began to reign"
+    },
+    {
+      "ref": "2 Divrei HaYamim 34:3",
+      "prompt": "For in the eighth year of his reign, while he was yet a boy, he began to seek the Creator of David his father, and in the twelfth year he began to purge Yehudah and Yerushalayim of the high places, the _____",
+      "answer": "Asherim",
+      "source_quote": "he began to purge Yehudah and Yerushalayim of the high places, the Asherim"
+    },
+    {
+      "ref": "2 Divrei HaYamim 34:14",
+      "prompt": "Khilqiyahu the priest found the _____ of Torah given through Mosheh",
+      "answer": "Book",
+      "source_quote": "Khilqiyahu the priest found the Book of Torah given through Mosheh"
+    },
+    {
+      "ref": "2 Divrei HaYamim 34:19",
+      "prompt": "And when the king heard the words of the Torah, he tore his _____",
+      "answer": "clothes",
+      "source_quote": "And when the king heard the words of the Torah, he tore his clothes"
+    },
+    {
+      "ref": "2 Divrei HaYamim 35:18",
+      "prompt": "No Passover like it had been kept in Yisra'el since the days of _____ the prophet",
+      "answer": "Shemu'el",
+      "source_quote": "No Passover like it had been kept in Yisra'el since the days of Shemu'el the prophet"
+    },
+    {
+      "ref": "2 Divrei HaYamim 36:15",
+      "prompt": "YHWH, the Creator of their fathers, sent persistently to them by his messengers, because he had _____ on his people and on his dwelling place",
+      "answer": "compassion",
+      "source_quote": "YHWH, the Creator of their fathers, sent persistently to them by his messengers, because he had compassion on his people and on his dwelling place"
+    },
+    {
+      "ref": "2 Divrei HaYamim 36:16",
+      "prompt": "But they kept mocking the messengers of YHWH, despising his words, and scoffing at his prophets, until the _____ of YHWH rose against his people",
+      "answer": "wrath",
+      "source_quote": "But they kept mocking the messengers of YHWH, despising his words, and scoffing at his prophets, until the wrath of YHWH rose against his people"
+    },
+    {
+      "ref": "2 Divrei HaYamim 36:21",
+      "prompt": "To fulfill the word of YHWH by the mouth of Yirmeyahu, until the land had enjoyed its _____",
+      "answer": "Shabbatot",
+      "source_quote": "To fulfill the word of YHWH by the mouth of Yirmeyahu, until the land had enjoyed its Shabbatot"
+    },
+    {
+      "ref": "2 Divrei HaYamim 36:23",
+      "prompt": "YHWH the Creator of heaven has given me all the kingdoms of the earth, and he has charged me to build him a house at _____ in Yehudah",
+      "answer": "Yerushalayim",
+      "source_quote": "YHWH the Creator of heaven has given me all the kingdoms of the earth, and he has charged me to build him a house at Yerushalayim in Yehudah"
+    }
   ],
   "multiple_choice": [
-    { "ref": "34:14-21", "question": "What did Yoshiyahu do when the Torah scroll was found in the temple?", "options": ["He ignored it", "He tore his garments in grief, renewed the covenant, and celebrated the greatest Pesach since Shemu'el", "He hid it again", "He sent it to Babylon"], "correct": 1, "source_quote": "When the king heard the words of the Torah, he tore his garments." },
-    { "ref": "32:1-22", "question": "What happened when Sennacherib of Ashur besieged Yerushalayim under Chizkiyahu?", "options": ["Chizkiyahu surrendered", "Chizkiyahu trusted YHWH, and YHWH sent an angel who destroyed the Assyrian army", "The walls fell immediately", "Chizkiyahu fled to Egypt"], "correct": 1, "source_quote": "And YHWH sent an angel, who cut off all the mighty warriors and commanders and officers in the camp of the king of Ashur." },
-    { "ref": "36:17-21", "question": "What happened to Yerushalayim at the end of 2 Chronicles?", "options": ["It was expanded and glorified", "Nevukhadnetzar burned the temple and the city, and the people were exiled to Babylon", "It was peacefully transferred to Persia", "It was abandoned voluntarily"], "correct": 1, "source_quote": "They burned the house of The Creator and broke down the wall of Yerushalayim and burned all its palaces with fire and destroyed all its precious vessels." }
+    {
+      "ref": "2 Divrei HaYamim 30:1-5",
+      "question": "Who does Khizkiyahu invite to his great Passover?",
+      "options": [
+        "Only the inhabitants of Yehudah and Binyamin",
+        "All of Yisra'el and Yehudah — including the northern tribes — from Dan to Be'er-Sheva",
+        "Only the priests and Levites",
+        "The surrounding nations as a witness"
+      ],
+      "correct": 1,
+      "source_quote": "Khizkiyahu sent to all Yisra'el and Yehudah, and wrote letters also to Efrayim and Menasheh, that they should come to the house of YHWH at Yerushalayim to keep the Passover"
+    },
+    {
+      "ref": "2 Divrei HaYamim 34:1",
+      "question": "How old was Yoshiyahu when he became king?",
+      "options": [
+        "Twelve years old",
+        "Eight years old",
+        "Sixteen years old",
+        "Twenty years old"
+      ],
+      "correct": 1,
+      "source_quote": "Yoshiyahu was eight years old when he began to reign"
+    },
+    {
+      "ref": "2 Divrei HaYamim 34:3",
+      "question": "When did Yoshiyahu begin seeking YHWH?",
+      "options": [
+        "At birth when his name was declared prophetically",
+        "In the eighth year of his reign, while still a boy",
+        "After the Book of Torah was found",
+        "After his advisors convinced him"
+      ],
+      "correct": 1,
+      "source_quote": "in the eighth year of his reign, while he was yet a boy, he began to seek the Creator of David his father"
+    },
+    {
+      "ref": "2 Divrei HaYamim 34:14-15",
+      "question": "Who found the Book of Torah?",
+      "options": [
+        "Yoshiyahu found it himself",
+        "The prophet Khuldah brought it",
+        "Khilqiyahu the priest found it in the Temple during repairs",
+        "It was brought from Babylon by returning exiles"
+      ],
+      "correct": 2,
+      "source_quote": "Khilqiyahu the priest found the Book of Torah given through Mosheh"
+    },
+    {
+      "ref": "2 Divrei HaYamim 35:18",
+      "question": "According to Divrei HaYamim, whose Passover is considered the greatest since Shemu'el?",
+      "options": [
+        "Asa's Passover",
+        "Khizkiyahu's Passover",
+        "Yoshiyahu's Passover",
+        "David's Passover"
+      ],
+      "correct": 2,
+      "source_quote": "No Passover like it had been kept in Yisra'el since the days of Shemu'el the prophet"
+    },
+    {
+      "ref": "2 Divrei HaYamim 35:21-23",
+      "question": "Why was Yoshiyahu's death a tragedy of his own making?",
+      "options": [
+        "He trusted bad military advisors",
+        "He went to battle against Pharaoh Nekho despite YHWH's word delivered through Nekho telling him to turn back",
+        "He refused to wear armor into battle",
+        "He was betrayed by one of his generals"
+      ],
+      "correct": 1,
+      "source_quote": "But Yoshiyahu would not turn away from him, but disguised himself in order to fight with him. He did not listen to the words of Nekho from the mouth of YHWH"
+    },
+    {
+      "ref": "2 Divrei HaYamim 36:15-16",
+      "question": "What does YHWH do before the final destruction of Yerushalayim?",
+      "options": [
+        "He withdraws his glory from the Temple in silence",
+        "He sends persistent messengers and prophets out of compassion for his people",
+        "He sends angels to protect the righteous",
+        "He reveals the disaster in a vision to Tzidkiyahu"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH, the Creator of their fathers, sent persistently to them by his messengers, because he had compassion on his people"
+    },
+    {
+      "ref": "2 Divrei HaYamim 36:21",
+      "question": "What does the 70-year exile fulfill according to Divrei HaYamim?",
+      "options": [
+        "The number of years the Temple stood",
+        "The word of YHWH through Yirmeyahu — the land enjoying its Shabbatot",
+        "A covenant made at Sinai about the duration of exile",
+        "The prophecy of Yesha'yahu about Babylon"
+      ],
+      "correct": 1,
+      "source_quote": "To fulfill the word of YHWH by the mouth of Yirmeyahu, until the land had enjoyed its Shabbatot"
+    },
+    {
+      "ref": "2 Divrei HaYamim 36:22-23",
+      "question": "What is the final message of Divrei HaYamim?",
+      "options": [
+        "A lament over the destruction of the Temple",
+        "Cyrus's decree commanding the return and rebuilding of YHWH's house",
+        "A genealogy connecting the exile to the restoration",
+        "A prayer for Yerushalayim's restoration"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH the Creator of heaven has given me all the kingdoms of the earth, and he has charged me to build him a house at Yerushalayim in Yehudah"
+    },
+    {
+      "ref": "2 Divrei HaYamim 36:19",
+      "question": "What did Nebukhadnetzar's forces do to the Temple?",
+      "options": [
+        "Seized it and used it as a Babylonian temple",
+        "Burned it and broke down the wall of Yerushalayim, and carried all the vessels to Babylon",
+        "Left it standing but removed the Ark",
+        "Sealed it and left it unharmed"
+      ],
+      "correct": 1,
+      "source_quote": "And they burned the house of YHWH and broke down the wall of Yerushalayim and burned all its palaces with fire and destroyed all its precious vessels"
+    }
   ],
   "faq": [
     {
-      "question": "What does Yoshiyahu's discovery of the Torah scroll reveal about textual loss?",
-      "answer": "2 Chronicles 34:14-15: the priest Chilqiyahu finds the Torah scroll in the temple — the book had been lost inside the very institution meant to preserve it. When Yoshiyahu hears its words, he tears his garments in anguish. The Torah was not stolen by enemies or destroyed in war — it was lost through neglect within the temple itself. This is the Great Eraser mechanism at its most subtle: the text can disappear not through active destruction but through institutional indifference. The Dead Sea Scrolls were sealed in caves in 68 CE and not fully published until the 1990s — a 1,900-year period in which primary scripture was inaccessible. The Orit Ge'ez manuscripts sat in Ethiopian monasteries while European scholars debated whether they existed. The Torah was in the temple the whole time. Someone just had to find it and read it."
+      "question": "What makes Khizkiyahu's Passover unusual?",
+      "answer": "He invites all of Yisra'el — including the northern tribes — to come to Yerushalayim, though many in the north mocked his messengers. Those who came celebrated for two weeks instead of one, and the joy was compared to Shlomo's day."
     },
     {
-      "question": "Why does 2 Chronicles end with the Koresh decree rather than with the destruction?",
-      "answer": "The final verse of Divrei HaYamim Bet (36:23) is not destruction — it is restoration: 'Let him go up.' The Chronicler could have ended with the burning of the temple and the exile. Instead, the last word is Koresh's decree permitting the return. This editorial decision says: the exile is not the end. The destruction is not the final word. YHWH's covenant endures through and beyond the catastrophe. The same principle applies to every subsequent displacement: the Roman destruction (70 CE), the medieval scatterings, the transatlantic slave trade, the modern dispersions. The covenant people are exiled, but the final word is always restoration. The Great Eraser tries to make the destruction permanent — to erase the identity so thoroughly that there is nothing to restore. The Chronicler says: let him go up. The return is always the last word."
+      "question": "What is Yoshiyahu's significance in Divrei HaYamim?",
+      "answer": "He is the last great covenant-reform king of Yehudah. He began seeking YHWH as a teenager before the Torah was even found, then undertook sweeping covenant renewal when the Book of Torah was discovered in the Temple."
     },
     {
-      "question": "What do Chizkiyahu's and Yoshiyahu's reforms reveal about the reform-apostasy cycle?",
-      "answer": "The Chronicler documents a recurring pattern: a righteous king reforms — cleansing the temple, restoring Torah observance, celebrating Pesach — then the next generation or the one after falls back into apostasy. Chizkiyahu reforms (chapters 29-32), his son Menasheh is the worst king in the record (chapter 33). Yoshiyahu reforms (chapters 34-35), his sons lead directly to the destruction of Yerushalayim (chapter 36). The pattern is not merely historical — it is structural. Covenant fidelity cannot be inherited. Each generation must rediscover the Torah for itself. Yoshiyahu found the scroll. His sons lost it again. The Great Eraser operates generationally: even when one generation recovers the primary sources, the next generation can lose them through institutional inertia, political compromise, or simple neglect. The Chronicler records the pattern so that the reader can recognize it when it repeats."
+      "question": "What happened when the Book of Torah was found in the Temple?",
+      "answer": "Yoshiyahu tore his clothes in grief when it was read — recognizing how far Yehudah had strayed from its commands. He sent to the prophetess Khuldah, who confirmed the promised judgment but also that YHWH would spare Yoshiyahu from seeing the disaster."
+    },
+    {
+      "question": "Why is Yoshiyahu's Passover rated greater than Khizkiyahu's in Divrei HaYamim?",
+      "answer": "Divrei HaYamim states that no Passover like Yoshiyahu's had been kept since the days of Shemu'el the prophet. His Passover involved properly organized Levitical service, the slaughter of 30,000 Passover lambs and 3,000 bulls, and meticulous attention to the Torah instructions."
+    },
+    {
+      "question": "What was Yoshiyahu's fatal mistake?",
+      "answer": "He went out to fight Pharaoh Nekho at Megiddo against YHWH's command. Nekho sent messengers saying YHWH had commanded him to hurry and that Yoshiyahu should not interfere — but Yoshiyahu disguised himself and fought anyway, was fatally wounded by archers."
+    },
+    {
+      "question": "What does 2 Divrei HaYamim 36:15-16 say about YHWH's heart toward his people before the destruction?",
+      "answer": "YHWH had compassion on his people and his dwelling place, and sent his messengers persistently — again and again — to warn them. The people mocked the messengers, despised YHWH's words, and scoffed at his prophets, until there was no remedy."
+    },
+    {
+      "question": "How does the 70-year exile relate to the Shabbat in Divrei HaYamim's theology?",
+      "answer": "Divrei HaYamim states the land lay desolate to fulfill its Shabbat rest — the land enjoyed its Shabbatot for 70 years. This frames the exile not merely as punishment but as the land receiving the Shabbat years that Yisra'el had not given it."
+    },
+    {
+      "question": "Why do the final verses of Divrei HaYamim repeat the opening of Ezra?",
+      "answer": "The deliberate link connects the story of YHWH's people directly into the story of restoration. Divrei HaYamim ends on a note of hope — the same words that open Ezra — showing the exile is not the end of the covenant story but a turning point toward restoration."
+    },
+    {
+      "question": "Who was the last king of Yehudah and how did his reign end?",
+      "answer": "Tzidkiyahu — installed by Nebukhadnetzar — did evil, refused to humble himself before Yirmeyahu, stiffened his neck and hardened his heart, then rebelled against Nebukhadnetzar. Nebukhadnetzar destroyed the Temple, broke down Yerushalayim's walls, and carried the remaining people to Babylon."
+    },
+    {
+      "question": "How does Divrei HaYamim function as a whole theological narrative?",
+      "answer": "It frames all of Yisra'el's history from Adam to the Cyrus Decree as a single covenant narrative — the Temple as the dwelling place of YHWH's glory, its proper service as the measure of covenant faithfulness, and the exile as the land's Shabbat rest before the return and restoration."
     }
   ]
 }

@@ -1,33 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_90",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_90",
   "label": "Divrei HaYamim Aleph (1 Chronicles) — Part 2 — Chapters 10–29",
   "volume": 31,
-  "content_version": 1,
+  "content_version": 3,
   "summary_plain": "Divrei HaYamim Aleph chapters 10 through 29 retell Dawid's reign from the death of Sha'ul to Dawid's final charge to Shelomoh. Dawid captures Yerushalayim and brings the Ark of the Covenant into the city with singing and dancing. He desires to build a house for YHWH, but YHWH says: Your son will build the house — I will establish his throne forever. Dawid prepares the materials for the temple, organizes the Levitical musicians and gatekeepers, and charges Shelomoh: Be strong and courageous. Know the Creator of your father and serve him with a whole heart.",
   "summary_scholarly": "The ACR reads from DSS fragments (4QChr) and the Orit Ge'ez. The Chronicler retells Dawid's reign with a distinctive emphasis: the military and political failures recorded in Shemu'el (Bat-Sheva, Amnon, Avshalom's revolt) are largely omitted. The Chronicler focuses on Dawid's role as temple preparer, worship organizer, and covenant transmitter. This is not historical falsification — it is theological selection. The Chronicler writes for the post-exilic community that needs to know its liturgical and institutional origins. Dawid's organization of the Levitical musicians (chapters 25-26) establishes the worship infrastructure that produced the Tehillim. The Chronicler's Dawid is the singer, the worshipper, the one who prepared everything so that YHWH's house could be built. The covenant promise in chapter 17 parallels 2 Shemu'el 7 — YHWH's unconditional oath to Dawid's line.",
   "key_terms": [
-    { "term": "Dawid", "phonetic": "Dah-VEED", "definition": "King of Yisra'EL, son of Yishai, of the tribe of Yehudah. In the Chronicler's account, Dawid is primarily the temple preparer and worship organizer — the one who set everything in place for the house of YHWH. Anglicized as David." },
-    { "term": "Aron HaBerit (Ark of the Covenant)", "phonetic": "Ah-ROHN hah-Beh-REET", "definition": "The sacred chest containing the tablets of the covenant. Dawid brings it into Yerushalayim with singing and dancing (chapter 15-16). The Ark is YHWH's throne on earth — the meeting point between YHWH and the covenant people." },
-    { "term": "Berit Olam (Eternal Covenant)", "phonetic": "Beh-REET Oh-LAHM", "definition": "1 Chronicles 17:12-14: YHWH promises Dawid an eternal throne — 'I will establish his throne forever. I will be his father, and he shall be my son.' This is the unconditional Dawid covenant — YHWH's oath that does not depend on human performance." }
+    {
+      "term": "Ark Brought to Yerushalayim",
+      "phonetic": "1 Divrei HaYamim 13-16",
+      "definition": "David's first attempt to bring the Ark failed when Uzza was struck dead; the second attempt succeeded with proper Levitical carrying procedures"
+    },
+    {
+      "term": "Uzza Struck Dead",
+      "phonetic": "OOZ-ah",
+      "definition": "Uzza reached out to steady the Ark when the oxen stumbled; YHWH's anger burned against him and he died — the Ark must be carried only by Levites using poles, not placed on a cart"
+    },
+    {
+      "term": "David's Psalm of Thanksgiving",
+      "phonetic": "1 Divrei HaYamim 16",
+      "definition": "When the Ark is installed in the tent David pitched for it, he leads a psalm combining portions of Tehillim 96, 105, and 106 — a liturgical moment of covenant worship"
+    },
+    {
+      "term": "Davidic Covenant",
+      "phonetic": "Berit David — 1 Divrei HaYamim 17",
+      "definition": "YHWH's promise to build David a house/dynasty — 'I will raise up your offspring after you and establish his kingdom'; David cannot build the Temple but his son will"
+    },
+    {
+      "term": "David Cannot Build the Temple",
+      "phonetic": "1 Divrei HaYamim 17:4",
+      "definition": "YHWH tells David through the prophet Natan: 'You shall not build me a house to dwell in' — David is a man of war; his son will build the Temple in a time of rest"
+    },
+    {
+      "term": "The Census and Plague",
+      "phonetic": "1 Divrei HaYamim 21",
+      "definition": "The Adversary (satan — the accuser role) incites David to count Yisra'el; YHWH is angered; David chooses three days of plague; 70,000 die; the threshing floor of Ornan the Yevusite becomes the Temple site"
+    },
+    {
+      "term": "Adversary Incites the Census",
+      "phonetic": "ha-satan — 1 Divrei HaYamim 21:1",
+      "definition": "In Shemu'el Bet 24:1 it is YHWH who incites David; in Divrei HaYamim 21:1 it is the Adversary — an adversarial figure in YHWH's council carrying out a function. This is documented as a textual variant, not a theological contradiction"
+    },
+    {
+      "term": "Temple Preparations",
+      "phonetic": "1 Divrei HaYamim 22-29",
+      "definition": "David gathers materials (cedar, iron, bronze, gold, silver), organizes the Levites, and commissions Shlomo to build the Temple — the most extensive preparation for YHWH's house in the Hebrew scriptures"
+    },
+    {
+      "term": "Levitical Organization",
+      "phonetic": "1 Divrei HaYamim 23-26",
+      "definition": "David organizes the Levites by age and function: 24 divisions of priests, singers, gatekeepers, and treasury officials — a priestly system designed for the permanent Temple"
+    },
+    {
+      "term": "'Everything Comes from You'",
+      "phonetic": "1 Divrei HaYamim 29:14",
+      "definition": "David's prayer: 'All things come from you, and of your own have we given you' — a declaration that the resources gathered for the Temple belong to YHWH and are returned to him, not donated by human initiative"
+    }
   ],
   "fill_blank": [
-    { "ref": "17:12", "prompt": "He shall build a house for me, and I will establish his ______ forever.", "answer": "throne", "source_quote": "He shall build a house for me, and I will establish his throne forever." },
-    { "ref": "28:9", "prompt": "Know the Creator of your father and serve him with a whole heart and with a willing ______.", "answer": "mind", "source_quote": "And you, Shelomoh my son, know the Creator of your father and serve him with a whole heart and with a willing mind, for YHWH searches all hearts and understands every plan and thought." },
-    { "ref": "29:11", "prompt": "Yours, O YHWH, is the greatness and the power and the glory and the victory and the ______.", "answer": "majesty", "source_quote": "Yours, O YHWH, is the greatness and the power and the glory and the victory and the majesty, for all that is in the heavens and in the earth is yours." }
+    {
+      "ref": "1 Divrei HaYamim 13:9-10",
+      "prompt": "And the anger of YHWH was kindled against Uzza, and he struck him down because he put out his hand to the _____, and he died there before YHWH",
+      "answer": "ark",
+      "source_quote": "the anger of YHWH was kindled against Uzza, and he struck him down because he put out his hand to the ark"
+    },
+    {
+      "ref": "1 Divrei HaYamim 15:2",
+      "prompt": "Then David said, No one but the _____ should carry the ark of YHWH, for YHWH chose them to carry the ark",
+      "answer": "Levites",
+      "source_quote": "No one but the Levites should carry the ark of YHWH, for YHWH chose them to carry the ark of YHWH"
+    },
+    {
+      "ref": "1 Divrei HaYamim 16:8",
+      "prompt": "Oh give thanks to YHWH; call upon his _____; make known his deeds among the peoples",
+      "answer": "name",
+      "source_quote": "Oh give thanks to YHWH; call upon his name; make known his deeds among the peoples"
+    },
+    {
+      "ref": "1 Divrei HaYamim 17:4",
+      "prompt": "Go and tell David my servant, Thus says YHWH, You shall not build me a _____ to dwell in",
+      "answer": "house",
+      "source_quote": "You shall not build me a house to dwell in"
+    },
+    {
+      "ref": "1 Divrei HaYamim 17:14",
+      "prompt": "I will confirm him in my house and in my kingdom forever, and his _____ shall be established forever",
+      "answer": "throne",
+      "source_quote": "I will confirm him in my house and in my kingdom forever, and his throne shall be established forever"
+    },
+    {
+      "ref": "1 Divrei HaYamim 21:1",
+      "prompt": "Then _____ stood against Yisra'el and incited David to number Yisra'el",
+      "answer": "an adversary (satan)",
+      "source_quote": "Then an adversary stood against Yisra'el and incited David to number Yisra'el"
+    },
+    {
+      "ref": "1 Divrei HaYamim 21:14",
+      "prompt": "So YHWH sent a pestilence on Yisra'el, and _____ thousand men fell in Yisra'el",
+      "answer": "seventy",
+      "source_quote": "So YHWH sent a pestilence on Yisra'el, and seventy thousand men fell in Yisra'el"
+    },
+    {
+      "ref": "1 Divrei HaYamim 22:9",
+      "prompt": "Behold, a son shall be born to you who shall be a man of _____; I will give him rest from all his surrounding enemies",
+      "answer": "rest",
+      "source_quote": "Behold, a son shall be born to you who shall be a man of rest; I will give him rest from all his surrounding enemies"
+    },
+    {
+      "ref": "1 Divrei HaYamim 28:9",
+      "prompt": "And you, Shlomo my son, know the Creator of your father and serve him with a whole heart and with a willing mind, for YHWH searches all hearts and understands every plan and _____",
+      "answer": "thought",
+      "source_quote": "for YHWH searches all hearts and understands every plan and thought"
+    },
+    {
+      "ref": "1 Divrei HaYamim 29:14",
+      "prompt": "For all things come from you, and of your own have we given _____",
+      "answer": "you",
+      "source_quote": "For all things come from you, and of your own have we given you"
+    }
   ],
   "multiple_choice": [
-    { "ref": "17:3-4", "question": "What does YHWH tell Dawid about building the temple?", "options": ["Build it immediately", "You shall not build the house — your son shall build it, and I will establish his throne forever", "There will be no temple", "Build it in Shomron"], "correct": 1, "source_quote": "You shall not build a house for me to dwell in... your son shall build a house for me, and I will establish his throne forever." },
-    { "ref": "15:16, 25:1-7", "question": "What does Dawid organize for the temple worship?", "options": ["A military guard only", "The Levitical musicians and singers — setting up the worship infrastructure", "A trading company", "A school of philosophy"], "correct": 1, "source_quote": "Dawid also commanded the chiefs of the Levites to appoint their brothers as the singers who should play loudly on musical instruments." },
-    { "ref": "29:10-13", "question": "What does Dawid's final prayer declare?", "options": ["That he is the greatest king", "Yours, O YHWH, is the greatness and the power and the glory — everything in heaven and earth is yours", "That Shelomoh should conquer all nations", "That the temple is unnecessary"], "correct": 1, "source_quote": "Yours, O YHWH, is the greatness and the power and the glory and the victory and the majesty, for all that is in the heavens and in the earth is yours." }
+    {
+      "ref": "1 Divrei HaYamim 13:7-10",
+      "question": "Why was Uzza struck dead when he reached out to steady the Ark?",
+      "options": [
+        "He was not a Levite",
+        "He touched the Ark, which only Levites could carry by poles and no one could touch directly",
+        "He was carrying the wrong items",
+        "He had not washed his hands"
+      ],
+      "correct": 1,
+      "source_quote": "the anger of YHWH was kindled against Uzza, and he struck him down because he put out his hand to the ark"
+    },
+    {
+      "ref": "1 Divrei HaYamim 15:2",
+      "question": "Who alone does David say should carry the Ark?",
+      "options": [
+        "The king himself",
+        "The Levites, whom YHWH chose for this purpose",
+        "The eldest men of each tribe",
+        "The priests of Tzadok only"
+      ],
+      "correct": 1,
+      "source_quote": "No one but the Levites should carry the ark of YHWH, for YHWH chose them to carry the ark"
+    },
+    {
+      "ref": "1 Divrei HaYamim 17:1-4",
+      "question": "Why does YHWH tell David he cannot build the Temple?",
+      "options": [
+        "David sinned too greatly with Bat-Sheva",
+        "David was too old",
+        "David shed much blood and waged great wars — his son in a time of peace will build it",
+        "David did not ask YHWH first"
+      ],
+      "correct": 2,
+      "source_quote": "You shall not build me a house to dwell in"
+    },
+    {
+      "ref": "1 Divrei HaYamim 17:11-12",
+      "question": "Who does YHWH promise will build the Temple?",
+      "options": [
+        "Yoav, David's general",
+        "Natan the prophet",
+        "David's son from his own body, who will come after him",
+        "Tzadok the priest"
+      ],
+      "correct": 2,
+      "source_quote": "I will raise up your offspring after you, one of your own sons, and I will establish his kingdom. He shall build a house for me"
+    },
+    {
+      "ref": "1 Divrei HaYamim 21:1",
+      "question": "Who incites David to take the census in Divrei HaYamim's account?",
+      "options": [
+        "YHWH directly (as in Shemu'el Bet 24)",
+        "An adversarial figure (ha-satan)",
+        "Yoav his general",
+        "The princes of the tribes"
+      ],
+      "correct": 1,
+      "source_quote": "Then an adversary stood against Yisra'el and incited David to number Yisra'el"
+    },
+    {
+      "ref": "1 Divrei HaYamim 21:9-12",
+      "question": "What three choices does YHWH offer David as punishment for the census?",
+      "options": [
+        "Exile, famine, or plague",
+        "Three years of famine, three months before enemies, or three days of plague",
+        "Loss of the kingdom, loss of his sons, or loss of Yerushalayim",
+        "Drought, defeat, or death of his firstborn"
+      ],
+      "correct": 1,
+      "source_quote": "Three years of famine, or three months of devastation by your foes, or three days of the sword of YHWH"
+    },
+    {
+      "ref": "1 Divrei HaYamim 21:26-28",
+      "question": "What happens at the threshing floor of Ornan that marks it as the Temple site?",
+      "options": [
+        "An angel appears there in a vision",
+        "YHWH answers David by fire from heaven on the altar",
+        "The Ark rests there miraculously",
+        "David finds the foundation stone there"
+      ],
+      "correct": 1,
+      "source_quote": "And YHWH answered him with fire from heaven upon the altar of burnt offering"
+    },
+    {
+      "ref": "1 Divrei HaYamim 22:14",
+      "question": "What quantities does David say he has prepared for the Temple?",
+      "options": [
+        "He prepared by prayer, not materials",
+        "A hundred thousand talents of gold and a million talents of silver, with bronze and iron beyond weighing",
+        "Enough for a simple tent like the Tabernacle",
+        "Materials he gathered from the surrounding nations as tribute"
+      ],
+      "correct": 1,
+      "source_quote": "With great pains I have prepared for the house of YHWH a hundred thousand talents of gold, a million talents of silver, and bronze and iron beyond weighing"
+    },
+    {
+      "ref": "1 Divrei HaYamim 28:9",
+      "question": "What does David tell Shlomo about YHWH's nature in his charge?",
+      "options": [
+        "YHWH rewards the wealthy and powerful",
+        "YHWH searches all hearts and understands every plan and thought",
+        "YHWH only sees outward actions",
+        "YHWH judges only through the priests"
+      ],
+      "correct": 1,
+      "source_quote": "for YHWH searches all hearts and understands every plan and thought"
+    },
+    {
+      "ref": "1 Divrei HaYamim 29:14",
+      "question": "What does David declare about all the Temple offerings brought?",
+      "options": [
+        "They are the people's greatest achievement",
+        "They came from YHWH — of his own have we given him",
+        "They honor David's dynasty forever",
+        "They fulfill the covenant made at Sinai"
+      ],
+      "correct": 1,
+      "source_quote": "For all things come from you, and of your own have we given you"
+    }
   ],
   "faq": [
     {
-      "question": "Why does the Chronicler omit Dawid's failures that are recorded in Shemu'el?",
-      "answer": "The books of Shemu'el record Dawid's sin with Bat-Sheva, the rape of Tamar by Amnon, Avshalom's revolt, and other failures in detail. The Chronicler largely omits these episodes. This is not because the Chronicler denies they happened — it is because the Chronicler writes for a different audience with a different purpose. The post-exilic community in Yerushalayim needs to know its liturgical origins, its temple foundations, its worship structure. The Chronicler presents Dawid as the temple preparer, the worship organizer, the covenant transmitter. Both portraits are true. Shemu'el tells the whole human story. The Chronicler tells the covenant-institutional story. The Great Eraser mechanism sometimes uses selective citation in the same way — presenting only part of a text to serve a theological agenda. The difference is that both Shemu'el and Chronicles are in the canon. The reader has access to both. Selective erasure becomes a problem only when the other source is suppressed."
+      "question": "Why was the first attempt to bring the Ark to Yerushalayim a failure?",
+      "answer": "David placed the Ark on a new cart — a Plishtim method — instead of having the Levites carry it on poles as YHWH commanded. When Uzza reached out to steady it, YHWH's anger burned and Uzza died. The proper method required Levites carrying it on their shoulders."
     },
     {
-      "question": "What does Dawid's charge to Shelomoh reveal about covenant transmission?",
-      "answer": "1 Chronicles 28:9: 'Know the Creator of your father and serve him with a whole heart and with a willing mind, for YHWH searches all hearts and understands every plan and thought.' Dawid does not tell Shelomoh to follow a priest, obey an institution, or accept a creed. He says: know The Creator directly. Serve with a whole heart. YHWH searches hearts — not credentials, not affiliations, not institutional memberships. This father-to-son transmission of covenant identity is the original mode. Before there were rabbis, before there were churches, before there were academies — there was a father telling his son: know YHWH. The Great Eraser replaces this direct transmission with institutional mediation. Dawid's charge says: the relationship is direct."
+      "question": "What is the significance of David's psalm in ch.16?",
+      "answer": "It combines portions of Tehillim 96, 105, and 106 — showing that the Psalter was understood as a living covenant liturgy, used at key moments of worship. The psalm's themes are YHWH's glory among the nations, his covenant with Avraham, and national praise."
+    },
+    {
+      "question": "What does YHWH promise David in the Davidic covenant of ch.17?",
+      "answer": "YHWH promises to establish David's dynasty forever: a son from his own body will build the Temple, YHWH will be a father to that son, and his throne will be established forever. David cannot build the Temple because he is a man of war."
+    },
+    {
+      "question": "Why does the census anger YHWH?",
+      "answer": "Divrei HaYamim states the Adversary incited David to count Yisra'el. The census represents a trust in human military numbers rather than in YHWH as Yisra'el's true defender — it is a failure of covenant faith expressed as a political act."
+    },
+    {
+      "question": "What is the significance of Ornan's threshing floor?",
+      "answer": "David purchases it to build an altar after YHWH stops the plague there. YHWH answers by fire from heaven on the altar — this site becomes the place where Shlomo will later build the Temple. The Temple of YHWH is built on the spot where judgment was turned back."
+    },
+    {
+      "question": "Why does David prepare materials for the Temple if he cannot build it?",
+      "answer": "David's love for YHWH means he prepares everything his son will need — gold, silver, bronze, iron, timber, and stone in enormous quantities. His preparation is an act of covenant devotion even though the honor of building goes to Shlomo."
+    },
+    {
+      "question": "How does David organize the Levites in chs 23-26?",
+      "answer": "He divides them into 24 priestly divisions (the sons of Aharon), organizes the singers under Asaf, Heman, and Yedutun, establishes gatekeeping divisions, and appoints treasury officials — a complete administrative structure for permanent Temple service."
+    },
+    {
+      "question": "What does David's prayer in ch.29 reveal about his theology?",
+      "answer": "David declares that everything given for the Temple came first from YHWH — the people are returning to YHWH what was already his. He acknowledges Yisra'el as foreigners and sojourners before YHWH, as all their ancestors were."
+    },
+    {
+      "question": "What is the textual significance of the census being incited by 'an adversary' in Divrei HaYamim vs. YHWH in Shemu'el?",
+      "answer": "This is a documented textual variant between the two accounts. In Shemu'el Bet 24:1 YHWH incites David; in Divrei HaYamim 21:1 an adversarial figure does so. The variant reflects the developing role of the adversary figure in the divine council across the Hebrew scriptural tradition — both are pre-corruption primary texts."
+    },
+    {
+      "question": "What charge does David give Shlomo about building the Temple?",
+      "answer": "Be strong and courageous; do not be afraid or dismayed. YHWH is with you and will not leave you until all the Temple work is finished. Seek YHWH with a whole heart and willing mind — YHWH searches all hearts and understands every thought."
     }
   ]
 }

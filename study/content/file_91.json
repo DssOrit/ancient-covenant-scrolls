@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_91",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_91",
   "label": "Divrei HaYamim Bet (2 Chronicles) — Part 1 — Chapters 1–18",
   "volume": 32,
-  "content_version": 1,
+  "content_version": 4,
   "summary_plain": "Divrei HaYamim Bet opens with Shelomoh asking YHWH for wisdom, not riches or power. YHWH grants him wisdom and adds riches and honor. Shelomoh builds the temple — cedar from Levanon, gold overlays, the great basin called the Sea — and dedicates it with prayer and sacrifice. The glory of YHWH fills the house as a cloud. The Queen of Sheva comes to test Shelomoh with hard questions and is overwhelmed by his wisdom. She says: Happy are your servants who stand before you and hear your wisdom. After Shelomoh's death, the kingdom divides. Rechav'am rules Yehudah. The Chronicler traces the southern kingdom's rulers through reforms and failures.",
   "summary_scholarly": "The ACR reads from DSS fragments and the Orit Ge'ez. The Queen of Sheva narrative (chapter 9) is critical. Sheva (Saba) was an ancient kingdom spanning the southern Arabian Peninsula and the Horn of Africa — modern Yemen, Eritrea, Ethiopia, and Djibouti. The Ethiopian tradition (Kebra Nagast) identifies the Queen of Sheva as Makeda and records that she bore Shelomoh a son, Menelik I, founder of the Solomonic dynasty of Ethiopia. This is not folklore — the Solomonic dynasty ruled Ethiopia from approximately 1270 to 1974 CE. The Aksumite Empire (c. 100-940 CE) controlled both sides of the Red Sea, including Saba. The trade corridor between Yisra'EL and Sheva was the African-Arabian spice and incense route — a continuous commercial and cultural connection. The Orit Ge'ez preserves the Sheva connection as living tradition. The Great Eraser separates Ethiopia from Yisra'EL by treating the Red Sea as a continental boundary when it is actually a narrow waterway that connected, not divided, the African and Arabian shores.",
   "key_terms": [
-    { "term": "Malkat Sheva (Queen of Sheva)", "phonetic": "Mal-KAHT SHEH-vah", "definition": "The queen who visited Shelomoh to test him with hard questions (chapter 9). Sheva (Saba) spanned southern Arabia and the Horn of Africa. The Ethiopian tradition identifies her as Makeda, mother of Menelik I. Anglicized as the Queen of Sheba." },
-    { "term": "Beit HaMiqdash (The Temple)", "phonetic": "Bayt hah-Mik-DAHSH", "definition": "The house Shelomoh built for YHWH in Yerushalayim. The Chronicler devotes chapters 2-7 to its construction and dedication. When the glory of YHWH filled it as a cloud, the priests could not stand to minister." },
-    { "term": "Kevod YHWH (Glory of YHWH)", "phonetic": "Keh-VOD", "definition": "2 Chronicles 7:1-2: 'The glory of YHWH filled the house. The priests could not enter the house of YHWH because the glory of YHWH filled it.' The kavod is YHWH's manifest presence — visible, tangible, overwhelming." }
+    {
+      "term": "Shlomo's Temple",
+      "phonetic": "2 Divrei HaYamim 2-7",
+      "definition": "The construction and dedication of the Temple in Yerushalayim — the central event of Divrei HaYamim Bet, narrated at length across six chapters"
+    },
+    {
+      "term": "Temple Dedication Prayer",
+      "phonetic": "2 Divrei HaYamim 6-7",
+      "definition": "Shlomo's extended prayer at the Temple dedication, calling on YHWH to hear prayers made toward this place, especially in times of defeat, drought, famine, plague, or exile"
+    },
+    {
+      "term": "'If My People Called by My Name'",
+      "phonetic": "2 Divrei HaYamim 7:14",
+      "definition": "YHWH's answer to Shlomo's prayer — unique to Divrei HaYamim, not in Melakhim: 'if my people who are called by my name humble themselves and pray and seek my face and turn from their wicked ways, then I will hear from heaven'"
+    },
+    {
+      "term": "YHWH's Fire on the Sacrifice",
+      "phonetic": "2 Divrei HaYamim 7:1",
+      "definition": "When Shlomo finished praying, fire came down from heaven and consumed the burnt offering and the sacrifices — YHWH's acceptance of the Temple dedication"
+    },
+    {
+      "term": "Kingdom Split",
+      "phonetic": "2 Divrei HaYamim 10",
+      "definition": "Rekhav'am's refusal to lighten the people's burden leads the northern tribes to reject his rule — 'What portion have we in David? Every man to your tents, O Yisra'el!'"
+    },
+    {
+      "term": "Rekhav'am",
+      "phonetic": "reh-khav-AM",
+      "definition": "Shlomo's son who becomes king; ignores the elders' counsel and follows the young men's advice to increase the people's yoke — the direct cause of the kingdom's split"
+    },
+    {
+      "term": "Yarov'am",
+      "phonetic": "yah-ro-VAM",
+      "definition": "The northern leader who leads the ten tribes away from Rekhav'am's rule, establishing the northern kingdom with golden calves at Beit-El and Dan"
+    },
+    {
+      "term": "King Asa's Reform",
+      "phonetic": "2 Divrei HaYamim 14-16",
+      "definition": "Asa removes the foreign altars, smashes sacred pillars, cuts down the Asherim, commands Yehudah to seek YHWH — a covenant reform king in the Davidic line"
+    },
+    {
+      "term": "Yehoshafat's Reforms",
+      "phonetic": "2 Divrei HaYamim 17-20",
+      "definition": "Yehoshafat sends priests and Levites throughout Yehudah to teach Torah; builds fortified cities; defeats a great coalition through prayer and prophetic word — YHWH fights for them"
+    },
+    {
+      "term": "Yehoram",
+      "phonetic": "yeh-ho-RAM",
+      "definition": "Yehoshafat's son who married Akhav's daughter; killed his brothers; built high places; Yisra'el went astray under him — received a letter of condemnation from Eliyahu the prophet"
+    }
   ],
   "fill_blank": [
-    { "ref": "1:10", "prompt": "Give me now wisdom and ______, that I may go out and come in before this people.", "answer": "knowledge", "source_quote": "Give me now wisdom and knowledge, that I may go out and come in before this people, for who can govern this people of yours, which is so great?" },
-    { "ref": "9:6", "prompt": "The Queen of Sheva said to Shelomoh: The report was true that I heard in my own land of your words and of your ______.", "answer": "wisdom", "source_quote": "She said to the king: The report was true that I heard in my own land of your words and of your wisdom." },
-    { "ref": "7:1", "prompt": "When Shelomoh finished his prayer, fire came down from heaven and consumed the burnt offering, and the ______ of YHWH filled the house.", "answer": "glory", "source_quote": "As soon as Shelomoh finished his prayer, fire came down from heaven and consumed the burnt offering and the sacrifices, and the glory of YHWH filled the house." }
+    {
+      "ref": "2 Divrei HaYamim 7:1",
+      "prompt": "When Shlomo had ended his prayer, _____ came down from heaven and consumed the burnt offering and the sacrifices",
+      "answer": "fire",
+      "source_quote": "fire came down from heaven and consumed the burnt offering and the sacrifices"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:3",
+      "prompt": "When all the people of Yisra'el saw the fire come down and the glory of YHWH on the Temple, they bowed down with their faces to the ground on the _____ and worshipped",
+      "answer": "pavement",
+      "source_quote": "bowed down with their faces to the ground on the pavement and worshipped"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:14",
+      "prompt": "If my people who are called by my name humble themselves and _____ and seek my face",
+      "answer": "pray",
+      "source_quote": "if my people who are called by my name humble themselves and pray and seek my face and turn from their wicked ways"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:14",
+      "prompt": "Then I will hear from heaven and will forgive their sin and _____ their land",
+      "answer": "heal",
+      "source_quote": "then I will hear from heaven and will forgive their sin and heal their land"
+    },
+    {
+      "ref": "2 Divrei HaYamim 10:11",
+      "prompt": "And now, whereas my father laid on you a heavy _____, I will add to your yoke",
+      "answer": "yoke",
+      "source_quote": "my father laid on you a heavy yoke, I will add to your yoke"
+    },
+    {
+      "ref": "2 Divrei HaYamim 10:16",
+      "prompt": "What portion have we in _____? To your tents, O Yisra'el!",
+      "answer": "David",
+      "source_quote": "What portion have we in David? To your tents, O Yisra'el!"
+    },
+    {
+      "ref": "2 Divrei HaYamim 14:2",
+      "prompt": "Asa did what was good and right in the eyes of _____ his Creator",
+      "answer": "YHWH",
+      "source_quote": "Asa did what was good and right in the eyes of YHWH his Creator"
+    },
+    {
+      "ref": "2 Divrei HaYamim 14:11",
+      "prompt": "YHWH, there is none like you to help, between the mighty and the weak. Help us, O YHWH our Creator, for we rely on _____, and in your name we have come against this multitude",
+      "answer": "you",
+      "source_quote": "Help us, O YHWH our Creator, for we rely on you, and in your name we have come against this multitude"
+    },
+    {
+      "ref": "2 Divrei HaYamim 20:17",
+      "prompt": "You will not need to fight in this battle. Stand firm, hold your position, and see the salvation of YHWH on your behalf, O Yehudah and Yerushalayim. Do not be afraid and do not be dismayed. Tomorrow go out against them, and YHWH will be with _____",
+      "answer": "you",
+      "source_quote": "you will not need to fight in this battle. Stand firm, hold your position, and see the salvation of YHWH on your behalf"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:16",
+      "prompt": "Now I have chosen and consecrated this house that my name may be there _____",
+      "answer": "forever",
+      "source_quote": "Now I have chosen and consecrated this house that my name may be there forever"
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:7-12", "question": "What did Shelomoh ask YHWH for?", "options": ["Military power and vast territory", "Wisdom and knowledge to govern YHWH's people", "Long life and immortality", "Revenge against his enemies"], "correct": 1, "source_quote": "Give me now wisdom and knowledge, that I may go out and come in before this people." },
-    { "ref": "9:1-12", "question": "What did the Queen of Sheva do when she visited Shelomoh?", "options": ["She waged war against him", "She tested him with hard questions and was overwhelmed by his wisdom — she said the report did not tell half of it", "She refused to enter the palace", "She demanded tribute"], "correct": 1, "source_quote": "When the Queen of Sheva had seen the wisdom of Shelomoh... there was no more breath in her. She said: The report was true... but the half of it was not told to me. Your wisdom surpasses the report that I heard." },
-    { "ref": "7:1-2", "question": "What happened when Shelomoh dedicated the temple?", "options": ["Nothing visible occurred", "Fire came down from heaven and the glory of YHWH filled the house — the priests could not enter", "The temple collapsed", "Only the king could enter"], "correct": 1, "source_quote": "Fire came down from heaven and consumed the burnt offering and the sacrifices, and the glory of YHWH filled the house. And the priests could not enter the house of YHWH, because the glory of YHWH filled the house." }
+    {
+      "ref": "2 Divrei HaYamim 7:1",
+      "question": "What happened when Shlomo finished his dedication prayer?",
+      "options": [
+        "The people shouted and praised YHWH",
+        "Fire came down from heaven and consumed the offerings, and the glory of YHWH filled the Temple",
+        "An earthquake shook the Temple mount",
+        "The Ark of the Covenant opened"
+      ],
+      "correct": 1,
+      "source_quote": "fire came down from heaven and consumed the burnt offering and the sacrifices, and the glory of YHWH filled the Temple"
+    },
+    {
+      "ref": "2 Divrei HaYamim 7:14",
+      "question": "What four things does YHWH say his people must do before he will heal their land?",
+      "options": [
+        "Fast, pray, give offerings, and seek the priests",
+        "Humble themselves, pray, seek YHWH's face, and turn from wicked ways",
+        "Build the Temple, teach Torah, keep Shabbat, and honor parents",
+        "Repent, sacrifice, give to the poor, and return to Yerushalayim"
+      ],
+      "correct": 1,
+      "source_quote": "if my people who are called by my name humble themselves and pray and seek my face and turn from their wicked ways"
+    },
+    {
+      "ref": "2 Divrei HaYamim 10:6-11",
+      "question": "What was Rekhav'am's fatal mistake?",
+      "options": [
+        "He raised taxes without asking anyone",
+        "He rejected the elders' counsel and followed the young men's advice to increase the people's burden",
+        "He made a treaty with Mitzrayim",
+        "He built a competing temple in Shekhem"
+      ],
+      "correct": 1,
+      "source_quote": "But he abandoned the counsel that the old men gave him and took counsel with the young men who had grown up with him"
+    },
+    {
+      "ref": "2 Divrei HaYamim 10:16",
+      "question": "What cry marks the northern tribes' rejection of Rekhav'am?",
+      "options": [
+        "'Death to the house of David!'",
+        "'What portion have we in David? To your tents, O Yisra'el!'",
+        "'We have no king but YHWH!'",
+        "'Cursed be the son of Shlomo!'"
+      ],
+      "correct": 1,
+      "source_quote": "What portion have we in David? To your tents, O Yisra'el!"
+    },
+    {
+      "ref": "2 Divrei HaYamim 14:11",
+      "question": "What does Asa say when facing the army of Zerakh the Ethiopian?",
+      "options": [
+        "He asks YHWH to destroy the enemy utterly",
+        "He prays that YHWH help them because they rely on YHWH alone, not on their own strength",
+        "He tells his generals to form a battle line",
+        "He sends tribute to avoid the battle"
+      ],
+      "correct": 1,
+      "source_quote": "Help us, O YHWH our Creator, for we rely on you, and in your name we have come against this multitude"
+    },
+    {
+      "ref": "2 Divrei HaYamim 17:7-9",
+      "question": "What unique thing did Yehoshafat do throughout Yehudah?",
+      "options": [
+        "He built a wall around Yerushalayim",
+        "He sent priests and Levites with the Book of Torah to teach throughout all of Yehudah's cities",
+        "He organized the Temple musicians",
+        "He expelled all non-Hebrews from the land"
+      ],
+      "correct": 1,
+      "source_quote": "In the third year of his reign he sent his officials, and also the Levites, and they taught in Yehudah, having the Book of the Torah of YHWH with them"
+    },
+    {
+      "ref": "2 Divrei HaYamim 20:1-4",
+      "question": "How does Yehoshafat respond when a great coalition marches against Yehudah?",
+      "options": [
+        "He assembles his army immediately",
+        "He sets his face to seek YHWH and proclaims a fast throughout all Yehudah",
+        "He sends tribute to the coalition",
+        "He calls on Yisra'el for military help"
+      ],
+      "correct": 1,
+      "source_quote": "Then Yehoshafat was afraid and set his face to seek YHWH, and proclaimed a fast throughout all Yehudah"
+    },
+    {
+      "ref": "2 Divrei HaYamim 20:17",
+      "question": "What does the prophet Yakhazi'el tell Yehoshafat before the battle?",
+      "options": [
+        "To attack at dawn",
+        "Not to fight — to stand firm and see YHWH's salvation, for the battle belongs to YHWH",
+        "To send his bravest warriors first",
+        "To pray all night before fighting"
+      ],
+      "correct": 1,
+      "source_quote": "You will not need to fight in this battle. Stand firm, hold your position, and see the salvation of YHWH on your behalf"
+    },
+    {
+      "ref": "2 Divrei HaYamim 20:21-22",
+      "question": "What unusual arrangement did Yehoshafat make for the battle?",
+      "options": [
+        "He had the priests blow trumpets throughout the battle",
+        "He appointed singers to go before the army praising YHWH in holy attire",
+        "He had Levites carry the Ark into battle",
+        "He stood on a high place and prayed during the battle"
+      ],
+      "correct": 1,
+      "source_quote": "He appointed those who were to sing to YHWH and praise him in holy attire, as they went before the army"
+    },
+    {
+      "ref": "2 Divrei HaYamim 21:12-15",
+      "question": "What unusual message does Yehoram receive from the prophet Eliyahu?",
+      "options": [
+        "A vision in the night",
+        "A written letter of condemnation",
+        "A messenger sent by hand",
+        "A word through his wife"
+      ],
+      "correct": 1,
+      "source_quote": "A letter came to him from Eliyahu the prophet saying, Thus says YHWH, the Creator of David your father"
+    }
   ],
   "faq": [
     {
-      "question": "What does the Queen of Sheva narrative reveal about the African-Arabian connection to Yisra'EL?",
-      "answer": "The Queen of Sheva came from Saba — an ancient kingdom that spanned the southern Arabian Peninsula and the Horn of Africa (modern Yemen, Eritrea, Ethiopia, Djibouti). The Red Sea did not divide these territories — it connected them. The Aksumite Empire (c. 100-940 CE) controlled both shores. The Ethiopian tradition (Kebra Nagast) identifies the Queen as Makeda and records that she bore Shelomoh a son, Menelik I, who founded the Solomonic dynasty. That dynasty ruled Ethiopia from approximately 1270 to 1974 CE — the longest continuous monarchical line in recorded history. The Orit Ge'ez was preserved by the community descended from this connection. The Great Eraser separates Ethiopia from Yisra'EL — treating the African Israelite tradition as derivative or legendary — when the textual, genetic, and archaeological evidence points to continuous connection across the African-Arabian trade corridor. The spice route from Sheva to Yerushalayim was the commercial backbone of Shelomoh's wealth."
+      "question": "What is the significance of YHWH's fire descending on the Temple sacrifice?",
+      "answer": "It is YHWH's direct acceptance of the Temple — the same pattern as YHWH's fire at Mosheh's first sacrifice (Vayikra 9:24) and Eliyahu's sacrifice on Mount Karmel. Fire from heaven is the covenant sign of YHWH's presence and approval."
     },
     {
-      "question": "Why does Shelomoh ask for wisdom and not power?",
-      "answer": "2 Chronicles 1:10: 'Give me now wisdom and knowledge, that I may go out and come in before this people.' YHWH responds: because you asked for wisdom and not riches, power, or the life of your enemies, I give you wisdom and add riches and honor as well (1:11-12). This is the covenant framework: the covenant leader's first obligation is wisdom — the capacity to govern YHWH's people according to YHWH's instruction. Not military force. Not economic extraction. Not personal glory. Wisdom. The same Chokmah (Wisdom) personified in Mishlei 1-9, the same Torah-wisdom celebrated in Psalm 119. Every Great Eraser system elevates institutional power over wisdom — credentialed authority over direct knowledge. Shelomoh's request says: wisdom is the prerequisite. Everything else follows."
+      "question": "Why is 2 Divrei HaYamim 7:14 significant as a unique text?",
+      "answer": "The verse 'If my people who are called by my name...' appears only in Divrei HaYamim, not in the parallel account in Melakhim. It is YHWH's direct conditional promise of restoration — heard and preserved only in this text."
     },
     {
-      "question": "What is the Aksumite connection to the Israelite covenant?",
-      "answer": "The Aksumite Empire, centered in modern-day Eritrea and northern Ethiopia, controlled both sides of the Red Sea from approximately 100 to 940 CE. Aksum was one of the four great world powers of late antiquity — alongside Rome, Persia, and China. The Aksumite script (Ge'ez) preserved the Orit — the Torah, the prophets, Chanokh, Yovelim, and other texts that the Masoretic canon later excluded. The Beta Israel maintained covenant practice — Shabbat, kashrut, pilgrimage, sacrifice — in Ethiopia for millennia before European contact. The Queen of Sheva narrative in 2 Chronicles 9 places the connection at the time of Shelomoh — the 10th century BCE. The Aksumite civilization that later preserved the Orit is the historical continuation of that Sheva-Yisra'EL corridor. The Great Eraser treats this entire tradition as marginal or folkloric, when it is in fact the oldest continuous preservation of the broader Israelite scriptural canon."
+      "question": "What caused the kingdom to split?",
+      "answer": "Rekhav'am rejected the counsel of the experienced elders who told him to lighten the people's burden. Following younger advisors, he threatened to increase it. The northern tribes declared 'What portion have we in David?' and withdrew under Yarov'am."
+    },
+    {
+      "question": "What is the theological significance of Yehoshafat's battle strategy?",
+      "answer": "Yehoshafat sends singers praising YHWH ahead of the army — when they begin to sing, YHWH sets an ambush against the enemy coalition and they destroy each other. YHWH fights; Yehudah collects the spoil for three days."
+    },
+    {
+      "question": "What makes Zerakh's army notable in ch.14?",
+      "answer": "Zerakh the Kushite (Ethiopian) comes against Asa with a million men and 300 chariots — an enormous force. Asa's prayer of dependence on YHWH alone results in YHWH defeating the entire army."
+    },
+    {
+      "question": "How does Divrei HaYamim Bet evaluate the kings of Yehudah?",
+      "answer": "Each king is evaluated by whether he sought YHWH and kept the covenant. Reform kings (Asa, Yehoshafat, Khizkiyahu, Yoshiyahu) are praised at length; apostate kings are condemned and their reigns summarized briefly."
+    },
+    {
+      "question": "Why does Divrei HaYamim Bet omit the story of David and Bat-Sheva?",
+      "answer": "Divrei HaYamim's concern is the Temple cult and covenant worship, not the full political history. It presents an idealized David as the Temple's founder. David's moral failures are outside the book's theological focus."
+    },
+    {
+      "question": "What is the importance of the Torah-teaching mission in Yehoshafat's reign?",
+      "answer": "Yehoshafat sends priests and Levites with the Book of Torah to teach throughout all of Yehudah — the first explicit national Torah-education program. This reflects Divrei HaYamim's concern that all of Yehudah knows and follows YHWH's covenant."
+    },
+    {
+      "question": "What letter does Yehoram receive from Eliyahu?",
+      "answer": "A written letter condemning Yehoram for walking in the way of the kings of Yisra'el, for killing his brothers who were better than he was, and predicting that YHWH would strike him and his people with a great plague — and that Yehoram would die of a severe bowel disease."
+    },
+    {
+      "question": "How does the golden calf worship of Yarov'am affect the northern kingdom in Divrei HaYamim's view?",
+      "answer": "By placing golden calves at Beit-El and Dan and driving out the Levitical priests, Yarov'am cut the northern kingdom off from legitimate covenant worship. Levites and those who sought YHWH from all the tribes migrated to Yehudah — concentrating covenant faithfulness in the south."
     }
   ]
 }

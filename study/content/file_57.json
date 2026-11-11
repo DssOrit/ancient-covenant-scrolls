@@ -1,34 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_57",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_57",
   "label": "Yehezkel (Ezekiel) — Part 4 — Chapters 25–32",
   "volume": 18,
-  "content_version": 1,
+  "content_version": 4,
   "summary_plain": "YHWH delivers oracles against the nations: Ammon, Moav, Edom, the Pelishtim. Then Tyre — the great maritime trading city. The prince of Tyre says: I am a god, I sit in the seat of gods in the heart of the seas. YHWH responds: You are a man and not a god. A lamentation over the king of Tyre: You were in Eden, the garden of The Creator. You were the anointed guardian kerub. You were blameless from the day you were created until unrighteousness was found in you. Against Mitsrayim: Pharaoh the great dragon lying in his rivers. YHWH will scatter Mitsrayim among the nations. The Assyrian was a cedar in Lebanon — great and tall — yet he was brought down to Sheol. Pharaoh shall be laid among the uncircumcised in the pit.",
   "summary_scholarly": "The ACR reads from the DSS Ezekiel fragments and the Orit Ge'ez. The Tyre oracles (chapters 26-28) are among the most significant in the prophetic literature. Chapter 28:12-19 — the lamentation over the king of Tyre — describes a figure in Eden, adorned with precious stones, the anointed guardian kerub who walked among the stones of fire until violence was found in him. This passage, alongside Yesha'yahu 14, forms the primary Hebrew prophetic material later systematized into the 'fall of Satan' narrative — though the original text describes the king of Tyre, not a supernatural being. The Mitsrayim oracles (chapters 29-32) include the cedar of Lebanon parable (chapter 31) and the descent to Sheol (chapter 32) — an underworld geography describing where fallen powers are laid.",
   "key_terms": [
-    { "term": "Prince of Tyre (Negid Tsor)", "phonetic": "Neh-GEED TSOR", "definition": "The ruler of the maritime trading city of Tyre who declares: 'I am a god, I sit in the seat of gods in the heart of the seas.' YHWH responds: you are a man and not a god. You shall die the death of the uncircumcised (28:2-10)." },
-    { "term": "Guardian Kerub (Keruv Mimshach)", "phonetic": "Keh-ROOV Mim-SHAHKH", "definition": "In the lamentation over the king of Tyre (28:14): 'You were the anointed guardian kerub — I placed you on the set-apart mountain of The Creator. You walked among the stones of fire.' Later tradition reinterpreted this as the fall of Satan, but the original text addresses the king of Tyre." },
-    { "term": "Sheol", "phonetic": "Sheh-OL", "definition": "The underworld, the pit, the place of the dead. Chapter 32 describes the fallen nations laid in Sheol — Assyria, Elam, Meshekh, Tuval, Edom — all brought down with their weapons of war. Not the later Christian 'hell' but the Hebrew abode of the dead." },
-    { "term": "Pharaoh the Dragon (Tannim)", "phonetic": "Tah-NEEM", "definition": "Chapter 29:3: Pharaoh is called the great dragon (tannim) lying in the midst of his rivers. YHWH will put hooks in his jaws and pull him out. The dragon imagery connects to ancient Near Eastern chaos-monster traditions." }
+    {
+      "term": "Oracles Against Ammon (Ezekiel 25:1-7)",
+      "phonetic": "Bnei Ammon",
+      "definition": "YHWH declares judgment against Ammon for saying Aha! over the defilement of the Temple and the desolation of Yisra'el. Ammon will be given over to the people of the east; their cities will become pasture for camels. They will know that YHWH is YHWH."
+    },
+    {
+      "term": "Oracle Against Tyre (Ezekiel 26-28)",
+      "phonetic": "Tzor",
+      "definition": "Three chapters dedicated to Tyre, the great Phoenician maritime trading city. Tyre said Aha! over Yerushalayim's fall: the gate of the peoples is broken; it has swung open to me. YHWH will bring Nebukhadnetzar against Tyre, destroying its walls and towers, scraping it bare like a rock, burying it in the sea. You shall be no more."
+    },
+    {
+      "term": "Lament Over the Prince of Tyre (Ezekiel 28:1-19)",
+      "phonetic": "nagid Tzor",
+      "definition": "The prince of Tyre said he was a god, sitting in the seat of gods in the heart of the seas. YHWH declares he will bring strangers against him. The lament extends to a covering cherub in the garden of Eden, full of wisdom and beauty, profaned by his own sin, cast down from the mountain of YHWH."
+    },
+    {
+      "term": "You Were the Signet of Perfection (Ezekiel 28:12-19)",
+      "phonetic": "khotem tokhnit",
+      "definition": "YHWH's dirge over the king of Tyre uses imagery of the garden of Eden: You were the signet of perfection, full of wisdom and perfect in beauty. You were in Eden, the garden of YHWH; every precious stone was your covering. He was a guardian cherub on YHWH's holy mountain. But his heart became proud because of his beauty and he was cast to the ground."
+    },
+    {
+      "term": "Oracle Against Mitzrayim — Pharaoh the Great Dragon (Ezekiel 29)",
+      "phonetic": "tanin ha-gadol",
+      "definition": "YHWH's oracle against Pharaoh king of Mitzrayim: Behold, I am against you, Pharaoh king of Egypt, the great dragon that lies in the midst of his streams. YHWH will put hooks in his jaws and drag him out of the Nile. Mitzrayim will be a staff of reed to Yisra'el — it always broke when leaned upon."
+    },
+    {
+      "term": "Lament Over Pharaoh (Ezekiel 32)",
+      "phonetic": "qi-NAH al Phar-oh",
+      "definition": "A funeral lament over Pharaoh: You consider yourself a lion of the nations, but you are like a dragon in the seas. YHWH will drag Pharaoh out and cast his flesh on the mountains, covering the heavens and causing the sun, moon, and stars to go dark. Pharaoh will descend to Sheol among the slain."
+    },
+    {
+      "term": "Nations Knowing That I Am YHWH",
+      "phonetic": "ve-yed-u ki ani YHWH",
+      "definition": "Throughout Ezekiel 25-32, every oracle against the nations ends with the same refrain: then they shall know that I am YHWH. The judgment of Ammon, Moav, Edom, Philistia, Tyre, Sidon, and Mitzrayim all serve the same covenant purpose: demonstrating YHWH's sovereignty over all nations, not just Yisra'el."
+    },
+    {
+      "term": "Oracle Against Sidon (Ezekiel 28:20-26)",
+      "phonetic": "Tzidon",
+      "definition": "YHWH declares judgment against Sidon, Tyre's northern neighbor: pestilence and blood in her streets. After this YHWH will gather Yisra'el from the peoples among whom they are scattered, and they will dwell securely in their land. The judgment of nations is paired with the promise of Yisra'el's restoration."
+    },
+    {
+      "term": "Oracle Against Moav and Edom (Ezekiel 25:8-14)",
+      "phonetic": "Moav and Edom",
+      "definition": "Moav said the house of Judah is like all the other nations, denying Yisra'el's covenant distinctiveness. Edom took revenge on the house of Yehudah. Both will be judged: Moav exposed to the people of the east, Edom cut off. Edom's judgment is particularly severe because of family betrayal — Edom is descended from Esav, Ya'aqov's brother."
+    },
+    {
+      "term": "Cedar of Lebanon Metaphor for Mitzrayim (Ezekiel 31)",
+      "phonetic": "erez ha-Levanon",
+      "definition": "YHWH asks Pharaoh: Consider Ashur, a cedar of Lebanon, beautiful in its branches, with its top among the clouds. All the birds nested in it, all the beasts gave birth under it. But it became proud because of its height, and YHWH gave it over to be cut down. Pharaoh is told: you shall be brought down with the trees of Eden to the depths of the earth."
+    }
   ],
   "fill_blank": [
-    { "ref": "28:2", "prompt": "Because your heart is proud, and you have said: I am a ______, I sit in the seat of gods, in the heart of the seas.", "answer": "god", "source_quote": "Because your heart is proud, and you have said: I am a god, I sit in the seat of gods, in the heart of the seas — yet you are a man and not a god, though you make your heart like the heart of a god." },
-    { "ref": "28:15", "prompt": "You were blameless in your ways from the day you were ______ until unrighteousness was found in you.", "answer": "created", "source_quote": "You were blameless in your ways from the day you were created until unrighteousness was found in you." },
-    { "ref": "29:3", "prompt": "Behold, I am against you, Pharaoh king of Mitsrayim, the great ______ that lies in the midst of his rivers.", "answer": "dragon", "source_quote": "Behold, I am against you, Pharaoh king of Mitsrayim, the great dragon that lies in the midst of his rivers, who says: My Nile is my own, I made it for myself." }
+    {
+      "ref": "Ezekiel 25:7",
+      "prompt": "I will stretch out my hand against you and hand you over as ___ to the nations; and I will cut you off from the peoples.",
+      "answer": "plunder",
+      "source_quote": "I will hand you over as plunder to the nations."
+    },
+    {
+      "ref": "Ezekiel 26:3",
+      "prompt": "I am against you, O Tyre, and will bring up many ___ against you, as the sea brings up its waves.",
+      "answer": "nations",
+      "source_quote": "I will bring up many nations against you, as the sea brings up its waves."
+    },
+    {
+      "ref": "Ezekiel 26:14",
+      "prompt": "I will make you a ___ rock. You shall be a place for the spreading of nets.",
+      "answer": "bare",
+      "source_quote": "I will make you a bare rock. You shall be a place for the spreading of nets."
+    },
+    {
+      "ref": "Ezekiel 28:2",
+      "prompt": "The prince of Tyre said: I am a god, I sit in the seat of ___ in the heart of the seas.",
+      "answer": "gods",
+      "source_quote": "I am a god, I sit in the seat of gods in the heart of the seas."
+    },
+    {
+      "ref": "Ezekiel 28:12",
+      "prompt": "You were the ___ of perfection, full of wisdom and perfect in beauty.",
+      "answer": "signet",
+      "source_quote": "You were the signet of perfection, full of wisdom and perfect in beauty."
+    },
+    {
+      "ref": "Ezekiel 28:17",
+      "prompt": "Your heart was proud because of your beauty; you ___ your wisdom for the sake of your splendor.",
+      "answer": "corrupted",
+      "source_quote": "You corrupted your wisdom for the sake of your splendor."
+    },
+    {
+      "ref": "Ezekiel 29:3",
+      "prompt": "I am against you, Pharaoh king of Egypt, the great ___ that lies in the midst of his streams.",
+      "answer": "dragon",
+      "source_quote": "The great dragon that lies in the midst of his streams."
+    },
+    {
+      "ref": "Ezekiel 29:6",
+      "prompt": "And all the inhabitants of Mitzrayim shall know that I am YHWH, because they have been a ___ of reed to the house of Yisra'el.",
+      "answer": "staff",
+      "source_quote": "They have been a staff of reed to the house of Yisra'el."
+    },
+    {
+      "ref": "Ezekiel 32:7",
+      "prompt": "When I blot you out, I will cover the heavens and make their stars dark; I will cover the sun with a ___ and the moon shall not give its light.",
+      "answer": "cloud",
+      "source_quote": "I will cover the sun with a cloud and the moon shall not give its light."
+    },
+    {
+      "ref": "Ezekiel 32:18",
+      "prompt": "Son of man, wail over the multitude of Egypt and send them down, her and the daughters of majestic nations, to the ___ of the earth.",
+      "answer": "depths",
+      "source_quote": "Send them down, her and the daughters of majestic nations, to the depths of the earth."
+    }
   ],
   "multiple_choice": [
-    { "ref": "28:12-15", "question": "What does the lamentation over the king of Tyre describe?", "options": ["A merchant who lost his wealth", "A figure who was in Eden as the anointed guardian kerub until unrighteousness was found in him", "A fallen angel in heaven", "A priest who defiled the Temple"], "correct": 1, "source_quote": "You were the signet of perfection, full of wisdom and perfect in beauty. You were in Eden, the garden of The Creator. You were the anointed guardian kerub." },
-    { "ref": "32:18-32", "question": "Where are the fallen nations described as being laid?", "options": ["In eternal fire", "In Sheol — the pit — with the uncircumcised", "In the sea", "In the wilderness"], "correct": 1, "source_quote": "They have laid her among the slain — all of them uncircumcised, slain by the sword. They went down to Sheol with their weapons of war." },
-    { "ref": "26:3-4", "question": "What does YHWH declare against Tyre?", "options": ["I will make you a bare rock — a place for spreading nets", "I will make you the greatest trading city", "I will build you a new harbor", "I will make you king over the nations"], "correct": 0, "source_quote": "I will scrape her soil from her and make her a bare rock. She shall be in the midst of the sea a place for the spreading of nets." }
+    {
+      "ref": "Ezekiel 25",
+      "question": "What was Ammon's sin that brought YHWH's judgment according to Ezekiel 25?",
+      "options": [
+        "Making war against Yehudah and destroying its cities",
+        "Rejoicing over the defilement of the Temple and Yisra'el's desolation",
+        "Refusing to pay tribute to the Babylonian king",
+        "Worshipping Baal and seducing Yisra'el into idolatry"
+      ],
+      "correct": 1,
+      "source_quote": "Because you said Aha! over my sanctuary when it was profaned."
+    },
+    {
+      "ref": "Ezekiel 26:14",
+      "question": "What does YHWH say Tyre will become after its destruction?",
+      "options": [
+        "A rebuilt city under foreign rule",
+        "A center of trade for the people of the east",
+        "A bare rock, a place for spreading nets, built no more",
+        "A city YHWH will give back to Yisra'el"
+      ],
+      "correct": 2,
+      "source_quote": "I will make you a bare rock. You shall be a place for the spreading of nets. You shall be built no more."
+    },
+    {
+      "ref": "Ezekiel 28:2",
+      "question": "What was the specific sin of the prince of Tyre that YHWH addresses in Ezekiel 28?",
+      "options": [
+        "Refusing to pay tribute to Nebukhadnetzar",
+        "Claiming divinity — I am a god",
+        "Plotting against YHWH's covenant people",
+        "Worshipping Marduk and Baal in his palace"
+      ],
+      "correct": 1,
+      "source_quote": "Because your heart is proud, and you have said, I am a god, I sit in the seat of gods."
+    },
+    {
+      "ref": "Ezekiel 28:12-19",
+      "question": "In the lament over the king of Tyre, in what location is he described as originally dwelling?",
+      "options": [
+        "In the courts of the Temple of Yerushalayim",
+        "On the highest peak of Mount Lebanon",
+        "In Eden, the garden of YHWH, on YHWH's holy mountain",
+        "In the throne room of Nebukhadnetzar in Babylon"
+      ],
+      "correct": 2,
+      "source_quote": "You were in Eden, the garden of YHWH... you were on the holy mountain of YHWH."
+    },
+    {
+      "ref": "Ezekiel 29:3",
+      "question": "How does YHWH describe Pharaoh king of Mitzrayim in Ezekiel 29?",
+      "options": [
+        "As a stumbling block to the house of Yisra'el",
+        "As a reed that breaks when leaned upon",
+        "As the great dragon lying in the midst of his streams",
+        "As the proud cedar that grew tall and was cut down"
+      ],
+      "correct": 2,
+      "source_quote": "The great dragon that lies in the midst of his streams."
+    },
+    {
+      "ref": "Ezekiel 29:6",
+      "question": "What does YHWH say Mitzrayim has been to the house of Yisra'el?",
+      "options": [
+        "A strong fortress in the day of trouble",
+        "A staff of reed that breaks when leaned upon",
+        "A powerful ally that faithfully kept its covenant",
+        "A source of wisdom and wealth"
+      ],
+      "correct": 1,
+      "source_quote": "They have been a staff of reed to the house of Yisra'el."
+    },
+    {
+      "ref": "Ezekiel 25:8",
+      "question": "What was Moav's sin according to Ezekiel 25:8?",
+      "options": [
+        "Giving military aid to Babylon against Yehudah",
+        "Saying the house of Judah is like all the other nations",
+        "Refusing to let Yehudah pass through their territory",
+        "Worshipping Kemosh in the Temple courts"
+      ],
+      "correct": 1,
+      "source_quote": "Because Moab and Seir said, Behold, the house of Judah is like all the other nations."
+    },
+    {
+      "ref": "Ezekiel 32:7",
+      "question": "What cosmic signs does YHWH declare will accompany Mitzrayim's destruction?",
+      "options": [
+        "Earthquakes and the sea pulling back from its shores",
+        "A new star rising in the east over Babylon",
+        "The heavens covered, sun clouded, moon and stars darkened",
+        "Fire falling from heaven on all the cities of Egypt"
+      ],
+      "correct": 2,
+      "source_quote": "I will cover the heavens and make their stars dark; I will cover the sun with a cloud and the moon shall not give its light."
+    },
+    {
+      "ref": "Ezekiel 25-32",
+      "question": "What refrain closes each oracle against the nations in Ezekiel 25-32?",
+      "options": [
+        "YHWH has spoken, let all flesh be silent",
+        "Then they shall know that I am YHWH",
+        "The sword of YHWH has been drawn and will not return",
+        "Hear this, all you nations, YHWH alone is Creator"
+      ],
+      "correct": 1,
+      "source_quote": "Then they shall know that I am YHWH."
+    },
+    {
+      "ref": "Ezekiel 31",
+      "question": "What tree does YHWH compare to Pharaoh to warn of his coming fall?",
+      "options": [
+        "The vine of Yisra'el that became worthless firewood",
+        "The great cedar of Lebanon that grew proud and was cut down",
+        "The olive tree planted in YHWH's own garden",
+        "The sycamore of Mitzrayim that bore no good fruit"
+      ],
+      "correct": 1,
+      "source_quote": "Consider Ashur, a cedar in Lebanon, beautiful in branches... its heart became proud because of its height."
+    }
   ],
   "faq": [
     {
-      "question": "How did the Great Eraser transform the king of Tyre passage into a 'fall of Satan' narrative?",
-      "answer": "Yehezkel 28:12-19 addresses the king of Tyre — a human ruler of a maritime trading city. The text describes him as having been in Eden, adorned with precious stones, the anointed guardian kerub who walked among the stones of fire until violence was found in him and he was cast out. The original context is clear: this is a lamentation over a human king whose pride led to his fall. Later Christian interpreters — particularly Origen (3rd century CE) and subsequent Church Fathers — detached this passage from its historical context and combined it with Yesha'yahu 14:12 (the fall of Helel ben Shachar, the morning star — also addressed to a human king, the king of Babylon) to construct the systematic 'fall of Satan' narrative that became standard Christian theology. The Hebrew text addresses human rulers. The Great Eraser repackaged prophetic oracles against specific historical powers into cosmic mythology — removing the political specificity of YHWH's judgment against trading empires and military powers and replacing it with an abstract supernatural drama. The effect: the prophets' confrontation of real political and economic power is spiritualized into harmless mythology."
+      "question": "What is the theological purpose of the oracles against nations in Ezekiel 25-32?",
+      "answer": "The oracles against Ammon, Moav, Edom, Philistia, Tyre, Sidon, and Mitzrayim serve a single covenant purpose: demonstrating that YHWH's sovereignty extends over all nations, not just Yisra'el. Each oracle ends with then they shall know that I am YHWH. These nations thought YHWH's judgment on Yisra'el meant YHWH was weak or defeated. The oracles declare the opposite: YHWH used Babylon as his instrument of judgment on Yisra'el; YHWH will also judge Babylon's allies and opponents in turn. No nation is outside YHWH's covenant governance."
     },
     {
-      "question": "What do the oracles against nations reveal about YHWH's sovereignty over all peoples?",
-      "answer": "Chapters 25-32 pronounce judgment on seven nations: Ammon, Moav, Edom, the Pelishtim, Tyre, Tsidon, and Mitsrayim. YHWH does not limit his jurisdiction to Yisra'EL — he judges all nations. The principle established in Yovelim 15 applies: every nation is under angelic jurisdiction, but YHWH governs the whole system. Tyre is judged for pride and exploitative trade. Mitsrayim is judged for being a false support — a staff of reed that pierces the hand that leans on it (29:6-7). The oracles establish that YHWH's justice operates internationally. No power — no matter how wealthy (Tyre) or ancient (Mitsrayim) or militarily dominant (Assyria) — stands outside YHWH's judgment. The DSS War Scroll (1QM) extends this framework into the eschatological battle: all nations aligned against the covenant people will face the same judgment Yehezkel pronounces on Tyre and Mitsrayim."
+      "question": "Why does Tyre receive three chapters of judgment in Ezekiel 26-28?",
+      "answer": "Tyre receives the most extended judgment of any nation in Ezekiel because of the nature of its sin: when Yerushalayim fell, Tyre said the gate of the peoples is broken — it has swung open to me. Tyre saw Yerushalayim's destruction as a commercial opportunity. This celebration of a covenant community's destruction, combined with Tyre's commercial pride and its prince's claim to divinity, made it a paradigmatic case of the hubris YHWH judges."
+    },
+    {
+      "question": "What is the Eden imagery in Ezekiel 28:12-19 about?",
+      "answer": "The lament over the king of Tyre uses Eden imagery to describe his original state and his fall: you were the signet of perfection, full of wisdom and perfect in beauty; you were in Eden, the garden of YHWH. He was a guardian cherub on YHWH's holy mountain, blameless, until iniquity was found in him. His heart became proud because of his beauty. This is YHWH's indictment of pride: the most beautifully gifted creature, given the highest position, fell because beauty became self-worship rather than service to the Creator."
+    },
+    {
+      "question": "Why does YHWH call Pharaoh the great dragon in Ezekiel 29?",
+      "answer": "YHWH's description of Pharaoh as the great dragon that lies in the midst of his streams deliberately echoes the creation narrative and the exodus tradition. The Nile was Mitzrayim's source of life and power; Pharaoh who controlled it claimed divine ownership of the waters. Pharaoh's claim that the Nile was his own is the paradigmatic form of creature claiming creator status. YHWH will put hooks in his jaws and drag him out."
+    },
+    {
+      "question": "What does the staff of reed metaphor say about Mitzrayim as an ally?",
+      "answer": "In Ezekiel 29:6-7, YHWH says Mitzrayim has been a staff of reed to the house of Yisra'el: when the hand grasped it, it broke and pierced the shoulder; when leaned upon, it splintered. This was the historical reality of Yisra'el's diplomatic relationship with Mitzrayim: every time Judah turned to Mitzrayim for military support against Assyria or Babylon, Mitzrayim failed to deliver, most catastrophically when Pharaoh's army turned back and left Yerushalayim to fall to Nebukhadnetzar."
+    },
+    {
+      "question": "What is Edom's specific judgment and why is it more severe than others?",
+      "answer": "In Ezekiel 25:12-14, Edom's judgment is delivered through the hand of YHWH's own people, not through foreign nations like the others. Edom, descended from Esav, took revenge on the house of Yehudah. Family betrayal is the aggravating factor: when Yerushalayim fell to Babylon, Edom participated in or celebrated the destruction of their covenant kin. Covenant kinship betrayal carries the heaviest judgment in the prophetic tradition."
+    },
+    {
+      "question": "How does the fall of the proud cedar in Ezekiel 31 warn Pharaoh?",
+      "answer": "In Ezekiel 31, YHWH uses Ashur, formerly the world's greatest empire, as the cedar of Lebanon: once beautiful, with top among the clouds, all nations sheltering in its branches. But it became proud because of its height, and YHWH gave it over to be cut down. The warning to Pharaoh is explicit: you shall be brought down with the trees of Eden. Greatness divorced from YHWH's governance ends in Sheol — the same fate has come for every empire that became too proud."
+    },
+    {
+      "question": "Why does Ezekiel 32 describe Pharaoh's descent into Sheol?",
+      "answer": "In Ezekiel 32, YHWH gives a full funeral dirge over Pharaoh: descending into Sheol, he will be met by all the other fallen empires — Ashur, Elam, Edom — all lying among the uncircumcised, killed by the sword. This scene of Sheol as the great equalizer makes the point: Mitzrayim's pride as the oldest and greatest civilization ends in the same place as every other empire that defied YHWH. The mighty Pharaoh will lie with the uncircumcised in Sheol — the ultimate reversal of royal glory."
+    },
+    {
+      "question": "What does the judgment of nations reveal about YHWH's covenant governance?",
+      "answer": "The oracles against nations in Ezekiel 25-32 reveal that YHWH's covenant governance is universal, not tribal. YHWH does not judge only covenant-violating Yisra'el but every nation according to universal moral standards: gloating over others' disasters (Ammon, Moav), family betrayal (Edom), commercial exploitation (Tyre), claiming divine self-sufficiency (Pharaoh). These standards are not specifically Hebrew covenant law but universal ethical standards embedded in creation itself. YHWH is Creator of all nations, and all nations are accountable to him."
+    },
+    {
+      "question": "What is the significance of Sidon's oracle being paired with the promise of Yisra'el's restoration?",
+      "answer": "In Ezekiel 28:20-26, the oracle against Sidon is immediately followed by YHWH's promise to gather Yisra'el from the peoples and restore them to their land: they shall dwell securely, and no one shall make them afraid. The pairing is deliberate: YHWH's judgment of the surrounding nations clears the hostile environment for Yisra'el's restoration. The scattered people cannot return to a land surrounded by enemies who celebrate their destruction. The oracles against nations are covenant preparation, clearing the way for YHWH to restore his covenant people to their land."
     }
   ]
 }

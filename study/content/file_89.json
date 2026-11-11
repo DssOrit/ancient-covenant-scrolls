@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_89",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_89",
   "label": "Divrei HaYamim Aleph (1 Chronicles) — Part 1 — Chapters 1–9",
   "volume": 31,
-  "content_version": 1,
+  "content_version": 3,
   "summary_plain": "Divrei HaYamim Aleph opens with genealogies stretching from Adam through all the tribes of Yisra'EL. Adam, Shet, Enosh. Noakh, Shem, Cham, Yafet. Avraham, Yitzchaq, Ya'aqov. The twelve tribes are listed with their family lines: Yehudah, Shim'on, Re'uven, Gad, the half-tribe of Menasheh, Levi, Yissakhar, Binyamin, Naftali, Menasheh, Efrayim, Asher, and the returned exiles. These nine chapters are the biological record — who belongs to Yisra'EL by descent, by family, by tribe.",
   "summary_scholarly": "The ACR reads Divrei HaYamim from DSS fragments (4QChr) and the Orit Ge'ez. Chapters 1-9 are the most comprehensive genealogical record in all of scripture. They trace the covenant lineage from Adam through the patriarchs, through the twelve tribes, through the priestly and Levitical families, and into the post-exilic community. The genealogies are not decorative — they are legal documentation of biological descent. They establish who belongs to the covenant community by birth, not by institutional decree. The Chronicler's genealogies record all twelve tribes — including the northern tribes that did not return from the Assyrian exile. This is significant: the genealogical record preserves the existence and identity of tribes whose physical return is not documented. The record outlasts the displacement. Chapter 1:8-16 traces the Hamite lineage through Cush, Mitzrayim, Put, and Canaan — the same African geography as Bereshit 10. Nimrod (1:10) is 'the first on earth to be a mighty man' — originating from Cush, Northeast Africa.",
   "key_terms": [
-    { "term": "Divrei HaYamim", "phonetic": "Div-RAY hah-Yah-MEEM", "definition": "Hebrew for 'Words (or Chronicles) of the Days.' The Septuagint called it Paraleipomena — 'Things Omitted.' The Hebrew title is the accurate one: these are the recorded events, the historical record." },
-    { "term": "Toledot (Genealogies)", "phonetic": "Tol-DOT", "definition": "Generations, family records. Chapters 1-9 are toledot — biological descent records tracing who belongs to each tribe by birth. These are not optional appendices. They are the legal record of covenant membership." },
-    { "term": "Shevatim (Tribes)", "phonetic": "Sheh-vah-TEEM", "definition": "The twelve tribes of Yisra'EL — biological-territorial divisions descended from Ya'aqov's twelve sons. The genealogies record all twelve, including the northern tribes displaced by Assyria. The tribal structure is the organizing principle of the covenant people." }
+    {
+      "term": "Divrei HaYamim",
+      "phonetic": "div-REY ha-ya-MEEM",
+      "definition": "The Hebrew title meaning 'The Words/Events of the Days' — the two-book chronicle that re-presents Yisra'el's history from Adam through the return from Babylon"
+    },
+    {
+      "term": "Genealogies (chs 1-9)",
+      "phonetic": "Yikhus",
+      "definition": "Nine chapters of genealogies from Adam through the twelve tribes, emphasizing the Davidic line and the Levitical/priestly lineages"
+    },
+    {
+      "term": "Kohathites",
+      "phonetic": "ko-HAT-eem",
+      "definition": "Levitical clan descended from Qohat son of Levi; responsible for carrying the most sacred items — the Ark, the table, the lampstand, and the altars"
+    },
+    {
+      "term": "Gershonites",
+      "phonetic": "gehr-SHON-eem",
+      "definition": "Levitical clan descended from Gershon son of Levi; responsible for the coverings and curtains of the Tabernacle"
+    },
+    {
+      "term": "Merarites",
+      "phonetic": "meh-RAR-eem",
+      "definition": "Levitical clan descended from Merari son of Levi; responsible for the frames, bars, pillars, and bases of the Tabernacle"
+    },
+    {
+      "term": "Levitical Priestly Lineages",
+      "phonetic": "Levi'im",
+      "definition": "The detailed recording of Levitical family lines in Divrei HaYamim reflects the book's particular concern with Temple service, priestly legitimacy, and covenant continuity"
+    },
+    {
+      "term": "David's Giborim",
+      "phonetic": "gib-or-EEM",
+      "definition": "The mighty warriors who joined David — listed in chs 11-12 — including the Three and the Thirty, their deeds recorded individually"
+    },
+    {
+      "term": "Sha'ul's Death Summary",
+      "phonetic": "sha-OOL",
+      "definition": "1 Divrei HaYamim ch.10 summarizes Sha'ul's death and states plainly it was because he did not seek YHWH — setting the stage for David's kingship"
+    },
+    {
+      "term": "David Becomes King",
+      "phonetic": "Yehezkel 11-12",
+      "definition": "All Yisra'el gathers to make David king at Khevron; warriors from every tribe come to him — including Levites and priests — in a unified national moment"
+    },
+    {
+      "term": "Chronicles' Temple-Cult Emphasis",
+      "phonetic": "Divrei HaYamim",
+      "definition": "Unlike Shemu'el and Melakhim, Divrei HaYamim consistently highlights the Temple, the Levites, the priests, and the proper organization of worship as central concerns"
+    }
   ],
   "fill_blank": [
-    { "ref": "1:1", "prompt": "Adam, Shet, ______.", "answer": "Enosh", "source_quote": "Adam, Shet, Enosh." },
-    { "ref": "1:34", "prompt": "The sons of Yitzchaq: ______ and Yisra'EL.", "answer": "Esav", "source_quote": "Avraham fathered Yitzchaq. The sons of Yitzchaq: Esav and Yisra'EL." },
-    { "ref": "2:1-2", "prompt": "These are the sons of Yisra'EL: Re'uven, Shim'on, Levi, ______, Yissakhar, Zevulun.", "answer": "Yehudah", "source_quote": "These are the sons of Yisra'EL: Re'uven, Shim'on, Levi, Yehudah, Yissakhar, Zevulun." }
+    {
+      "ref": "1 Divrei HaYamim 10:13",
+      "prompt": "So Sha'ul died for his unfaithfulness. He was unfaithful to YHWH in that he did not keep the command of _____ and also consulted a medium",
+      "answer": "YHWH",
+      "source_quote": "So Sha'ul died for his unfaithfulness. He was unfaithful to YHWH in that he did not keep the command of YHWH"
+    },
+    {
+      "ref": "1 Divrei HaYamim 11:1",
+      "prompt": "Then all Yisra'el gathered together to David at _____ and said, Behold, we are your bone and flesh",
+      "answer": "Khevron",
+      "source_quote": "Then all Yisra'el gathered together to David at Khevron and said, Behold, we are your bone and flesh"
+    },
+    {
+      "ref": "1 Divrei HaYamim 11:3",
+      "prompt": "So all the elders of Yisra'el came to the king at Khevron, and David made a _____ with them at Khevron before YHWH",
+      "answer": "covenant",
+      "source_quote": "David made a covenant with them at Khevron before YHWH, and they anointed David king over Yisra'el"
+    },
+    {
+      "ref": "1 Divrei HaYamim 6:1",
+      "prompt": "The sons of Levi: _____,  Qohat, and Merari",
+      "answer": "Gershon",
+      "source_quote": "The sons of Levi: Gershon, Qohat, and Merari"
+    },
+    {
+      "ref": "1 Divrei HaYamim 6:33",
+      "prompt": "These are the men whom David put in charge of the service of song in the house of YHWH after the _____ came to rest there",
+      "answer": "ark",
+      "source_quote": "These are the men whom David put in charge of the service of song in the house of YHWH after the ark came to rest there"
+    },
+    {
+      "ref": "1 Divrei HaYamim 1:1",
+      "prompt": "Adam, Seth, Enosh, _____",
+      "answer": "Qenan",
+      "source_quote": "Adam, Seth, Enosh, Qenan"
+    },
+    {
+      "ref": "1 Divrei HaYamim 10:14",
+      "prompt": "He did not seek guidance from YHWH. Therefore YHWH put him to death and turned the kingdom over to David the son of _____",
+      "answer": "Yishai",
+      "source_quote": "He did not seek guidance from YHWH. Therefore YHWH put him to death and turned the kingdom over to David the son of Yishai"
+    },
+    {
+      "ref": "1 Divrei HaYamim 11:9",
+      "prompt": "And David became greater and greater, for YHWH of _____ was with him",
+      "answer": "Hosts",
+      "source_quote": "And David became greater and greater, for YHWH of Hosts was with him"
+    },
+    {
+      "ref": "1 Divrei HaYamim 12:38",
+      "prompt": "All these, men of war, arrayed in battle order, came to Khevron with full intent to make David king over all _____",
+      "answer": "Yisra'el",
+      "source_quote": "All these, men of war, arrayed in battle order, came to Khevron with full intent to make David king over all Yisra'el"
+    },
+    {
+      "ref": "1 Divrei HaYamim 9:1",
+      "prompt": "So all Yisra'el was recorded in genealogies, and these are written in the Book of the Kings of _____",
+      "answer": "Yisra'el",
+      "source_quote": "So all Yisra'el was recorded in genealogies, and these are written in the Book of the Kings of Yisra'el"
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:1-4", "question": "Where do the genealogies of Divrei HaYamim begin?", "options": ["With Avraham", "With Adam — tracing all of humanity from the first man", "With Moshe", "With Dawid"], "correct": 1, "source_quote": "Adam, Shet, Enosh, Qenan, Mahalal'el, Yered, Chanokh, Metushelakh, Lemekh, Noakh." },
-    { "ref": "2:1-2", "question": "How many sons of Yisra'EL (Ya'aqov) are listed?", "options": ["Six", "Ten", "Twelve", "Eight"], "correct": 2, "source_quote": "These are the sons of Yisra'EL: Re'uven, Shim'on, Levi, Yehudah, Yissakhar, Zevulun, Dan, Yosef, Binyamin, Naftali, Gad, Asher." },
-    { "ref": "1:10", "question": "From which lineage does Nimrod originate?", "options": ["Shem", "Yafet", "Cush — the son of Cham, from Northeast Africa", "Canaan"], "correct": 2, "source_quote": "Cush fathered Nimrod. He was the first on earth to be a mighty man." }
+    {
+      "ref": "1 Divrei HaYamim 1:1-4",
+      "question": "Who is the first person named in Divrei HaYamim's genealogies?",
+      "options": [
+        "Avraham",
+        "Noakh",
+        "Adam",
+        "Moshe"
+      ],
+      "correct": 2,
+      "source_quote": "Adam, Seth, Enosh, Qenan"
+    },
+    {
+      "ref": "1 Divrei HaYamim 6:1",
+      "question": "Who are the three sons of Levi listed in Divrei HaYamim?",
+      "options": [
+        "Aharon, Mosheh, and Miryam",
+        "Gershon, Qohat, and Merari",
+        "Tzadok, Avtiyatar, and Zaddi'el",
+        "Pinkhas, Eli, and Shmu'el"
+      ],
+      "correct": 1,
+      "source_quote": "The sons of Levi: Gershon, Qohat, and Merari"
+    },
+    {
+      "ref": "1 Divrei HaYamim 10:13-14",
+      "question": "Why did Sha'ul die according to Divrei HaYamim?",
+      "options": [
+        "He was defeated in battle by the Plishtim",
+        "He killed himself to avoid capture",
+        "He was unfaithful to YHWH and consulted a medium rather than seeking YHWH",
+        "YHWH struck him directly for offering a sacrifice"
+      ],
+      "correct": 2,
+      "source_quote": "So Sha'ul died for his unfaithfulness. He was unfaithful to YHWH in that he did not keep the command of YHWH and also consulted a medium"
+    },
+    {
+      "ref": "1 Divrei HaYamim 11:1",
+      "question": "Where did all Yisra'el gather to make David king?",
+      "options": [
+        "Yerushalayim",
+        "Shekhem",
+        "Khevron",
+        "Beit-El"
+      ],
+      "correct": 2,
+      "source_quote": "Then all Yisra'el gathered together to David at Khevron"
+    },
+    {
+      "ref": "1 Divrei HaYamim 11:3",
+      "question": "What did David make with the elders of Yisra'el at Khevron?",
+      "options": [
+        "A peace treaty",
+        "A division of the land",
+        "A covenant before YHWH",
+        "A written law"
+      ],
+      "correct": 2,
+      "source_quote": "David made a covenant with them at Khevron before YHWH"
+    },
+    {
+      "ref": "1 Divrei HaYamim 11:4-7",
+      "question": "What city did David capture to make his capital?",
+      "options": [
+        "Khevron",
+        "Shekhem",
+        "Tzion/Yerushalayim (Yevus)",
+        "Beit-Lekhem"
+      ],
+      "correct": 2,
+      "source_quote": "And David and all Yisra'el went to Yerushalayim, that is Yevus, where the Yevusites were"
+    },
+    {
+      "ref": "1 Divrei HaYamim 11:11",
+      "question": "What was Yashov'am the son of Khakhmoni known for in David's mighty men?",
+      "options": [
+        "He was the fastest runner",
+        "He wielded his spear against 300 and killed them at one time",
+        "He crossed the Yarden alone",
+        "He was David's armor-bearer"
+      ],
+      "correct": 1,
+      "source_quote": "He wielded his spear against 300 whom he killed at one time"
+    },
+    {
+      "ref": "1 Divrei HaYamim 12:1-2",
+      "question": "Where were some of David's first supporters from — including skilled archers who could use both hands?",
+      "options": [
+        "The tribe of Yehudah",
+        "The tribe of Dan",
+        "The tribe of Binyamin, Sha'ul's own tribe",
+        "The tribe of Efrayim"
+      ],
+      "correct": 2,
+      "source_quote": "Now these are the men who came to David at Tziqlag, while he could not move about freely because of Sha'ul the son of Qish. They were among the mighty men who helped him in war. They were archers who could shoot with bow and sling with either the right or the left hand; they were Binyaminites, Sha'ul's kinsmen"
+    },
+    {
+      "ref": "1 Divrei HaYamim 12:38-40",
+      "question": "What was the mood when all the tribes came to make David king at Khevron?",
+      "options": [
+        "Solemn and serious",
+        "Joyful — there was eating, drinking, and celebrating for three days",
+        "Divided and uncertain",
+        "Marked by fasting and prayer"
+      ],
+      "correct": 1,
+      "source_quote": "And they were there with David for three days, eating and drinking, for their brothers had made preparation for them"
+    },
+    {
+      "ref": "1 Divrei HaYamim 9:33",
+      "question": "What did the singers among the Levites do at the Temple?",
+      "options": [
+        "They served only on feast days",
+        "They were employed in their work day and night",
+        "They served in rotation with the other Levites",
+        "They ministered only during morning sacrifices"
+      ],
+      "correct": 1,
+      "source_quote": "Now these, the singers, the heads of fathers' houses of the Levites, were in the chambers of the Temple free from other service, for they were employed in their work day and night"
+    }
   ],
   "faq": [
     {
-      "question": "Why do the genealogies matter for covenant identity?",
-      "answer": "The genealogies of Divrei HaYamim 1-9 are the biological record of the covenant people. They trace descent from Adam through the patriarchs through all twelve tribes. This is not ceremonial or symbolic — it is legal documentation. You are in a tribe because you were born into it. The covenant is carried by blood and descent, not by institutional declaration. The Great Eraser mechanism replaces genealogical identity with institutional identity. The Rabbinical definition ('Who is a Jew?' — determined by a bet din, a rabbinic court) replaces the biblical definition (membership by tribal descent). The Christian definition ('Who is saved?' — determined by creedal confession) replaces covenant membership entirely. DNA companies reassign Israelite genetic markers to European population labels. In every case, an institutional authority overrides the genealogical record. Divrei HaYamim 1-9 is the record itself. It does not require institutional validation."
+      "question": "Why does Divrei HaYamim open with nine chapters of genealogies?",
+      "answer": "The genealogies establish the covenant continuity of Yisra'el from Adam through the present community — connecting the restored community after Babylon to the full line of YHWH's covenant people, with particular focus on David's line and the priestly/Levitical structure."
     },
     {
-      "question": "Why does the Chronicler record all twelve tribes if the northern tribes were lost?",
-      "answer": "The northern tribes were displaced by Assyria in 722 BCE. They did not return with the Judean exiles. But the Chronicler — writing after the return — still records their genealogies (1 Chronicles 2-8). Efrayim is there. Menasheh is there. Dan, Naftali, Gad, Asher, Yissakhar, Zevulun — all are there. The genealogical record preserves what the political reality erased. The tribes exist in the record even when they cannot be located on the ground. This is the opposite of the Great Eraser: the Chronicler insists on preserving the identity of peoples whose physical location is unknown. The tribes did not cease to exist because they were displaced. Their descendants are somewhere. The genealogical record waits for them."
+      "question": "What is different about Divrei HaYamim's account of Sha'ul's death compared to Shemu'el?",
+      "answer": "Divrei HaYamim states the theological verdict directly: Sha'ul died because he was unfaithful to YHWH, did not keep YHWH's command, and consulted a medium rather than seeking YHWH. The focus is on the spiritual cause, not the battle narrative."
     },
     {
-      "question": "What does the Cush-Nimrod genealogy in chapter 1 reveal?",
-      "answer": "1 Chronicles 1:10: 'Cush fathered Nimrod. He was the first on earth to be a mighty man.' Nimrod — the first mighty man, the founder of Babylon and Nineveh (Bereshit 10:8-12) — originates from Cush, which is Northeast Africa (Nubia/Ethiopia/Sudan). The world's first empire-builder comes from Africa. The first civilization builders in the genealogical record are Hamite — Cush, Mitzrayim (Egypt), Put (Libya), Canaan. The genealogical record places African peoples at the origin of civilization. The Great Eraser separates the 'Middle East' from Africa, treats Mesopotamian civilization as non-African, and obscures the genealogical record that connects Babylon's founder to Cush. The text says what it says: Nimrod was Cushite."
+      "question": "What does the unified gathering at Khevron represent in Divrei HaYamim?",
+      "answer": "All Yisra'el — every tribe — comes to David, making him king in a covenant ceremony before YHWH. Divrei HaYamim emphasizes national unity and covenant form in a way that Shemu'el's parallel account does not."
+    },
+    {
+      "question": "What is the purpose of recording David's giborim (mighty warriors)?",
+      "answer": "To show that David's kingship was built on loyal covenant community, not personal power alone. Each warrior's deeds are recorded — they are covenant partners in building the kingdom, not mere subjects."
+    },
+    {
+      "question": "Why does Divrei HaYamim give so much attention to the Levites?",
+      "answer": "Because the book's main concern is the proper worship of YHWH — the Temple, its service, its singers, its gatekeepers, and its priests. Legitimate Temple service requires properly traced Levitical lineage, hence the detailed genealogies."
+    },
+    {
+      "question": "What is the relationship between Divrei HaYamim and the books of Shemu'el and Melakhim?",
+      "answer": "Divrei HaYamim re-presents the same history with different priorities — it focuses on the Temple cult and the Davidic covenant, omits David's personal sins (Bat-Sheva, Amnon, Avshalom), and frames events through the lens of covenant faithfulness and worship."
+    },
+    {
+      "question": "What do the three Levitical clans represent?",
+      "answer": "Gershon, Qohat, and Merari each received specific responsibilities in the wilderness Tabernacle and later in the Temple service. Qohat carried the most sacred items; Gershon carried the coverings; Merari carried the structural framework."
+    },
+    {
+      "question": "Why does Divrei HaYamim begin with Adam rather than Avraham?",
+      "answer": "By beginning at Adam, Divrei HaYamim frames Yisra'el's story not as a national history but as the continuation of humanity's covenant story from creation — the restored community after Babylon stands in continuity with all of human history."
+    },
+    {
+      "question": "Who wrote Divrei HaYamim?",
+      "answer": "The traditional attribution is to Ezra the scribe. The book's concern with priestly genealogies, Temple service, and the return from Babylon is consistent with Ezra's perspective as a Levitical scribe in the restoration period."
+    },
+    {
+      "question": "What does the phrase 'David became greater and greater, for YHWH of Hosts was with him' mean in this context?",
+      "answer": "It is Divrei HaYamim's theological explanation for David's growing power — not political skill or military advantage alone, but YHWH's direct presence and support as David built the unified covenant kingdom."
     }
   ]
 }
