@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_104",
-  "label": "Hodayot (Thanksgiving Hymns) \u2014 Part 2 \u2014 Col 5\u20138",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_104",
+  "label": "Hodayot (Thanksgiving Hymns) — Part 2 — Col 5–8",
   "volume": 41,
-  "content_version": 1,
-  "summary_plain": "The Hodayot continue with hymns praising YHWH for sustaining the speaker through trial. The speaker describes rivers of Belial that overwhelm like fire, consuming every green and dry tree. Yet YHWH is a refuge and a fortress. The speaker has been like a sailor on raging seas \u2014 the gates of death opened, and Sheol was upon his bed. But YHWH delivered him. The community hymns praise YHWH for planting a tree of life beside the eternal spring \u2014 its branches reach to the heavens, its roots go down to the deep. YHWH\u2019s truth is the foundation of all things.",
-  "summary_scholarly": "Hodayot columns 5-8 contain some of the most poetically powerful compositions from Qumran. The \u2018rivers of Belial\u2019 passage (Col V) uses flood imagery reminiscent of Tehillim 18 and Yonah 2. The \u2018tree of life\u2019 passage (Col VI-VIII) describes the community as a planting by YHWH \u2014 rooted in the eternal spring, with branches reaching to heaven. The imagery draws on Bereshit 2 (the tree of life), Yehezkel 47 (the river from the Temple), and Tehillim 1 (the tree planted by streams of water). The hymns in these columns express the community\u2019s self-understanding as YHWH\u2019s planting in the wilderness \u2014 a living tree sustained by the water of Torah while the surrounding world is consumed by the rivers of Belial.",
+  "content_version": 2,
+  "summary_plain": "The Hodayot continue with hymns praising YHWH for sustaining the speaker through trial. The speaker describes rivers of Belial that overwhelm like fire, consuming every green and dry tree. Yet YHWH is a refuge and a fortress. The speaker has been like a sailor on raging seas — the gates of death opened, and Sheol was upon his bed. But YHWH delivered him. The community hymns praise YHWH for planting a tree of life beside the eternal spring — its branches reach to the heavens, its roots go down to the deep. YHWH’s truth is the foundation of all things.",
+  "summary_scholarly": "Hodayot columns 5-8 contain some of the most poetically powerful compositions from Qumran. The ‘rivers of Belial’ passage (Col V) uses flood imagery reminiscent of Tehillim 18 and Yonah 2. The ‘tree of life’ passage (Col VI-VIII) describes the community as a planting by YHWH — rooted in the eternal spring, with branches reaching to heaven. The imagery draws on Bereshit 2 (the tree of life), Yehezkel 47 (the river from the Temple), and Tehillim 1 (the tree planted by streams of water). The hymns in these columns express the community’s self-understanding as YHWH’s planting in the wilderness — a living tree sustained by the water of Torah while the surrounding world is consumed by the rivers of Belial.",
   "key_terms": [
-    { "term": "Nakhalei Belial", "phonetic": "Nakh-ah-LEI Beh-lee-AHL", "definition": "The \u2018Rivers of Belial\u2019 \u2014 a metaphor for the overwhelming forces of destruction and deception that threaten the covenant community. The floods consume every tree, but YHWH sustains the speaker through them." },
-    { "term": "Etz Khayyim", "phonetic": "Etz Khah-YEEM", "definition": "The \u2018Tree of Life\u2019 \u2014 used in the Hodayot to describe the covenant community planted by YHWH. Its roots reach to the deep, its branches to the heavens. It is nourished by the eternal spring \u2014 the water of YHWH\u2019s Torah." }
+    {
+      "term": "Community Hymns",
+      "phonetic": "",
+      "definition": "The group of Hodayot hymns (roughly cols 1-9 and 18-28) composed for community liturgical use rather than by the Teacher personally. These hymns speak in a broader communal voice and are suited for group recitation. They complement the more personal Teacher Hymns in the scroll's overall design."
+    },
+    {
+      "term": "Plant Root Imagery",
+      "phonetic": "",
+      "definition": "A recurring image in the Hodayot community hymns: the community is a plant planted by YHWH — a shoot, a root, a garden tree. This botanical covenant imagery draws on Yesha'yahu and Tehillim and frames the community as YHWH's living planting in a hostile world."
+    },
+    {
+      "term": "Holy Planting",
+      "phonetic": "",
+      "definition": "YHWH has planted the community as a holy plant — a fixed and flourishing covenant presence. The community's permanence and growth depend entirely on YHWH's ongoing care, not their own strength. The holy planting is watered by YHWH's covenant faithfulness."
+    },
+    {
+      "term": "Springs of Living Water",
+      "phonetic": "",
+      "definition": "An image in the Hodayot community hymns: YHWH's wisdom and Torah are living water, nourishing the community's growth as a plant. This water imagery pairs with the plant imagery throughout the hymns."
+    },
+    {
+      "term": "Wicked Priest (Hodayot)",
+      "phonetic": "",
+      "definition": "The major antagonist of the Teacher Hymns section — an external priestly figure who opposed the Teacher, possibly the Jerusalem high priest who actively persecuted the community. Distinct from the Man of the Lie (internal opponent). Both appear in the Hodayot's Teacher Hymns."
+    },
+    {
+      "term": "Songs of the Poor",
+      "phonetic": "",
+      "definition": "Some Hodayot community hymns speak from the perspective of the poor (anawim) — the humble covenant keepers who rely entirely on YHWH. This is not economic poverty only but covenant humility: the community sees itself as the anawim of Yesha'yahu, waiting for YHWH's vindication."
+    },
+    {
+      "term": "Covenant Assembly",
+      "phonetic": "",
+      "definition": "The community hymns celebrate the covenant assembly — the gathering of those who walk in truth. YHWH has established this assembly and no opponent can destroy it. The community's corporate existence is itself the evidence of YHWH's covenant faithfulness."
+    },
+    {
+      "term": "YHWH's Sovereign Knowledge",
+      "phonetic": "",
+      "definition": "A theological theme in the Hodayot: YHWH knows everything from the beginning — all human events are within his sovereign foreknowledge. The community's suffering is not outside YHWH's knowledge; their vindication is already determined."
+    },
+    {
+      "term": "Hymn of Communal Praise",
+      "phonetic": "",
+      "definition": "A distinct category within the community hymns — hymns designed for group recitation at the community's regular assemblies. These hymns reinforce corporate identity, covenant loyalty, and the community's shared theological vision."
+    },
+    {
+      "term": "Covenant Renewal Context",
+      "phonetic": "",
+      "definition": "The Hodayot community hymns were likely used in the annual covenant renewal ceremony described in 1QS col.1-2 — the Day of Entry when members renewed their covenant commitment and new members were admitted. The hymns mark the liturgical frame of the community's self-understanding."
+    }
   ],
   "fill_blank": [
-    { "ref": "Col V:5-6", "prompt": "The rivers of Belial shall overflow all high banks like a fire that devours all the ______ and dry trees.", "answer": "green", "source_quote": "The rivers of Belial shall overflow all high banks like a fire that devours all the green and dry trees." },
-    { "ref": "Col VI:15-16", "prompt": "You have planted a tree of life beside the eternal ______, and by its waters all the trees of the garden grow.", "answer": "spring", "source_quote": "You have planted a tree of life beside the eternal spring." }
+    {
+      "ref": "1QH col.6:15-17",
+      "prompt": "YHWH planted the community as a ___ in a garden — a living covenant presence nourished by his faithfulness.",
+      "answer": "plant / tree",
+      "source_quote": "You planted me as a tree beside streams of water. — 1QH col.VI:15-17"
+    },
+    {
+      "ref": "1QH col.6:12-14",
+      "prompt": "The community is watered by ___ of living water — YHWH's wisdom and Torah.",
+      "answer": "springs / streams",
+      "source_quote": "Springs of living water pour from the high heavens. — 1QH col.VI:12-14"
+    },
+    {
+      "ref": "1QH col.5:5-7",
+      "prompt": "The community sees itself as the ___ — the humble covenant keepers waiting for YHWH's vindication.",
+      "answer": "poor / anawim",
+      "source_quote": "The poor and the humble shall exult in YHWH. — 1QH col.V:5-7"
+    },
+    {
+      "ref": "1QH col.8:4-6",
+      "prompt": "YHWH's ___ knowledge encompasses all human events — the community's suffering is within his sovereign foreknowledge.",
+      "answer": "sovereign / perfect",
+      "source_quote": "You know all things before they come to be. — 1QH col.VIII:4-6"
+    },
+    {
+      "ref": "1QH",
+      "prompt": "The community hymns (Part 2) are suited for ___ recitation — not individual declarations.",
+      "answer": "group / communal",
+      "source_quote": "Community Hymns — designed for group liturgical recitation at community assemblies. — 1QH"
+    },
+    {
+      "ref": "1QH col.6:17-19",
+      "prompt": "The holy ___ metaphor: YHWH has planted the community as a permanent covenant presence no enemy can uproot.",
+      "answer": "planting",
+      "source_quote": "You planted me as a holy planting. — 1QH col.VI:17-19"
+    },
+    {
+      "ref": "1QH col.5:12-14",
+      "prompt": "In the community hymns, the ___ assembly is celebrated as evidence of YHWH's covenant faithfulness.",
+      "answer": "covenant",
+      "source_quote": "You have established a covenant assembly among your people. — 1QH col.V:12-14"
+    },
+    {
+      "ref": "1QH col.8:9-11",
+      "prompt": "No opponent can destroy the community because YHWH himself has ___ it as his plant.",
+      "answer": "established / planted",
+      "source_quote": "It cannot be uprooted for YHWH has planted it. — 1QH col.VIII:9-11"
+    },
+    {
+      "ref": "1QH",
+      "prompt": "The Hodayot community hymns were likely used in the annual ___ ceremony described in 1QS col.1-2.",
+      "answer": "covenant renewal",
+      "source_quote": "The community hymns were likely used in the annual covenant renewal ceremony. — 1QH"
+    },
+    {
+      "ref": "1QH col.7:6-8",
+      "prompt": "In the Hodayot hymns, the ___ of Yesha'yahu — the humble waiting for YHWH's vindication — describes the community's self-image.",
+      "answer": "poor / anawim",
+      "source_quote": "The community sees itself as Yesha'yahu's anawim — the poor waiting for YHWH's vindication. — 1QH col.VII"
+    }
   ],
   "multiple_choice": [
-    { "ref": "Col V:5-12", "question": "What are the \u2018rivers of Belial\u2019 in the Hodayot?", "options": ["Literal rivers flooding Qumran", "A metaphor for the overwhelming forces of deception and destruction", "The Tigris and Euphrates", "The rivers of Mitzrayim"], "correct": 1, "source_quote": "The rivers of Belial shall overflow all high banks like a fire that devours all the green and dry trees." },
-    { "ref": "Col VI:15-17", "question": "What does the \u2018tree of life\u2019 planted by the eternal spring represent?", "options": ["The Temple in Yerushalayim", "The covenant community sustained by YHWH\u2019s Torah", "A literal tree at Qumran", "The tree of knowledge in Bereshit"], "correct": 1, "source_quote": "You have planted a tree of life beside the eternal spring." }
+    {
+      "ref": "1QH",
+      "question": "What are the Community Hymns in the Hodayot?",
+      "options": [
+        "Hymns written by the community for use outside Qumran",
+        "Hymns composed for group liturgical recitation at community assemblies",
+        "Hymns about the community's military victories",
+        "Hymns written to the Teacher from his disciples"
+      ],
+      "correct": 1,
+      "source_quote": "Community Hymns — designed for group liturgical use. — 1QH"
+    },
+    {
+      "ref": "1QH col.6:15-17",
+      "question": "What plant metaphor does the Hodayot use for the community?",
+      "options": [
+        "A vine protected by a wall",
+        "A tree planted beside streams of water — a living covenant presence",
+        "A cedar planted on the mountain",
+        "A palm tree in the wilderness"
+      ],
+      "correct": 1,
+      "source_quote": "You planted me as a tree beside streams of water. — 1QH col.VI:15-17"
+    },
+    {
+      "ref": "1QH col.5:5-7",
+      "question": "Who does the community identify with in the Hodayot's community hymns?",
+      "options": [
+        "The warriors of Yisra'el in the wilderness",
+        "The poor/humble (anawim) waiting for YHWH's vindication",
+        "The Levitical priests of the first Temple",
+        "The prophets of the northern kingdom"
+      ],
+      "correct": 1,
+      "source_quote": "The poor and humble shall exult in YHWH. — 1QH col.V:5-7"
+    },
+    {
+      "ref": "1QH col.8:4-6",
+      "question": "What does the Hodayot say about YHWH's knowledge?",
+      "options": [
+        "YHWH learns from human history",
+        "YHWH knows all things before they come to be — sovereign foreknowledge",
+        "YHWH's knowledge is limited to what the prophets reveal",
+        "YHWH reveals knowledge only to the high priest"
+      ],
+      "correct": 1,
+      "source_quote": "You know all things before they come to be. — 1QH col.VIII:4-6"
+    },
+    {
+      "ref": "1QH col.6:12-14",
+      "question": "What do the 'springs of living water' represent in the Hodayot?",
+      "options": [
+        "The physical water supply at Qumran",
+        "YHWH's wisdom and Torah nourishing the community's growth",
+        "The baptismal water of the community's entry rite",
+        "The tears of the Teacher's persecution"
+      ],
+      "correct": 1,
+      "source_quote": "Springs of living water pour from the high heavens. — 1QH col.VI:12-14"
+    },
+    {
+      "ref": "1QH",
+      "question": "When were the community hymns likely used?",
+      "options": [
+        "At the annual fast of Yom Kippur",
+        "In the annual covenant renewal ceremony (1QS col.1-2)",
+        "During the final war against the Kittim",
+        "At the entry of each new member individually"
+      ],
+      "correct": 1,
+      "source_quote": "The community hymns were likely used in the annual covenant renewal ceremony. — 1QH"
+    },
+    {
+      "ref": "1QH col.8:9-11",
+      "question": "Why is the community's holy planting permanent?",
+      "options": [
+        "Because of the community's own righteousness",
+        "Because it is protected by the Teacher's prayers",
+        "Because YHWH himself planted it and no enemy can uproot it",
+        "Because the cave location protects it"
+      ],
+      "correct": 2,
+      "source_quote": "It cannot be uprooted for YHWH has planted it. — 1QH col.VIII:9-11"
+    },
+    {
+      "ref": "1QH",
+      "question": "How does the Hodayot Part 2 community hymns differ from the Teacher Hymns (Part 1)?",
+      "options": [
+        "Part 2 is in Aramaic; Part 1 is in Hebrew",
+        "Part 2 uses a communal voice for group recitation; Part 1 is more intensely personal and individual",
+        "Part 2 describes military events; Part 1 describes liturgy",
+        "Part 2 was written after the Teacher's death; Part 1 was written before his birth"
+      ],
+      "correct": 1,
+      "source_quote": "Community Hymns — communal voice; Teacher Hymns — more personally intense. — 1QH"
+    },
+    {
+      "ref": "1QH col.5:12-14",
+      "question": "What does the covenant assembly's existence prove in the community hymns?",
+      "options": [
+        "That the community has earned YHWH's favor",
+        "That the Teacher was the true high priest",
+        "That YHWH's covenant faithfulness is real and ongoing",
+        "That the Jerusalem Temple was unnecessary"
+      ],
+      "correct": 2,
+      "source_quote": "You have established a covenant assembly among your people. — 1QH col.V:12-14"
+    },
+    {
+      "ref": "1QH",
+      "question": "What is the core theological claim of the Hodayot's covenant hymns?",
+      "options": [
+        "The community earns YHWH's favor through perfect Torah observance",
+        "YHWH's covenant is entirely grace — the community's existence is YHWH's gift, not their own achievement",
+        "The Teacher of Righteousness replaces the Jerusalem high priest",
+        "The end of days is now fully arrived with the community's founding"
+      ],
+      "correct": 1,
+      "source_quote": "You have established me through your covenant of grace. — 1QH throughout"
+    }
   ],
   "faq": [
     {
-      "question": "How does the tree of life imagery in the Hodayot connect to the covenant community\u2019s self-understanding?",
-      "answer": "The Hodayot describe YHWH planting a \u2018tree of life beside the eternal spring.\u2019 This tree is the covenant community \u2014 rooted in YHWH\u2019s Torah (the spring), reaching from the depths to the heavens. The imagery draws on Bereshit 2 (the original tree of life), Yehezkel 47 (the river from the restored Temple), and Tehillim 1 (the righteous person as a tree by streams of water). The community understood itself as YHWH\u2019s planting in the wilderness \u2014 alive because it draws from the eternal spring, not because of institutional support. The Great Eraser can cut down visible institutions, but it cannot dry up the eternal spring. The tree can be hidden, buried, scattered \u2014 but the water source is YHWH\u2019s Torah, which survives every attempt at destruction."
+      "question": "What is the difference between the Community Hymns and the Teacher Hymns in the Hodayot?",
+      "answer": "The Teacher Hymns (roughly cols 10-17) are believed to have been composed by the Teacher of Righteousness personally — their intense first-person language, specific persecution accounts, and reference to the Man of the Lie suggest personal authorship. The Community Hymns (the rest of the scroll, including cols 1-9 and 18-28) are broader liturgical compositions designed for group recitation. They speak in a more corporate voice and cover themes of YHWH's creation, covenant faithfulness, the community as YHWH's holy planting, and the anawim's waiting for vindication."
     },
     {
-      "question": "What does the Hodayot\u2019s flood imagery reveal about spiritual warfare?",
-      "answer": "The \u2018rivers of Belial\u2019 in Hodayot Col V describe a cosmic flood \u2014 not water but fire and deception \u2014 that overwhelms the land and consumes every tree. The speaker is like a sailor on raging seas, with the gates of death opening around him. Yet YHWH is a fortress in the flood. This imagery connects to Bereshit 6-9 (the flood of Noakh), Tehillim 18 (the torrents of Belial), and the Qumran War Scroll (the cosmic battle). The Hodayot\u2019s contribution is personal: the speaker experiences the cosmic battle within his own life. The Great Eraser operates as rivers of Belial \u2014 overwhelming the covenant people with wave after wave of institutional pressure, cultural erasure, and identity suppression. The Hodayot\u2019s answer is the same as Noakh\u2019s: YHWH preserves a remnant through the flood."
+      "question": "What does the plant/tree imagery in the Hodayot mean?",
+      "answer": "The plant and tree imagery — 'you planted me as a tree beside streams of water,' 'a holy planting,' 'a shoot from a garden' — frames the community as YHWH's living covenant presence in the world. The plant depends entirely on YHWH's water (Torah, wisdom) and YHWH's care. It cannot uproot itself or survive on its own. And it cannot be uprooted by enemies because YHWH planted it. This imagery draws on Tehillim 1 (the tree planted by water) and Yesha'yahu's vine and planting metaphors, applying them to the covenant community's corporate identity."
+    },
+    {
+      "question": "Who are the 'poor' (anawim) in the Hodayot?",
+      "answer": "In the Hodayot, the anawim (poor, humble) are the covenant community themselves — not primarily defined by economic poverty but by covenant humility. They are those who have no power of their own, who depend entirely on YHWH, who wait for YHWH's vindication against powerful enemies. This self-understanding draws on Yesha'yahu's anawim — the humble remnant who inherit the land after the proud are brought low. The community saw their situation (small, persecuted, without institutional power) as the fulfillment of this prophetic portrait."
+    },
+    {
+      "question": "What does YHWH's sovereign foreknowledge mean in the Hodayot?",
+      "answer": "The claim that YHWH knows all things before they come to be is a comfort in the Hodayot's context of persecution and suffering. The community's suffering is not random, not outside YHWH's knowledge, not a sign of YHWH's absence. It is within the scope of YHWH's sovereign foreknowledge — which means their vindication is also already known and certain. This is not fatalism; it is covenant confidence grounded in YHWH's nature as the one who does not learn from events but determines them."
+    },
+    {
+      "question": "How were the community hymns used liturgically?",
+      "answer": "The community hymns were likely recited at the community's regular assemblies — particularly the annual covenant renewal ceremony described in 1QS cols 1-2. The covenant renewal was the moment when members reaffirmed their commitment and new members were admitted. Hymns that celebrate the covenant assembly, YHWH's planting, and the community's identity as the anawim would fit this liturgical moment perfectly. They reinforce the community's self-understanding and express the covenant loyalty being renewed."
+    },
+    {
+      "question": "How does the Hodayot's view of human nature in community hymns compare to the Teacher Hymns?",
+      "answer": "Both sections share the same core anthropology: humans are formed of clay, dependent on YHWH's grace, unable to earn covenant status. The Teacher Hymns express this from an intensely personal, persecuted perspective. The community hymns express it in a broader, more corporate register — the whole community acknowledges collective insufficiency and collective dependence on YHWH. The theology is consistent: in both sections, the singer (individual or corporate) has nothing to offer YHWH except YHWH's own covenant faithfulness reflected back."
+    },
+    {
+      "question": "What connection does the Hodayot have to the biblical Psalms tradition?",
+      "answer": "The Hodayot are deeply rooted in Tehillim's literary and theological tradition. They share vocabulary (watery pit, rock and refuge, enemies surrounding), structure (thanksgiving formula, lament, trust declaration, petition), and themes (YHWH's steadfast love, the contrast between the righteous and the wicked, divine rescue from death). But unlike Tehillim, which developed over centuries, the Hodayot are datable to the community's specific situation and reflect a specific, identified community rather than the broader national life of Yisra'el."
+    },
+    {
+      "question": "What does the 'springs of living water' image tell us about the Hodayot's Torah theology?",
+      "answer": "Torah and wisdom are living water — not static ancient text but dynamically nourishing reality. The plant (community) cannot grow without this water. The community's survival and flourishing depend on constant nourishment from YHWH's Torah and wisdom. This is consistent with the Qumran community's intensive Torah-study practice (1QS describes regular nightly Torah reading) — study of Torah is not academic; it is drinking the living water that keeps the covenant plant alive."
+    },
+    {
+      "question": "Why does the Hodayot emphasize that the holy planting cannot be uprooted?",
+      "answer": "Because the community was under real threat — from the Man of the Lie, the Wicked Priest, enemies, and the dominant institutions of their society. The repeated claim that YHWH's planting cannot be uprooted is a liturgical affirmation of covenant security against that felt insecurity. It is not triumphalism but resilience: 'however surrounded we are, however powerful our enemies, YHWH planted us and only YHWH can uproot us.' This theological anchor kept the community coherent under sustained pressure."
+    },
+    {
+      "question": "What does the Hodayot tell us about the community's liturgical life?",
+      "answer": "The Hodayot document a rich liturgical life: regular communal hymn-singing alongside Torah study and covenant practice. The community was not just a legal institution or a scribal school — it was a worshipping community for whom theological singing was central. The Hodayot's hymns, alongside the Shirot Olat HaShabbat (Songs of Sabbath Sacrifice) and 4QDibHam (Words of the Luminaries), show a community whose devotional life was as developed as its legal and theological frameworks."
     }
   ]
 }

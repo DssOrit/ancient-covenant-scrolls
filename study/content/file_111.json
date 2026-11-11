@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_111",
-  "label": "Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 3 \u2014 Col 45\u201366",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_111",
+  "label": "Temple Scroll 11Q19 (Megillat HaMikdash) — Part 3 — Col 45–66",
   "volume": 46,
-  "content_version": 1,
-  "summary_plain": "The final section of the Temple Scroll covers the purity of the Temple city, laws of vows and oaths, regulations for witnesses, laws of warfare, and the statutes for the entire land of Yisra\u2019el. The Temple city itself is holy \u2014 no impurity may enter it. The scroll details what may and may not be brought into the city. Laws about idolatry are strict: if a city worships other gods, it shall be utterly destroyed. The warfare regulations prescribe how Yisra\u2019el shall go to battle: the priest shall speak to the army, and YHWH shall fight for them. The scroll concludes with a comprehensive restatement of the covenant blessings and curses.",
-  "summary_scholarly": "Columns 45-66 of the Temple Scroll cover the purity of the Temple city (expanding on Devarim\u2019s laws of the camp), laws of vows and oaths (paralleling Bamidbar 30), laws of witnesses (expanding Devarim 17:6-7 and 19:15), laws of warfare (rewriting Devarim 20), and the apostasy laws (expanding Devarim 13). The scroll treats the entire Temple city as a sacred zone equivalent to the wilderness camp of Yisra\u2019el, applying the purity laws of Bamidbar and Vayikra to urban space. The warfare regulations require priestly involvement in military decisions, consistent with the War Scroll (1QM). The apostasy laws are more detailed than the Masoretic Torah. The final columns effectively create a comprehensive legal code for the ideal covenant society \u2014 a constitution derived entirely from Torah rewritten as YHWH\u2019s direct speech.",
+  "content_version": 2,
+  "summary_plain": "The final section of the Temple Scroll covers the purity of the Temple city, laws of vows and oaths, regulations for witnesses, laws of warfare, and the statutes for the entire land of Yisra’el. The Temple city itself is holy — no impurity may enter it. The scroll details what may and may not be brought into the city. Laws about idolatry are strict: if a city worships other gods, it shall be utterly destroyed. The warfare regulations prescribe how Yisra’el shall go to battle: the priest shall speak to the army, and YHWH shall fight for them. The scroll concludes with a comprehensive restatement of the covenant blessings and curses.",
+  "summary_scholarly": "Columns 45-66 of the Temple Scroll cover the purity of the Temple city (expanding on Devarim’s laws of the camp), laws of vows and oaths (paralleling Bamidbar 30), laws of witnesses (expanding Devarim 17:6-7 and 19:15), laws of warfare (rewriting Devarim 20), and the apostasy laws (expanding Devarim 13). The scroll treats the entire Temple city as a sacred zone equivalent to the wilderness camp of Yisra’el, applying the purity laws of Bamidbar and Vayikra to urban space. The warfare regulations require priestly involvement in military decisions, consistent with the War Scroll (1QM). The apostasy laws are more detailed than the Masoretic Torah. The final columns effectively create a comprehensive legal code for the ideal covenant society — a constitution derived entirely from Torah rewritten as YHWH’s direct speech.",
   "key_terms": [
-    { "term": "Ir HaMikdash", "phonetic": "Eer Ha-Mik-DAHSH", "definition": "The \u2018Temple City\u2019 \u2014 the entire city surrounding the Temple is treated as a sacred zone in the Temple Scroll. Purity laws that the Masoretic Torah applies only to the Temple courts are extended to the entire city." },
-    { "term": "Torat HaMilkhamah", "phonetic": "Toh-RAHT Ha-Mil-khah-MAH", "definition": "The \u2018Law of Warfare\u2019 in the Temple Scroll, rewriting Devarim 20. The priest speaks to the army before battle. YHWH fights for Yisra\u2019el. The regulations require priestly oversight of all military operations." }
+    {
+      "term": "Statutes of the King",
+      "phonetic": "",
+      "definition": "Columns 56-59 of the Temple Scroll contain detailed laws governing the king — selection, marriage, military, economic, and judicial rules. The king must be chosen by YHWH, must be from among the covenant brothers, may not multiply horses or wives, and must write a copy of the Torah before him every day of his life."
+    },
+    {
+      "term": "King's Torah Copy",
+      "phonetic": "",
+      "definition": "The Temple Scroll's king requirement: the king must have a scroll of this Torah written for him by the priests and Levites, and read in it every day of his life so that he may learn to revere YHWH and not exalt himself above his brothers. This is Devarim 17:18-20 expanded into law."
+    },
+    {
+      "term": "Royal Marriage Law",
+      "phonetic": "",
+      "definition": "The Temple Scroll's king may not multiply wives for himself. Specifically, he may not take a wife from outside the people of Yisra'el, and he may not take a second wife as long as the first lives — a stricter standard than mainstream practice."
+    },
+    {
+      "term": "King's Guard (1,000)",
+      "phonetic": "",
+      "definition": "The Temple Scroll specifies that 1,000 men are the king's permanent guard — not an unlimited army, but a specifically limited personal guard. The community's king is a servant of the covenant, not a monarch accumulating power."
+    },
+    {
+      "term": "Purity Laws (Cols 45-51)",
+      "phonetic": "",
+      "definition": "The Temple Scroll's Part 3 opens with detailed purity regulations: who may enter the Temple city, how skin disease, bodily discharge, and death-impurity are handled, and the requirement for a three-day purification period for certain impurities before entering the Temple area."
+    },
+    {
+      "term": "Capital Crimes (Temple Scroll)",
+      "phonetic": "",
+      "definition": "Columns 64-66 of the Temple Scroll include laws about capital crimes — those who betray the people to a foreign nation or who flee to a foreign nation to bring an army against Yisra'el. These traitors are to be hanged on a tree."
+    },
+    {
+      "term": "Hanging on a Tree",
+      "phonetic": "",
+      "definition": "The Temple Scroll cols 64-66 expand on Devarim 21:22-23 — a person guilty of treason (betraying Yisra'el to a foreign nation) is to be executed and hanged on a tree. This is a judicial execution method for the most serious political crimes, not associated in this context with the NT's later application."
+    },
+    {
+      "term": "Judicial System (Temple Scroll)",
+      "phonetic": "",
+      "definition": "The Temple Scroll describes a judicial system with judges appointed in every town, a supreme court for difficult cases, and the king bound by the same laws as the people. The judicial system is covenant-based, not royal decree."
+    },
+    {
+      "term": "Camp Purity (Military)",
+      "phonetic": "",
+      "definition": "The Temple Scroll specifies that the military camp must maintain high purity — provisions for latrines outside the camp, covering bodily waste, maintaining the camp's ritual cleanliness during warfare. These rules echo Devarim 23:12-14 but are elaborated."
+    },
+    {
+      "term": "Royal Covenant Accountability",
+      "phonetic": "",
+      "definition": "The Temple Scroll's king is fully bound by the covenant — he may not exalt himself above his brothers, may not multiply silver and gold, may not accumulate military power beyond the specified guard. The covenant constrains the king as it constrains everyone. The king is not above the Torah."
+    }
   ],
   "fill_blank": [
-    { "ref": "Col XLV:11-12", "prompt": "You shall not defile the ______ in which I dwell, for I, YHWH, dwell among the children of Yisra\u2019el.", "answer": "city", "source_quote": "You shall not defile the city in which I cause my name to dwell, for I, YHWH, dwell among the children of Yisra\u2019el." },
-    { "ref": "Col LXI:12-14", "prompt": "When you go out to war against your enemies, the priest shall stand and speak to the ______.", "answer": "army", "source_quote": "When you go out to war against your enemies, the priest shall stand and speak to the army." }
+    {
+      "ref": "11Q19 col.56-59",
+      "prompt": "The Temple Scroll's king must have a copy of the Torah written for him and read in it every ___ of his life.",
+      "answer": "day",
+      "source_quote": "He shall read in it every day of his life so that he may learn to revere YHWH. — 11Q19 col.LVI-LIX"
+    },
+    {
+      "ref": "11Q19 col.56-59",
+      "prompt": "The king may not multiply ___ for himself beyond what YHWH has assigned.",
+      "answer": "wives / horses / silver / gold",
+      "source_quote": "He shall not multiply wives for himself... nor shall he accumulate excessive silver and gold. — 11Q19 col.LVI-LIX"
+    },
+    {
+      "ref": "11Q19 col.57-58",
+      "prompt": "The king may not take a second wife as long as the ___ lives.",
+      "answer": "first / first wife",
+      "source_quote": "He shall not take another wife while she lives. — 11Q19 col.LVII:15-19"
+    },
+    {
+      "ref": "11Q19 col.56",
+      "prompt": "The king's permanent personal guard is specified as ___ men.",
+      "answer": "1,000",
+      "source_quote": "1,000 men — the king's specified personal guard. — 11Q19 col.LVI"
+    },
+    {
+      "ref": "11Q19 col.64-66",
+      "prompt": "The Temple Scroll expands Devarim 21:22-23 to cover traitors — those who betray Yisra'el to foreign nations are to be ___ on a tree.",
+      "answer": "hanged",
+      "source_quote": "He shall be hanged on a tree — Temple Scroll expansion of Devarim 21:22-23 for treason. — 11Q19 col.LXIV-LXVI"
+    },
+    {
+      "ref": "11Q19 col.56-59",
+      "prompt": "The covenant principle in the Temple Scroll's king laws: the king may not exalt himself above his ___ — he is bound by the same covenant.",
+      "answer": "brothers",
+      "source_quote": "So that he may not exalt his heart above his brothers. — 11Q19 col.LVI-LIX"
+    },
+    {
+      "ref": "11Q19 col.45-51",
+      "prompt": "The Temple Scroll's purity laws require a ___ purification period for certain impurities before entering the Temple area.",
+      "answer": "three-day",
+      "source_quote": "Three-day purification before entry into the Temple city. — 11Q19 col.XLV-LI"
+    },
+    {
+      "ref": "11Q19",
+      "prompt": "The Temple Scroll's judicial system requires judges appointed in every ___, with a supreme court for difficult cases.",
+      "answer": "town",
+      "source_quote": "Judges appointed in every town — supreme court for difficult cases. — 11Q19"
+    },
+    {
+      "ref": "11Q19 col.56-59",
+      "prompt": "The Temple Scroll's king must be chosen by ___ and must come from among the covenant brothers — not from a foreign nation.",
+      "answer": "YHWH",
+      "source_quote": "You shall set over yourself a king whom YHWH your Creator chooses. — 11Q19 col.LVI:14-15"
+    },
+    {
+      "ref": "11Q19 col.63-64",
+      "prompt": "During warfare, the Temple Scroll requires the military camp to maintain purity including ___ outside the camp.",
+      "answer": "latrines / waste areas",
+      "source_quote": "You shall have an area outside the camp to relieve yourself — military camp purity. — 11Q19 col.LXIII-LXIV"
+    }
   ],
   "multiple_choice": [
-    { "ref": "Col XLV-XLVII", "question": "How does the Temple Scroll treat the Temple city?", "options": ["As an ordinary marketplace", "As a sacred zone where the same purity laws apply as in the Temple itself", "As a place where foreigners may settle freely", "As separate from the Temple\u2019s holiness"], "correct": 1, "source_quote": "The entire Temple city is treated as a sacred zone. No impurity may enter the city where YHWH causes his name to dwell." },
-    { "ref": "Col LXI-LXII", "question": "What do the Temple Scroll\u2019s warfare regulations require?", "options": ["The king alone decides on war", "The community votes democratically", "The priest speaks to the army and YHWH fights for Yisra\u2019el", "War is forbidden entirely"], "correct": 2, "source_quote": "The priest shall stand and speak to the army. YHWH your Creator goes with you to fight for you against your enemies." }
+    {
+      "ref": "11Q19 col.56-59",
+      "question": "What must the Temple Scroll's king do with a Torah copy every day?",
+      "options": [
+        "Read it aloud to the assembly",
+        "Read in it daily to learn to revere YHWH and not exalt himself",
+        "Recopy one column to maintain his scribal skills",
+        "Transmit it to the priests each morning"
+      ],
+      "correct": 1,
+      "source_quote": "He shall read in it every day of his life so that he may learn to revere YHWH. — 11Q19 col.LVI-LIX"
+    },
+    {
+      "ref": "11Q19 col.57-58",
+      "question": "What does the Temple Scroll say about the king taking a second wife?",
+      "options": [
+        "He may take up to four wives if he is a great king",
+        "He may not take a second wife while the first wife lives",
+        "He needs the priests' approval to take a second wife",
+        "He must wait a 7-year mourning period before remarrying"
+      ],
+      "correct": 1,
+      "source_quote": "He shall not take another wife while she lives. — 11Q19 col.LVII:15-19"
+    },
+    {
+      "ref": "11Q19 col.56",
+      "question": "What is the size of the Temple Scroll's king's personal guard?",
+      "options": [
+        "100 men",
+        "500 men",
+        "1,000 men",
+        "10,000 men"
+      ],
+      "correct": 2,
+      "source_quote": "1,000 men — the king's specified guard. — 11Q19 col.LVI"
+    },
+    {
+      "ref": "11Q19 col.64-66",
+      "question": "What does the Temple Scroll specify for someone who betrays Yisra'el to a foreign nation?",
+      "options": [
+        "Exile from the covenant community",
+        "Fifty lashes and a fine",
+        "Hanging on a tree — an expansion of Devarim 21:22-23 for treason",
+        "Imprisonment until the Yovel (Jubilee) year"
+      ],
+      "correct": 2,
+      "source_quote": "He shall be hanged on a tree — treason = capital crime. — 11Q19 col.LXIV-LXVI"
+    },
+    {
+      "ref": "11Q19 col.56-59",
+      "question": "According to the Temple Scroll's king laws, the king may not exalt himself above:",
+      "options": [
+        "The high priest",
+        "The council of twelve",
+        "His brothers — the covenant community",
+        "The Teacher of Righteousness"
+      ],
+      "correct": 2,
+      "source_quote": "He shall not exalt his heart above his brothers. — 11Q19 col.LVI-LIX"
+    },
+    {
+      "ref": "11Q19 col.45-51",
+      "question": "What is the purity requirement before entering the Temple city in the Temple Scroll?",
+      "options": [
+        "A one-day purification period",
+        "A three-day purification period for certain impurities",
+        "Seven days of washing for all impurities",
+        "Purification is required only for the Temple court, not the city"
+      ],
+      "correct": 1,
+      "source_quote": "Three-day purification before entry. — 11Q19 col.XLV-LI"
+    },
+    {
+      "ref": "11Q19 col.56-59",
+      "question": "The Temple Scroll's king must be chosen by:",
+      "options": [
+        "The community's annual vote",
+        "The high priest's appointment",
+        "YHWH's selection from among the covenant brothers",
+        "His father's designation"
+      ],
+      "correct": 2,
+      "source_quote": "A king whom YHWH your Creator chooses. — 11Q19 col.LVI:14-15"
+    },
+    {
+      "ref": "11Q19",
+      "question": "How does the Temple Scroll's judicial system hold the king accountable?",
+      "options": [
+        "The king is above the law — he is YHWH's anointed",
+        "The king is bound by the same covenant laws as the community — he is not above the Torah",
+        "The king has a separate royal law code that supersedes the Torah",
+        "The king is judged only by the high priest"
+      ],
+      "correct": 1,
+      "source_quote": "The covenant constrains the king as it constrains everyone. — 11Q19 col.LVI-LIX"
+    },
+    {
+      "ref": "11Q19 col.63-64",
+      "question": "What do the military camp purity laws in the Temple Scroll require?",
+      "options": [
+        "Celibacy for the duration of the campaign",
+        "Latrine areas outside the camp and covering bodily waste",
+        "No eating during daylight hours while at war",
+        "Three priests must accompany every military unit"
+      ],
+      "correct": 1,
+      "source_quote": "An area outside the camp to relieve yourself — military camp purity. — 11Q19 col.LXIII-LXIV"
+    },
+    {
+      "ref": "11Q19 col.64-66",
+      "question": "The 'hanging on a tree' in the Temple Scroll cols 64-66 is applied to:",
+      "options": [
+        "All capital offenders",
+        "Only religious law violators",
+        "Political traitors who betray Yisra'el to foreign nations",
+        "Those who violate the Sabbath three times"
+      ],
+      "correct": 2,
+      "source_quote": "He shall be hanged on a tree — applied to traitors/those who betray Yisra'el. — 11Q19 col.LXIV-LXVI"
+    }
   ],
   "faq": [
     {
-      "question": "What does the Temple Scroll\u2019s comprehensive legal code reveal about Qumran\u2019s vision for society?",
-      "answer": "The final columns of the Temple Scroll cover warfare, witnesses, vows, apostasy, and the purity of the entire Temple city. Combined with the earlier sections on architecture, festivals, and the Law of the King, the scroll constitutes a complete constitution for the ideal covenant society. Every area of life \u2014 worship, governance, military, economics, urban planning, and criminal justice \u2014 is derived from Torah rewritten as YHWH\u2019s direct speech. The Great Eraser has presented the Qumran community as a marginal sect with no political relevance. The Temple Scroll reveals a community that had a fully developed vision for society \u2014 not a retreat from the world but a blueprint for its reconstruction on Torah terms. The vision was never implemented because Rome destroyed the community. But the blueprint survived in the cave."
+      "question": "What are the Statutes of the King in the Temple Scroll?",
+      "answer": "Columns 56-59 of the Temple Scroll contain detailed laws about the ideal covenant king: he must be chosen by YHWH from among the covenant brothers, may not be a foreigner, may not multiply wives (not while the first lives), may not accumulate excessive horses, silver, or gold, must have a Torah copy written for him and read it daily, and may not exalt himself above his brothers. His permanent guard is 1,000 men. These laws are an expansion of Devarim 17:14-20, made into binding covenant statute."
     },
     {
-      "question": "Why does the Temple Scroll extend sanctuary purity to the entire Temple city?",
-      "answer": "In the Masoretic Torah, the strictest purity laws apply to the Temple courts. The Temple Scroll extends these laws to the entire city: no impurity may enter the city where YHWH causes his name to dwell. The theological implication is that the sacred space is not confined to the Temple building but extends outward into the community\u2019s living space. If YHWH dwells among his people, then the entire community is a sanctuary. The Great Eraser has confined holiness to designated buildings \u2014 churches, synagogues, mosques \u2014 separating \u2018sacred\u2019 space from \u2018secular\u2019 space. The Temple Scroll\u2019s vision has no such division. The city is the sanctuary. The community is the Temple. The purity of daily life is the purity of worship. This is the same principle the Community Rule (1QS) applies to the community itself: the community is an \u2018eternal planting, a house of holiness for Yisra\u2019el.\u2019"
+      "question": "What is the significance of the king's daily Torah reading requirement?",
+      "answer": "The Temple Scroll requires the king to have a Torah copy written for him by the priests and Levites, and to read in it every day of his life 'so that he may learn to revere YHWH and not exalt his heart above his brothers.' This daily requirement means Torah is not just the king's constitutional constraint — it is his daily formation. The king who reads the Torah every day is a king shaped by covenant values, not just bound by covenant rules. The Temple Scroll envisions a king formed by the Torah from the inside, not merely restrained by it from the outside."
+    },
+    {
+      "question": "What does the marriage law tell us about the Temple Scroll's ethics?",
+      "answer": "The Temple Scroll's king may take only one wife, and may not take a second while the first lives. This is stricter than the mainstream Tanakh record (Dawid had multiple wives; Shlomoh had hundreds). The Temple Scroll applies a monogamy standard to the king that the community also applied to community members in the Damascus Document (CD prohibits taking a second wife while the first lives). This reflects a consistent covenant-law position: marriage is a covenant bond that cannot be multiplied or dissolved while the first partner lives."
+    },
+    {
+      "question": "What crimes does the Temple Scroll consider capital offenses?",
+      "answer": "The Temple Scroll includes treason among capital crimes: someone who betrays Yisra'el to a foreign nation, or who flees to a foreign nation and brings an army against Yisra'el, is to be executed and hanged on a tree. This expands the Devarim 21:22-23 provision (which covers someone guilty of a sin worthy of death) to cover specifically political treason. The community understood the covenant's survival as requiring the most serious penalty for those who endangered it by siding with foreign powers."
+    },
+    {
+      "question": "What is the 'hanging on a tree' in the Temple Scroll?",
+      "answer": "The Temple Scroll cols 64-66 expand Devarim 21:22-23 to cover treason: political traitors who betray Yisra'el to a foreign nation are to be executed and hanged on a tree. This is a judicial punishment for the most serious political crime — not a sacrificial or religious execution, but a civic punishment for covenant betrayal. The same passage (Devarim 21:22-23) is later applied by Paul in Galatians 3:13 in a completely different theological framework. The Temple Scroll's application is straightforwardly judicial: treason carries the death penalty and public display."
+    },
+    {
+      "question": "How does the Temple Scroll constrain royal power?",
+      "answer": "The Temple Scroll's king is structurally limited: he may not multiply wives, horses, silver, or gold; his permanent guard is specifically 1,000 men; he must read the Torah daily to remain formed by covenant values; he may not exalt himself above his brothers; and he is chosen by YHWH, not by his own lineage or dynastic succession alone. The covenant is the king's constitutional frame — he is as bound by it as the smallest member of the community. This is a radical anti-monarchic theology embedded in the structure of the community's ideal kingdom."
+    },
+    {
+      "question": "How do the purity laws of Temple Scroll Part 3 work?",
+      "answer": "The purity laws (cols 45-51) define who may enter the Temple city zone and under what conditions. Certain impurities require a three-day waiting and purification period before entry. The laws cover skin disease, bodily discharge, and death-impurity. The Temple city (the broader sacred zone, not just the Temple mount) is maintained at a higher purity standard than the rest of Yerushalayim. The laws ensure that the entire sacred geography around YHWH's dwelling is maintained at covenant purity — not just the innermost courts."
+    },
+    {
+      "question": "How does the Temple Scroll's judicial system ensure covenant accountability?",
+      "answer": "Judges are appointed in every town to handle local disputes. Difficult cases go to a supreme court. The king himself is judged by the same Torah laws as everyone else — there is no royal exception. The judicial system is not the king's instrument of power but the covenant's mechanism for holding everyone accountable, including the king. This consistent accountability is what distinguishes the Temple Scroll's covenant kingdom from the kind of monarchy that the Prophets critiqued — where kings used courts to protect their own interests."
+    },
+    {
+      "question": "What do the military camp purity laws mean for the community's warfare theology?",
+      "answer": "The military camp must be maintained at the same purity standard as the community's covenant life — latrines outside the camp, bodily waste covered, no impurity within the camp. This is because YHWH is present in the camp ('for YHWH your Creator walks in the midst of your camp' — echoing Devarim 23:14). Warfare is not a suspension of covenant life; it is covenant life under different conditions. The camp is as sacred as the Temple city in the sense that YHWH's presence is there — that presence demands the same purity discipline."
+    },
+    {
+      "question": "How does Temple Scroll Part 3 complete the scroll's theological vision?",
+      "answer": "Parts 1-3 together present a complete covenant society organized around YHWH's presence: Part 1 establishes the sacred architecture; Part 2 establishes the covenant calendar and festival cycle; Part 3 establishes the purity laws, judicial system, and royal accountability that govern the people's life within that sacred space and time. Together they describe a society where every dimension — space, time, law, and leadership — is ordered by YHWH's covenant. It is the most comprehensive blueprint for a covenant society in the entire DSS corpus."
     }
   ]
 }

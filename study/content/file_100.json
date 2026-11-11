@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_100",
-  "label": "Rule of Blessings 1QSb (Serekh HaBerakhot) \u2014 Complete",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_100",
+  "label": "Rule of Blessings 1QSb (Serekh HaBerakhot) — Complete",
   "volume": 38,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "The Rule of Blessings contains blessings to be spoken over members of the covenant community. The first blessing is for the faithful members of the covenant: may YHWH bless you from his holy habitation and open for you the eternal fountain. The second blessing is for the high priest: may YHWH lift his countenance upon you and make you holy among his people and set you as a crown of glory. The third blessing is for the sons of Tzadok, the priests: may YHWH bless you and keep you, may he renew the covenant of eternal priesthood for you. The fourth blessing is for the Prince of the Congregation (Nasi HaEdah): may YHWH raise you to everlasting heights and make you as a fortified tower.",
-  "summary_scholarly": "1QSb (Serekh HaBerakhot) was found appended to 1QS and 1QSa in Cave 1. It is a liturgical text containing a series of blessings structured hierarchically: the covenant community, the high priest, the priestly line, and the Prince of the Congregation (a royal-messianic figure). The blessings draw heavily on the Birkat Kohanim (priestly blessing) of Bamidbar 6:24-26 but expand it significantly. The blessing for the Prince of the Congregation (Col V) uses royal-messianic language: he strikes the earth with his mouth, he slays the wicked with the breath of his lips \u2014 language that echoes Yesha\u2019yahu 11:4. The text preserves a liturgical theology in which YHWH\u2019s blessing flows through established channels: community, priest, priesthood, prince.",
+  "summary_scholarly": "1QSb (Serekh HaBerakhot) was found appended to 1QS and 1QSa in Cave 1. It is a liturgical text containing a series of blessings structured hierarchically: the covenant community, the high priest, the priestly line, and the Prince of the Congregation (a royal-messianic figure). The blessings draw heavily on the Birkat Kohanim (priestly blessing) of Bamidbar 6:24-26 but expand it significantly. The blessing for the Prince of the Congregation (Col V) uses royal-messianic language: he strikes the earth with his mouth, he slays the wicked with the breath of his lips — language that echoes Yesha’yahu 11:4. The text preserves a liturgical theology in which YHWH’s blessing flows through established channels: community, priest, priesthood, prince.",
   "key_terms": [
-    { "term": "Serekh HaBerakhot", "phonetic": "SEH-rekh Ha-Beh-rah-KHOT", "definition": "Hebrew for \u2018Rule of Blessings.\u2019 A liturgical scroll containing blessings for the covenant community, the high priest, the priestly sons of Tzadok, and the Prince of the Congregation." },
-    { "term": "Nasi HaEdah", "phonetic": "Nah-SEE Ha-Eh-DAH", "definition": "The \u2018Prince of the Congregation\u2019 \u2014 a royal-messianic figure blessed in 1QSb. He is distinguished from the priestly Mashiach. The blessing uses language from Yesha\u2019yahu 11 about striking the earth and judging the poor with righteousness." }
+    {
+      "term": "Serekh HaBerakhot",
+      "phonetic": "SEH-rekh ha-be-ra-KHOT",
+      "definition": "Rule of Blessings — 1QSb, appended to 1QS and 1QSa in the same Cave 1 scroll. Contains a series of priestly blessings to be recited over the congregation, the high priest, the sons of Zadok (priests), and the Prince of the Congregation (the royal/messianic leader)."
+    },
+    {
+      "term": "Nesi HaEdah",
+      "phonetic": "neh-SEE ha-EH-dah",
+      "definition": "Prince of the Congregation — the royal/military messianic figure blessed in the final section of 1QSb. He is to judge the poor with righteousness, smite the earth with the rod of his mouth, destroy the wicked with the breath of his lips — language drawn from Yesha'yahu 11."
+    },
+    {
+      "term": "Sons of Zadok",
+      "phonetic": "",
+      "definition": "The priestly lineage that the Qumran community traced itself to — the legitimate Zadokite priests displaced from the Jerusalem Temple. 1QSb contains a specific blessing over the Sons of Zadok as the covenant's authorized priestly line."
+    },
+    {
+      "term": "Priestly Blessing (1QSb)",
+      "phonetic": "",
+      "definition": "The blessing in 1QSb over the high priestly figure: may YHWH lift up his face to you and give you peace. The form echoes the Aaronite blessing of Bamidbar 6:24-26 but is reworded and expanded for the covenant community's eschatological context."
+    },
+    {
+      "term": "Rod of His Mouth",
+      "phonetic": "",
+      "definition": "The weapon of the Prince of the Congregation in 1QSb col.5, drawn from Yesha'yahu 11:4: he will smite the earth with the rod of his mouth and destroy the wicked with the breath of his lips. This is judgment-language, not military conquest — speech/decree as power."
+    },
+    {
+      "term": "Holy Ones (Kedoshim)",
+      "phonetic": "ke-do-SHEEM",
+      "definition": "In 1QSb, the angelic hosts alongside whom the high priest serves. The priestly blessing in 1QSb places the high priest in the dual-register context: he ministers with the holy ones (angels) in the heavenly-earthly assembly."
+    },
+    {
+      "term": "Yesha'yahu 11 Allusions",
+      "phonetic": "ye-sha-YAH-hoo",
+      "definition": "The blessing over the Prince of the Congregation in 1QSb col.5 is saturated with language from Yesha'yahu 11: a shoot from the stump of Yishai, the spirit of YHWH upon him, righteousness as the girdle of his loins, judgment of the poor. 1QSb uses these as the vocabulary of the eschatological royal blessing."
+    },
+    {
+      "term": "Covenant of Eternal Priesthood",
+      "phonetic": "",
+      "definition": "The 1QSb blessing over the Sons of Zadok invokes the covenant of eternal priesthood — YHWH's covenant with Pinehas and the legitimate priestly line. The Qumran community saw themselves as the true inheritors of this covenant against the corrupted Jerusalem priesthood."
+    },
+    {
+      "term": "1QSb (1Q28b)",
+      "phonetic": "",
+      "definition": "The cave and scroll designation for the Rule of Blessings — the 'b' suffix indicates it is the third document in the same Cave 1 scroll as 1QS and 1QSa. The scroll contained these three texts together as a governing triad."
+    },
+    {
+      "term": "Eschatological Blessings",
+      "phonetic": "",
+      "definition": "The blessings in 1QSb are framed for 'the end of days' — not current priestly service but the perfected messianic-age service. They envision the ideal functioning of the covenant's priestly and royal offices after YHWH's visitation."
+    }
   ],
   "fill_blank": [
-    { "ref": "Col III:1-2", "prompt": "May YHWH lift his countenance upon you and open for you the eternal ______.", "answer": "fountain", "source_quote": "May YHWH lift his countenance upon you and open for you the eternal fountain." },
-    { "ref": "Col V:24-25", "prompt": "May he make your horns of iron and your hooves of bronze; may you gore like a bull and trample the peoples like the mire of the ______.", "answer": "streets", "source_quote": "May he make your horns of iron and your hooves of bronze; may you gore like a bull and trample the peoples like the mire of the streets." }
+    {
+      "ref": "1QSb col.5",
+      "prompt": "The blessing over the Prince of the Congregation says he shall ___ the earth with the rod of his mouth.",
+      "answer": "smite",
+      "source_quote": "He will smite the earth with the rod of his mouth and destroy the wicked with the breath of his lips. — 1QSb col.V:24-25"
+    },
+    {
+      "ref": "1QSb col.3",
+      "prompt": "The Sons of Zadok are blessed as the ___ priests — the legitimate priestly lineage of the covenant.",
+      "answer": "covenant / Zadokite",
+      "source_quote": "May you serve in YHWH's Temple as he commanded, and minister with the angels of the presence. — 1QSb col.III:25-26"
+    },
+    {
+      "ref": "1QSb col.5",
+      "prompt": "The Prince of the Congregation is associated with language from Yesha'yahu 11, including the ___ from the stump of Yishai.",
+      "answer": "shoot / branch",
+      "source_quote": "May you be like a shoot from the stump of Yishai, and your throne established forever. — 1QSb col.V"
+    },
+    {
+      "ref": "1QSb col.2",
+      "prompt": "The high priestly blessing in 1QSb invokes YHWH lifting up his ___ to give peace — echoing Bamidbar 6.",
+      "answer": "face",
+      "source_quote": "May YHWH lift up his face to you and give you peace. — 1QSb col.II (echoing Bamidbar 6:26)"
+    },
+    {
+      "ref": "1QSb",
+      "prompt": "1QSb was found in ___ 1 and is appended to the same scroll as 1QS and 1QSa.",
+      "answer": "Cave",
+      "source_quote": "1QSb (1Q28b) — Cave 1 scroll appended to 1QS and 1QSa."
+    },
+    {
+      "ref": "1QSb col.3",
+      "prompt": "The priestly blessing places the high priest alongside the ___ in the heavenly-earthly dual assembly.",
+      "answer": "holy ones / angels",
+      "source_quote": "May you minister in the holy dwelling with the angels of the presence. — 1QSb col.III"
+    },
+    {
+      "ref": "1QSb col.5",
+      "prompt": "The Prince of the Congregation is to judge the ___ with righteousness, one of the marks drawn from Yesha'yahu 11.",
+      "answer": "poor",
+      "source_quote": "He will judge the poor with righteousness. — Yesha'yahu 11:4, cited in 1QSb col.V"
+    },
+    {
+      "ref": "1QSb",
+      "prompt": "The blessings in 1QSb are framed for the ___ — the perfected messianic age after YHWH's visitation.",
+      "answer": "end of days",
+      "source_quote": "1QSb is framed for the end of days, alongside 1QSa."
+    },
+    {
+      "ref": "1QSb col.5",
+      "prompt": "The Prince of the Congregation is to destroy the wicked with the ___ of his lips.",
+      "answer": "breath",
+      "source_quote": "He will destroy the wicked with the breath of his lips. — 1QSb col.V:24-25"
+    },
+    {
+      "ref": "1QSb col.3",
+      "prompt": "The covenant of eternal priesthood invoked in the Sons of Zadok blessing traces back to ___ and the Pinehas covenant.",
+      "answer": "Pinehas / the priestly covenant",
+      "source_quote": "May the covenant of eternal priesthood be confirmed in you as it was for Pinehas. — 1QSb col.III"
+    }
   ],
   "multiple_choice": [
-    { "ref": "Col I-V", "question": "In what order does 1QSb bless the community?", "options": ["Prince first, then priests, then community", "Community, then high priest, then sons of Tzadok, then Prince of the Congregation", "High priest only", "Each tribe individually"], "correct": 1, "source_quote": "The blessings are structured hierarchically: the faithful, the high priest, the sons of Tzadok, and the Prince of the Congregation." },
-    { "ref": "Col V:21-26", "question": "What messianic language does the blessing for the Prince of the Congregation use?", "options": ["He will build the Third Temple", "He strikes the earth with his mouth and slays the wicked with the breath of his lips", "He will gather the exiles from Egypt", "He will restore the Ark of the Covenant"], "correct": 1, "source_quote": "He shall strike the earth with the rod of his mouth, and with the breath of his lips he shall slay the wicked." }
+    {
+      "ref": "1QSb col.5",
+      "question": "What weapon does the Prince of the Congregation use to smite the earth?",
+      "options": [
+        "A sword of iron",
+        "The rod of his mouth",
+        "Fire from heaven",
+        "The covenant scroll"
+      ],
+      "correct": 1,
+      "source_quote": "He will smite the earth with the rod of his mouth. — 1QSb col.V:24-25"
+    },
+    {
+      "ref": "1QSb",
+      "question": "1QSb is known as:",
+      "options": [
+        "Rule of the Congregation",
+        "Songs of Sabbath Sacrifice",
+        "Rule of Blessings (Serekh HaBerakhot)",
+        "Pesher on Yesha'yahu"
+      ],
+      "correct": 2,
+      "source_quote": "1QSb — Serekh HaBerakhot, Rule of Blessings."
+    },
+    {
+      "ref": "1QSb col.3",
+      "question": "Alongside whom does 1QSb place the high priest in ministry?",
+      "options": [
+        "The Prince of the Congregation",
+        "The Teacher of Righteousness",
+        "The holy ones (angels)",
+        "The twelve elders"
+      ],
+      "correct": 2,
+      "source_quote": "May you minister with the angels of the presence. — 1QSb col.III"
+    },
+    {
+      "ref": "1QSb col.5",
+      "question": "The blessing over the Prince of the Congregation draws heavily from which prophet?",
+      "options": [
+        "Yirmiyahu 23",
+        "Yesha'yahu 11",
+        "Yehezkel 44",
+        "Amos 9"
+      ],
+      "correct": 1,
+      "source_quote": "1QSb col.5 saturated with Yesha'yahu 11 language — rod of his mouth, spirit of YHWH, judgment of the poor."
+    },
+    {
+      "ref": "1QSb col.2",
+      "question": "The high priestly blessing in 1QSb echoes which biblical priestly blessing?",
+      "options": [
+        "The Levitical song in Devarim 32",
+        "The blessing of Ya'akov in Bereshit 49",
+        "The Aaronite blessing in Bamidbar 6:24-26",
+        "The royal blessing in Tehillim 72"
+      ],
+      "correct": 2,
+      "source_quote": "May YHWH lift up his face to you and give you peace — echoing Bamidbar 6:26. — 1QSb col.II"
+    },
+    {
+      "ref": "1QSb col.3",
+      "question": "What covenant is invoked in the blessing over the Sons of Zadok?",
+      "options": [
+        "The covenant with Avraham",
+        "The covenant of eternal priesthood (Pinehas)",
+        "The covenant of Dawid's kingship",
+        "The covenant at Horeb"
+      ],
+      "correct": 1,
+      "source_quote": "May the covenant of eternal priesthood be confirmed in you. — 1QSb col.III"
+    },
+    {
+      "ref": "1QSb",
+      "question": "When are the blessings in 1QSb framed to be used?",
+      "options": [
+        "At each daily prayer service",
+        "During the annual Day of Atonement",
+        "At the end of days — the eschatological messianic age",
+        "At the community's weekly Sabbath meal"
+      ],
+      "correct": 2,
+      "source_quote": "1QSb is framed for the end of days, alongside 1QSa."
+    },
+    {
+      "ref": "1QSb",
+      "question": "The Prince of the Congregation in 1QSb is best understood as:",
+      "options": [
+        "The teacher-priest who leads the daily liturgy",
+        "The royal/military messianic leader — the Messiah of Yisra'el",
+        "An alternative name for the Maskil",
+        "The Zadokite high priest"
+      ],
+      "correct": 1,
+      "source_quote": "The Prince of the Congregation — the royal/messianic leader in 1QSb col.5."
+    },
+    {
+      "ref": "1QSb col.5",
+      "question": "Which characteristic of the Prince of the Congregation is listed in 1QSb?",
+      "options": [
+        "He will rebuild the Jerusalem Temple",
+        "He will judge the poor with righteousness",
+        "He will expel all Gentiles from the land",
+        "He will establish a new Torah"
+      ],
+      "correct": 1,
+      "source_quote": "He will judge the poor with righteousness. — Yesha'yahu 11:4, cited in 1QSb col.V"
+    },
+    {
+      "ref": "1QSb",
+      "question": "Who are the Sons of Zadok according to the Qumran community?",
+      "options": [
+        "The Roman converts to the covenant",
+        "The disciples of the Teacher of Righteousness only",
+        "The legitimate Zadokite priestly lineage displaced from the Temple",
+        "The twelve founding members of the Yakhad"
+      ],
+      "correct": 2,
+      "source_quote": "The Sons of Zadok — the legitimate Zadokite priestly line the community traced itself to. — 1QSb col.III"
+    }
   ],
   "faq": [
     {
-      "question": "What does the Rule of Blessings reveal about Qumran liturgical practice?",
-      "answer": "1QSb preserves a formal liturgy of blessing structured around the covenant hierarchy. The blessings flow from the community upward through the priesthood to the royal-messianic Prince. Each blessing draws on Torah language \u2014 the Birkat Kohanim of Bamidbar 6:24-26, the promises to the seed of Aharon, and the royal imagery of Yesha\u2019yahu 11. This liturgy was not spontaneous. It was scripted, hierarchical, and Torah-based. The Great Eraser has suppressed the knowledge that Second Temple communities had detailed liturgical practices grounded in the written Torah rather than in later rabbinic or church liturgical traditions. The Rule of Blessings demonstrates that the covenant community\u2019s worship was text-derived, priest-mediated, and community-centered \u2014 a practice with no dependency on the Jerusalem Temple establishment."
+      "question": "What is 1QSb (Rule of Blessings)?",
+      "answer": "1QSb is the third document appended to the Cave 1 scroll that also contains 1QS (Community Rule) and 1QSa (Rule of the Congregation). It contains a series of priestly blessings for the end of days: blessings over the congregation, the high priest, the Sons of Zadok (the community's priestly lineage), and the Prince of the Congregation (the royal/messianic leader). These blessings are not for current use but for the perfected eschatological age."
     },
     {
-      "question": "Why is the Prince of the Congregation significant in the Qumran messianic framework?",
-      "answer": "The Nasi HaEdah (Prince of the Congregation) in 1QSb is a royal-messianic figure distinct from the priestly Mashiach. His blessing uses language from Yesha\u2019yahu 11:4: striking the earth with his mouth, slaying the wicked with the breath of his lips. This dual-messianic expectation \u2014 a priestly Mashiach and a royal Prince \u2014 is unique to the Qumran texts and has no parallel in either the later rabbinic tradition (which collapses both into one) or the Christian tradition (which identifies both with a single figure). The Great Eraser operates by collapsing this complexity into a simpler framework. The Qumran texts preserve the original structure: the priestly function and the royal function are distinct roles with distinct blessings, both serving under YHWH\u2019s sovereignty."
+      "question": "Who is the Prince of the Congregation in 1QSb?",
+      "answer": "The Prince of the Congregation (Nesi HaEdah) is the royal/military messianic figure in Qumran texts — the Messiah of Yisra'el, distinct from the priestly Messiah of Aaron. The 1QSb blessing over him is saturated with Yesha'yahu 11 language: a shoot from Yishai, the spirit of YHWH, judgment of the poor, smiting the earth with the rod of his mouth, destroying the wicked with the breath of his lips. His authority is expressed through righteous judgment and divine decree, not simply military force."
+    },
+    {
+      "question": "How does 1QSb use Yesha'yahu 11?",
+      "answer": "The blessing over the Prince of the Congregation in 1QSb col.5 draws directly on Yesha'yahu 11's portrait of the ideal Davidic ruler: wisdom and understanding, the fear of YHWH, judging the poor with righteousness, the rod of his mouth as his weapon, the breath of his lips as destruction of the wicked. 1QSb applies this prophetic portrait to the community's eschatological royal figure. The DSS treated Yesha'yahu 11 as a source text for messianic expectation — the NT borrowed this same passage later."
+    },
+    {
+      "question": "What is the Aaronite blessing connection in 1QSb?",
+      "answer": "The high priestly blessing in 1QSb echoes the Aaronite blessing of Bamidbar 6:24-26 — the three-fold blessing of YHWH lifting his face, giving grace, and giving peace. 1QSb uses this ancient form but recontextualizes it for the covenant community's eschatological high priest who ministers with the angels of the presence. The community read themselves as the true inheritors of the Aaronite blessing's meaning."
+    },
+    {
+      "question": "What is the significance of the Sons of Zadok?",
+      "answer": "The Sons of Zadok were the legitimate priestly lineage according to the Qumran community — descended from Zadok, Dawid's priest, whose line is promised in Yekhezkel 44 as the legitimate priests of the future Temple. The community believed the Jerusalem Temple's priesthood had become illegitimate (whether through the Hasmonean takeover of the high priesthood or earlier corruption). By identifying themselves as the Sons of Zadok, they claimed the mantle of legitimate priestly authority that the Temple had forfeited."
+    },
+    {
+      "question": "Why is 1QSb framed for the end of days rather than current use?",
+      "answer": "Because the community's ideal priestly and royal leadership was not present in its current form. The legitimate high priest and the messianic Prince had not yet arrived. 1QSb preserved the ideal form of blessing that would be used when the proper leadership was established — a document of anticipation. Like 1QSa's messianic banquet, 1QSb's blessings define what the perfected covenant community will look like, shaping present practice by its eschatological goal."
+    },
+    {
+      "question": "How does 1QSb fit with 1QS and 1QSa?",
+      "answer": "The three documents form a triad on the same Cave 1 scroll: 1QS governs current community life (entry, Two Spirits, penal code, Maskil's hymn); 1QSa governs the eschatological assembly at the end of days; 1QSb provides the liturgical blessings for the eschatological leadership at that same end of days. Together they move from present practice (1QS) to future assembly structure (1QSa) to future blessing liturgy (1QSb). The whole scroll is a complete governing vision from present to eschatological."
+    },
+    {
+      "question": "What does the 'rod of his mouth' mean?",
+      "answer": "The rod of his mouth (Yesha'yahu 11:4, cited in 1QSb) is a figure of speech for authoritative decree — the Prince of the Congregation's judgment-speech functions as a rod, smiting the earth by its pronouncement. This is not literal weapon imagery but prophetic judgment language: his word has the force of execution. This contrasts with the War Scroll's military imagery — in 1QSb, the Prince's power is expressed through righteous speech, not just armies. The NT's Revelation 19:15 borrows this same imagery, applying it to its invented figure."
+    },
+    {
+      "question": "What connects 1QSb to the Songs of Sabbath Sacrifice (Shirot)?",
+      "answer": "Both texts place the community in the same dual-register frame: the earthly covenant community worshipping alongside the angelic heavenly assembly. 1QSb's blessing over the high priest says he ministers 'with the angels of the presence' — the same holy ones who populate the heavenly temple in the Shirot. This shared framework means the community's earthly priestly service is simultaneously a participation in the heavenly temple's ongoing angelic service."
+    },
+    {
+      "question": "How does 1QSb understand priestly authority?",
+      "answer": "Priestly authority in 1QSb is covenantal and lineage-based: it rests on the Sons of Zadok's descent from the legitimate priestly line and on YHWH's covenant with Pinehas (eternal priesthood). It is not institutional — the Jerusalem Temple's official priesthood had forfeited this authority by corruption. The community held the authentic covenant, the authentic lineage (or identified with it), and the authentic liturgy. The blessings of 1QSb articulate what that authentic priesthood looks like when properly constituted."
     }
   ]
 }
