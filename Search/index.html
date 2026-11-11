@@ -1281,7 +1281,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="alphabet" onclick="setMode('alphabet')">Paleo Alphabet</div>
       <div class="mpill" data-mode="dna" onclick="setMode('dna')"><i class="ri-dna-line"></i> Hebrew DNA</div>
       <div class="mpill" data-mode="tools" onclick="setMode('tools')"><i class="ri-tools-line"></i> Useful Tools</div>
-      <div class="mpill" data-mode="workbook" onclick="setMode('workbook')"><i class="ri-gamepad-line"></i> Q&amp;A Workbook</div>
+      <div class="mpill" data-mode="workbook" onclick="setMode('workbook')"><i class="ri-gamepad-line"></i> Quiz Games</div>
     </div>
   </div>
 
@@ -1347,7 +1347,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         </div>
         <div class="feat-card feat-card-wide" onclick="setMode('workbook')">
           <div class="fc-icon"><i class="ri-gamepad-line"></i></div>
-          <div class="fc-title">Interactive Q&amp;A Workbook</div>
+          <div class="fc-title">Quiz Games</div>
           <div class="fc-desc">Five games built entirely from this site's own primary-source data. Rounds of 10, with harder rounds unlocking as you master each one.</div>
         </div>
       </div>
@@ -1581,7 +1581,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
     <!-- WORKBOOK -->
     <div id="workbook-view" style="display:none">
       <div class="wb-back" onclick="setMode('home')"><i class="ri-arrow-left-s-line"></i> Home</div>
-      <div class="sv-hdr" style="padding:4px 14px 0">Interactive Q&amp;A Workbook</div>
+      <div class="sv-hdr" style="padding:4px 14px 0">Quiz Games</div>
       <div class="sv-sub">Five games, all built from this site's own primary-source data. Every round is 10 real items. Score 8 of 10 to unlock the next, harder round.</div>
       <div id="workbook-panel"></div>
     </div>
@@ -11947,11 +11947,11 @@ function wbBuildPaleo() {
 }
 
 var WB_GAMES = [
-  { id: 'spotchange', icon: 'ri-git-compare-line', title: 'Spot the Change', desc: 'What did the primary source actually say, before the later tradition rewrote it?', build: wbBuildSpotChange },
-  { id: 'claimsort', icon: 'ri-scales-3-line', title: 'Primary Source or Claim?', desc: 'Sort each statement: manuscript-attested primary source, or an institutional claim with no primary-source backing.', build: wbBuildClaimSort },
-  { id: 'rootmatch', icon: 'ri-text', title: 'Root Match', desc: 'Match the ancient root to its true meaning, both directions.', build: wbBuildRootMatch },
-  { id: 'timeline', icon: 'ri-time-line', title: 'Timeline Order', desc: 'Put real dated events in chronological order, from the covenant genealogy and from the documented canon history.', build: wbBuildTimeline },
-  { id: 'paleo', icon: 'ri-font-size-2', title: 'Paleo Gauntlet', desc: 'Drill all 22 paleo-Hebrew letters: glyph, name, numeric value, and pictograph.', build: wbBuildPaleo }
+  { id: 'spotchange', icon: 'ri-find-replace-line', color: '#E67E22', title: 'Spot the Change', desc: 'What did the primary source actually say, before the later tradition rewrote it?', build: wbBuildSpotChange },
+  { id: 'claimsort', icon: 'ri-scales-3-line', color: '#3498DB', title: 'Primary Source or Claim?', desc: 'Sort each statement: manuscript-attested primary source, or an institutional claim with no primary-source backing.', build: wbBuildClaimSort },
+  { id: 'rootmatch', icon: 'ri-text', color: '#9B59B6', title: 'Root Match', desc: 'Match the ancient root to its true meaning, both directions.', build: wbBuildRootMatch },
+  { id: 'timeline', icon: 'ri-time-line', color: '#1ABC9C', title: 'Timeline Order', desc: 'Put real dated events in chronological order, from the covenant genealogy and from the documented canon history.', build: wbBuildTimeline },
+  { id: 'paleo', icon: 'ri-font-size-2', color: '#E74C3C', title: 'Paleo Gauntlet', desc: 'Drill all 22 paleo-Hebrew letters: glyph, name, numeric value, and pictograph.', build: wbBuildPaleo }
 ];
 var WB_STATE = null;
 
@@ -11980,8 +11980,8 @@ function renderWorkbookHome() {
     var totalTiers = Math.max(1, Math.ceil(pool.length / 10));
     var tier = Math.min(wbMastery(g.id), totalTiers);
     var metaText = tier === 0 ? ('Round 1 of ' + totalTiers + ' — not started') : (tier >= totalTiers ? ('All ' + totalTiers + ' rounds mastered') : ('Round ' + (tier + 1) + ' of ' + totalTiers + ' unlocked'));
-    html += '<div class="wb-game-card" onclick="wbStartGame(\'' + g.id + '\')">' +
-      '<div class="wb-game-icon"><i class="' + g.icon + '"></i></div>' +
+    html += '<div class="wb-game-card" style="border-left-color:' + g.color + '" onclick="wbStartGame(\'' + g.id + '\')">' +
+      '<div class="wb-game-icon" style="color:' + g.color + '"><i class="' + g.icon + '"></i></div>' +
       '<div class="wb-game-info">' +
       '<div class="wb-game-title">' + esc(g.title) + '</div>' +
       '<div class="wb-game-desc">' + esc(g.desc) + '</div>' +
@@ -12002,7 +12002,7 @@ function wbStartGame(gameId) {
   var start = masteredTier * 10;
   var items = pool.slice(start, start + 10);
   if (items.length < 10) items = items.concat(wbShuffle(pool).slice(0, 10 - items.length));
-  WB_STATE = { gameId: gameId, gameTitle: game.title, totalTiers: totalTiers, tier: masteredTier, idx: 0, correct: 0, hintLevel: 0, answered: false, eliminated: [], items: items, missed: [], isRemix: false };
+  WB_STATE = { gameId: gameId, gameTitle: game.title, gameColor: game.color || 'var(--gold)', totalTiers: totalTiers, tier: masteredTier, idx: 0, correct: 0, hintLevel: 0, answered: false, eliminated: [], items: items, missed: [], isRemix: false };
   wbRenderQuestion();
 }
 
@@ -12027,7 +12027,7 @@ function wbRenderQuestion() {
   if (s.idx >= s.items.length) { wbRenderResults(); return; }
   var it = s.items[s.idx];
   var html = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>';
-  html += '<div class="wb-round-hdr"><div class="wb-round-title">' + esc(s.gameTitle) + (s.isRemix ? '' : (' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers)) + '</div><div class="wb-round-prog">Q' + (s.idx + 1) + '/' + s.items.length + ' · ' + s.correct + ' correct</div></div>';
+  html += '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor||'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + (s.isRemix ? '' : (' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers)) + '</div><div class="wb-round-prog">Q' + (s.idx + 1) + '/' + s.items.length + ' · ' + s.correct + ' correct</div></div>';
   html += '<div class="wb-q-box">';
   if (it.type === 'mc') {
     html += '<div class="wb-q-text">' + esc(it.prompt) + '</div>';
@@ -12169,7 +12169,7 @@ function wbRenderResults() {
     '<div class="wb-results"><div class="wb-results-score">' + s.correct + '/' + s.items.length + '</div>' +
     '<div class="wb-results-label">' + esc(s.gameTitle) + '</div>' +
     '<div class="wb-results-msg">' + esc(msg) + '</div></div>' +
-    '<button class="wb-next-btn" onclick="renderWorkbookHome()">Back to Workbook</button>';
+    '<button class="wb-next-btn" onclick="renderWorkbookHome()">Back to Quiz Games</button>';
 }
 
 window.addEventListener('load',function(){if(document.getElementById('dna-grid'))filterDNA();});
