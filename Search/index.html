@@ -5494,6 +5494,10 @@ var SEPTUAGINT_PROPHESIES = [
   {ref:'Zechariah 9:9, Riding a Donkey',hebrew:'Rejoice greatly, O daughter of Zion, your king comes to you, righteous and having salvation, lowly and riding on a donkey.',greek:'No significant divergence.',nt:'Matthew 21:2-7 reads this as prediction and fulfills it, and adds a second animal (a donkey and its colt) by misreading the Hebrew poetic parallelism, resulting in the NT narrative describing the figure riding two animals simultaneously.',context:'Hebrew poetic parallelism uses two phrases to describe one thing (a donkey, described as a colt). Matthew treats the two phrases as two separate animals, a misreading of Hebrew poetry made from the Greek translation.'},
   {ref:'Micah 5:2, Born in Bethlehem',hebrew:'But you, Bethlehem Ephrathah, though you are small among the clans of Judah, out of you will come for me one who will be ruler over Israel.',greek:'Minor variations.',nt:'Matthew 2:6 and Luke 2:4 both place the birth in Bethlehem to fulfill this. They use incompatible mechanisms: Matthew\'s narrative places the invented family in Bethlehem (fleeing to Egypt then relocating to Nazareth); Luke\'s narrative has them traveling from Nazareth to Bethlehem for a census.',context:'Two gospel authors independently recognized the Bethlehem requirement and each invented a different explanation for how the fictional family ended up there, and their explanations directly contradict each other.'}
 ];
+var FISHING_IMAGE_INVERSION = [
+  {ref:'Yirmeyahu 16:16, Fishers and Hunters Sent for Judgment',source:'"Behold, I am sending for many fishers, declares YHWH, and they shall catch them. And afterward I will send for many hunters, and they shall hunt them from every mountain and every hill, and out of the clefts of the rocks." YHWH sends fishers paired directly with hunters, to track down and catch a scattered, judged people. The image means capture for judgment, not recruitment.',ntUse:'Matthew 4:19 / Mark 1:17, the invented figure to Shimon and Andrew: "Follow me, and I will make you fishers of men." The same fishing-for-people idiom, repurposed as a cheerful call to gather followers.',context:'Every other use of this exact idiom in the covenant record means being caught, hunted, or conquered. The NT narrative inverts an idiom whose meaning was already fixed by the covenant prophets, erasing its documented meaning rather than building on it.'},
+  {ref:'Havakuk 1:14-17, The Net-Fisherman Who Worships His Own Net',source:'"You make mankind like the fish of the sea... He brings all of them up with a hook. He drags them out with his net. He gathers them in his dragnet. So he rejoices and is glad. Therefore he sacrifices to his net and makes offerings to his dragnet, for by them he lives in luxury." The fisherman here is the Chaldean war machine: dragging people up like fish, then worshipping the net itself, the instrument of its own conquest, as a god.',ntUse:'The same "fisher of men" phrase (Matthew 4:19 / Mark 1:17) sits in a corpus where the only other sustained fishing-for-people scene is this one: a conqueror idolizing the power that lets him capture people.',context:'Havakuk names the net-fisherman\'s act for what it is: violent capture followed by idolatry of the capturing power itself. The NT borrows the fishing-for-people image while discarding everything the covenant record actually says about what that image means.'}
+];
 var TEACHER_OF_RIGHTEOUSNESS = {
   desc:'Every element the NT later assembled into its invented figure already stood in the covenant record, centuries earlier — the persecuted righteous prophet, the awaited prophet like Moshe, the teacher given the hidden counsel of YHWH, the covenant meal and the washing in water. These are the covenant record\'s own, long before the gospel narrative. The NT revealed nothing new; it recombined a template already set.',
   points:[
@@ -5602,6 +5606,21 @@ function renderOriginsPanel() {
   var empHtml = EMPEROR_WORSHIP.map(function(e) {
     return '<div class="td-item"><div class="td-topic">' + esc(e.title) + '</div><div class="td-text">' + esc(e.text) + '</div></div>';
   }).join('');
+  var fishHtml = FISHING_IMAGE_INVERSION.map(function(f) {
+    return '<div class="hr-source">' +
+      '<div class="hr-source-hdr" onclick="toggleAccordion(this)">' +
+        '<div class="hr-source-name">' + esc(f.ref) + '</div>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>' +
+      '</div>' +
+      '<div style="display:none;padding:0 14px 13px;border-top:1px solid #1e1e1e">' +
+        '<div class="rb-dss-maso" style="margin:9px 0 7px">' +
+          '<div class="rb-col rb-dss"><div class="rb-col-head">Primary Source Meaning</div><div class="rb-col-text">' + esc(f.source) + '</div></div>' +
+          '<div class="rb-col rb-maso"><div class="rb-col-head">NT Use</div><div class="rb-col-text">' + esc(f.ntUse) + '</div></div>' +
+        '</div>' +
+        '<div class="hr-verdict-box">Context: ' + esc(f.context) + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 
   panel.innerHTML =
     '<div class="hr-sec-head">The Name, Yeshua to Jesus</div>' +
@@ -5613,6 +5632,9 @@ function renderOriginsPanel() {
     '<div class="hr-sec-head">Septuagint Prophecy Fabrication</div>' +
     '<div class="hr-sec-sub">NT authors read Greek, not Hebrew. They quoted Greek mistranslations as fulfilled Hebrew prophecy. Five documented cases.</div>' +
     sepHtml +
+    '<div class="hr-sec-head">"Fisher of Men," Judgment Imagery Recast as Invitation</div>' +
+    '<div class="hr-sec-sub">Every other use of the fishing-for-people idiom in the covenant record means capture, judgment, or conquest. The NT takes the same idiom and inverts its meaning into a recruitment phrase.</div>' +
+    fishHtml +
     '<div class="hr-sec-head">Yeshayahu 53, What the Primary Sources Actually Say</div>' +
     '<div class="hr-sec-sub">The most misappropriated chapter in the Hebrew primary sources. The physical manuscript evidence, the literary architecture the church severed, the plural pronoun the church translation hid, and why the community that possessed the scroll never applied it the way the NT does.</div>' +
     '<div class="td-item"><div class="td-topic">First: The Physical Evidence</div><div class="td-text">The primary witness is 1QIsa-a, the Great Isaiah Scroll recovered from Cave 1 at Qumran in 1947. It is the oldest complete biblical manuscript in existence, dated by carbon testing and paleographic analysis to 125-100 BCE, over a century before the figure the church applies this passage to was invented, and over a century before the NT was written. The scroll is 7.34 metres long, contains all 66 chapters of Yeshayahu, and is held in the Shrine of the Book in Jerusalem. It is publicly viewable. It is not a copy of a copy. It is the primary witness in its original form.</div></div>' +
