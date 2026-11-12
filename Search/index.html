@@ -190,6 +190,9 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .wb-clue-tile.trap{background:rgba(192,57,43,0.22);border-color:#c0392b}
 .wb-clue-tile.missed{background:rgba(39,174,96,0.12);border-color:#27ae60;opacity:0.7}
 .wb-clue-tag{font-size:8px;font-weight:700;letter-spacing:0.3px;color:var(--gold)}
+.wb-clue-bg{background:url('images/clue-locations.png') center/cover no-repeat;border-radius:var(--r);overflow:hidden;position:relative;padding:12px}
+.wb-clue-bg::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.62);pointer-events:none;border-radius:var(--r)}
+.wb-clue-inner{position:relative;z-index:1}
 /* TIMELINE ORDER */
 .wb-tl-bg{background:url('images/timeline-bg.png') center/cover no-repeat;border-radius:var(--r);overflow:hidden;position:relative;padding:12px}
 .wb-tl-bg::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.6);pointer-events:none;border-radius:var(--r)}
@@ -12378,21 +12381,21 @@ function wbRenderClue() {
   var done = C.phase !== 'playing';
   var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
     '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Clue ' + (s.idx + 1) + '/' + s.boards.length + ' · ' + s.correct + ' correct</div></div>';
-  var html = '<div class="wb-q-box"><div class="wb-clue-banner"><span class="wb-clue-label">CLUE</span><span class="wb-clue-word">' + esc(board.clueHeb) + ' (' + esc(board.clueTranslit) + ')</span></div>' +
-    '<div class="wb-q-text">Tap the tile that is this root’s true meaning. One tile is a trap — a real but wrong meaning from a different root.</div><div class="wb-clue-grid">';
+  var html = ‘<div class="wb-q-box"><div class="wb-clue-bg"><div class="wb-clue-inner"><div class="wb-clue-banner"><span class="wb-clue-label">CLUE</span><span class="wb-clue-word">’ + esc(board.clueHeb) + ‘ (‘ + esc(board.clueTranslit) + ‘)</span></div>’ +
+    ‘<div class="wb-q-text" style="color:rgba(255,255,255,0.78);font-size:12px;margin-bottom:10px">Tap the tile that is this root\’s true meaning. One tile is a trap — a real but wrong meaning from a different root.</div><div class="wb-clue-grid">’;
   C.tiles.forEach(function(t, i) {
-    var cls = 'wb-clue-tile'; var tag = '';
-    if (t.status === 'match') { cls += ' match'; tag = 'CORRECT'; }
-    else if (t.status === 'wrong') { cls += ' wrong'; tag = 'NOT A MATCH'; }
-    else if (t.status === 'trap') { cls += ' trap'; tag = 'TRAP'; }
-    else if (done && t.kind === 'match') { cls += ' missed'; tag = 'WAS THE MATCH'; }
-    var disabled = done || t.status !== 'hidden';
-    html += '<button class="' + cls + '" ' + (disabled ? 'disabled' : ('onclick="wbClueGuess(' + i + ')"')) + '>' + esc(t.text) + (tag ? ('<span class="wb-clue-tag">' + tag + '</span>') : '') + '</button>';
+    var cls = ‘wb-clue-tile’; var tag = ‘’;
+    if (t.status === ‘match’) { cls += ‘ match’; tag = ‘CORRECT’; }
+    else if (t.status === ‘wrong’) { cls += ‘ wrong’; tag = ‘NOT A MATCH’; }
+    else if (t.status === ‘trap’) { cls += ‘ trap’; tag = ‘TRAP’; }
+    else if (done && t.kind === ‘match’) { cls += ‘ missed’; tag = ‘WAS THE MATCH’; }
+    var disabled = done || t.status !== ‘hidden’;
+    html += ‘<button class="’ + cls + ‘" ‘ + (disabled ? ‘disabled’ : (‘onclick="wbClueGuess(‘ + i + ‘)"’)) + ‘>’ + esc(t.text) + (tag ? (‘<span class="wb-clue-tag">’ + tag + ‘</span>’) : ‘’) + ‘</button>’;
   });
-  html += '</div>';
-  if (done) html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(board.clueHeb) + ' (' + esc(board.clueTranslit) + ')</div>' + esc(board.reveal) + '</div>';
-  else html += '<div class="wb-round-prog" style="margin-top:8px">Strikes: ' + C.strikes + '/3</div>';
-  html += '</div>';
+  html += ‘</div>’;
+  if (done) html += ‘<div class="wb-reveal"><div class="wb-reveal-src">’ + esc(board.clueHeb) + ‘ (‘ + esc(board.clueTranslit) + ‘)</div>’ + esc(board.reveal) + ‘</div>’;
+  else html += ‘<div class="wb-round-prog" style="margin-top:8px;color:rgba(255,255,255,0.6)">Strikes: ‘ + C.strikes + ‘/3</div>’;
+  html += ‘</div></div></div>’;
   if (done) html += '<button class="wb-next-btn" onclick="wbClueNext()">' + (s.idx + 1 >= s.boards.length ? 'See results' : 'Next clue') + '</button>';
   panel.innerHTML = hdr + html;
 }
