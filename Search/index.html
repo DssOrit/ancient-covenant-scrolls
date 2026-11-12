@@ -209,10 +209,40 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .wb-memory-inner{position:relative;z-index:1}
 .wb-memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .wb-memory-tile{aspect-ratio:1;background:rgba(15,10,5,0.9);border:2px solid rgba(255,255,255,0.25);border-radius:9px;font-size:18px;color:var(--tx3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;padding:4px;text-align:center;line-height:1.1}
-.wb-memory-tile.face-up{color:#fff;font-size:10.5px;font-weight:700}
+.wb-memory-tile.face-up{color:#fff;font-size:9px;font-weight:700;word-break:break-word;overflow-wrap:break-word;line-height:1.3}
 .wb-memory-tile.matched{opacity:0.4}
 .wb-memory-legend{display:flex;gap:5px;margin-top:8px;justify-content:center;flex-wrap:wrap}
 .wb-memory-legend-item{padding:4px 9px;border-radius:5px;font-size:9px;font-weight:800;letter-spacing:0.4px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.3)}
+.wb-hl-bg{background:url('images/higherlow-bg.png') center/cover no-repeat,linear-gradient(135deg,#1a1200,#2a1a00);border-radius:var(--r);overflow:hidden;position:relative;padding:12px}
+.wb-hl-bg::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.60);pointer-events:none;border-radius:var(--r)}
+.wb-hl-inner{position:relative;z-index:1}
+.wb-hl-current{text-align:center;padding:14px 8px 10px}
+.wb-hl-val{font-size:52px;font-weight:900;color:#C8971F;line-height:1}
+.wb-hl-label{font-size:12px;color:rgba(255,255,255,0.85);margin-top:6px;line-height:1.35}
+.wb-hl-next{text-align:center;font-size:11.5px;color:rgba(255,255,255,0.65);margin:8px 0 12px;padding:8px;background:rgba(255,255,255,0.08);border-radius:7px}
+.wb-hl-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.wb-hl-btn{padding:14px 6px;border-radius:9px;font-size:14px;font-weight:800;border:none;cursor:pointer;letter-spacing:0.5px}
+.wb-hl-btn.higher{background:#27ae60;color:#fff}
+.wb-hl-btn.lower{background:#e74c3c;color:#fff}
+.wb-hl-btn.bank{background:#C8971F;color:#fff;grid-column:span 1}
+.wb-hl-btn.risk{background:rgba(255,255,255,0.15);color:#fff;border:2px solid rgba(255,255,255,0.4);grid-column:span 1}
+.wb-hl-result{text-align:center;padding:10px;border-radius:8px;font-size:13px;font-weight:700;margin-bottom:8px}
+.wb-hl-result.correct{background:rgba(39,174,96,0.25);color:#2ecc71}
+.wb-hl-result.wrong{background:rgba(231,76,60,0.25);color:#e74c3c}
+.wb-hl-streak{text-align:center;font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:8px}
+.wb-hl-banked{text-align:center;font-size:11px;color:#C8971F;font-weight:700;margin-bottom:8px}
+.wb-vf-bg{background:url('images/vocabfeud-bg.png') center/cover no-repeat,linear-gradient(135deg,#0a1628,#1a2a40);border-radius:var(--r);overflow:hidden;position:relative;padding:12px}
+.wb-vf-bg::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.62);pointer-events:none;border-radius:var(--r)}
+.wb-vf-inner{position:relative;z-index:1}
+.wb-vf-topic{font-size:13px;font-weight:700;color:#fff;text-align:center;margin-bottom:12px;line-height:1.35;padding:8px;background:rgba(255,255,255,0.1);border-radius:7px}
+.wb-vf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.wb-vf-tile{padding:11px 8px;border-radius:9px;font-size:11.5px;font-weight:700;text-align:center;cursor:pointer;border:2px solid rgba(255,255,255,0.25);background:rgba(15,10,5,0.85);color:#fff;line-height:1.2;min-height:44px;display:flex;align-items:center;justify-content:center}
+.wb-vf-tile.found{background:rgba(39,174,96,0.35);border-color:#27ae60;color:#2ecc71}
+.wb-vf-tile.wrong{background:rgba(231,76,60,0.35);border-color:#e74c3c;color:#e74c3c}
+.wb-vf-tile.missed{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.5)}
+.wb-vf-strikes{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.wb-vf-strike{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900}
+.wb-vf-strike.hit{background:#e74c3c;border-color:#e74c3c;color:#fff}
 
 /* FILTER BAR */
 .filter-bar{display:flex;gap:5px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none;flex-shrink:0}
@@ -11989,23 +12019,93 @@ function wbBuildTimeline() {
   return wbShuffle(problems);
 }
 
-function wbBuildPaleo() {
-  return (typeof PALEO_ALPHA !== 'undefined' ? PALEO_ALPHA : []);
-}
+var WB_MEMORY_FACTS = [
+  {term:'Qumran caves',meaning:'Where the DSS were hidden and found in 1947'},
+  {term:'Beta Israel',meaning:'Ethiopian Hebrew community who kept the Ge\'ez Orit'},
+  {term:'364-day calendar',meaning:'Covenant solar calendar recorded in 1 Chanokh'},
+  {term:'YHWH',meaning:'The covenant name, suppressed in later translations'},
+  {term:'Masoretes',meaning:'Scribes who added vowel marks 600-900 CE'},
+  {term:'Chanokh',meaning:'Pre-flood prophet; his book removed from most canons'},
+  {term:'Yovelim',meaning:'49-year Jubilee cycles, the covenant timekeeping book'},
+  {term:'Soleb inscription',meaning:'1400 BCE Egypt records YHWH in the Shasu land'},
+  {term:'Elephantine papyri',meaning:'Hebrew garrison letters from Kush, 5th cent. BCE'},
+  {term:'Second Temple period',meaning:'516 BCE to 70 CE, texts edited under foreign control'},
+  {term:'Septuagint',meaning:'Greek translation of Hebrew texts, 3rd-2nd century BCE'},
+  {term:'Tetragrammaton',meaning:'Four letters YHWH, replaced with LORD in translation'},
+  {term:'Council of Nicaea',meaning:'325 CE Roman council that set Christian doctrine'},
+  {term:'Niqqud',meaning:'Rabbinic vowel dots added centuries after original text'},
+  {term:'Ge\'ez script',meaning:'Ancient Kush script used to preserve the Hebrew canon'},
+  {term:'Tobit',meaning:'Covenant story found in DSS, absent from most Bibles'},
+  {term:'Ben Sira',meaning:'2nd century BCE Hebrew wisdom text, found in DSS'},
+  {term:'Dum Diversas',meaning:'1452 papal decree authorizing seizure and enslavement'},
+  {term:'Partus sequitur ventrem',meaning:'1662 law: enslaved status passes through the mother'},
+  {term:'1 Chanokh Ch. 72',meaning:'The Astronomical Book, details the 364-day solar year'},
+  {term:'Qumran Yahad',meaning:'The covenant community that copied and preserved the DSS'},
+  {term:'Masoretic Text',meaning:'9th-10th century CE text, later than many DSS copies'},
+  {term:'Babylonian exile',meaning:'586-538 BCE, Hebrew texts altered under foreign rule'},
+  {term:'Dead Sea Scrolls',meaning:'Pre-Rabbinic Hebrew manuscripts written before 70 CE'}
+];
+function wbBuildPaleo() { return WB_MEMORY_FACTS; }
+
+var WB_HIGHER_LOWER = [
+  {val:7,   label:'Days in the creation week'},
+  {val:11,  label:'DSS cave sites found at Qumran'},
+  {val:12,  label:'Tribes of the covenant people'},
+  {val:22,  label:'Letters in the paleo-Hebrew alphabet'},
+  {val:40,  label:'Years of wilderness journey'},
+  {val:49,  label:'Years in one Jubilee cycle'},
+  {val:70,  label:'Year the Second Temple fell (CE)'},
+  {val:81,  label:'Books in the Ge\'ez Orit canon'},
+  {val:325, label:'Year of the Council of Nicaea (CE)'},
+  {val:364, label:'Days in the covenant solar calendar'},
+  {val:538, label:'Year the Babylonian exile ended (BCE)'},
+  {val:586, label:'Year the Babylonian exile began (BCE)'},
+  {val:900, label:'DSS manuscripts found in total'},
+  {val:1452,label:'Year of the Dum Diversas decree'},
+  {val:1662,label:'Year of Partus sequitur ventrem'},
+  {val:1947,label:'Year the Dead Sea Scrolls were discovered'}
+];
+function wbBuildHigherLow() { return wbShuffle(WB_HIGHER_LOWER.slice()); }
+
+var WB_VOCAB_FEUD = [
+  {
+    topic:'Books found among the Dead Sea Scrolls',
+    correct:['Psalms','Isaiah','Daniel','Enoch','Jubilees','Tobit'],
+    wrong:['Matthew','Revelation','Talmud','Zohar','Didache']
+  },
+  {
+    topic:'Books in the Ge\'ez Orit but absent from most Western Bibles',
+    correct:['Enoch','Jubilees','Tobit','Ben Sira','Maccabees 1','Maccabees 2'],
+    wrong:['Galatians','Romans','Titus','Hebrews','Revelation']
+  },
+  {
+    topic:'Things the Masoretes added to the Hebrew text',
+    correct:['Vowel points','Accent marks','Cantillation','Chapter marks','Verse numbers','Marginal notes'],
+    wrong:['Original consonants','DSS variants','Enoch chapters','Calendar laws','Covenant names']
+  },
+  {
+    topic:'Evidence sources for the 364-day covenant calendar',
+    correct:['1 Chanokh Ch. 72','DSS calendar texts','Yovelim','4Q319','Solar festivals','52-week year'],
+    wrong:['Gregorian calendar','Rabbinic calendar','Roman calendar','Council of Nicaea','Babylonian calendar']
+  }
+];
+function wbBuildVocabFeud() { return WB_VOCAB_FEUD.slice(); }
 
 var WB_GAMES = [
   { id: 'spotchange', icon: 'ri-find-replace-line', color: '#E67E22', img: 'game-spotchange.png', title: 'Scroll or No Scroll', desc: 'Pick a scroll to keep. Open the others — each reveals what the primary source actually says. The Scribe will make you an offer.', mechanic: 'deal', build: wbBuildSpotChange },
   { id: 'claimsort', icon: 'ri-user-search-line', color: '#3498DB', img: 'game-claimsort.png', title: 'The Imposter', desc: 'Two of three statements are manuscript-attested. One is the institutional claim with no primary-source backing. Find it.', mechanic: 'imposter', build: wbBuildClaimSort },
   { id: 'rootmatch', icon: 'ri-grid-line', color: '#9B59B6', img: 'game-rootmatch.png', title: 'Clue Grid', desc: "A root's meaning is the clue. Tap its true match on the board — one tile is a trap.", mechanic: 'cluegrid', build: wbBuildRootMatch },
   { id: 'timeline', icon: 'ri-time-line', color: '#1ABC9C', img: 'game-timeline.png', title: 'Timeline Order', desc: 'Put real dated events in chronological order, from the covenant genealogy and the documented canon history.', mechanic: 'generic', build: wbBuildTimeline },
-  { id: 'paleo', icon: 'ri-layout-grid-line', color: '#E74C3C', img: 'game-paleo.png', title: 'Memory Match', desc: 'Flip tiles to match each paleo-Hebrew glyph to its name.', mechanic: 'memory', build: wbBuildPaleo }
+  { id: 'paleo', icon: 'ri-layout-grid-line', color: '#E74C3C', img: 'game-paleo.png', title: 'Memory Match', desc: 'Flip tiles to match each term with its historical meaning.', mechanic: 'memory', build: wbBuildPaleo },
+  { id: 'higherlow', icon: 'ri-bar-chart-line', color: '#C8971F', img: null, title: 'Higher or Lower', desc: 'Look at the value and the next label. Guess whether the next number is higher or lower. Bank your tokens or risk them for more.', mechanic: 'higherlow', build: wbBuildHigherLow },
+  { id: 'vocabfeud', icon: 'ri-survey-line', color: '#1ABC9C', img: null, title: 'Vocab Feud', desc: 'Read the category. Tap every word that belongs. Three wrong taps ends the round.', mechanic: 'vocabfeud', build: wbBuildVocabFeud }
 ];
 var WB_STATE = null;
 function wbTotalRounds(gameId) {
   var game = WB_GAMES.filter(function(g) { return g.id === gameId; })[0];
   if (!game) return 1;
   var pool = game.build();
-  var perRound = { deal: 12, imposter: 30, cluegrid: 10, memory: 6, generic: 10 }[game.mechanic] || 10;
+  var perRound = { deal: 12, imposter: 30, cluegrid: 10, memory: 6, generic: 10, higherlow: 5, vocabfeud: 1 }[game.mechanic] || 10;
   return Math.max(1, Math.ceil(pool.length / perRound));
 }
 
@@ -12063,6 +12163,8 @@ function wbStartGame(gameId) {
   if (game.mechanic === 'imposter') { wbStartImposter(gameId, game.title, color, tier, totalTiers, pool); return; }
   if (game.mechanic === 'cluegrid') { wbStartClue(gameId, game.title, color, tier, totalTiers, pool); return; }
   if (game.mechanic === 'memory') { wbStartMemory(gameId, game.title, color, tier, totalTiers, pool); return; }
+  if (game.mechanic === 'higherlow') { wbStartHigherLow(gameId, game.title, color, tier, totalTiers, pool); return; }
+  if (game.mechanic === 'vocabfeud') { wbStartVocabFeud(gameId, game.title, color, tier, totalTiers, pool); return; }
   wbStartGeneric(gameId, game.title, color, tier, totalTiers, pool);
 }
 
@@ -12410,8 +12512,8 @@ function wbStartMemory(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
   if (letters.length < 6) letters = letters.concat(wbShuffle(pool).slice(0, 6 - letters.length));
   var tiles = [];
   letters.forEach(function(l, i) {
-    tiles.push({ pairIdx: i, kind: 'glyph', text: l.g, matched: false });
-    tiles.push({ pairIdx: i, kind: 'name', text: l.name, matched: false });
+    tiles.push({ pairIdx: i, kind: 'term', text: l.term || l.g || '', matched: false });
+    tiles.push({ pairIdx: i, kind: 'meaning', text: l.meaning || l.name || '', matched: false });
   });
   WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'memory', tier: tier, totalTiers: totalTiers, isRemix: false,
     letters: letters, tiles: wbShuffle(tiles), flipped: [], mismatches: 0, matchedCount: 0, busy: false };
@@ -12454,7 +12556,7 @@ function wbRenderMemory() {
     '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">' + s.matchedCount + '/' + s.letters.length + ' matched · ' + s.mismatches + ' mismatches</div></div>';
   var PAIR_COLORS = ['#3498db','#27ae60','#e67e22','#c0392b','#9b59b6','#16a085'];
   var PAIR_BG = ['rgba(52,152,219,0.18)','rgba(39,174,96,0.18)','rgba(230,126,34,0.18)','rgba(192,57,43,0.18)','rgba(155,89,182,0.18)','rgba(22,160,133,0.18)'];
-  var html = '<div class="wb-q-box"><div class="wb-memory-bg"><div class="wb-memory-inner"><div class="wb-q-text" style="color:rgba(255,255,255,0.75);font-size:12px;text-align:center;margin-bottom:10px">Flip two tiles at a time. Match each paleo-Hebrew glyph to its name.</div><div class="wb-memory-grid">';
+  var html = '<div class="wb-q-box"><div class="wb-memory-bg"><div class="wb-memory-inner"><div class="wb-q-text" style="color:rgba(255,255,255,0.75);font-size:12px;text-align:center;margin-bottom:10px">Flip two tiles at a time. Match each term with its historical meaning.</div><div class="wb-memory-grid">';
   s.tiles.forEach(function(t, i) {
     var faceUp = t.matched || s.flipped.indexOf(i) !== -1;
     var pairColor = PAIR_COLORS[t.pairIdx % PAIR_COLORS.length];
@@ -12464,14 +12566,140 @@ function wbRenderMemory() {
     html += '<button class="' + cls + '" onclick="wbMemoryFlip(' + i + ')" ' + (faceUp ? 'disabled' : '') + ' style="' + matchedStyle + '">' + (faceUp ? esc(t.text) : '?') + '</button>';
   });
   html += '</div>';
-  if (s.letters && s.letters.length) {
-    html += '<div class="wb-memory-legend">';
-    s.letters.forEach(function(l, idx) {
-      var c = PAIR_COLORS[idx % PAIR_COLORS.length];
-      html += '<div class="wb-memory-legend-item" style="color:' + c + ';border-color:' + c + '">' + esc(l.glyph || '') + ' ' + esc(l.name || '') + '</div>';
-    });
-    html += '</div>';
+  html += '</div></div></div>';
+  panel.innerHTML = hdr + html;
+}
+
+// ── HIGHER OR LOWER ──────────────────────────────────────────────────────────────────────
+function wbStartHigherLow(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
+  var perRound = 5;
+  var shuffled = wbShuffle(pool.slice());
+  var start = tier * perRound;
+  var items = shuffled.slice(start, start + perRound + 1);
+  if (items.length < 2) items = wbShuffle(pool.slice()).slice(0, perRound + 1);
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'higherlow',
+    tier: tier, totalTiers: totalTiers, isRemix: false,
+    items: items, idx: 0, banked: 0, streak: 0, phase: 'guess', missed: [] };
+  wbRenderHigherLow();
+}
+function wbHLGuess(dir) {
+  var s = WB_STATE;
+  if (s.phase !== 'guess') return;
+  var curr = s.items[s.idx], next = s.items[s.idx + 1];
+  var correct = (dir === 'higher' && next.val > curr.val) || (dir === 'lower' && next.val < curr.val);
+  if (correct) {
+    s.streak++;
+    s.phase = (s.idx + 1 >= s.items.length - 1) ? 'done' : 'correct';
+    if (s.phase === 'done') { s.banked += s.streak; s.streak = 0; wbHLFinish(); return; }
+  } else {
+    s.streak = 0;
+    s.phase = 'wrong';
   }
+  wbRenderHigherLow();
+}
+function wbHLBank() {
+  var s = WB_STATE;
+  s.banked += s.streak; s.streak = 0; s.idx++; s.phase = 'guess';
+  if (s.idx >= s.items.length - 1) { wbHLFinish(); return; }
+  wbRenderHigherLow();
+}
+function wbHLRisk() {
+  var s = WB_STATE; s.idx++; s.phase = 'guess';
+  if (s.idx >= s.items.length - 1) { wbHLFinish(); return; }
+  wbRenderHigherLow();
+}
+function wbHLFinish() {
+  var s = WB_STATE;
+  wbFinishRound({ gameId: s.gameId, gameTitle: s.gameTitle, tier: s.tier, totalTiers: s.totalTiers, isRemix: false,
+    scoreLabel: s.banked + ' token' + (s.banked === 1 ? '' : 's') + ' banked',
+    passed: s.banked >= 2, missed: [],
+    failMsg: 'Bank at least 2 tokens to unlock the next round.' });
+}
+function wbRenderHigherLow() {
+  var s = WB_STATE;
+  var panel = document.getElementById('workbook-panel');
+  if (!panel) return;
+  var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
+    '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' ─ Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Banked: ' + s.banked + ' token' + (s.banked === 1 ? '' : 's') + '</div></div>';
+  var curr = s.items[s.idx];
+  var next = s.items[s.idx + 1];
+  var html = '<div class="wb-q-box"><div class="wb-hl-bg"><div class="wb-hl-inner">';
+  if (s.phase === 'guess') {
+    html += '<div class="wb-hl-current"><div class="wb-hl-val">' + esc(String(curr.val)) + '</div><div class="wb-hl-label">' + esc(curr.label) + '</div></div>';
+    html += '<div class="wb-hl-next"><b>Next:</b> ' + esc(next.label) + '</div>';
+    if (s.streak > 0) html += '<div class="wb-hl-streak">Streak: ' + s.streak + ' at risk</div>';
+    html += '<div class="wb-hl-btns"><button class="wb-hl-btn higher" onclick="wbHLGuess(\'higher\')">HIGHER ↑</button><button class="wb-hl-btn lower" onclick="wbHLGuess(\'lower\')">LOWER ↓</button></div>';
+  } else if (s.phase === 'correct') {
+    html += '<div class="wb-hl-result correct">Correct. Streak: ' + s.streak + ' token' + (s.streak === 1 ? '' : 's') + ' at risk</div>';
+    html += '<div class="wb-hl-current"><div class="wb-hl-val">' + esc(String(next.val)) + '</div><div class="wb-hl-label">' + esc(next.label) + '</div></div>';
+    html += '<div class="wb-hl-btns"><button class="wb-hl-btn bank" onclick="wbHLBank()">BANK (' + (s.banked + s.streak) + ')</button><button class="wb-hl-btn risk" onclick="wbHLRisk()">RISK IT →</button></div>';
+  } else if (s.phase === 'wrong') {
+    html += '<div class="wb-hl-result wrong">Wrong. Streak lost. Answer: ' + esc(String(next.val)) + ' — ' + esc(next.label) + '</div>';
+    if (s.banked > 0) html += '<div class="wb-hl-banked">' + s.banked + ' token' + (s.banked === 1 ? '' : 's') + ' already banked</div>';
+    html += '<button class="wb-next-btn" onclick="wbHLFinish()">See result</button>';
+  }
+  html += '</div></div></div>';
+  panel.innerHTML = hdr + html;
+}
+
+// ── VOCAB FEUD ──────────────────────────────────────────────────────────────────────
+function wbStartVocabFeud(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
+  var cat = pool[Math.min(tier, pool.length - 1)];
+  var tiles = wbShuffle(
+    cat.correct.map(function(w) { return { word: w, kind: 'correct', state: 'hidden' }; }).concat(
+    cat.wrong.map(function(w) { return { word: w, kind: 'wrong', state: 'hidden' }; })
+  ));
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'vocabfeud',
+    tier: tier, totalTiers: totalTiers, isRemix: false,
+    cat: cat, tiles: tiles, strikes: 0, found: 0, done: false, missed: [] };
+  wbRenderVocabFeud();
+}
+function wbVFTap(i) {
+  var s = WB_STATE;
+  if (s.done) return;
+  var t = s.tiles[i];
+  if (t.state !== 'hidden') return;
+  if (t.kind === 'correct') {
+    t.state = 'found'; s.found++;
+    if (s.found >= s.cat.correct.length) { s.done = true; wbVFFinish(true); return; }
+  } else {
+    t.state = 'wrong'; s.strikes++;
+    if (s.strikes >= 3) {
+      s.done = true;
+      s.tiles.forEach(function(tile) { if (tile.state === 'hidden' && tile.kind === 'correct') tile.state = 'missed'; });
+      wbVFFinish(false); return;
+    }
+  }
+  wbRenderVocabFeud();
+}
+function wbVFFinish(passed) {
+  var s = WB_STATE;
+  wbRenderVocabFeud();
+  setTimeout(function() {
+    wbFinishRound({ gameId: s.gameId, gameTitle: s.gameTitle, tier: s.tier, totalTiers: s.totalTiers, isRemix: false,
+      scoreLabel: s.found + '/' + s.cat.correct.length + ' found, ' + s.strikes + ' strike' + (s.strikes === 1 ? '' : 's'),
+      passed: passed, missed: [],
+      failMsg: 'Find all ' + s.cat.correct.length + ' words with 2 or fewer strikes to unlock the next round.' });
+  }, 1000);
+}
+function wbRenderVocabFeud() {
+  var s = WB_STATE;
+  var panel = document.getElementById('workbook-panel');
+  if (!panel) return;
+  var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
+    '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' ─ Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">' + s.found + '/' + s.cat.correct.length + ' found' + (s.strikes > 0 ? ' · ' + s.strikes + ' strike' + (s.strikes === 1 ? '' : 's') : '') + '</div></div>';
+  var html = '<div class="wb-q-box"><div class="wb-vf-bg"><div class="wb-vf-inner">';
+  html += '<div class="wb-vf-topic">' + esc(s.cat.topic) + '</div>';
+  html += '<div class="wb-vf-grid">';
+  s.tiles.forEach(function(t, i) {
+    var cls = 'wb-vf-tile' + (t.state !== 'hidden' ? ' ' + t.state : '');
+    var disabled = t.state !== 'hidden' || s.done;
+    html += '<button class="' + cls + '" ' + (disabled ? 'disabled' : ('onclick="wbVFTap(' + i + ')"')) + '>' + esc(t.word) + '</button>';
+  });
+  html += '</div>';
+  html += '<div class="wb-vf-strikes">';
+  for (var k = 0; k < 3; k++) html += '<div class="wb-vf-strike' + (k < s.strikes ? ' hit' : '') + '">' + (k < s.strikes ? 'X' : '') + '</div>';
+  html += '</div>';
   html += '</div></div></div>';
   panel.innerHTML = hdr + html;
 }
