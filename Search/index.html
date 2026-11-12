@@ -151,30 +151,65 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .wb-results-label{font-size:12px;color:var(--tx2);margin-bottom:16px}
 .wb-results-msg{font-size:12.5px;color:var(--tx1);line-height:1.6;margin-bottom:4px}
 .wb-back{padding:14px 14px 0;font-size:12px;color:var(--tx3);cursor:pointer}
-.wb-case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
-.wb-case{background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:16px 4px;font-size:15px;font-weight:700;color:var(--tx1);cursor:pointer;text-align:center;font-family:inherit}
-.wb-case.mine{border-color:var(--gold);color:var(--gold);display:flex;flex-direction:column;gap:2px}
-.wb-case.mine span{font-size:8.5px;font-weight:600;text-transform:uppercase;color:var(--tx3)}
-.wb-case.opened{opacity:0.35;color:var(--tx3)}
-.wb-imposter-cards{display:flex;flex-direction:column;gap:8px}
-.wb-imposter-card{background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:12px 13px;font-size:12px;color:var(--tx1);line-height:1.55;cursor:pointer;text-align:left;font-family:inherit}
+/* SCROLL OR NO SCROLL */
+.wb-case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.wb-case{background:rgba(80,50,10,0.82);border:2px solid #c8971f;border-radius:10px;padding:18px 4px;font-size:17px;font-weight:800;color:#f5d87a;cursor:pointer;text-align:center;font-family:inherit;text-shadow:0 1px 3px rgba(0,0,0,0.9)}
+.wb-case.mine{border-color:#27ae60;color:#27ae60;display:flex;flex-direction:column;gap:2px}
+.wb-case.mine span{font-size:8.5px;font-weight:600;text-transform:uppercase;color:rgba(255,255,255,0.6)}
+.wb-case.opened{opacity:0.3;color:var(--tx3);border-color:#333}
+.wb-snr-bg{background:url('images/snr-jars.png') center/cover no-repeat;border-radius:var(--r);overflow:hidden;position:relative;padding:12px}
+.wb-snr-bg::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.58);pointer-events:none;border-radius:var(--r)}
+.wb-snr-inner{position:relative;z-index:1}
+.wb-deal-row{display:flex;gap:10px;margin-top:10px}
+.wb-deal-btn{flex:1;padding:14px;font-size:13.5px;font-weight:800;border:none;border-radius:10px;cursor:pointer;font-family:inherit;letter-spacing:0.4px}
+.wb-deal-btn.accept{background:linear-gradient(135deg,#c8971f,#f5d87a);color:#1a1200}
+.wb-deal-btn.reject{background:linear-gradient(135deg,#8b0000,#c0392b);color:#fff}
+/* THE IMPOSTER */
+.wb-imposter-bg{background:url('images/imposter-bg.png') center/cover no-repeat;border-radius:var(--r);overflow:hidden;position:relative;padding:12px}
+.wb-imposter-bg::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.65);pointer-events:none;border-radius:var(--r)}
+.wb-imposter-inner{position:relative;z-index:1}
+.wb-imposter-stamp{font-size:10px;font-weight:800;color:#c0392b;letter-spacing:1.2px;text-align:center;border:2px solid rgba(192,57,43,0.7);border-radius:4px;padding:5px 12px;margin:10px auto 0;display:table}
+.wb-imposter-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wb-imposter-card{background:rgba(10,8,5,0.88);border:2px solid #444;border-radius:10px;padding:10px 6px 12px;font-size:10.5px;color:var(--tx1);line-height:1.45;cursor:pointer;text-align:center;font-family:inherit;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:7px}
+.wb-imposter-card-state{font-size:8.5px;font-weight:800;letter-spacing:0.5px;padding:3px 7px;border-radius:4px;width:100%;text-align:center;background:rgba(255,255,255,0.08)}
 .wb-imposter-card.disabled{pointer-events:none}
-.wb-imposter-card.imposter{background:rgba(192,57,43,0.18);border-color:#c0392b}
-.wb-imposter-card.wrong-pick{opacity:0.5}
-.wb-clue-banner{display:flex;align-items:baseline;gap:9px;margin-bottom:10px}
-.wb-clue-label{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:0.5px}
-.wb-clue-word{font-size:15px;font-weight:700;color:#fff}
+.wb-imposter-card.imposter{border-color:#c0392b;background:rgba(100,0,0,0.5)}
+.wb-imposter-card.imposter .wb-imposter-card-state{background:rgba(192,57,43,0.4);color:#ff7070}
+.wb-imposter-card.real{border-color:#27ae60}
+.wb-imposter-card.real .wb-imposter-card-state{background:rgba(39,174,96,0.3);color:#5fe09a}
+.wb-imposter-card.wrong-pick{opacity:0.4}
+.wb-imposter-fig{width:36px;height:46px;object-fit:contain}
+/* CLUE GRID */
+.wb-clue-banner{display:flex;align-items:center;gap:9px;margin-bottom:12px;background:rgba(200,151,31,0.12);border:1px solid rgba(200,151,31,0.4);border-radius:8px;padding:9px 12px}
+.wb-clue-label{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:0.5px;white-space:nowrap}
+.wb-clue-word{font-size:15.5px;font-weight:800;color:#fff}
 .wb-clue-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:4px}
-.wb-clue-tile{background:var(--s2);border:1px solid #2a2a2a;border-radius:9px;padding:10px 8px;font-size:11px;color:var(--tx1);cursor:pointer;text-align:center;line-height:1.4;font-family:inherit;display:flex;flex-direction:column;gap:3px;align-items:center}
+.wb-clue-tile{background:rgba(20,15,0,0.92);border:2px solid #3a2800;border-radius:9px;padding:12px 8px;font-size:11px;color:var(--tx1);cursor:pointer;text-align:center;line-height:1.4;font-family:inherit;display:flex;flex-direction:column;gap:3px;align-items:center}
 .wb-clue-tile.match{background:rgba(39,174,96,0.2);border-color:#27ae60}
 .wb-clue-tile.wrong{opacity:0.4}
 .wb-clue-tile.trap{background:rgba(192,57,43,0.22);border-color:#c0392b}
 .wb-clue-tile.missed{background:rgba(39,174,96,0.12);border-color:#27ae60;opacity:0.7}
 .wb-clue-tag{font-size:8px;font-weight:700;letter-spacing:0.3px;color:var(--gold)}
-.wb-memory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.wb-memory-tile{aspect-ratio:1;background:var(--s2);border:1px solid #2a2a2a;border-radius:9px;font-size:16px;color:var(--tx3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;padding:4px}
-.wb-memory-tile.face-up{background:var(--s1);border-color:var(--gold);color:var(--tx1);font-size:11px}
-.wb-memory-tile.matched{opacity:0.45;border-color:#27ae60}
+/* TIMELINE ORDER */
+.wb-tl-bg{background:url('images/timeline-bg.png') center/cover no-repeat;border-radius:var(--r);overflow:hidden;position:relative;padding:12px}
+.wb-tl-bg::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.6);pointer-events:none;border-radius:var(--r)}
+.wb-tl-inner{position:relative;z-index:1}
+.wb-order-pool{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
+.wb-order-item{background:rgba(10,20,60,0.88);border:2px solid #c8971f;border-radius:10px;padding:11px 9px;font-size:11.5px;color:#fff;cursor:pointer;line-height:1.5;text-align:center;font-weight:600}
+.wb-order-item.picked{opacity:0.3;pointer-events:none}
+.wb-order-slots{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
+.wb-order-slot{background:rgba(10,20,60,0.75);border:2px solid rgba(200,151,31,0.4);border-radius:8px;padding:11px 9px;font-size:11px;color:rgba(255,255,255,0.4);min-height:16px;text-align:center}
+.wb-order-slot.filled{border-color:#c8971f;color:#fff;font-weight:600}
+/* MEMORY MATCH */
+.wb-memory-bg{background:url('images/memory-bg.png') center/cover no-repeat;border-radius:var(--r);overflow:hidden;position:relative;padding:10px}
+.wb-memory-bg::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.6);pointer-events:none;border-radius:var(--r)}
+.wb-memory-inner{position:relative;z-index:1}
+.wb-memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.wb-memory-tile{aspect-ratio:1;background:rgba(15,10,5,0.9);border:2px solid rgba(255,255,255,0.25);border-radius:9px;font-size:18px;color:var(--tx3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;padding:4px;text-align:center;line-height:1.1}
+.wb-memory-tile.face-up{color:#fff;font-size:10.5px;font-weight:700}
+.wb-memory-tile.matched{opacity:0.4}
+.wb-memory-legend{display:flex;gap:5px;margin-top:8px;justify-content:center;flex-wrap:wrap}
+.wb-memory-legend-item{padding:4px 9px;border-radius:5px;font-size:9px;font-weight:800;letter-spacing:0.4px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.3)}
 
 /* FILTER BAR */
 .filter-bar{display:flex;gap:5px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none;flex-shrink:0}
@@ -11953,11 +11988,11 @@ function wbBuildPaleo() {
 }
 
 var WB_GAMES = [
-  { id: ‘spotchange’, icon: ‘ri-find-replace-line’, color: ‘#E67E22’, img: ‘game-spotchange.png’, title: ‘Scroll or No Scroll’, desc: ‘Pick a scroll to keep. Open the others — each reveals what the primary source actually says. The Scribe will make you an offer.’, mechanic: ‘deal’, build: wbBuildSpotChange },
-  { id: ‘claimsort’, icon: ‘ri-user-search-line’, color: ‘#3498DB’, img: ‘game-claimsort.png’, title: ‘The Imposter’, desc: ‘Two of three statements are manuscript-attested. One is the institutional claim with no primary-source backing. Find it.’, mechanic: ‘imposter’, build: wbBuildClaimSort },
-  { id: ‘rootmatch’, icon: ‘ri-grid-line’, color: ‘#9B59B6’, img: ‘game-rootmatch.png’, title: ‘Clue Grid’, desc: ‘A root’s meaning is the clue. Tap its true match on the board — one tile is a trap.’, mechanic: ‘cluegrid’, build: wbBuildRootMatch },
-  { id: ‘timeline’, icon: ‘ri-time-line’, color: ‘#1ABC9C’, img: ‘game-timeline.png’, title: ‘Timeline Order’, desc: ‘Put real dated events in chronological order, from the covenant genealogy and the documented canon history.’, mechanic: ‘generic’, build: wbBuildTimeline },
-  { id: ‘paleo’, icon: ‘ri-layout-grid-line’, color: ‘#E74C3C’, img: ‘game-paleo.png’, title: ‘Memory Match’, desc: ‘Flip tiles to match each paleo-Hebrew glyph to its name.’, mechanic: ‘memory’, build: wbBuildPaleo }
+  { id: 'spotchange', icon: 'ri-find-replace-line', color: '#E67E22', img: 'game-spotchange.png', title: 'Scroll or No Scroll', desc: 'Pick a scroll to keep. Open the others — each reveals what the primary source actually says. The Scribe will make you an offer.', mechanic: 'deal', build: wbBuildSpotChange },
+  { id: 'claimsort', icon: 'ri-user-search-line', color: '#3498DB', img: 'game-claimsort.png', title: 'The Imposter', desc: 'Two of three statements are manuscript-attested. One is the institutional claim with no primary-source backing. Find it.', mechanic: 'imposter', build: wbBuildClaimSort },
+  { id: 'rootmatch', icon: 'ri-grid-line', color: '#9B59B6', img: 'game-rootmatch.png', title: 'Clue Grid', desc: "A root's meaning is the clue. Tap its true match on the board — one tile is a trap.", mechanic: 'cluegrid', build: wbBuildRootMatch },
+  { id: 'timeline', icon: 'ri-time-line', color: '#1ABC9C', img: 'game-timeline.png', title: 'Timeline Order', desc: 'Put real dated events in chronological order, from the covenant genealogy and the documented canon history.', mechanic: 'generic', build: wbBuildTimeline },
+  { id: 'paleo', icon: 'ri-layout-grid-line', color: '#E74C3C', img: 'game-paleo.png', title: 'Memory Match', desc: 'Flip tiles to match each paleo-Hebrew glyph to its name.', mechanic: 'memory', build: wbBuildPaleo }
 ];
 var WB_STATE = null;
 function wbTotalRounds(gameId) {
@@ -12069,7 +12104,7 @@ function wbRenderGeneric() {
   var it = s.items[s.idx];
   var html = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>';
   html += '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Q' + (s.idx + 1) + '/' + s.items.length + ' · ' + s.correct + ' correct</div></div>';
-  html += '<div class="wb-q-box"><div class="wb-q-text">Tap these in the order they happened, earliest first (' + esc(it.poolLabel) + '):</div>';
+  html += '<div class="wb-q-box"><div class="wb-tl-bg"><div class="wb-tl-inner"><div class="wb-q-text" style="color:rgba(255,255,255,0.8);font-size:12px;margin-bottom:10px">Tap these in the order they happened, earliest first (' + esc(it.poolLabel) + '):</div>';
   html += '<div class="wb-order-slots">';
   for (var slot = 0; slot < it.events.length; slot++) {
     var filled = s.tapped[slot] !== undefined;
@@ -12082,7 +12117,7 @@ function wbRenderGeneric() {
   });
   html += '</div>';
   if (s.answered) html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(it.poolLabel) + '</div>' + esc(it.reveal || '') + '</div>';
-  html += '</div>';
+  html += '</div></div></div>';
   if (s.answered) html += '<button class="wb-next-btn" onclick="wbGenericNext()">' + (s.idx + 1 >= s.items.length ? 'See results' : 'Next') + '</button>';
   panel.innerHTML = html;
 }
@@ -12175,9 +12210,9 @@ function wbRenderDeal() {
   if (!panel) return;
   var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
     '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Scroll set ' + (s.ptIdx + 1) + ' of ' + s.playthroughs.length + '</div></div>';
-  var html = '<div class="wb-q-box">';
+  var html = '<div class="wb-q-box"><div class="wb-snr-bg"><div class="wb-snr-inner">';
   if (D.phase === 'pick') {
-    html += '<div class="wb-q-text">Pick a scroll to keep. The other five will be opened to reveal what the primary source actually says.</div><div class="wb-case-grid">';
+    html += '<div class="wb-q-text" style="color:#f5d87a;text-align:center;font-size:12.5px;margin-bottom:12px">Pick a scroll to keep. The other five will be opened to reveal what the primary source actually says.</div><div class="wb-case-grid">';
     for (var i = 0; i < 6; i++) html += '<button class="wb-case" onclick="wbDealPickCase(' + i + ')">' + (i + 1) + '</button>';
     html += '</div>';
   } else {
@@ -12192,17 +12227,17 @@ function wbRenderDeal() {
       html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(D.lastReveal.label) + ' — ' + esc(D.lastReveal.src) + '</div>&ldquo;' + esc(D.lastReveal.reveal) + '&rdquo;' + (D.lastReveal.verdict ? ('<div style="margin-top:6px">' + esc(D.lastReveal.verdict) + '</div>') : '') + '</div>';
     }
     if (D.phase === 'offer') {
-      html += '<div class="wb-q-text" style="margin-top:12px">The Scribe offers <b>' + D.offerAmount.toLocaleString() + ' points</b> to stop here. Take it, or open another scroll?</div>' +
-        '<div class="wb-sort-row"><button class="wb-sort-btn primary" onclick="wbDealAccept()">Take the Offer</button><button class="wb-sort-btn claim" onclick="wbDealReject()">Keep Going</button></div>';
+      html += '<div class="wb-q-text" style="color:#f5d87a;text-align:center;font-size:12.5px;margin-top:10px">The Scribe offers <b>' + D.offerAmount.toLocaleString() + ' points</b> to stop here.</div>' +
+        '<div class="wb-deal-row"><button class="wb-deal-btn accept" onclick="wbDealAccept()">TAKE THE SCROLL</button><button class="wb-deal-btn reject" onclick="wbDealReject()">OPEN ANOTHER</button></div>';
     }
     if (D.phase === 'ended') {
       var R = D.finalResult;
-      html += '<div class="wb-q-text" style="margin-top:12px">' + (R.deal ? ('You took the offer: <b>' + R.amount.toLocaleString() + ' points</b>.') : 'You played to the end. Your scroll held:') + '</div>';
+      html += '<div class="wb-q-text" style="color:#f5d87a;text-align:center;font-size:12.5px;margin-top:10px">' + (R.deal ? ('You took the offer: <b>' + R.amount.toLocaleString() + ' points</b>.') : 'You played to the end. Your scroll held:') + '</div>';
       if (!R.deal) html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(R.item.label) + '</div>&ldquo;' + esc(R.item.reveal) + '&rdquo;</div>';
       html += '<button class="wb-next-btn" onclick="wbDealContinue()">' + (s.ptIdx + 1 < s.playthroughs.length ? 'Next scroll set' : 'See results') + '</button>';
     }
   }
-  html += '</div>';
+  html += '</div></div></div>';
   panel.innerHTML = hdr + html;
 }
 
@@ -12258,22 +12293,36 @@ function wbRenderImposter() {
   var set = s.sets[s.idx];
   var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
     '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Set ' + (s.idx + 1) + '/' + s.sets.length + ' · ' + s.correct + ' correct</div></div>';
-  var html = '<div class="wb-q-box"><div class="wb-q-text">Two of these three are manuscript-attested primary source. One is the institutional claim with no primary-source backing. Tap the imposter.</div><div class="wb-imposter-cards">';
+  var html = '<div class="wb-q-box"><div class="wb-imposter-bg"><div class="wb-imposter-inner"><div class="wb-q-text" style="color:rgba(255,255,255,0.75);font-size:12px;text-align:center;margin-bottom:12px">Two are manuscript-attested primary source. One is the institutional claim. Tap the imposter.</div><div class="wb-imposter-cards">';
   set.cards.forEach(function(c, i) {
     var cls = 'wb-imposter-card';
+    var stateLabel = ''; var extra = '';
     if (s.phase === 'result') {
       cls += ' disabled';
-      if (i === set.imposterIdx) cls += ' imposter';
-      else if (i === s.chosen) cls += ' wrong-pick';
+      if (i === set.imposterIdx) {
+        cls += ' imposter';
+        stateLabel = 'IMPOSTER';
+        extra = '<img class="wb-imposter-fig" src="images/imposter-figure.png" alt="">';
+      } else if (i === s.chosen) {
+        cls += ' wrong-pick';
+        stateLabel = 'PRIMARY';
+      } else {
+        stateLabel = 'PRIMARY';
+      }
     }
-    html += '<button class="' + cls + '" onclick="wbImposterGuess(' + i + ')">' + esc(c.statement) + '</button>';
+    html += '<button class="' + cls + '" onclick="wbImposterGuess(' + i + ')">' +
+      (stateLabel ? '<div class="wb-imposter-card-state">' + stateLabel + '</div>' : '') +
+      (extra || '') +
+      '<span style="font-size:10px;line-height:1.4">' + esc(c.statement) + '</span>' +
+      '</button>';
   });
   html += '</div>';
   if (s.phase === 'result') {
     var imp = set.cards[set.imposterIdx];
-    html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(imp.src || '') + '</div>' + esc(imp.reveal || '') + '</div>';
+    html += '<div class="wb-reveal" style="margin-top:10px"><div class="wb-reveal-src">' + esc(imp.src || '') + '</div>' + esc(imp.reveal || '') + '</div>' +
+      '<div class="wb-imposter-stamp">IDENTIFY. ELIMINATE. LEARN.</div>';
   }
-  html += '</div>';
+  html += '</div></div></div>';
   if (s.phase === 'result') html += '<button class="wb-next-btn" onclick="wbImposterNext()">' + (s.idx + 1 >= s.sets.length ? 'See results' : 'Next') + '</button>';
   panel.innerHTML = hdr + html;
 }
@@ -12397,13 +12446,27 @@ function wbRenderMemory() {
   if (!panel) return;
   var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
     '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">' + s.matchedCount + '/' + s.letters.length + ' matched · ' + s.mismatches + ' mismatches</div></div>';
-  var html = '<div class="wb-q-box"><div class="wb-q-text">Flip two tiles at a time. Match each paleo-Hebrew glyph to its name.</div><div class="wb-memory-grid">';
+  var PAIR_COLORS = ['#3498db','#27ae60','#e67e22','#c0392b','#9b59b6','#16a085'];
+  var PAIR_BG = ['rgba(52,152,219,0.18)','rgba(39,174,96,0.18)','rgba(230,126,34,0.18)','rgba(192,57,43,0.18)','rgba(155,89,182,0.18)','rgba(22,160,133,0.18)'];
+  var html = '<div class="wb-q-box"><div class="wb-memory-bg"><div class="wb-memory-inner"><div class="wb-q-text" style="color:rgba(255,255,255,0.75);font-size:12px;text-align:center;margin-bottom:10px">Flip two tiles at a time. Match each paleo-Hebrew glyph to its name.</div><div class="wb-memory-grid">';
   s.tiles.forEach(function(t, i) {
     var faceUp = t.matched || s.flipped.indexOf(i) !== -1;
+    var pairColor = PAIR_COLORS[t.pairIdx % PAIR_COLORS.length];
+    var pairBg = PAIR_BG[t.pairIdx % PAIR_BG.length];
+    var matchedStyle = t.matched ? ('background:' + pairBg + ';border:2px solid ' + pairColor + ';color:' + pairColor + ';') : '';
     var cls = 'wb-memory-tile' + (t.matched ? ' matched' : '') + (faceUp ? ' face-up' : '');
-    html += '<button class="' + cls + '" onclick="wbMemoryFlip(' + i + ')" ' + (faceUp ? 'disabled' : '') + '>' + (faceUp ? esc(t.text) : '?') + '</button>';
+    html += '<button class="' + cls + '" onclick="wbMemoryFlip(' + i + ')" ' + (faceUp ? 'disabled' : '') + ' style="' + matchedStyle + '">' + (faceUp ? esc(t.text) : '?') + '</button>';
   });
-  html += '</div></div>';
+  html += '</div>';
+  if (s.letters && s.letters.length) {
+    html += '<div class="wb-memory-legend">';
+    s.letters.forEach(function(l, idx) {
+      var c = PAIR_COLORS[idx % PAIR_COLORS.length];
+      html += '<div class="wb-memory-legend-item" style="color:' + c + ';border-color:' + c + '">' + esc(l.glyph || '') + ' ' + esc(l.name || '') + '</div>';
+    });
+    html += '</div>';
+  }
+  html += '</div></div></div>';
   panel.innerHTML = hdr + html;
 }
 
