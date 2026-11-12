@@ -12097,8 +12097,8 @@ var WB_GAMES = [
   { id: 'rootmatch', icon: 'ri-grid-line', color: '#9B59B6', img: 'game-rootmatch.png', title: 'Clue Grid', desc: "A root's meaning is the clue. Tap its true match on the board — one tile is a trap.", mechanic: 'cluegrid', build: wbBuildRootMatch },
   { id: 'timeline', icon: 'ri-time-line', color: '#1ABC9C', img: 'game-timeline.png', title: 'Timeline Order', desc: 'Put real dated events in chronological order, from the covenant genealogy and the documented canon history.', mechanic: 'generic', build: wbBuildTimeline },
   { id: 'paleo', icon: 'ri-layout-grid-line', color: '#E74C3C', img: 'game-paleo.png', title: 'Memory Match', desc: 'Flip tiles to match each term with its historical meaning.', mechanic: 'memory', build: wbBuildPaleo },
-  { id: 'higherlow', icon: 'ri-bar-chart-line', color: '#C8971F', img: null, title: 'Higher or Lower', desc: 'Look at the value and the next label. Guess whether the next number is higher or lower. Bank your tokens or risk them for more.', mechanic: 'higherlow', build: wbBuildHigherLow },
-  { id: 'vocabfeud', icon: 'ri-survey-line', color: '#1ABC9C', img: null, title: 'Vocab Feud', desc: 'Read the category. Tap every word that belongs. Three wrong taps ends the round.', mechanic: 'vocabfeud', build: wbBuildVocabFeud }
+  { id: 'higherlow', icon: 'ri-bar-chart-line', color: '#C8971F', img: 'higherlow-bg.png', title: 'Higher or Lower', desc: 'Look at the value and the next label. Guess whether the next number is higher or lower. Bank your tokens or risk them for more.', mechanic: 'higherlow', build: wbBuildHigherLow },
+  { id: 'vocabfeud', icon: 'ri-survey-line', color: '#1ABC9C', img: 'game-vocabfeud.png', title: 'Vocab Feud', desc: 'Read the category. Tap every word that belongs. Three wrong taps ends the round.', mechanic: 'vocabfeud', build: wbBuildVocabFeud }
 ];
 var WB_STATE = null;
 function wbTotalRounds(gameId) {
@@ -12625,6 +12625,7 @@ function wbRenderHigherLow() {
   var next = s.items[s.idx + 1];
   var html = '<div class="wb-q-box"><div class="wb-hl-bg"><div class="wb-hl-inner">';
   if (s.phase === 'guess') {
+    if (s.idx === 0 && s.streak === 0 && s.banked === 0) html += '<div style="font-size:11px;color:rgba(255,255,255,0.65);text-align:center;margin-bottom:10px;line-height:1.5">See the number. Guess if the next is HIGHER or LOWER. Get it right, then BANK your tokens to keep them safe, or RISK IT to keep the streak going.</div>';
     html += '<div class="wb-hl-current"><div class="wb-hl-val">' + esc(String(curr.val)) + '</div><div class="wb-hl-label">' + esc(curr.label) + '</div></div>';
     html += '<div class="wb-hl-next"><b>Next:</b> ' + esc(next.label) + '</div>';
     if (s.streak > 0) html += '<div class="wb-hl-streak">Streak: ' + s.streak + ' at risk</div>';
@@ -12690,6 +12691,7 @@ function wbRenderVocabFeud() {
     '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' ─ Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">' + s.found + '/' + s.cat.correct.length + ' found' + (s.strikes > 0 ? ' · ' + s.strikes + ' strike' + (s.strikes === 1 ? '' : 's') : '') + '</div></div>';
   var html = '<div class="wb-q-box"><div class="wb-vf-bg"><div class="wb-vf-inner">';
   html += '<div class="wb-vf-topic">' + esc(s.cat.topic) + '</div>';
+  html += '<div style="font-size:11px;color:rgba(255,255,255,0.6);text-align:center;margin-bottom:8px">Tap every word that belongs. 3 wrong taps ends the round.</div>';
   html += '<div class="wb-vf-grid">';
   s.tiles.forEach(function(t, i) {
     var cls = 'wb-vf-tile' + (t.state !== 'hidden' ? ' ' + t.state : '');
