@@ -12757,18 +12757,30 @@ function wbRenderVocabFeud() {
 
 // ── STORY QUEST ────────────────────────────────────────────────────────────────────────────────────────────────────
 var WB_STORY_QUEST = [
-  {story: "In 1947, a Bedouin shepherd threw a stone into a cave near [BLANK] and heard pottery break -- the first of the Dead Sea Scrolls had been found.", correct: "Qumran", options: ["Qumran", "Jerusalem", "Babylon"]},
-  {story: "The covenant calendar runs exactly [BLANK] days -- 52 complete weeks -- as documented in 1 Chanokh Chapter 72.", correct: "364", options: ["364", "360", "365"]},
-  {story: "In 325 CE the Roman emperor Constantine gathered bishops at the Council of [BLANK] to set the doctrines of Christianity by vote.", correct: "Nicaea", options: ["Nicaea", "Carthage", "Antioch"]},
-  {story: "The [BLANK] scribes added vowel dots and accent marks to the Hebrew text between the 6th and 10th centuries -- long after the original scrolls.", correct: "Masoretic", options: ["Masoretic", "Qumran", "Essene"]},
-  {story: "The name YHWH was replaced in most Bible translations by the title [BLANK], erasing the covenant name from view.", correct: "LORD", options: ["LORD", "God", "Adonai"]},
-  {story: "Pope Nicholas V issued the [BLANK] decree in 1452, giving legal authority to seize land and permanently enslave non-Christian peoples.", correct: "Dum Diversas", options: ["Dum Diversas", "Inter Caetera", "Sublimus Dei"]},
-  {story: "The Beta Israel of Kush preserved the [BLANK], a 108-book Hebrew canon containing Chanokh, Yovelim, and Tobit -- excluded from most Western Bibles.", correct: "Ge'ez Orit", options: ["Ge'ez Orit", "Septuagint", "Vulgate"]},
-  {story: "The [BLANK] inscription, carved in Egypt around 1400 BCE, is one of the earliest known records of the name YHWH.", correct: "Soleb", options: ["Soleb", "Elephantine", "Sinai"]},
-  {story: "The 1662 law called [BLANK] made enslaved status pass through the mother, so children born to enslaved women could never be free.", correct: "Partus sequitur ventrem", options: ["Partus sequitur ventrem", "Dum Diversas", "Inter Caetera"]},
-  {story: "The [BLANK] papyri are letters from a Hebrew garrison in Kush, 5th century BCE, documenting YHWH worship along the Nile long before the common era.", correct: "Elephantine", options: ["Elephantine", "Qumran", "Nag Hammadi"]},
-  {story: "The Qumran community sealed their scrolls in [BLANK] jars, which protected the parchment from moisture for nearly 2000 years.", correct: "clay", options: ["clay", "bronze", "cedar"]},
-  {story: "The [BLANK] cycle, a 49-year count documented in the book of Yovelim, marks the covenant people's land and freedom jubilees.", correct: "Jubilee", options: ["Jubilee", "Sabbatical", "Covenant"]}
+  {story: "Yeshayahu 43:10-11 · 1QIsa-a Cave 1: Before Me no [BLANK] was formed nor shall there be any after Me. I YHWH am the only one and besides Me there is no saviour.", correct: "god", options: ["god", "prophet", "saviour", "messenger"]},
+  {story: "Yeshayahu 44:6 · 1QIsa-a Cave 1: I am the first and I am the [BLANK] and besides Me there is no god.", correct: "last", options: ["last", "only", "source", "eternal"]},
+  {story: "Yeshayahu 45:5 · 1QIsa-a Cave 1: I am YHWH and there is [BLANK] else. Besides Me there is no god.", correct: "no", options: ["no", "none", "not", "nothing"]},
+  {story: "4Q521 · Messianic Apocalypse Cave 4: YHWH will heal the wounded and give life to the [BLANK] and bring good news to the poor.", correct: "dead", options: ["dead", "living", "poor", "righteous"]},
+  {story: "Yeshayahu 35:4-6 · 1QIsa-a Cave 1: Behold your [BLANK] will come with vengeance and with divine recompense -- He heals and rescues directly.", correct: "Creator", options: ["Creator", "prophet", "messenger", "priest"]},
+  {story: "Community Rule · 1QS Column 9 Cave 1: Until the coming of the [BLANK] and the anointed ones of Aharon and Yisra'el.", correct: "Prophet", options: ["Prophet", "Messiah", "King", "Son"]},
+  {story: "Damascus Document · CD Column 12: The anointed one of Aharon and Yisra'el shall arise and atone for their [BLANK].", correct: "iniquity", options: ["iniquity", "enemies", "people", "land"]},
+  {story: "1 Chanokh Chapter 72: The year has [BLANK] days complete, 52 weeks, neither excess nor deficit.", correct: "364", options: ["364", "360", "365", "354"]},
+  {story: "John 1:1 verdict: Constructed from Greek [BLANK] philosophy. No DSS or Orit Ge'ez source for a divine word-entity at creation.", correct: "Logos", options: ["Logos", "Wisdom", "Torah", "Spirit"]},
+  {story: "Matthew 1:23 verdict: Built on a Greek mistranslation of almah to [BLANK]. The DSS primary source 1QIsa-a uses almah meaning young woman.", correct: "parthenos", options: ["parthenos", "bethulah", "neanis", "korasion"]},
+  {story: "1 John 5:7 verdict: The Johannine Comma -- adding three heavenly witnesses -- first appears in Latin manuscripts in [BLANK] CE. Absent from all Greek manuscripts before the 16th century.", correct: "546", options: ["546", "325", "397", "900"]},
+  {story: "In [BLANK] CE the Roman emperor Constantine gathered bishops at Nicaea to set Christian doctrine by majority vote under imperial pressure.", correct: "325", options: ["325", "397", "180", "405"]},
+  {story: "The [BLANK] Text was compiled by scribes who added niqqud vowel points to Hebrew scripture between 600 and 900 CE.", correct: "Masoretic", options: ["Masoretic", "Qumran", "Septuagint", "Vulgate"]},
+  {story: "In [BLANK] CE the NT canon was finalized by vote at the Council of Carthage -- 367 years after the events described.", correct: "397", options: ["397", "325", "405", "180"]},
+  {story: "The name [BLANK] was assigned to the fourth gospel by Irenaeus of Lyon around 180 CE for theological reasons he stated explicitly in his writing Adversus Haereses.", correct: "John", options: ["John", "Luke", "Mark", "Paul"]},
+  {story: "In 1947 a Bedouin shepherd threw a stone into a cave near [BLANK] and heard pottery break -- the first of the Dead Sea Scrolls had been found.", correct: "Qumran", options: ["Qumran", "Jerusalem", "Alexandria", "Masada"]},
+  {story: "The [BLANK] papyri from the 5th century BCE document YHWH worship by a Hebrew garrison stationed on an island in the Nile in Kush.", correct: "Elephantine", options: ["Elephantine", "Qumran", "Nag Hammadi", "Oxyrhynchus"]},
+  {story: "Pope Nicholas V issued the [BLANK] decree in 1452 authorizing the seizure of land and permanent enslavement of non-Christian peoples.", correct: "Dum Diversas", options: ["Dum Diversas", "Inter Caetera", "Sublimus Dei", "Requerimiento"]},
+  {story: "The [BLANK] inscription carved in Kush around 1400 BCE is among the earliest known records of the name YHWH -- over 3000 years ago.", correct: "Soleb", options: ["Soleb", "Amarah-West", "Karnak", "Sinai"]},
+  {story: "The [BLANK] of Kush preserved the 108-book Hebrew canon including Chanokh, Yovelim, and Tobit -- excluded from most Western Bibles.", correct: "Beta Israel", options: ["Beta Israel", "Essenes", "Pharisees", "Sadducees"]},
+  {story: "DSS publication was [BLANK] from 1947 to 1991 -- nearly 44 years after discovery -- with only a small closed group of scholars granted access.", correct: "suppressed", options: ["suppressed", "delayed", "debated", "translated"]},
+  {story: "The 1662 law called partus sequitur ventrem made enslaved status pass through the [BLANK], so children could never be free regardless of their father.", correct: "mother", options: ["mother", "father", "owner", "council"]},
+  {story: "Papyrus [BLANK] is the oldest surviving NT manuscript, dated approximately 200 CE -- 170 years after the events described in the Gospel of John.", correct: "P66", options: ["P66", "P52", "P75", "P45"]},
+  {story: "The Tiqqune Soferim are [BLANK] documented corrections to Torah passages where Masoretic scribes changed the text to protect the perceived dignity of the divine name.", correct: "18", options: ["18", "7", "36", "54"]}
 ];
 function wbBuildStoryQuest() { return wbShuffle(WB_STORY_QUEST.slice()); }
 function wbStartStoryQuest(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
@@ -12820,16 +12832,31 @@ function wbRenderStoryQuest() {
 
 // ── DEBATE ARENA ────────────────────────────────────────────────────────────────────────────────────────────────────
 var WB_DEBATE_ARENA = [
-  {scenario: "A council member claims: the lunar calendar is the original Hebrew covenant calendar. What is the correct counter?", correct: "Solar -- 364 days, 52 weeks, recorded in 1 Chanokh Ch. 72", wrong: ["Lunar -- 354 days, Rabbinic tradition", "Both are valid -- the DSS used both"]},
-  {scenario: "A scribe argues: the Masoretic Text is the oldest and most authoritative Hebrew scripture. What does the evidence show?", correct: "DSS manuscripts are older and show different readings", wrong: ["The Masoretic Text and DSS are identical", "The Masoretic Text was copied from DSS originals"]},
-  {scenario: "At council, someone says: the Council of Nicaea only settled a minor theological dispute. What is the documented record?", correct: "It set Roman church doctrine and determined the Christian canon by majority vote in 325 CE", wrong: ["It was a minor debate with no lasting decisions", "It restored the original Hebrew covenant tradition"]},
-  {scenario: "A member states: the title LORD in the Bible is a faithful translation of the original divine name. What is accurate?", correct: "LORD replaces YHWH -- the covenant name was deliberately substituted in translation", wrong: ["LORD is a direct translation of YHWH", "The original text used LORD and YHWH interchangeably"]},
-  {scenario: "Someone argues: 1 Chanokh is a late forgery with no ancient manuscript evidence. What do the DSS show?", correct: "Cave 4 at Qumran contains Chanokh fragments dated before the 1st century BCE", wrong: ["No Chanokh fragments have been found in the DSS caves", "The Chanokh fragments are from the 3rd century CE"]},
-  {scenario: "A council member states: the Ge'ez Orit requires DSS confirmation before it can be used as a source. What is correct?", correct: "The Ge'ez Orit is a primary co-equal source carrying pre-Corruption Hebrew tradition", wrong: ["The Ge'ez Orit is a translation of Septuagint Greek texts", "The Ge'ez Orit cannot be used without DSS fragments to confirm it"]},
-  {scenario: "Someone claims: niqqud vowel points are part of the original Hebrew text. What is accurate?", correct: "Niqqud was added by Masoretic scribes between the 6th and 10th centuries CE", wrong: ["Niqqud appears in original Torah manuscripts", "Niqqud was used by the DSS scribes at Qumran"]},
-  {scenario: "A member argues: the 364-day covenant calendar must add extra days to stay accurate. What does 1 Chanokh state?", correct: "1 Chanokh records 364 days as the complete covenant year with no intercalation described", wrong: ["1 Chanokh allows for a 5-day intercalation each year", "The covenant calendar adds a leap month every 3 years"]},
-  {scenario: "Someone argues: the Dum Diversas decree only applied to Muslim rulers. What is in the text?", correct: "The decree authorized seizure and permanent enslavement of all enemies of the Christian faith", wrong: ["The decree was specifically limited to Muslim rulers in North Africa", "The decree was overturned by a later papal bull within 10 years"]},
-  {scenario: "A scribe claims: all Second Temple period texts are equally reliable primary sources. What is the accurate position?", correct: "Second Temple texts must be evaluated -- many reflect foreign rule pressure and priestly corruption", wrong: ["All Second Temple texts carry equal authority with pre-exile texts", "Second Temple texts are more reliable than earlier sources"]}
+  {scenario: "NT claim -- John 1:1: In the beginning was the Word and the Word was with God. What does the primary source say?", correct: "Bereshit 1:1 · DSS Cave 4: In the beginning The Creator created the heavens and the earth. YHWH acts directly with no word-entity.", wrong: ["The DSS confirm a divine Word existed before creation", "The Ge'ez Orit describes the Word as YHWH's first creation"]},
+  {scenario: "NT claim -- John 3:16: YHWH loved the world and sent his only Son to die for it. What does the primary source say?", correct: "Yeshayahu 43:11 · 1QIsa-a Cave 1: I YHWH am the only one and besides Me there is no saviour.", wrong: ["The DSS describe a divine son sent as a sacrifice for sin", "The Ge'ez Orit confirms a coming divine mediator figure"]},
+  {scenario: "NT claim -- 1 John 5:7: There are three that bear witness in heaven: Father, Word, and Spirit. What is documented about this text?", correct: "The Johannine Comma first appears in Latin manuscripts around 546 CE. It is absent from all Greek NT manuscripts before the 16th century.", wrong: ["The Johannine Comma appears in Papyrus 66 and 75 from 200 CE", "The Comma was removed from early manuscripts but later restored"]},
+  {scenario: "NT claim -- Matthew 1:23: A virgin shall conceive and bear a son. What does the actual DSS source show?", correct: "1QIsa-a Cave 1 uses almah -- young woman of marriageable age. The Greek Septuagint mistranslated almah as parthenos meaning virgin.", wrong: ["1QIsa-a confirms a future virgin birth as the sign to the nation", "The DSS text uses bethulah meaning virgin woman in this passage"]},
+  {scenario: "NT claim -- Matthew 27:46: My God my God why have you forsaken me? What does the DSS source show?", correct: "Tehillim 22:1 · 11QPs Cave 11: The psalm is a declaration of rescue, not abandonment -- it ends with YHWH answering and saving.", wrong: ["The DSS Psalms scroll confirms this as a messianic prophecy of abandonment", "Tehillim 22 describes a sacrificial figure permanently rejected by YHWH"]},
+  {scenario: "NT doctrine claims YHWH sends divine intermediaries to act as saviours. What does the primary source record say?", correct: "Yeshayahu 43:11 · 1QIsa-a: I YHWH am the only one and besides Me there is no saviour. YHWH acts directly with no intermediary.", wrong: ["YHWH designates special intermediaries for each covenant generation", "The DSS allow for a secondary divine figure in exceptional circumstances"]},
+  {scenario: "NT Trinitarian doctrine claims Father, Son, and Spirit are three co-equal persons. What does Devarim 6:4 say?", correct: "Shema -- YHWH our Creator YHWH is one. The DSS 4QDeut preserves this statement of absolute singular unity with no division.", wrong: ["Devarim 6:4 is a foundation text that supports Trinitarian doctrine", "The DSS text of Devarim uses a word meaning united that allows for plurality"]},
+  {scenario: "NT doctrine claims the Messiah is divine and pre-existent. What do the DSS say about the Messiah?", correct: "1QS Column 9: The coming of the Prophet and the anointed ones of Aharon and Yisra'el -- human covenant figures, not a divine pre-existent being.", wrong: ["4Q246 confirms a divine Son figure who pre-exists creation itself", "The DSS describe a celestial Messiah figure who descends from heaven"]},
+  {scenario: "NT portrays YHWH as requiring a blood sacrifice for forgiveness of sin. What does the Damascus Document say?", correct: "CD Column 12: The anointed one of Aharon and Yisra'el shall arise and atone for their iniquity -- a human covenant figure, no blood sacrifice required.", wrong: ["The Damascus Document confirms a coming sacrifice atones for all sin", "CD Column 12 describes a blood ritual that mirrors NT atonement doctrine"]},
+  {scenario: "Christianity claims Chanokh was not part of the Hebrew canon. What does the physical evidence show?", correct: "Cave 4 at Qumran contains Chanokh fragments dated before the 1st century BCE -- older than every NT text by centuries.", wrong: ["No Chanokh fragments have been found in any of the DSS caves", "Chanokh appears only in later Ethiopic manuscripts with no DSS attestation"]},
+  {scenario: "A council member claims NT gospel names were written by eyewitnesses. What does the authorship record show?", correct: "Gospel names were assigned by Irenaeus of Lyon around 180 CE for theological reasons he stated explicitly in Adversus Haereses. The manuscripts carry no author names.", wrong: ["The gospels carry the names of their authors in the original Greek manuscripts", "The names Matthew, Mark, Luke, and John appear in the earliest papyrus finds"]},
+  {scenario: "Someone claims the Council of Nicaea was a voluntary religious gathering of bishops. What does the historical record show?", correct: "It was convened by Roman Emperor Constantine in 325 CE who wanted religious unity to stabilize his empire. Doctrine was set by majority vote under imperial pressure.", wrong: ["The Council was self-organized by bishops with no imperial involvement", "Constantine attended only as an observer and had no influence on the outcome"]},
+  {scenario: "A scribe argues the Masoretic Text is the original Hebrew scripture. What does the DSS comparison show?", correct: "The DSS manuscripts predate the Masoretic Text by over 1000 years and show different readings. The Masoretes added niqqud and made editorial decisions in 600-900 CE.", wrong: ["The DSS confirm the Masoretic Text is an accurate copy of earlier originals", "The Masoretic Text and DSS are essentially identical with no meaningful variants"]},
+  {scenario: "NT Trinitarian theology claims the Logos concept originates in Hebrew scripture. What does the history of ideas show?", correct: "Logos theology was developed by Heraclitus around 500 BCE and by Philo of Alexandria. It has no equivalent in DSS or Ge'ez Orit primary sources.", wrong: ["The Logos concept appears in pre-exilic Hebrew texts predating Greek philosophy", "The DSS contain direct parallels to Logos theology in multiple scroll texts"]},
+  {scenario: "A church leader claims the NT canon was set by spiritual discernment alone. What does the Council of Carthage record show?", correct: "The NT canon was finalized by majority vote at the Council of Carthage in 397 CE -- 367 years after the events described -- under institutional authority.", wrong: ["The NT canon was set at the Council of Nicaea in 325 CE by unanimous agreement", "The NT canon was established by apostolic authority within 50 years of the events"]},
+  {scenario: "NT claim -- Isaiah 7:14 predicts a virgin birth. What does the DSS primary source show?", correct: "1QIsa-a Cave 1 uses almah meaning young woman contemporary to King Ahaz. The sign is given to Ahaz's generation -- not a future individual birth.", wrong: ["1QIsa-a uses bethulah confirming a virgin birth prediction for the future", "The DSS text of Yeshayahu 7:14 describes a future miraculous birth sign"]},
+  {scenario: "Someone claims the books removed from the Bible were excluded on spiritual grounds. What does the historical record show?", correct: "The Council of Carthage in 397 CE finalized the canon by institutional vote -- 367 years after the events. Books were included or excluded by majority decision under Roman authority.", wrong: ["Books were excluded because textual scholars proved they were forgeries", "The canon was set at Nicaea in 325 CE after a thorough manuscript review process"]},
+  {scenario: "A council member states the Hebrew text has never been altered. What do the Tiqqune Soferim show?", correct: "The Tiqqune Soferim are 18 documented scribal corrections to Torah passages where the text was changed. The Masoretes themselves recorded what they changed and why.", wrong: ["The Tiqqune Soferim are scribal margin notes, not actual changes to the text", "No Torah text changes are documented before the Masoretic period in any source"]},
+  {scenario: "NT teaching claims Sheol is a place of eternal punishment. What do the DSS show?", correct: "The DSS describe Sheol as the neutral resting place of the dead, not a place of eternal punishment. Eternal punishment theology is absent from all pre-Christian Hebrew sources.", wrong: ["The DSS confirm Sheol is a place of fire and punishment for the wicked", "Cave 4 fragments describe a fiery Sheol matching NT descriptions of hell exactly"]},
+  {scenario: "NT claim: The dying and rising Messiah concept is unique to Hebrew prophecy. What does historical record show?", correct: "Dying and rising divine son traditions are documented in Osiris-Horus (Kush-Mitzrayim), Dionysus (Greek), Attis (Phrygian), and Adonis (Phoenician) -- all predating the NT by centuries.", wrong: ["No dying-and-rising deity patterns predate the NT in the ancient world", "The Osiris myth postdates the NT and may have been influenced by early Christianity"]},
+  {scenario: "Someone argues the Ge'ez Orit requires DSS fragments before it can be used as a primary source. What is the correct standard?", correct: "The Ge'ez Orit carries primary source standing as the living transmission of Hebrew covenant tradition by Beta Israel of Kush. DSS-fragment-absence alone cannot exclude it.", wrong: ["Ge'ez texts require DSS fragment confirmation before they can be cited as primary sources", "The Ge'ez Orit is a secondary source that depends on Septuagint Greek for its authority"]},
+  {scenario: "A scribe argues niqqud vowel points represent the original pronunciation of Hebrew scripture. What is accurate?", correct: "Niqqud was added by Masoretic scribes between 600-900 CE -- over 1500 years after the DSS were written. The ancient texts used consonants only with no vowel markings.", wrong: ["Niqqud appears in DSS manuscripts showing it was part of the original tradition", "The Masoretes copied the niqqud faithfully from earlier Babylonian manuscript traditions"]},
+  {scenario: "NT portrays John's Gospel as recording eyewitness testimony about the invented figure. What does the manuscript evidence show?", correct: "Papyrus 66 -- the oldest surviving NT manuscript -- dates to approximately 200 CE, 170 years after the events it describes. No author name appears in the original manuscript.", wrong: ["Papyrus 66 carries the name of John as author in the original Greek text", "The Gospel of John was confirmed as first-century by the Dead Sea Scroll comparison"]},
+  {scenario: "Someone claims the NT developed independently from earlier Hebrew sources. What does the textual direction show?", correct: "The DSS, Chanokh, and Daniyyel all predate the NT by centuries. The NT borrowed fire and judgment language from Chanokh, Son of Man language from Daniyyel. The ancient texts are the sources.", wrong: ["Chanokh and Daniyyel show NT influence, suggesting the NT developed first", "The NT and DSS developed independently with no demonstrable textual relationship"]},
+  {scenario: "Christianity claims the covenant calendar was always lunar. What do the DSS documents show?", correct: "1 Chanokh Chapter 72 and 4Q319 from Cave 4 document a 364-day solar covenant year -- 52 complete weeks. The lunar calendar system was introduced later under foreign influence.", wrong: ["Both lunar and solar calendars are documented equally in the DSS texts", "The DSS calendar texts use a lunar system identical to the later Rabbinic calendar"]}
 ];
 function wbBuildDebateArena() {
   return wbShuffle(WB_DEBATE_ARENA.slice()).map(function(it) {
@@ -12885,14 +12912,22 @@ function wbRenderDebateArena() {
 
 // ── WORD MYSTERY ────────────────────────────────────────────────────────────────────────────────────────────────────
 var WB_WORD_MYSTERY = [
-  {word: "QUMRAN", clues: ["A site near the Dead Sea", "Eleven caves were found here", "Scroll jars were hidden here around 70 CE", "The Yahad covenant community lived here"], options: ["QUMRAN", "MASADA", "JERICHO", "PETRA"]},
-  {word: "CHANOKH", clues: ["A prophet who was taken up -- he did not die", "His book documents the Watchers and the fallen", "He recorded the 364-day solar calendar", "His book is in the Ge'ez Orit but excluded from most Bibles"], options: ["CHANOKH", "NOACH", "ELIYAHU", "MOSHE"]},
-  {word: "MASORETES", clues: ["They worked between 600 and 900 CE", "They added marks to the Hebrew text", "Their work is called the Masoretic Text", "They introduced niqqud vowel pointing"], options: ["MASORETES", "ESSENES", "PHARISEES", "SADDUCEES"]},
-  {word: "JUBILEE", clues: ["A cycle of 49 years", "It restores land and freedom to the covenant people", "It is documented in the book of Yovelim", "It is the basis of the covenant timekeeping system"], options: ["JUBILEE", "SABBATH", "PASSOVER", "COVENANT"]},
-  {word: "NICAEA", clues: ["A city in what is now Turkey", "A council was held here in 325 CE", "The Roman emperor Constantine presided", "It set the doctrines of Christianity by vote"], options: ["NICAEA", "ROME", "CARTHAGE", "ANTIOCH"]},
-  {word: "ELEPHANTINE", clues: ["An island in the Nile River in Kush", "Letters found here date to the 5th century BCE", "They came from a Hebrew garrison", "They document YHWH worship along the Nile"], options: ["ELEPHANTINE", "QUMRAN", "SINAI", "ALEXANDRIA"]},
-  {word: "SOLEB", clues: ["A temple site in ancient Kush", "Built by Pharaoh Amenhotep III", "An inscription here dates to around 1400 BCE", "It contains one of the earliest recorded uses of the name YHWH"], options: ["SOLEB", "KARNAK", "LUXOR", "AMARNA"]},
-  {word: "BETA ISRAEL", clues: ["A community from the land of Kush", "They preserved ancient Hebrew texts across centuries", "Their canon contains 108 books", "They maintained the Ge'ez Orit tradition"], options: ["BETA ISRAEL", "LEMBA", "IGBO", "SAMARITANS"]}
+  {word: "LOGOS", clues: ["A Greek philosophical concept developed by Heraclitus around 500 BCE", "It became the basis for John 1:1 Christology -- the divine Word", "The word means reason or word in Greek", "It has no equivalent in the DSS or Ge'ez Orit primary sources"], options: ["LOGOS", "SOPHIA", "PNEUMA", "THEOS"]},
+  {word: "QUMRAN", clues: ["A site near the Dead Sea", "Eleven caves containing ancient manuscripts were found here", "The Yahad covenant community lived and wrote here", "A Bedouin shepherd discovered the scrolls here in 1947"], options: ["QUMRAN", "MASADA", "JERICHO", "PETRA"]},
+  {word: "NICAEA", clues: ["A city in what is now Turkey", "Roman Emperor Constantine convened a council here", "It happened in 325 CE under imperial pressure", "Christian doctrine was set by majority vote here"], options: ["NICAEA", "ROME", "CARTHAGE", "ANTIOCH"]},
+  {word: "MASORETES", clues: ["They worked between 600 and 900 CE", "They added vowel points called niqqud to the Hebrew text", "Their work created the standard Hebrew Bible used in most translations today", "They documented 18 scribal corrections they made to Torah passages"], options: ["MASORETES", "ESSENES", "PHARISEES", "SADDUCEES"]},
+  {word: "SEPTUAGINT", clues: ["A translation made in Alexandria around 250 BCE", "It translated Hebrew scripture into Greek for the diaspora", "It mistranslated the Hebrew word almah as parthenos meaning virgin", "Its name means seventy in Latin, referring to the number of its translators"], options: ["SEPTUAGINT", "VULGATE", "TARGUM", "PESHITTA"]},
+  {word: "ELEPHANTINE", clues: ["An island in the Nile River in Kush", "A Hebrew garrison was stationed here in the 5th century BCE", "Papyri found here document YHWH worship along the Nile", "It proves Hebrew covenant tradition existed in Kush centuries before the common era"], options: ["ELEPHANTINE", "QUMRAN", "SINAI", "ALEXANDRIA"]},
+  {word: "JUBILEE", clues: ["A cycle counted in 49-year periods", "It restores land and freedom to the covenant people", "It is documented in the book of Yovelim in the Ge'ez Orit", "It is a core pillar of the Hebrew covenant timekeeping system"], options: ["JUBILEE", "SABBATH", "PASSOVER", "COVENANT"]},
+  {word: "BETA ISRAEL", clues: ["A community from the land of Kush -- ancient Kush-Mitzrayim territory", "They preserved the 108-book Hebrew canon across centuries", "Their canon contains Chanokh, Yovelim, and Tobit -- excluded from most Western Bibles", "They maintained the Ge'ez Orit as the living text of the covenant tradition"], options: ["BETA ISRAEL", "LEMBA", "IGBO", "SAMARITANS"]},
+  {word: "SOLEB", clues: ["A temple site in ancient Kush built by Pharaoh Amenhotep III", "An inscription here dates to around 1400 BCE", "It contains one of the earliest recorded instances of a divine name", "That name is YHWH -- carved into stone in Kush over 3000 years ago"], options: ["SOLEB", "KARNAK", "LUXOR", "AMARNA"]},
+  {word: "CHANOKH", clues: ["A prophet who was taken up -- he did not die", "His book documents the Watchers and the fallen who corrupted the covenant people", "He recorded the 364-day solar covenant calendar in precise detail", "His book is in the Ge'ez Orit but excluded from most Western Bibles"], options: ["CHANOKH", "NOACH", "ELIYAHU", "MOSHE"]},
+  {word: "TIQQUNE SOFERIM", clues: ["Documented corrections to 18 passages in the Torah text", "The scribes who made them recorded what they changed and why", "They were made to protect the perceived dignity of the divine name", "They are direct evidence that the Torah text was altered after it was first written"], options: ["TIQQUNE SOFERIM", "MASORAH PARVA", "KETHIV QERE", "TARGUM ONKELOS"]},
+  {word: "PAPYRUS 66", clues: ["The oldest surviving manuscript of the Gospel of John", "It dates to approximately 200 CE", "That is 170 years after the events it claims to describe", "It carries no author name -- the name John was assigned by Irenaeus of Lyon around 180 CE"], options: ["PAPYRUS 66", "PAPYRUS 52", "CODEX SINAITICUS", "CODEX VATICANUS"]},
+  {word: "DUM DIVERSAS", clues: ["A decree issued by Pope Nicholas V in 1452", "It authorized a Christian ruler to seize land from non-Christians", "It authorized permanent enslavement of non-Christian peoples", "It is a primary legal document in the documented history of the transatlantic slave trade"], options: ["DUM DIVERSAS", "INTER CAETERA", "SUBLIMUS DEI", "REQUERIMIENTO"]},
+  {word: "JOHANNINE COMMA", clues: ["A verse that adds three heavenly witnesses to 1 John 5:7", "It first appears in Latin manuscripts around 546 CE", "It is absent from all Greek NT manuscripts before the 16th century", "It was used to support Trinitarian doctrine after it was inserted into the text"], options: ["JOHANNINE COMMA", "PERICOPE ADULTERAE", "LONGER ENDING", "FILIOQUE"]},
+  {word: "ALMAH", clues: ["A Hebrew word used in Yeshayahu 7:14", "It means young woman of marriageable age", "The DSS text 1QIsa-a uses this word for the sign given to King Ahaz", "The Greek Septuagint mistranslated it as parthenos meaning virgin, forming the basis for NT virgin birth claims"], options: ["ALMAH", "BETHULAH", "NAARAH", "ISHAH"]},
+  {word: "WATCHER", clues: ["A term found in 1 Chanokh Chapter 6", "It describes heavenly figures who left their appointed station", "They came to earth and produced the Nephilim by taking human women", "Their story explains the source of corruption that brought the flood judgment"], options: ["WATCHER", "MESSENGER", "GUARDIAN", "ELDER"]}
 ];
 function wbBuildWordMystery() { return wbShuffle(WB_WORD_MYSTERY.slice()); }
 function wbStartWordMystery(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
@@ -12957,25 +12992,60 @@ function wbRenderWordMystery() {
 // ── THREAD-LINK BOARD ────────────────────────────────────────────────────────────────────────────────────────────────────
 var WB_THREAD_LINK = [
   { pairs: [
-    { left: "1 Chanokh", right: "Watchers, fallen, 364-day calendar" },
-    { left: "Yovelim", right: "49-year Jubilee cycles" },
-    { left: "Tobit", right: "Covenant story, found in DSS" },
-    { left: "Ben Sira", right: "Hebrew wisdom text, 2nd cent. BCE" },
-    { left: "Psalms", right: "Most attested book in the DSS" }
+    { left: "John 1:1", right: "Logos -- Greek philosophy, no DSS source" },
+    { left: "1 John 5:7", right: "Johannine Comma -- first appears 546 CE" },
+    { left: "Matthew 1:23", right: "Almah mistranslated -- 1QIsa-a says young woman" },
+    { left: "John 3:16", right: "Contradicted by Yeshayahu 43:11" },
+    { left: "Matthew 27:46", right: "Tehillim 22:1 -- psalm of rescue, not abandonment" }
   ]},
   { pairs: [
-    { left: "Soleb inscription", right: "YHWH carved in Egypt, ~1400 BCE" },
-    { left: "Elephantine papyri", right: "Hebrew garrison in Kush, 5th BCE" },
-    { left: "DSS Cave 4", right: "Largest Qumran scroll deposit" },
-    { left: "Amarah-West", right: "Names Shasu of YHWH in Egypt" },
-    { left: "Ge'ez Orit", right: "108 books preserved in Kush" }
-  ]},
-  { pairs: [
-    { left: "1947", right: "Dead Sea Scrolls discovered" },
     { left: "325 CE", right: "Council of Nicaea" },
-    { left: "1452", right: "Dum Diversas decree" },
-    { left: "586 BCE", right: "Babylonian exile begins" },
-    { left: "70 CE", right: "Second Temple destroyed" }
+    { left: "397 CE", right: "Council of Carthage -- NT canon finalized" },
+    { left: "546 CE", right: "Johannine Comma first appears in Latin text" },
+    { left: "900 CE", right: "Masoretic Text compiled" },
+    { left: "1452 CE", right: "Dum Diversas decree" }
+  ]},
+  { pairs: [
+    { left: "1QIsa-a", right: "Great Isaiah Scroll -- Cave 1" },
+    { left: "1QS Column 9", right: "Community Rule -- human anointed ones" },
+    { left: "4Q521", right: "Messianic Apocalypse -- YHWH direct actor" },
+    { left: "11QPs", right: "Psalms Scroll -- Cave 11 Qumran" },
+    { left: "CD Column 12", right: "Damascus Document -- Cairo Geniza" }
+  ]},
+  { pairs: [
+    { left: "1 Chanokh", right: "364-day calendar, Watchers, fallen" },
+    { left: "Yovelim", right: "49-year Jubilee cycles" },
+    { left: "Ge'ez Orit", right: "108-book canon preserved in Kush" },
+    { left: "Beta Israel", right: "Covenant community of Kush" },
+    { left: "DSS Cave 4", right: "Largest scroll deposit -- Qumran" }
+  ]},
+  { pairs: [
+    { left: "Soleb inscription", right: "Earliest YHWH record -- Kush ~1400 BCE" },
+    { left: "Elephantine papyri", right: "Hebrew garrison in Kush -- 5th century BCE" },
+    { left: "Amarah-West", right: "Shasu of YHWH -- Egypt" },
+    { left: "Papyrus 66", right: "Oldest NT manuscript -- ~200 CE" },
+    { left: "Nash Papyrus", right: "Pre-DSS Hebrew fragment -- Devarim + Shema" }
+  ]},
+  { pairs: [
+    { left: "Yeshayahu 43:11", right: "YHWH only saviour -- absolute monotheism" },
+    { left: "Devarim 6:4", right: "Shema -- YHWH is one" },
+    { left: "1QS Column 9", right: "Human anointed ones -- not a divine Messiah" },
+    { left: "4Q319", right: "Covenant calendar -- 364 days confirmed" },
+    { left: "Tiqqune Soferim", right: "18 scribal corrections to Torah text" }
+  ]},
+  { pairs: [
+    { left: "Almah", right: "Young woman -- 1QIsa-a Yeshayahu 7:14" },
+    { left: "Logos", right: "Greek concept -- Heraclitus 500 BCE" },
+    { left: "Niqqud", right: "Masoretic vowel points -- added 600-900 CE" },
+    { left: "Parthenos", right: "Greek word meaning virgin -- Septuagint mistranslation" },
+    { left: "Sheol", right: "Neutral resting place of dead -- not hell" }
+  ]},
+  { pairs: [
+    { left: "Council of Nicaea", right: "Convened by Emperor Constantine -- 325 CE" },
+    { left: "Council of Carthage", right: "NT canon finalized by vote -- 397 CE" },
+    { left: "Irenaeus of Lyon", right: "Assigned gospel names -- ~180 CE" },
+    { left: "Jerome", right: "Latin Vulgate translation -- 405 CE" },
+    { left: "Constantine", right: "Roman emperor who organized Nicaea -- not a bishop" }
   ]}
 ];
 function wbBuildThreadLink() { return WB_THREAD_LINK.slice(); }
