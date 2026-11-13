@@ -1,9 +1,9 @@
 # Session Notes — 2026-11-13
 
 ## Current state
-- `main` HEAD `5d401d1` (PR #1247 merge commit), confirmed via `mcp__github__pull_request_read` (`merged: true`, `merged_by: DssOrit`).
-- `Solar/sw.js` cache: `acr-solar-v99` (unchanged by PR #1247 — no cache-relevant file list change, only `note`/ingredient text).
-- Working tree clean, nothing uncommitted. Nothing outstanding — all three PRs from today (#1244, #1245, #1246, #1247) are merged.
+- `main` HEAD `ec3899e` (PR #1248 merge commit), confirmed via `mcp__github__pull_request_read` (`merged: true`, `merged_by: DssOrit`).
+- `Solar/sw.js` cache: `acr-solar-v99` (unchanged by PR #1247 or #1248 — neither touched the SW cache-list files).
+- Working tree clean, nothing uncommitted. Nothing outstanding — all five PRs from today (#1244, #1245, #1246, #1247, #1248) are merged.
 
 ## Built today
 - **PR #1244 (merged)** — split Yom Todah into Day One (Friday, prep/cooking) and Day Two (Saturday, Sabbath meal), matching Yom Berachah's existing two-day structure. Expanded the weekly Shabbat page's Cooking guidance for keeping dishes warm into Day Two without kindling on the Sabbath.
@@ -14,9 +14,11 @@
 - Wrote and pushed this session-notes file directly to `main` (`f67216b`).
 - **PR #1247 (merged)** — see "Shopping-list reconciliation" below for the full resolution of the handwritten-list cross-check. Backup branch `backup/2026-11-13-acr-solar-v99b` taken before this fix, SHA `f67216b71e1e91b33d338377a21b05afd308616e`, confirmed matching pre-change `origin/main`. Verification: `node --check` on inline scripts passes, `<div>` tags balanced (662/662), headless-browser test confirmed all 5 new/updated notes render with the exact text and Stuffing's first ingredient reads "8 mushroom or vegetable broth cubes, per batch of 2 pans," zero page errors. Confirmed merged via `mcp__github__pull_request_read` (`merged_by: DssOrit`), merge commit `5d401d1`.
 - Created and pushed stable-state backup branch `backup/2026-11-13-acr-solar-v99c` at `main` HEAD `5d401d1` after the user confirmed PR #1247 merged.
+- **PR #1248 (merged)** — the user noticed "Turkey / Salmon" in Yom Todah Day One's food list had no photo (no single existing image covered the combo item). User supplied a new photo (turkey legs + salmon fillet on the gold plate). Added as `Solar/images/food/turkey-salmon.jpg` (900px max, JPEG, 164 KB) and wired into the `familyFoods` entry. Backup branch `backup/2026-11-13-acr-solar-v99d` taken before this fix, SHA `3ec34b64ba9baf77ad5896bd3036335f861bf8ca`, confirmed matching pre-change `origin/main`. Verification: `node --check` passes, `<div>` tags balanced (662/662), headless-browser test confirmed the photo renders (`naturalWidth: 900`), zero page errors. Confirmed merged via `mcp__github__pull_request_read` (`merged_by: DssOrit`), merge commit `ec3899e`.
+- Created and pushed stable-state backup branch `backup/2026-11-13-acr-solar-v99e` at `main` HEAD `ec3899e` after the user confirmed PR #1248 merged.
 
 ## Outstanding / blocking
-None. All four PRs from today (#1244, #1245, #1246, #1247) are merged and confirmed.
+None. All five PRs from today (#1244, #1245, #1246, #1247, #1248) are merged and confirmed.
 
 ## Shopping-list reconciliation — all items resolved this session
 After PR #1246 merged, the user supplied an old handwritten family shopping list and asked whether it reconciles with the shipped recipes. Cross-checked all 29 `FOOD_RECIPES` ingredient lists directly against the list, reported every finding, and got explicit per-item direction. Resolution:
@@ -43,9 +45,13 @@ After PR #1246 merged, the user supplied an old handwritten family shopping list
 - `backup/2026-11-13-acr-solar-v99` — stable-state backup at `main` HEAD `6c5c4d52e36ed3bfc50be9ee51dd5b0065c90043`, taken after the user confirmed PR #1246 merged and working. Recovery: `git checkout backup/2026-11-13-acr-solar-v99`.
 - `backup/2026-11-13-acr-solar-v99b` — pre-change backup taken before PR #1247's edits, SHA `f67216b71e1e91b33d338377a21b05afd308616e`, confirmed matching pre-change `origin/main`.
 - `backup/2026-11-13-acr-solar-v99c` — stable-state backup at `main` HEAD `5d401d1`, taken after the user confirmed PR #1247 merged and working. Recovery: `git checkout backup/2026-11-13-acr-solar-v99c`.
+- `backup/2026-11-13-acr-solar-v99d` — pre-change backup taken before PR #1248's edits, SHA `3ec34b64ba9baf77ad5896bd3036335f861bf8ca`, confirmed matching pre-change `origin/main`.
+- `backup/2026-11-13-acr-solar-v99e` — stable-state backup at `main` HEAD `ec3899e`, taken after the user confirmed PR #1248 merged and working. Recovery: `git checkout backup/2026-11-13-acr-solar-v99e`.
 
 ## Today's commit log
 ```
+ec3899e Merge pull request #1248 from DssOrit/claude/solar-turkey-salmon-img-2026-11-13
+c791cdf Solar: add Turkey & Salmon photo to Yom Todah Day One's food list
 5d401d1 Merge pull request #1247 from DssOrit/claude/solar-recipe-notes-2026-11-13
 f8d60d8 session notes 2026-11-13: shopping-list reconciliation resolved, PR #1247 opened
 ff970d8 Solar: add family-version side notes to 4 recipes, swap Stuffing to veggie broth
