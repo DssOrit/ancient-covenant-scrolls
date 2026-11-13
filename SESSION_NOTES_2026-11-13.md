@@ -1,10 +1,9 @@
 # Session Notes — 2026-11-13
 
 ## Current state
-- `main` HEAD `f67216b` (PR #1246 merge + session notes commit), confirmed via `mcp__github__pull_request_read` (`merged: true`, `merged_by: DssOrit`).
-- PR #1247 open on branch `claude/solar-recipe-notes-2026-11-13`, NOT yet merged — see "Outstanding / blocking" below.
+- `main` HEAD `5d401d1` (PR #1247 merge commit), confirmed via `mcp__github__pull_request_read` (`merged: true`, `merged_by: DssOrit`).
 - `Solar/sw.js` cache: `acr-solar-v99` (unchanged by PR #1247 — no cache-relevant file list change, only `note`/ingredient text).
-- Working tree clean on `main`; feature branch for PR #1247 pushed.
+- Working tree clean, nothing uncommitted. Nothing outstanding — all three PRs from today (#1244, #1245, #1246, #1247) are merged.
 
 ## Built today
 - **PR #1244 (merged)** — split Yom Todah into Day One (Friday, prep/cooking) and Day Two (Saturday, Sabbath meal), matching Yom Berachah's existing two-day structure. Expanded the weekly Shabbat page's Cooking guidance for keeping dishes warm into Day Two without kindling on the Sabbath.
@@ -13,10 +12,11 @@
   - Verification before shipping: backup branch confirmed against pre-change `origin/main` SHA, `node --check` on all inline `<script>` blocks, `<div>` tag-balance check (662/662), all 30 food images resized/recompressed from 85MB to 5.2MB total and verified valid, headless-browser (Playwright) test against the real running app confirming all 27 food cards render with working images, quantity math, and correct recipe-detail open behavior for both a family-dish card and an Extras card.
 - Created and pushed stable-state backup branch `backup/2026-11-13-acr-solar-v99` at `main` HEAD `6c5c4d5` after the user confirmed PR #1246 merged.
 - Wrote and pushed this session-notes file directly to `main` (`f67216b`).
-- **PR #1247 (open, not yet merged)** — see "Shopping-list reconciliation" below for the full resolution of the handwritten-list cross-check. Backup branch `backup/2026-11-13-acr-solar-v99b` taken before this fix, SHA `f67216b71e1e91b33d338377a21b05afd308616e`, confirmed matching pre-change `origin/main`. Verification: `node --check` on inline scripts passes, `<div>` tags balanced (662/662), headless-browser test confirmed all 5 new/updated notes render with the exact text and Stuffing's first ingredient reads "8 mushroom or vegetable broth cubes, per batch of 2 pans," zero page errors.
+- **PR #1247 (merged)** — see "Shopping-list reconciliation" below for the full resolution of the handwritten-list cross-check. Backup branch `backup/2026-11-13-acr-solar-v99b` taken before this fix, SHA `f67216b71e1e91b33d338377a21b05afd308616e`, confirmed matching pre-change `origin/main`. Verification: `node --check` on inline scripts passes, `<div>` tags balanced (662/662), headless-browser test confirmed all 5 new/updated notes render with the exact text and Stuffing's first ingredient reads "8 mushroom or vegetable broth cubes, per batch of 2 pans," zero page errors. Confirmed merged via `mcp__github__pull_request_read` (`merged_by: DssOrit`), merge commit `5d401d1`.
+- Created and pushed stable-state backup branch `backup/2026-11-13-acr-solar-v99c` at `main` HEAD `5d401d1` after the user confirmed PR #1247 merged.
 
 ## Outstanding / blocking
-**PR #1247 open, awaiting the user's merge** — `https://github.com/DssOrit/ancient-covenant-scrolls/pull/1247`, branch `claude/solar-recipe-notes-2026-11-13`. Everything below this point is resolved; this is just the final merge step.
+None. All four PRs from today (#1244, #1245, #1246, #1247) are merged and confirmed.
 
 ## Shopping-list reconciliation — all items resolved this session
 After PR #1246 merged, the user supplied an old handwritten family shopping list and asked whether it reconciles with the shipped recipes. Cross-checked all 29 `FOOD_RECIPES` ingredient lists directly against the list, reported every finding, and got explicit per-item direction. Resolution:
@@ -42,9 +42,13 @@ After PR #1246 merged, the user supplied an old handwritten family shopping list
 - `backup/2026-11-13-acr-solar-v98` — pre-change backup taken before PR #1246's edits, SHA `1ac70fd976bda7a97005ffdfcf2de93800840825`, verified matching pre-change `origin/main`.
 - `backup/2026-11-13-acr-solar-v99` — stable-state backup at `main` HEAD `6c5c4d52e36ed3bfc50be9ee51dd5b0065c90043`, taken after the user confirmed PR #1246 merged and working. Recovery: `git checkout backup/2026-11-13-acr-solar-v99`.
 - `backup/2026-11-13-acr-solar-v99b` — pre-change backup taken before PR #1247's edits, SHA `f67216b71e1e91b33d338377a21b05afd308616e`, confirmed matching pre-change `origin/main`.
+- `backup/2026-11-13-acr-solar-v99c` — stable-state backup at `main` HEAD `5d401d1`, taken after the user confirmed PR #1247 merged and working. Recovery: `git checkout backup/2026-11-13-acr-solar-v99c`.
 
 ## Today's commit log
 ```
+5d401d1 Merge pull request #1247 from DssOrit/claude/solar-recipe-notes-2026-11-13
+f8d60d8 session notes 2026-11-13: shopping-list reconciliation resolved, PR #1247 opened
+ff970d8 Solar: add family-version side notes to 4 recipes, swap Stuffing to veggie broth
 6c5c4d5 Merge pull request #1246 from DssOrit/claude/solar-recipe-detail-2026-11-13
 c3c0ec6 Add food photos, recipes, and Extras section to Solar RSVP planner
 9d42a6b Prophetic Watch brief 2026-11-13
