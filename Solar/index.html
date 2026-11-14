@@ -823,6 +823,19 @@ select.form-input option { background: var(--surface2); }
 .rsvp-food-tap{color:var(--gold);font-size:12px;font-weight:800;margin-top:8px;}
 .rsvp-extras-label{margin-top:22px;}
 .rsvp-footnote{color:var(--text3);font-size:12.5px;margin-top:20px;font-style:italic;line-height:1.5;}
+.rsvp-print-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--surface2);border:2px solid var(--border2);color:var(--text);border-radius:var(--radius-sm);padding:13px;font-size:15px;font-weight:800;font-family:var(--font);cursor:pointer;margin:18px 0 0;}
+.rsvp-print-btn i{font-size:17px;color:var(--gold);}
+#print-supply-list{display:none;}
+@media print{
+  body *{visibility:hidden;}
+  #print-supply-list, #print-supply-list *{visibility:visible;}
+  #print-supply-list{display:block;position:absolute;left:0;top:0;width:100%;padding:24px;color:#000;background:#fff;}
+  #print-supply-list h1{font-size:22px;margin:0 0 4px;}
+  #print-supply-list .psl-sub{font-size:14px;color:#333;margin:0 0 18px;}
+  #print-supply-list h2{font-size:16px;margin:18px 0 8px;border-bottom:1.5px solid #666;padding-bottom:4px;}
+  #print-supply-list ul{list-style:none;padding:0;margin:0;}
+  #print-supply-list li{font-size:14px;padding:5px 0;border-bottom:1px solid #ddd;display:flex;justify-content:space-between;gap:12px;}
+}
 @media (max-width:420px){.rsvp-food-grid{grid-template-columns:1fr;}}
 
 /* Recipe & Supply List detail overlay */
@@ -1417,6 +1430,9 @@ select.form-input option { background: var(--surface2); }
     <div id="recipe-content"></div>
   </div>
 </div>
+
+<!-- PRINT-ONLY SUPPLY LIST (shown only by the print stylesheet, hidden otherwise) -->
+<div id="print-supply-list"></div>
 
 
 <!-- SHABBAT MODE OVERLAY -->
@@ -2930,6 +2946,7 @@ function rsvpRender() {
     '<div class="rsvp-food-grid">' +
     FOOD_EXTRAS.map(function (f, i) { return rsvpFoodCardHtml(f, i, attending); }).join('') +
     '</div>' +
+    '<button class="rsvp-print-btn" onclick="printSupplyList()"><i class="ri-printer-line"></i> Print Supply List</button>' +
     '<div class="rsvp-footnote">Amounts are ordinary modern planning estimates, not from any ancient source — adjust to your own household’s appetite. Tap a dish with a photo to see its supply list and recipe.</div>';
 
   document.getElementById('rsvp-content').innerHTML = html;
@@ -2990,6 +3007,31 @@ function openRecipeDetail(name) {
 function closeRecipeDetail(e) {
   if (e && e.target !== document.getElementById('recipe-overlay')) return;
   document.getElementById('recipe-overlay').classList.remove('on');
+}
+
+function printSupplyList() {
+  if (!RSVP_CUR) return;
+  var data = rsvpLoad(RSVP_CUR);
+  var attending = data.guests.filter(function (g) { return g.attending; }).length;
+
+  function rowsFor(list) {
+    return (list || []).map(function (f) {
+      var totalQty = f.qty * attending;
+      var roundedQty = Math.ceil(totalQty * 4) / 4;
+      var qtyText = attending === 0 ? '—' : rsvpFmtQty(totalQty) + ' ' + rsvpUnitLabel(f.unit, roundedQty);
+      return '<li><span>' + ssEsc(f.name) + '</span><span>' + qtyText + '</span></li>';
+    }).join('');
+  }
+
+  var html = '<h1>' + ssEsc(RSVP_CUR.name) + '</h1>' +
+    '<div class="psl-sub">Supply list &mdash; ' + attending + ' attending &mdash; printed ' + new Date().toLocaleDateString() + '</div>' +
+    '<h2>How Much To Prepare</h2>' +
+    '<ul>' + rowsFor(RSVP_CUR.familyFoods) + '</ul>' +
+    '<h2>Extras &mdash; Either Day</h2>' +
+    '<ul>' + rowsFor(FOOD_EXTRAS) + '</ul>';
+
+  document.getElementById('print-supply-list').innerHTML = html;
+  window.print();
 }
 
 // ─── AGENDA VIEW ──────────────────────────────────────────────────────────────
