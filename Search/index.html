@@ -3547,6 +3547,17 @@ function doSearch(q) {
         }
       });
     });
+    var laws = DATA.covenant_laws || {};
+    Object.keys(laws).forEach(function(cat) {
+      laws[cat].forEach(function(v) {
+        if ((v.text || '').toLowerCase().includes(query) ||
+            (v.ref || '').toLowerCase().includes(query) ||
+            (v.law || '').toLowerCase().includes(query) ||
+            cat.toLowerCase().includes(query)) {
+          results.push({ _type: 'law', cat: cat, v: v });
+        }
+      });
+    });
   }
 
   // Search site content panels
@@ -3633,6 +3644,14 @@ function renderResultCard(r) {
       '<div class="rc-ref">' + r.v.ref + '</div>' +
       '<div class="rc-text">' + esc(r.v.text).substring(0, 140) + '</div>' +
       '<div class="rc-ms">' + esc(r.v.ms) + '</div>' +
+      '</div>';
+  }
+  if (r._type === 'law') {
+    return '<div class="rc">' +
+      '<div class="rc-ref">' + esc(r.v.ref) + ' — ' + esc(r.v.law) + '</div>' +
+      '<div class="rc-text">' + esc(r.v.text).substring(0, 160) + (r.v.text.length > 160 ? '...' : '') + '</div>' +
+      '<div class="rc-ms">' + esc(r.v.ms) + ' · ' + esc(r.v.corpus) + '</div>' +
+      '<div class="rc-ms" style="margin-top:2px;color:var(--gold);opacity:0.7">Covenant Law — ' + esc(r.cat) + '</div>' +
       '</div>';
   }
   if (r._type === 'site') {
