@@ -11,6 +11,27 @@
 const RADIUS_DEG = 0.2;   // ~20 km box around the query point
 const json = (o, s) => new Response(JSON.stringify(o), { status: s || 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
 
+// Rate-limited per caller IP via the edge Cache API (best-effort, per-colo).
+// Unauthenticated public write endpoint — without a cap it can be flooded
+// with fake ratings at zero cost.
+const RL_LIMIT = 10;      // max writes
+const RL_WINDOW_S = 60;   // per rolling window (seconds)
+async function underRateLimit(request, routeKey) {
+  try {
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+    const bucket = Math.floor(Date.now() / (RL_WINDOW_S * 1000));
+    const cacheKey = new Request('https://ratelimit.internal/' + routeKey + '/' + ip + '/' + bucket);
+    const cache = caches.default;
+    const prior = await cache.match(cacheKey);
+    const count = prior ? parseInt(await prior.text(), 10) || 0 : 0;
+    if (count >= RL_LIMIT) return false;
+    await cache.put(cacheKey, new Response(String(count + 1), { headers: { 'Cache-Control': 'max-age=' + RL_WINDOW_S } }));
+    return true;
+  } catch (e) {
+    return true;
+  }
+}
+
 export async function onRequestGet(context) {
   const { request, env } = context;
   if (!env.DB) return json({ configured: false });
@@ -33,6 +54,9 @@ export async function onRequestGet(context) {
 export async function onRequestPost(context) {
   const { request, env } = context;
   if (!env.DB) return json({ configured: false });
+  if (!(await underRateLimit(request, 'restrooms-post'))) {
+    return json({ configured: true, error: 'rate limited, try again shortly' }, 429);
+  }
   let body;
   try { body = await request.json(); } catch (e) { return json({ configured: true, error: 'bad request' }, 400); }
   const ref = (body && body.ref || '').toString().slice(0, 64);

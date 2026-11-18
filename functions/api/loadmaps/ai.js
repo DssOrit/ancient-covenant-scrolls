@@ -2,12 +2,41 @@
    Limited AI: a single Claude Haiku call for parsing ambiguous input. Keeps the
    key server-side. Set ANTHROPIC_API_KEY (and optionally AI_MODEL) in the Pages
    env to enable. Haiku at one call per request is near-zero cost.
-   POST /api/loadmaps/ai  { q: "question" }  ->  { configured, answer } */
+   POST /api/loadmaps/ai  { q: "question" }  ->  { configured, answer }
+
+   Rate-limited per caller IP via the edge Cache API (best-effort, per-colo —
+   not a substitute for a Cloudflare dashboard Rate Limiting rule on this
+   route, which is the real defense against sustained abuse). This endpoint
+   is unauthenticated and forwards to a paid API key, so it must never be
+   left uncapped. */
+const RL_LIMIT = 8;       // max requests
+const RL_WINDOW_S = 60;   // per rolling window (seconds)
+async function underRateLimit(request, routeKey) {
+  try {
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+    const bucket = Math.floor(Date.now() / (RL_WINDOW_S * 1000));
+    const cacheKey = new Request('https://ratelimit.internal/' + routeKey + '/' + ip + '/' + bucket);
+    const cache = caches.default;
+    const prior = await cache.match(cacheKey);
+    const count = prior ? parseInt(await prior.text(), 10) || 0 : 0;
+    if (count >= RL_LIMIT) return false;
+    await cache.put(cacheKey, new Response(String(count + 1), { headers: { 'Cache-Control': 'max-age=' + RL_WINDOW_S } }));
+    return true;
+  } catch (e) {
+    // Fail open: a rate-limit bookkeeping error must never take down the feature.
+    return true;
+  }
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
   const headers = { 'content-type': 'application/json', 'cache-control': 'no-store' };
   const key = env.ANTHROPIC_API_KEY;
   if (!key) return new Response(JSON.stringify({ configured: false }), { headers });
+
+  if (!(await underRateLimit(request, 'ai'))) {
+    return new Response(JSON.stringify({ configured: true, error: 'rate limited, try again shortly' }), { status: 429, headers });
+  }
 
   let body;
   try { body = await request.json(); } catch (e) {
