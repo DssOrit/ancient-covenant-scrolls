@@ -21,9 +21,15 @@
 
 const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
+// OCC is designed to run same-origin with this API (see HANDOFF_OCC_BACKEND.md) —
+// a same-origin call never looks at these headers at all, so this allowlist only
+// ever blocks OTHER websites from calling this API; it cannot affect the real app.
+const ALLOWED_ORIGINS = ['https://loadeco.app', 'https://acrscrolls.com', 'https://dssorit.github.io'];
 function cors(origin) {
+  const allow = ALLOWED_ORIGINS.indexOf(origin) >= 0 ? origin : ALLOWED_ORIGINS[0];
   return {
-    'Access-Control-Allow-Origin': origin || '*',
+    'Access-Control-Allow-Origin': allow,
+    'Vary': 'Origin',
     'Access-Control-Allow-Methods': 'GET,POST,PATCH,DELETE,OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type,Authorization',
     'Access-Control-Max-Age': '86400'
