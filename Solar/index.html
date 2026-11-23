@@ -562,6 +562,22 @@ select.form-input option { background: var(--surface2); }
 .fg-board-item.revealed { background: var(--surface3); border-color: var(--gold); cursor: default; }
 .fg-board-pts { color: var(--gold); font-weight: 800; font-family: var(--mono); flex-shrink: 0; }
 .fg-scroll-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+.fg-paint-pass{text-align:center;padding:40px 16px;}
+.fg-paint-pass-name{font-size:22px;font-weight:800;color:var(--text);margin-bottom:18px;}
+.fg-paint-reveal-card{background:var(--surface2);border:2px solid var(--gold);border-radius:var(--radius);padding:30px 16px;margin:18px 0;}
+.fg-paint-reveal-card .label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+.fg-paint-reveal-card .name{font-size:26px;font-weight:800;color:var(--gold);}
+.fg-paint-timer{font-size:56px;font-weight:800;font-family:var(--mono);color:var(--text);text-align:center;margin:14px 0;letter-spacing:0.02em;}
+.fg-paint-timer.low{color:#E8505B;}
+.fg-paint-timer-row{display:flex;gap:10px;justify-content:center;margin-bottom:14px;}
+.fg-paint-timer-pick{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-weight:700;color:var(--text2);}
+.fg-paint-timer-pick.active{border-color:var(--gold);color:var(--gold);background:var(--surface3);}
+.fg-paint-pool-row{display:flex;gap:10px;margin-bottom:14px;}
+.fg-paint-pool-pick{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;cursor:pointer;font-weight:700;color:var(--text2);}
+.fg-paint-pool-pick.active{border-color:var(--gold);color:var(--gold);background:var(--surface3);}
+#fg-paint-flash{position:fixed;inset:0;background:var(--gold);color:#1a1200;z-index:5600;display:none;align-items:center;justify-content:center;flex-direction:column;font-weight:800;}
+#fg-paint-flash.on{display:flex;}
+#fg-paint-flash .big{font-size:40px;margin-bottom:10px;}
 .fg-scroll-card {
   aspect-ratio: 3/4; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: var(--gold);
@@ -1488,6 +1504,8 @@ select.form-input option { background: var(--surface2); }
   <div id="feast-games-content"></div>
 </div>
 
+<div id="fg-paint-flash"><div class="big">TIME&rsquo;S UP!</div><div>Stop painting &mdash; pass the device to the host.</div></div>
+
 <!-- TEXT PAGE OVERLAY -->
 <div id="text-page-overlay">
   <div id="text-page-topbar">
@@ -2035,6 +2053,16 @@ var FG_KEY = null, FG_PARTY = null, FG_INTROS = null;
 var FG_BOARD = null, FG_SCROLL = null, FG_CLUE = null;
 var FG_SETUP_MODE = null, FG_SETUP_NAMES = [];
 
+// ─── SIP, PAINT & GUESS — shared party game (physical painting, app is host/scorekeeper only) ──
+var PAINT_CELEBRITIES = [
+  {name:'Michael Jackson',cat:'Musician'},{name:'Beyoncé',cat:'Musician'},{name:'Oprah Winfrey',cat:'Icon'},{name:'Will Smith',cat:'Actor'},{name:'Leonardo DiCaprio',cat:'Actor'},{name:'Brad Pitt',cat:'Actor'},{name:'Angelina Jolie',cat:'Actor'},{name:'Tom Hanks',cat:'Actor'},{name:'Scarlett Johansson',cat:'Actor'},{name:'Taylor Swift',cat:'Musician'},{name:'Shakira',cat:'Musician'},{name:'Jackie Chan',cat:'Actor'},{name:'Keanu Reeves',cat:'Actor'},{name:'Marilyn Monroe',cat:'Actor'},{name:'Albert Einstein',cat:'Icon'},{name:'Nelson Mandela',cat:'Icon'},{name:'Elvis Presley',cat:'Musician'},{name:'Adele',cat:'Musician'},{name:'Celine Dion',cat:'Musician'},{name:'Malcolm X',cat:'Icon'},{name:'Martin Luther King Jr.',cat:'Icon'},{name:'Barack Obama',cat:'Icon'},{name:'Madonna',cat:'Musician'},{name:'Rihanna',cat:'Musician'},{name:'Bruce Lee',cat:'Actor'},{name:'Charlie Chaplin',cat:'Actor'},{name:'Mahatma Gandhi',cat:'Icon'},{name:'Princess Diana',cat:'Icon'},{name:'Elon Musk',cat:'Icon'},{name:'Steve Jobs',cat:'Icon'},{name:'Muhammad Ali',cat:'Icon'},{name:'Stevie Wonder',cat:'Musician'},{name:'Whitney Houston',cat:'Musician'},{name:'Morgan Freeman',cat:'Actor'},{name:'Denzel Washington',cat:'Actor'},{name:'Tom Cruise',cat:'Actor'},{name:'Jennifer Lopez',cat:'Musician'},{name:'Bob Marley',cat:'Musician'},{name:'Dwayne Johnson',cat:'Actor'},{name:'Vin Diesel',cat:'Actor'},{name:'Jet Li',cat:'Actor'},{name:'Amitabh Bachchan',cat:'Actor'},{name:'Idris Elba',cat:'Actor'},{name:'Halle Berry',cat:'Actor'},{name:'Charlize Theron',cat:'Actor'},{name:'Nicole Kidman',cat:'Actor'},{name:'Hugh Jackman',cat:'Actor'},{name:'George Clooney',cat:'Actor'},{name:'Robert Downey Jr.',cat:'Actor'},{name:'Samuel L. Jackson',cat:'Actor'},{name:'Kevin Hart',cat:'Actor'},{name:'Lady Gaga',cat:'Musician'},{name:'Justin Bieber',cat:'Musician'},{name:'Eminem',cat:'Musician'},{name:'Drake',cat:'Musician'},{name:'Ed Sheeran',cat:'Musician'},{name:'Queen Elizabeth II',cat:'Icon'}
+];
+var PAINT_MOVIES = [
+  'Titanic','Jurassic Park','Jaws','E.T.','The Godfather','Rocky','Home Alone','Top Gun','Forrest Gump','Mission: Impossible','Fast & Furious','Gladiator','The Dark Knight','The Matrix','Die Hard','Mad Max: Fury Road','Men in Black','Independence Day','The Terminator','Taken','The Hunger Games','Transformers','Inception','The Bourne Identity','Casino Royale','Slumdog Millionaire','Dangal','Parasite','SpongeBob SquarePants','The Simpsons','King of the Hill','John Wick','Spider-Man','Despicable Me','Minions','Tom and Jerry','Looney Tunes','Breaking Bad','Friends','Grease','Dirty Dancing','The Pursuit of Happyness','The Shawshank Redemption','Pulp Fiction','Goodfellas','Scarface','The Silence of the Lambs','Se7en','Speed','Cast Away','A Star Is Born','Bohemian Rhapsody','The Social Network','Catch Me If You Can','Erin Brockovich','3 Idiots','My Big Fat Greek Wedding','Crazy Rich Asians','Toy Story'
+];
+var FG_PAINT = null;
+var FG_PAINT_TIMER_IV = null;
+
 function feastButtonsHTML(name) {
   if (!FEAST_FEATURES[name]) return '';
   var safe = name.replace(/'/g, "\\'");
@@ -2130,7 +2158,7 @@ function fgSetupAdjust(delta) {
 }
 function fgPartyFinish() {
   FG_PARTY = { mode: FG_SETUP_MODE, entities: FG_SETUP_NAMES.map(function (nm, i) { return { name: (nm && nm.trim()) || ((FG_SETUP_MODE === 'teams' ? 'Team ' : 'Player ') + (i + 1)), score: 0 }; }) };
-  FG_INTROS = { board: false, scroll: false, clue: false };
+  FG_INTROS = { board: false, scroll: false, clue: false, paint: false };
   fgOpenMenu();
 }
 
@@ -2142,6 +2170,7 @@ function fgOpenMenu() {
     '<div class="fg-menu-card" onclick="fgOpenBoard()"><div class="fg-menu-title">' + g.board.title + '</div><div class="fg-menu-sub">' + g.board.rounds.length + ' rounds + a face-off and a Lightning Round finale — ' + totalBoard + ' real answers.</div></div>' +
     '<div class="fg-menu-card" onclick="fgOpenScroll()"><div class="fg-menu-title">' + g.scroll.title + '</div><div class="fg-menu-sub">' + g.scroll.subtitle + ' — ' + g.scroll.scrolls.length + ' scrolls, opened in stages, with real Deal-or-No-Deal offers.</div></div>' +
     '<div class="fg-menu-card" onclick="fgOpenClue()"><div class="fg-menu-title">' + g.clue.title + '</div><div class="fg-menu-sub">A real two-side clue-and-guess game, ' + g.clue.cards.length + ' cards, one assassin.</div></div>' +
+    '<div class="fg-menu-card" onclick="fgOpenPaintGuess()"><div class="fg-menu-title">Sip, Paint &amp; Guess</div><div class="fg-menu-sub">Real paint on real canvas — the app assigns secret celebrities or movies, runs the timer, and keeps score. ' + PAINT_CELEBRITIES.length + ' celebrities, ' + PAINT_MOVIES.length + ' movies &amp; shows.</div></div>' +
     '<button class="btn-primary" style="margin-top:4px;" onclick="fgPodium()">End Game Night — Final Results</button>' +
     '<button class="btn-cancel" style="margin-top:8px;" onclick="fgPartySetup()">Change Players / Teams</button>';
   document.getElementById('feast-games-content').innerHTML = html;
@@ -2599,6 +2628,396 @@ function fgClueEndTurn() {
   FG_CLUE.phase = 'clue';
   FG_CLUE.keyShown = false;
   fgRenderClue();
+}
+
+// ─── SIP, PAINT & GUESS ──────────────────────────────────────────────────────
+function fgPaintShuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function fgPaintSave() {
+  try { LS.set('paintguess_save', JSON.stringify({ party: FG_PARTY, paint: FG_PAINT })); } catch (e) {}
+}
+function fgPaintClearSave() {
+  try { LS.remove('paintguess_save'); } catch (e) {}
+}
+function fgPaintSetLabel(t) { document.getElementById('feast-games-label').textContent = t; }
+function fgPaintSetContent(h) { document.getElementById('feast-games-content').innerHTML = h; }
+
+function fgOpenPaintGuess() {
+  var raw = LS.get('paintguess_save');
+  if (raw) {
+    try {
+      var saved = JSON.parse(raw);
+      if (saved && saved.paint && saved.paint.phase !== 'final') {
+        fgPaintSetLabel('Sip, Paint & Guess');
+        fgPaintSetContent(
+          '<div style="font-size:18px;font-weight:800;margin-bottom:10px;">Resume Your Game?</div>' +
+          '<div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:14px;">A Sip, Paint &amp; Guess game was in progress — Round ' + saved.paint.roundNum + '. Pick up where you left off, or start fresh.</div>' +
+          '<button class="btn-primary" onclick="fgPaintResumeSaved()">Resume Game</button>' +
+          '<button class="btn-cancel" style="margin-top:8px;" onclick="fgPaintClearSave();fgPaintIntro();">Start New Game</button>' +
+          '<button class="btn-cancel" style="margin-top:8px;" onclick="fgOpenMenu()">Back to Games</button>'
+        );
+        return;
+      }
+    } catch (e) {}
+  }
+  if (FG_INTROS && !FG_INTROS.paint) { fgPaintIntro(); return; }
+  if (FG_PAINT && FG_PAINT.phase && FG_PAINT.phase !== 'final') { fgPaintRender(); return; }
+  fgPaintIntro();
+}
+function fgPaintResumeSaved() {
+  var raw = LS.get('paintguess_save');
+  if (!raw) { fgPaintIntro(); return; }
+  try {
+    var saved = JSON.parse(raw);
+    FG_PARTY = saved.party;
+    FG_PAINT = saved.paint;
+    if (FG_INTROS) FG_INTROS.paint = true;
+    fgPaintRender();
+  } catch (e) { fgPaintIntro(); }
+}
+function fgPaintIntro() {
+  if (FG_INTROS) FG_INTROS.paint = true;
+  fgPaintSetLabel('How to Play');
+  fgPaintSetContent(
+    '<div style="font-size:18px;font-weight:800;margin-bottom:10px;">How to Play — Sip, Paint &amp; Guess</div>' +
+    '<div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:14px;">This app never shows a canvas — you paint for real, on real canvas, with real paint. The app only assigns secret names, runs the timer, and keeps score.<br><br>Before each round, the host picks a pool (Celebrities or Movies &amp; Shows) and a timer length. Pass the device around — each player taps once to secretly see their assigned name, then hides it and passes the device on. When everyone has a name, put the devices aside and paint. When the timer ends, the host uses the app to show each painting in turn, record who guessed it first, and reveal the name. After three rounds, vote on a few special awards and see the final leaderboard.</div>' +
+    '<button class="btn-primary" onclick="fgPaintNewGame()">Start Playing</button>' +
+    '<button class="btn-cancel" style="margin-top:8px;" onclick="fgOpenMenu()">Back to Games</button>'
+  );
+}
+function fgPaintNewGame() {
+  FG_PAINT = {
+    phase: 'roundSetup',
+    roundNum: 1,
+    pool: null,
+    timerMin: 4,
+    availCeleb: fgPaintShuffle(PAINT_CELEBRITIES.map(function (c) { return c.name; })),
+    availMovie: fgPaintShuffle(PAINT_MOVIES.slice()),
+    order: [],
+    turnIdx: 0,
+    assignments: {},
+    revealedNow: false,
+    timerSecLeft: 0,
+    guessOrder: [],
+    guessIdx: 0,
+    pendingGuesser: false,
+    awardPicks: {}
+  };
+  fgPaintSave();
+  fgPaintRoundSetup();
+}
+function fgPaintRender() {
+  switch (FG_PAINT.phase) {
+    case 'roundSetup': fgPaintRoundSetup(); break;
+    case 'assign': fgPaintAssignScreen(); break;
+    case 'timer': fgPaintTimerScreen(); break;
+    case 'guess': fgPaintGuessingScreen(); break;
+    case 'roundEnd': fgPaintRoundEnd(); break;
+    case 'awards': fgPaintAwardsScreen(); break;
+    case 'final': fgPaintFinalResults(); break;
+    default: fgPaintRoundSetup();
+  }
+}
+function fgPaintRoundSetup() {
+  FG_PAINT.phase = 'roundSetup';
+  fgPaintSave();
+  fgPaintSetLabel('Round ' + FG_PAINT.roundNum + ' of 3');
+  var pool = FG_PAINT.pool, min = FG_PAINT.timerMin;
+  fgPaintSetContent(
+    '<div style="font-size:18px;font-weight:800;margin-bottom:4px;">Round ' + FG_PAINT.roundNum + ' of 3</div>' +
+    '<div style="font-size:13px;color:var(--text3);margin-bottom:14px;">Pick what everyone paints this round, and how long they get.</div>' +
+    '<div class="fg-paint-pool-row">' +
+      '<div class="fg-paint-pool-pick' + (pool === 'celeb' ? ' active' : '') + '" onclick="fgPaintPickPool(\'celeb\')"><i class="ri-user-star-line"></i><br>Celebrities<br><span style="font-size:11px;color:var(--text3);">' + FG_PAINT.availCeleb.length + ' left</span></div>' +
+      '<div class="fg-paint-pool-pick' + (pool === 'movie' ? ' active' : '') + '" onclick="fgPaintPickPool(\'movie\')"><i class="ri-film-line"></i><br>Movies &amp; Shows<br><span style="font-size:11px;color:var(--text3);">' + FG_PAINT.availMovie.length + ' left</span></div>' +
+    '</div>' +
+    '<div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:8px;">Timer</div>' +
+    '<div class="fg-paint-timer-row">' +
+      [2, 4, 6].map(function (n) { return '<div class="fg-paint-timer-pick' + (min === n ? ' active' : '') + '" onclick="fgPaintPickTimer(' + n + ')">' + n + ' min</div>'; }).join('') +
+    '</div>' +
+    '<button class="btn-primary" onclick="fgPaintStartRound()"' + (pool ? '' : ' disabled') + '>Start Round ' + FG_PAINT.roundNum + '</button>' +
+    '<button class="btn-cancel" style="margin-top:8px;" onclick="fgOpenMenu()">Back to Games</button>'
+  );
+}
+function fgPaintPickPool(p) { FG_PAINT.pool = p; fgPaintRoundSetup(); }
+function fgPaintPickTimer(n) { FG_PAINT.timerMin = n; fgPaintRoundSetup(); }
+function fgPaintStartRound() {
+  if (!FG_PAINT.pool) return;
+  var avail = FG_PAINT.pool === 'celeb' ? FG_PAINT.availCeleb : FG_PAINT.availMovie;
+  if (avail.length < fgNumEntities()) {
+    fgPaintSetContent('<div style="font-size:15px;color:var(--text2);margin-bottom:14px;">Not enough names left in that pool for everyone this round — pick the other pool, or wrap up the game.</div><button class="btn-cancel" onclick="fgPaintRoundSetup()">Back</button>');
+    return;
+  }
+  FG_PAINT.order = fgPaintShuffle(FG_PARTY.entities.map(function (e, i) { return i; }));
+  FG_PAINT.turnIdx = 0;
+  FG_PAINT.assignments = {};
+  FG_PAINT.revealedNow = false;
+  FG_PAINT.phase = 'assign';
+  fgPaintSave();
+  fgPaintAssignScreen();
+}
+function fgPaintAssignScreen() {
+  fgPaintSetLabel('Round ' + FG_PAINT.roundNum + ' — Assigning');
+  if (FG_PAINT.turnIdx >= FG_PAINT.order.length) {
+    FG_PAINT.phase = 'timer';
+    FG_PAINT.timerSecLeft = FG_PAINT.timerMin * 60;
+    fgPaintSave();
+    fgPaintTimerScreen();
+    return;
+  }
+  var idx = FG_PAINT.order[FG_PAINT.turnIdx];
+  var entityName = fgEntityName(idx);
+  if (!FG_PAINT.revealedNow) {
+    fgPaintSetContent(
+      '<div class="fg-paint-pass">' +
+        '<div style="font-size:13px;color:var(--text3);margin-bottom:6px;">Pass the device to</div>' +
+        '<div class="fg-paint-pass-name">' + entityName + '</div>' +
+        '<button class="btn-primary" onclick="fgPaintReveal()">Tap to Reveal Your Name</button>' +
+      '</div>'
+    );
+  } else {
+    var assigned = FG_PAINT.assignments[idx];
+    fgPaintSetContent(
+      '<div class="fg-paint-pass">' +
+        '<div style="font-size:13px;color:var(--text3);margin-bottom:6px;">' + entityName + ', you are painting:</div>' +
+        '<div class="fg-paint-reveal-card"><div class="label">Paint This</div><div class="name">' + assigned + '</div></div>' +
+        '<button class="btn-primary" onclick="fgPaintHideAndPass()">Tap to Hide &amp; Pass</button>' +
+      '</div>'
+    );
+  }
+}
+function fgPaintReveal() {
+  var idx = FG_PAINT.order[FG_PAINT.turnIdx];
+  var avail = FG_PAINT.pool === 'celeb' ? FG_PAINT.availCeleb : FG_PAINT.availMovie;
+  var picked = avail.pop();
+  FG_PAINT.assignments[idx] = picked;
+  FG_PAINT.revealedNow = true;
+  fgPaintSave();
+  fgPaintAssignScreen();
+}
+function fgPaintHideAndPass() {
+  FG_PAINT.turnIdx++;
+  FG_PAINT.revealedNow = false;
+  fgPaintSave();
+  fgPaintAssignScreen();
+}
+function fgPaintTimerScreen() {
+  fgPaintSetLabel('Round ' + FG_PAINT.roundNum + ' — Painting');
+  var mm = Math.floor(FG_PAINT.timerSecLeft / 60), ss = FG_PAINT.timerSecLeft % 60;
+  var txt = mm + ':' + (ss < 10 ? '0' : '') + ss;
+  fgPaintSetContent(
+    '<div style="text-align:center;font-size:14px;color:var(--text2);margin-bottom:6px;">Paint your assigned ' + (FG_PAINT.pool === 'celeb' ? 'celebrity' : 'movie or show') + ' now — devices aside!</div>' +
+    '<div class="fg-paint-timer' + (FG_PAINT.timerSecLeft <= 30 ? ' low' : '') + '" id="fg-paint-timer-num">' + txt + '</div>' +
+    '<button class="btn-primary" onclick="fgPaintSkipTimer()">Time&rsquo;s Up — Start Guessing</button>' +
+    '<button class="btn-cancel" style="margin-top:8px;" onclick="fgPaintAdjustTimer(30)">+30 sec</button>'
+  );
+  if (FG_PAINT_TIMER_IV) clearInterval(FG_PAINT_TIMER_IV);
+  FG_PAINT_TIMER_IV = setInterval(fgPaintTick, 1000);
+}
+function fgPaintAdjustTimer(sec) {
+  FG_PAINT.timerSecLeft += sec;
+  var el = document.getElementById('fg-paint-timer-num');
+  if (el) {
+    var mm = Math.floor(FG_PAINT.timerSecLeft / 60), ss = FG_PAINT.timerSecLeft % 60;
+    el.textContent = mm + ':' + (ss < 10 ? '0' : '') + ss;
+    el.className = 'fg-paint-timer' + (FG_PAINT.timerSecLeft <= 30 ? ' low' : '');
+  }
+}
+function fgPaintTick() {
+  FG_PAINT.timerSecLeft--;
+  var el = document.getElementById('fg-paint-timer-num');
+  if (el) {
+    var mm = Math.floor(FG_PAINT.timerSecLeft / 60), ss = FG_PAINT.timerSecLeft % 60;
+    el.textContent = mm + ':' + (ss < 10 ? '0' : '') + ss;
+    if (FG_PAINT.timerSecLeft <= 30) el.className = 'fg-paint-timer low';
+  }
+  if (FG_PAINT.timerSecLeft <= 0) {
+    clearInterval(FG_PAINT_TIMER_IV);
+    FG_PAINT_TIMER_IV = null;
+    fgPaintTimeUp();
+  }
+}
+function fgPaintSkipTimer() {
+  if (FG_PAINT_TIMER_IV) { clearInterval(FG_PAINT_TIMER_IV); FG_PAINT_TIMER_IV = null; }
+  fgPaintTimeUp();
+}
+function fgPaintBeep() {
+  try {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    var ctx = new AC();
+    for (var i = 0; i < 3; i++) {
+      (function (i) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = 'sine'; o.frequency.value = 880;
+        o.connect(g); g.connect(ctx.destination);
+        var t = ctx.currentTime + i * 0.35;
+        g.gain.setValueAtTime(0.25, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+        o.start(t); o.stop(t + 0.32);
+      })(i);
+    }
+  } catch (e) {}
+}
+function fgPaintTimeUp() {
+  FG_PAINT.guessOrder = FG_PAINT.order.slice();
+  FG_PAINT.guessIdx = 0;
+  FG_PAINT.phase = 'guess';
+  fgPaintSave();
+  var flash = document.getElementById('fg-paint-flash');
+  flash.classList.add('on');
+  fgPaintBeep();
+  flash.onclick = fgPaintDismissFlash;
+  setTimeout(fgPaintDismissFlash, 2800);
+}
+function fgPaintDismissFlash() {
+  var flash = document.getElementById('fg-paint-flash');
+  if (!flash.classList.contains('on')) return;
+  flash.classList.remove('on');
+  fgPaintGuessingScreen();
+}
+function fgPaintGuessingScreen() {
+  fgPaintSetLabel('Round ' + FG_PAINT.roundNum + ' — Guessing');
+  if (FG_PAINT.guessIdx >= FG_PAINT.guessOrder.length) {
+    fgPaintRoundEnd();
+    return;
+  }
+  var idx = FG_PAINT.guessOrder[FG_PAINT.guessIdx];
+  var name = fgEntityName(idx);
+  var answer = FG_PAINT.assignments[idx];
+  if (FG_PAINT.pendingGuesser) {
+    var others = FG_PAINT.order.filter(function (i) { return i !== idx; });
+    fgPaintSetContent(
+      '<div style="font-size:16px;font-weight:800;margin-bottom:10px;">Who guessed it first?</div>' +
+      others.map(function (i) { return '<div class="fg-board-item" onclick="fgPaintPickGuesser(' + i + ')"><span>' + fgEntityName(i) + '</span></div>'; }).join('') +
+      '<button class="btn-cancel" style="margin-top:8px;" onclick="fgPaintPickGuesser(-1)">Not Sure / Skip</button>'
+    );
+    return;
+  }
+  fgPaintSetContent(
+    '<div style="font-size:13px;color:var(--text3);margin-bottom:6px;">Now showing</div>' +
+    '<div style="font-size:20px;font-weight:800;margin-bottom:16px;">' + name + '&rsquo;s Painting</div>' +
+    '<button class="btn-primary" onclick="fgPaintGuessCorrect()">Someone Guessed It!</button>' +
+    '<button class="btn-cancel" style="margin-top:8px;" onclick="fgPaintGuessWrong()">Nobody Guessed It</button>'
+  );
+}
+function fgPaintGuessCorrect() {
+  var others = FG_PAINT.order.filter(function (i) { return i !== FG_PAINT.guessOrder[FG_PAINT.guessIdx]; });
+  if (others.length <= 1) {
+    fgPaintPickGuesser(others.length === 1 ? others[0] : -1);
+    return;
+  }
+  FG_PAINT.pendingGuesser = true;
+  fgPaintSave();
+  fgPaintGuessingScreen();
+}
+function fgPaintPickGuesser(guesserIdx) {
+  var idx = FG_PAINT.guessOrder[FG_PAINT.guessIdx];
+  if (guesserIdx >= 0) FG_PARTY.entities[guesserIdx].score += 2;
+  FG_PARTY.entities[idx].score += 1;
+  FG_PAINT.pendingGuesser = false;
+  fgPaintSave();
+  fgPaintRevealAnswer(idx, true, guesserIdx);
+}
+function fgPaintGuessWrong() {
+  var idx = FG_PAINT.guessOrder[FG_PAINT.guessIdx];
+  FG_PARTY.entities[idx].score += 1;
+  fgPaintSave();
+  fgPaintRevealAnswer(idx, false, -1);
+}
+function fgPaintRevealAnswer(idx, guessed, guesserIdx) {
+  var answer = FG_PAINT.assignments[idx];
+  var sub = guessed ? ('Guessed' + (guesserIdx >= 0 ? (' by ' + fgEntityName(guesserIdx)) : '') + ' — +1 point to the painter, ' + (guesserIdx >= 0 ? '+2 to the guesser.' : 'no guesser recorded.')) : 'Nobody guessed it — the painter still earns +1 for the attempt.';
+  fgPaintSetContent(
+    '<div style="font-size:13px;color:var(--text3);margin-bottom:6px;">' + fgEntityName(idx) + ' was painting</div>' +
+    '<div class="fg-paint-reveal-card"><div class="label">Reveal</div><div class="name">' + answer + '</div></div>' +
+    '<div style="font-size:13px;color:var(--text2);margin-bottom:14px;">' + sub + '</div>' +
+    '<button class="btn-primary" onclick="fgPaintNextGuessTarget()">' + (FG_PAINT.guessIdx + 1 >= FG_PAINT.guessOrder.length ? 'See Round Results' : 'Next Painting') + '</button>'
+  );
+}
+function fgPaintNextGuessTarget() {
+  FG_PAINT.guessIdx++;
+  fgPaintSave();
+  fgPaintGuessingScreen();
+}
+function fgPaintRoundEnd() {
+  FG_PAINT.phase = 'roundEnd';
+  fgPaintSave();
+  fgPaintSetLabel('Round ' + FG_PAINT.roundNum + ' Results');
+  var isLast = FG_PAINT.roundNum >= 3;
+  fgPaintSetContent(
+    fgLeaderboardHTML('Scores After Round ' + FG_PAINT.roundNum) +
+    '<button class="btn-primary" style="margin-top:12px;" onclick="' + (isLast ? 'fgPaintGoToAwards()' : 'fgPaintNextRound()') + '">' + (isLast ? 'Special Awards' : 'Start Round ' + (FG_PAINT.roundNum + 1)) + '</button>' +
+    '<button class="btn-cancel" style="margin-top:8px;" onclick="fgOpenMenu()">Pause Here — Back to Games</button>'
+  );
+}
+function fgPaintNextRound() {
+  FG_PAINT.roundNum++;
+  FG_PAINT.pool = null;
+  fgPaintSave();
+  fgPaintRoundSetup();
+}
+var PAINT_AWARDS = [
+  { key: 'recognizable', label: 'Most Recognizable' },
+  { key: 'fail', label: 'Best Fail' },
+  { key: 'fastest', label: 'Fastest Guess' },
+  { key: 'crowd', label: "Crowd's Choice" }
+];
+function fgPaintGoToAwards() {
+  FG_PAINT.phase = 'awards';
+  fgPaintSave();
+  fgPaintAwardsScreen();
+}
+function fgPaintAwardsScreen() {
+  fgPaintSetLabel('Special Awards');
+  var html = '<div style="font-size:18px;font-weight:800;margin-bottom:4px;">Special Awards</div>' +
+    '<div style="font-size:13px;color:var(--text3);margin-bottom:14px;">Vote as a group — tap who wins each one. Each award is worth +1 point. Skip any you don\'t want to use.</div>';
+  PAINT_AWARDS.forEach(function (a) {
+    var picked = FG_PAINT.awardPicks[a.key];
+    html += '<div class="detail-label" style="margin-top:10px;">' + a.label + '</div>';
+    html += FG_PARTY.entities.map(function (e, i) {
+      return '<div class="fg-board-item' + (picked === i ? ' revealed' : '') + '" onclick="fgPaintAwardPick(\'' + a.key + '\',' + i + ')"><span>' + e.name + '</span>' + (picked === i ? '<span class="fg-board-pts">✓</span>' : '') + '</div>';
+    }).join('');
+  });
+  html += '<button class="btn-primary" style="margin-top:10px;" onclick="fgPaintFinishAwards()">Finish Game — Final Results</button>';
+  fgPaintSetContent(html);
+}
+function fgPaintAwardPick(key, idx) {
+  if (FG_PAINT.awardPicks[key] === idx) { delete FG_PAINT.awardPicks[key]; }
+  else {
+    if (FG_PAINT.awardPicks[key] !== undefined) FG_PARTY.entities[FG_PAINT.awardPicks[key]].score -= 1;
+    FG_PAINT.awardPicks[key] = idx;
+    FG_PARTY.entities[idx].score += 1;
+  }
+  fgPaintSave();
+  fgPaintAwardsScreen();
+}
+function fgPaintFinishAwards() {
+  FG_PAINT.phase = 'final';
+  fgPaintSave();
+  fgPaintFinalResults();
+}
+function fgPaintFinalResults() {
+  fgPaintSetLabel('Final Results');
+  var rows = FG_PARTY.entities.map(function (e) { return { name: e.name, score: e.score }; });
+  rows.sort(function (a, b) { return b.score - a.score; });
+  var winner = rows[0];
+  fgPaintSetContent(
+    '<div style="text-align:center;font-size:40px;margin-bottom:6px;">🎨</div>' +
+    '<div style="text-align:center;font-size:20px;font-weight:800;margin-bottom:4px;">' + (winner ? winner.name : '') + ' Wins Sip, Paint &amp; Guess!</div>' +
+    '<div style="text-align:center;font-size:13px;color:var(--text3);margin-bottom:16px;">' + (winner ? winner.score : 0) + ' points</div>' +
+    fgLeaderboardHTML('Final Scores') +
+    '<button class="btn-primary" style="margin-top:12px;" onclick="fgPaintPlayAgain()">Play Again</button>' +
+    '<button class="btn-cancel" style="margin-top:8px;" onclick="fgPaintClearSave();fgOpenMenu();">Back to Games</button>'
+  );
+  fgPaintClearSave();
+}
+function fgPaintPlayAgain() {
+  fgPaintNewGame();
 }
 
 function showEventDetail(evt, sd) {
