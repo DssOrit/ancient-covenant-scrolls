@@ -2113,8 +2113,17 @@ function openFeastGames(name) {
   if (!GAME_DATA[name]) return;
   FG_KEY = name;
   document.getElementById('event-modal-overlay').style.display = 'none';
-  if (!FG_PARTY) fgPartySetup(); else fgOpenMenu();
+  if (!FG_PARTY) fgPartySetup(); else fgPartyConfirm();
   document.getElementById('feast-games-overlay').style.display = 'flex';
+}
+function fgPartyConfirm() {
+  document.getElementById('feast-games-label').textContent = "Who's Playing?";
+  var names = FG_PARTY.entities.map(function (e) { return e.name; }).join(', ');
+  document.getElementById('feast-games-content').innerHTML =
+    '<div style="font-size:18px;font-weight:800;margin-bottom:6px;">Who\'s Playing?</div>' +
+    '<div style="font-size:13px;color:var(--text3);margin-bottom:16px;">Right now: ' + names + '.</div>' +
+    '<button class="btn-primary" onclick="fgOpenMenu()">Keep These Players</button>' +
+    '<button class="btn-cancel" style="margin-top:8px;" onclick="fgPartySetup()">Change Players / Teams</button>';
 }
 function closeFeastGames() {
   document.getElementById('feast-games-overlay').style.display = 'none';
@@ -2197,13 +2206,17 @@ function fgPartyFinish() {
 function fgOpenMenu() {
   var g = GAME_DATA[FG_KEY];
   var totalBoard = g.board.rounds.reduce(function (s, r) { return s + r.answers.length; }, 0);
-  var html = fgLeaderboardHTML('Game Night Scores') +
+  var names = FG_PARTY.entities.map(function (e) { return e.name; }).join(', ');
+  var html = '<div class="fg-menu-card" onclick="fgPartySetup()" style="border-left:4px solid var(--gold);display:flex;align-items:center;gap:12px;">' +
+      '<i class="ri-group-line" style="font-size:24px;color:var(--gold);flex-shrink:0;"></i>' +
+      '<div><div class="fg-menu-title" style="margin-bottom:2px;">Change Players / Teams</div><div class="fg-menu-sub">Now playing: ' + names + '</div></div>' +
+    '</div>' +
+    fgLeaderboardHTML('Game Night Scores') +
     '<div class="fg-menu-card" onclick="fgOpenBoard()"><div class="fg-menu-title">' + g.board.title + '</div><div class="fg-menu-sub">' + g.board.rounds.length + ' rounds + a face-off and a Lightning Round finale — ' + totalBoard + ' real answers.</div></div>' +
     '<div class="fg-menu-card" onclick="fgOpenScroll()"><div class="fg-menu-title">' + g.scroll.title + '</div><div class="fg-menu-sub">' + g.scroll.subtitle + ' — ' + g.scroll.scrolls.length + ' scrolls, opened in stages, with real Deal-or-No-Deal offers.</div></div>' +
     '<div class="fg-menu-card" onclick="fgOpenClue()"><div class="fg-menu-title">' + g.clue.title + '</div><div class="fg-menu-sub">A real two-side clue-and-guess game, ' + g.clue.cards.length + ' cards, one assassin.</div></div>' +
     '<div class="fg-menu-card" onclick="fgOpenPaintGuess()"><div class="fg-menu-title">Sip, Paint &amp; Guess</div><div class="fg-menu-sub">Real paint on real canvas — the app assigns secret celebrities or movies, runs the timer, and keeps score. ' + PAINT_CELEBRITIES.length + ' celebrities, ' + PAINT_MOVIES.length + ' movies &amp; shows.</div></div>' +
-    '<button class="btn-primary" style="margin-top:4px;" onclick="fgPodium()">End Game Night — Final Results</button>' +
-    '<button class="btn-cancel" style="margin-top:8px;" onclick="fgPartySetup()">Change Players / Teams</button>';
+    '<button class="btn-primary" style="margin-top:4px;" onclick="fgPodium()">End Game Night — Final Results</button>';
   document.getElementById('feast-games-content').innerHTML = html;
   document.getElementById('feast-games-label').textContent = 'Games';
 }
@@ -2734,7 +2747,6 @@ function fgPaintNewGame() {
     turnIdx: 0,
     assignments: {},
     revealedNow: false,
-    choosing: false,
     timerSecLeft: 0,
     guessOrder: [],
     guessIdx: 0,
@@ -2789,7 +2801,6 @@ function fgPaintStartRound() {
   FG_PAINT.turnIdx = 0;
   FG_PAINT.assignments = {};
   FG_PAINT.revealedNow = false;
-  FG_PAINT.choosing = false;
   FG_PAINT.phase = 'assign';
   fgPaintSave();
   fgPaintAssignScreen();
@@ -2816,41 +2827,26 @@ function fgPaintAssignScreen() {
     );
     return;
   }
-  if (FG_PAINT.choosing) {
-    var avail = (FG_PAINT.pool === 'celeb' ? FG_PAINT.availCeleb : FG_PAINT.availMovie).sort();
-    fgPaintSetContent(
-      '<div style="text-align:center;font-size:13px;color:var(--text3);margin-bottom:10px;">' + entityName + ', pick what you&rsquo;ll paint:</div>' +
-      avail.map(function (n, i) { return '<div class="fg-board-item" onclick="fgPaintChoose(' + i + ')"><span>' + n + '</span></div>'; }).join('')
-    );
-    return;
-  }
   fgPaintSetContent(
     '<div class="fg-paint-pass">' +
       '<div style="font-size:13px;color:var(--text3);margin-bottom:6px;">Pass the device to</div>' +
       '<div class="fg-paint-pass-name">' + entityName + '</div>' +
-      '<button class="btn-primary" onclick="fgPaintStartChoosing()">Tap to Choose Your ' + (FG_PAINT.pool === 'celeb' ? 'Celebrity' : 'Movie or Show') + '</button>' +
+      '<button class="btn-primary" onclick="fgPaintDrawName()">Tap to Reveal Your ' + (FG_PAINT.pool === 'celeb' ? 'Celebrity' : 'Movie or Show') + '</button>' +
     '</div>'
   );
 }
-function fgPaintStartChoosing() {
-  FG_PAINT.choosing = true;
-  fgPaintSave();
-  fgPaintAssignScreen();
-}
-function fgPaintChoose(poolIndex) {
+function fgPaintDrawName() {
   var idx = FG_PAINT.order[FG_PAINT.turnIdx];
   var avail = FG_PAINT.pool === 'celeb' ? FG_PAINT.availCeleb : FG_PAINT.availMovie;
-  var picked = avail.splice(poolIndex, 1)[0];
+  var picked = avail.pop();
   FG_PAINT.assignments[idx] = picked;
   FG_PAINT.revealedNow = true;
-  FG_PAINT.choosing = false;
   fgPaintSave();
   fgPaintAssignScreen();
 }
 function fgPaintHideAndPass() {
   FG_PAINT.turnIdx++;
   FG_PAINT.revealedNow = false;
-  FG_PAINT.choosing = false;
   fgPaintSave();
   fgPaintAssignScreen();
 }
