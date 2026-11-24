@@ -2785,7 +2785,7 @@ function fgPaintStartRound() {
     fgPaintSetContent('<div style="font-size:15px;color:var(--text2);margin-bottom:14px;">Not enough names left in that pool for everyone this round — pick the other pool, or wrap up the game.</div><button class="btn-cancel" onclick="fgPaintRoundSetup()">Back</button>');
     return;
   }
-  FG_PAINT.order = fgPaintShuffle(FG_PARTY.entities.map(function (e, i) { return i; }));
+  FG_PAINT.order = FG_PARTY.entities.map(function (e, i) { return i; });
   FG_PAINT.turnIdx = 0;
   FG_PAINT.assignments = {};
   FG_PAINT.revealedNow = false;
