@@ -2080,6 +2080,13 @@ var PAINT_CELEBRITIES = [
 var PAINT_MOVIES = [
   'Titanic','Jurassic Park','Jaws','E.T.','The Godfather','Rocky','Home Alone','Top Gun','Forrest Gump','Mission: Impossible','Fast & Furious','Gladiator','The Dark Knight','The Matrix','Die Hard','Mad Max: Fury Road','Men in Black','Independence Day','The Terminator','Taken','The Hunger Games','Transformers','Inception','The Bourne Identity','Casino Royale','Slumdog Millionaire','Dangal','Parasite','SpongeBob SquarePants','The Simpsons','King of the Hill','John Wick','Spider-Man','Despicable Me','Minions','Tom and Jerry','Looney Tunes','Breaking Bad','Friends','Grease','Dirty Dancing','The Pursuit of Happyness','The Shawshank Redemption','Pulp Fiction','Goodfellas','Scarface','The Silence of the Lambs','Se7en','Speed','Cast Away','A Star Is Born','Bohemian Rhapsody','The Social Network','Catch Me If You Can','Erin Brockovich','3 Idiots','My Big Fat Greek Wedding','Crazy Rich Asians','Toy Story'
 ];
+var PAINT_SONGS = [
+  'Hotel California','Sweet Child O\' Mine','Smells Like Teen Spirit','Eye of the Tiger','Purple Rain','Jailhouse Rock','Can\'t Help Falling in Love','Born in the U.S.A.','Dancing in the Dark','Livin\' on a Prayer','Don\'t Stop Believin\'','We Didn\'t Start the Fire','Piano Man','American Pie','Johnny B. Goode','Great Balls of Fire','Walk This Way','Free Bird','Sweet Home Alabama','Light My Fire',
+  'Billie Jean','Thriller','Like a Prayer','Vogue','Material Girl','Uptown Funk','Happy','Can\'t Stop the Feeling','Poker Face','Bad Romance','I Gotta Feeling','Girls Just Want to Have Fun','Shake It Off','Blank Space','Firework','Roar','Since U Been Gone','Toxic','Oops!... I Did It Again','I Wanna Dance with Somebody','I Will Always Love You',
+  'Respect','What a Wonderful World','I Will Survive','Single Ladies','Crazy in Love','What\'s Going On','Ain\'t No Mountain High Enough','September','Boogie Wonderland','I Want You Back','Empire State of Mind','Lose Yourself','In Da Club','Hey Ya!',
+  'Y.M.C.A.','Le Freak','Good Times',
+  'Jolene','9 to 5','Friends in Low Places','Take Me Home, Country Roads'
+];
 var FG_PAINT = null;
 var FG_PAINT_TIMER_IV = null;
 
@@ -2215,7 +2222,7 @@ function fgOpenMenu() {
     '<div class="fg-menu-card" onclick="fgOpenBoard()"><div class="fg-menu-title">' + g.board.title + '</div><div class="fg-menu-sub">' + g.board.rounds.length + ' rounds + a face-off and a Lightning Round finale — ' + totalBoard + ' real answers.</div></div>' +
     '<div class="fg-menu-card" onclick="fgOpenScroll()"><div class="fg-menu-title">' + g.scroll.title + '</div><div class="fg-menu-sub">' + g.scroll.subtitle + ' — ' + g.scroll.scrolls.length + ' scrolls, opened in stages, with real Deal-or-No-Deal offers.</div></div>' +
     '<div class="fg-menu-card" onclick="fgOpenClue()"><div class="fg-menu-title">' + g.clue.title + '</div><div class="fg-menu-sub">A real two-side clue-and-guess game, ' + g.clue.cards.length + ' cards, one assassin.</div></div>' +
-    '<div class="fg-menu-card" onclick="fgOpenPaintGuess()"><div class="fg-menu-title">Sip, Paint &amp; Guess</div><div class="fg-menu-sub">Real paint on real canvas — the app assigns secret celebrities or movies, runs the timer, and keeps score. ' + PAINT_CELEBRITIES.length + ' celebrities, ' + PAINT_MOVIES.length + ' movies &amp; shows.</div></div>' +
+    '<div class="fg-menu-card" onclick="fgOpenPaintGuess()"><div class="fg-menu-title">Sip, Paint &amp; Guess</div><div class="fg-menu-sub">Real paint on real canvas — the app assigns secret celebrities, movies, or songs, runs the timer, and keeps score. ' + PAINT_CELEBRITIES.length + ' celebrities, ' + PAINT_MOVIES.length + ' movies &amp; shows, ' + PAINT_SONGS.length + ' songs.</div></div>' +
     '<button class="btn-primary" style="margin-top:4px;" onclick="fgPodium()">End Game Night — Final Results</button>';
   document.getElementById('feast-games-content').innerHTML = html;
   document.getElementById('feast-games-label').textContent = 'Games';
@@ -2730,7 +2737,7 @@ function fgPaintIntro() {
   fgPaintSetLabel('How to Play');
   fgPaintSetContent(
     '<div style="font-size:18px;font-weight:800;margin-bottom:10px;">How to Play — Sip, Paint &amp; Guess</div>' +
-    '<div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:14px;">This app never shows a canvas — you paint for real, on real canvas, with real paint. The app only assigns secret names, runs the timer, and keeps score.<br><br>Before each round, the host picks a pool (Celebrities or Movies &amp; Shows) and a timer length. Pass the device around — each player taps once to secretly see their assigned name, then hides it and passes the device on. When everyone has a name, put the devices aside and paint. When the timer ends, the host uses the app to show each painting in turn, record who guessed it first, and reveal the name. After three rounds, vote on a few special awards and see the final leaderboard.</div>' +
+    '<div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:14px;">This app never shows a canvas — you paint for real, on real canvas, with real paint. The app only assigns secret names, runs the timer, and keeps score.<br><br>Before each round, the host picks a pool (Celebrities, Movies &amp; Shows, or Songs) and a timer length. Pass the device around — each player taps once to secretly see their assigned name, then hides it and passes the device on. When everyone has a name, put the devices aside and paint. When the timer ends, the host uses the app to show each painting in turn, record who guessed it first, and reveal the name. After three rounds, vote on a few special awards and see the final leaderboard.</div>' +
     '<button class="btn-primary" onclick="fgPaintNewGame()">Start Playing</button>' +
     '<button class="btn-cancel" style="margin-top:8px;" onclick="fgOpenMenu()">Back to Games</button>'
   );
@@ -2743,6 +2750,7 @@ function fgPaintNewGame() {
     timerMin: 4,
     availCeleb: fgPaintShuffle(PAINT_CELEBRITIES.map(function (c) { return c.name; })),
     availMovie: fgPaintShuffle(PAINT_MOVIES.slice()),
+    availSong: fgPaintShuffle(PAINT_SONGS.slice()),
     order: [],
     turnIdx: 0,
     assignments: {},
@@ -2779,6 +2787,7 @@ function fgPaintRoundSetup() {
     '<div class="fg-paint-pool-row">' +
       '<div class="fg-paint-pool-pick' + (pool === 'celeb' ? ' active' : '') + '" onclick="fgPaintPickPool(\'celeb\')"><i class="ri-user-star-line"></i><br>Celebrities<br><span style="font-size:11px;color:var(--text3);">' + FG_PAINT.availCeleb.length + ' left</span></div>' +
       '<div class="fg-paint-pool-pick' + (pool === 'movie' ? ' active' : '') + '" onclick="fgPaintPickPool(\'movie\')"><i class="ri-film-line"></i><br>Movies &amp; Shows<br><span style="font-size:11px;color:var(--text3);">' + FG_PAINT.availMovie.length + ' left</span></div>' +
+      '<div class="fg-paint-pool-pick' + (pool === 'song' ? ' active' : '') + '" onclick="fgPaintPickPool(\'song\')"><i class="ri-music-2-line"></i><br>Songs<br><span style="font-size:11px;color:var(--text3);">' + FG_PAINT.availSong.length + ' left</span></div>' +
     '</div>' +
     '<div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:8px;">Timer</div>' +
     '<div class="fg-paint-timer-row">' +
@@ -2790,11 +2799,21 @@ function fgPaintRoundSetup() {
 }
 function fgPaintPickPool(p) { FG_PAINT.pool = p; fgPaintRoundSetup(); }
 function fgPaintPickTimer(n) { FG_PAINT.timerMin = n; fgPaintRoundSetup(); }
+function fgPaintAvail() {
+  if (FG_PAINT.pool === 'celeb') return FG_PAINT.availCeleb;
+  if (FG_PAINT.pool === 'movie') return FG_PAINT.availMovie;
+  return FG_PAINT.availSong;
+}
+function fgPaintPoolLabel() {
+  if (FG_PAINT.pool === 'celeb') return 'Celebrity';
+  if (FG_PAINT.pool === 'movie') return 'Movie or Show';
+  return 'Song';
+}
 function fgPaintStartRound() {
   if (!FG_PAINT.pool) return;
-  var avail = FG_PAINT.pool === 'celeb' ? FG_PAINT.availCeleb : FG_PAINT.availMovie;
+  var avail = fgPaintAvail();
   if (avail.length < fgNumEntities()) {
-    fgPaintSetContent('<div style="font-size:15px;color:var(--text2);margin-bottom:14px;">Not enough names left in that pool for everyone this round — pick the other pool, or wrap up the game.</div><button class="btn-cancel" onclick="fgPaintRoundSetup()">Back</button>');
+    fgPaintSetContent('<div style="font-size:15px;color:var(--text2);margin-bottom:14px;">Not enough names left in that pool for everyone this round — pick a different pool, or wrap up the game.</div><button class="btn-cancel" onclick="fgPaintRoundSetup()">Back</button>');
     return;
   }
   FG_PAINT.order = FG_PARTY.entities.map(function (e, i) { return i; });
@@ -2831,13 +2850,13 @@ function fgPaintAssignScreen() {
     '<div class="fg-paint-pass">' +
       '<div style="font-size:13px;color:var(--text3);margin-bottom:6px;">Pass the device to</div>' +
       '<div class="fg-paint-pass-name">' + entityName + '</div>' +
-      '<button class="btn-primary" onclick="fgPaintDrawName()">Tap to Reveal Your ' + (FG_PAINT.pool === 'celeb' ? 'Celebrity' : 'Movie or Show') + '</button>' +
+      '<button class="btn-primary" onclick="fgPaintDrawName()">Tap to Reveal Your ' + fgPaintPoolLabel() + '</button>' +
     '</div>'
   );
 }
 function fgPaintDrawName() {
   var idx = FG_PAINT.order[FG_PAINT.turnIdx];
-  var avail = FG_PAINT.pool === 'celeb' ? FG_PAINT.availCeleb : FG_PAINT.availMovie;
+  var avail = fgPaintAvail();
   var picked = avail.pop();
   FG_PAINT.assignments[idx] = picked;
   FG_PAINT.revealedNow = true;
@@ -2855,7 +2874,7 @@ function fgPaintTimerScreen() {
   var mm = Math.floor(FG_PAINT.timerSecLeft / 60), ss = FG_PAINT.timerSecLeft % 60;
   var txt = mm + ':' + (ss < 10 ? '0' : '') + ss;
   fgPaintSetContent(
-    '<div style="text-align:center;font-size:14px;color:var(--text2);margin-bottom:6px;">Paint your assigned ' + (FG_PAINT.pool === 'celeb' ? 'celebrity' : 'movie or show') + ' now — devices aside!</div>' +
+    '<div style="text-align:center;font-size:14px;color:var(--text2);margin-bottom:6px;">Paint your assigned ' + fgPaintPoolLabel().toLowerCase() + ' now — devices aside!</div>' +
     '<div class="fg-paint-timer' + (FG_PAINT.timerSecLeft <= 30 ? ' low' : '') + '" id="fg-paint-timer-num">' + txt + '</div>' +
     '<button class="btn-primary" onclick="fgPaintSkipTimer()">Time&rsquo;s Up — Start Guessing</button>' +
     '<button class="btn-cancel" style="margin-top:8px;" onclick="fgPaintAdjustTimer(30)">+30 sec</button>'
