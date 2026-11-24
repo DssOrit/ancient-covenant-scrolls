@@ -20,7 +20,7 @@
 - All five Solar PRs this session followed the backup-first → verify → fix → merge-link flow (Rule 38/39): a fresh unlock phrase was obtained for every round, a pre-change backup branch was created and verified against the exact `origin/main` SHA before each edit, and every fix was checked with `node --check`, `<div>` tag-balance counts, and headless-browser (Playwright) functional tests exercising the real app behavior — never just code-reading — before pushing.
 
 ## Outstanding / blocking
-None. All five PRs (#1257-#1261) are merged and confirmed via `mcp__github__pull_request_read`.
+None. All five PRs (#1257-#1261) are merged and confirmed via `mcp__github__pull_request_read`. User live-tested PR #1261 on iPad Safari after a full reload (the first report showed the old list, traced to a stale already-open tab running pre-deploy JS, not a bad deploy — confirmed by diffing `raw.githubusercontent.com` against the shipped code) and confirmed working: single-name reveal with no list, correct player roster shown.
 
 ## Pending / parked
 - None newly parked this session. The user mentioned "we can always add more later" regarding the celebrity/movie pools — no specific follow-up requested yet.
