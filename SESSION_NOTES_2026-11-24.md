@@ -1,8 +1,8 @@
 # Session Notes — 2026-11-24
 
 ## Current state
-- `main` HEAD `b30cb89d1a3ffc4d976d28104a93d768f8b7fd2b` (PR #1261 merge commit), confirmed via `mcp__github__pull_request_read` (`merged: true`, `merged_by: DssOrit`).
-- `Solar/sw.js` cache: `acr-solar-v99` (unchanged across all of this session's PRs — no cache-list file changes, only logic/markup edits inside `index.html`).
+- `main` HEAD `395521a4c80f5ee6456b3f2086816001ae57400e` (PR #1264 merge commit, with PR #1265 following it), confirmed via `mcp__github__pull_request_read` (`merged: true`, `merged_by: DssOrit` on both).
+- `Solar/sw.js` cache: `acr-solar-v99` (unchanged across all of this session's PRs — no cache-list file changes, only logic/markup/data edits inside `index.html`).
 - Working tree clean, `main` up to date with `origin/main`.
 - Note: this is the first `SESSION_NOTES_*.md` filed since `SESSION_NOTES_2026-11-14.md`. PRs #1257 and #1258 were branched/built on 2026-11-16 and 2026-11-23 respectively but not logged at the time — backfilled here along with everything else from this continuous session. Other repo activity in that window (Prophetic Watch briefs, PR #1255 Load Maps rate-limit, PR #1251 ACR Search covenant laws, PRs #1252-1254 Solar Manna Wafers/Decoration Q&A) was done in other sessions, not this one, and is not re-logged here.
 
@@ -17,13 +17,19 @@
 - **PR #1261 (merged)** — two more fixes from live user feedback:
   1. Reverted Paint & Guess's choosing screen back to a pure random single-name draw (no list, no choice) — the user didn't like that the list let players see what names were still available.
   2. Made the player/team count control easy to find: moved "Change Players / Teams" to a prominent gold-bordered bar at the top of the Games menu (was a small gray button buried at the bottom), and added a "Who's Playing?" confirm screen (current roster + Keep/Change buttons) every time a holiday's games are entered, not just the very first time.
-- All five Solar PRs this session followed the backup-first → verify → fix → merge-link flow (Rule 38/39): a fresh unlock phrase was obtained for every round, a pre-change backup branch was created and verified against the exact `origin/main` SHA before each edit, and every fix was checked with `node --check`, `<div>` tag-balance counts, and headless-browser (Playwright) functional tests exercising the real app behavior — never just code-reading — before pushing.
+- **PR #1262 (merged)** — added a third Paint & Guess pool, Songs: 62 titles, American artists only (user explicitly excluded European/world acts after an earlier broader international draft), every one a certified global hit. Generalized the celeb/movie pool-lookup ternary into shared `fgPaintAvail()`/`fgPaintPoolLabel()` helpers so a third pool didn't need the logic repeated at each call site.
+- **PR #1263 (merged)** — user raised that a painting-guessing game needs a concrete visual, not an abstract phrase ("you can't paint 'believing'"). Audited all 62 songs against that drawability bar: removed 24 abstract titles (Respect, I Will Survive, Lose Yourself, etc.), added 12 with strong literal imagery (Ring of Fire, Hound Dog, Cat's in the Cradle, etc.). Net: 50 songs.
+- User then asked to add this same drawability standard as a standing rule for both Songs and Movies going forward.
+- **PR #1264 (merged)** — applied the drawability audit to the existing Movies pool (59 titles): removed 9 abstract titles (Taken, The Bourne Identity, Slumdog Millionaire, Parasite, The Pursuit of Happyness, Se7en, Erin Brockovich, 3 Idiots, Crazy Rich Asians). Four of those were the pool's international representation, so replaced with comparably drawable global hits rather than just losing that representation: Parasite→Train to Busan (South Korean), Slumdog Millionaire→RRR (Indian), 3 Idiots→Baahubali (Indian), Crazy Rich Asians→Ip Man (Hong Kong). Net: 54 movies. This PR sat open for roughly two hours before the user merged it — flagged to the user mid-session when asked "what was in that merge" and it turned out not yet merged; re-checked and confirmed merged shortly after.
+- **PR #1265 (merged)** — added one example per pool to the "How to Play" instructions (Serena Williams / Finding Nemo / I Heard It Through the Grapevine), per the user's explicit requirement that none of the three appear in the real pools, so reading the instructions can't tip off a real in-game name. Verified programmatically against the live pool arrays before shipping.
+- All nine Solar PRs this session followed the backup-first → verify → fix → merge-link flow (Rule 38/39): a fresh unlock phrase was obtained for every round (including rounds where the phrase text was reused verbatim from a prior round's template but still treated as a fresh ask), a pre-change backup branch was created and verified against the exact `origin/main` SHA before each edit, and every fix was checked with `node --check`, `<div>` tag-balance counts, and headless-browser (Playwright) functional tests exercising the real app behavior — never just code-reading — before pushing.
 
 ## Outstanding / blocking
-None. All five PRs (#1257-#1261) are merged and confirmed via `mcp__github__pull_request_read`. User live-tested PR #1261 on iPad Safari after a full reload (the first report showed the old list, traced to a stale already-open tab running pre-deploy JS, not a bad deploy — confirmed by diffing `raw.githubusercontent.com` against the shipped code) and confirmed working: single-name reveal with no list, correct player roster shown.
+None. All nine PRs (#1257-#1265) are merged and confirmed via `mcp__github__pull_request_read`. User live-tested PR #1261 on iPad Safari after a full reload (the first report showed the old list, traced to a stale already-open tab running pre-deploy JS, not a bad deploy — confirmed by diffing `raw.githubusercontent.com` against the shipped code) and confirmed working: single-name reveal with no list, correct player roster shown.
 
 ## Pending / parked
 - None newly parked this session. The user mentioned "we can always add more later" regarding the celebrity/movie pools — no specific follow-up requested yet.
+- The drawability standard (every Songs/Movies entry must be one clear, concrete, paintable visual) is now a standing bar for this feature going forward, not yet written into any project rules file — noted here so a future session curating these pools knows to apply it.
 
 ## Capability gaps in this session
 - None encountered beyond the standing sandbox network gaps already documented in `HANDOFF.md`/earlier session notes.
@@ -32,11 +38,24 @@ None. All five PRs (#1257-#1261) are merged and confirmed via `mcp__github__pull
 - `backup/2026-11-24-acr-solar-v99` — pre-existing, at stale SHA `f233d53` (pre-PR-#1259). Superseded by the backups below for anything after PR #1258.
 - `backup/2026-11-24-acr-solar-v99b` — pre-change backup before PR #1260's fix, SHA `b37fcc1047870bbcc15c0a2906b8f60abd492ec5` (post-PR-#1259 state).
 - `backup/2026-11-24-acr-solar-v99c` — pre-change backup before PR #1261's fixes, SHA `248d7bef8b76910fdd6b3c64e89ac0adda8b5f77` (post-PR-#1260 state).
-- `backup/2026-11-24-acr-solar-v99d` — stable-state backup at `main` HEAD `b30cb89d1a3ffc4d976d28104a93d768f8b7fd2b`, taken after the user confirmed PR #1261 merged. Recovery: `git checkout backup/2026-11-24-acr-solar-v99d`.
+- `backup/2026-11-24-acr-solar-v99d` — stable-state backup at `main` HEAD `b30cb89d1a3ffc4d976d28104a93d768f8b7fd2b`, taken after the user confirmed PR #1261 merged.
+- `backup/2026-11-24-acr-solar-v99e` — pre-change backup before PR #1262 (Songs category), SHA `18ee7baf7f6abc9c9f2e59e9a4df3e4f1e8bc071`.
+- `backup/2026-11-24-acr-solar-v99f` — pre-change backup before PR #1263 (Songs drawability curation), SHA `f76e503780158cf94dab22d3ba1a190fd8efb172`.
+- `backup/2026-11-24-acr-solar-v99g` — pre-change backup before PR #1264 (Movies drawability curation), SHA `353a3d2a35f3df060897aa433dddbe658e7c7ec7`.
+- `backup/2026-11-24-acr-solar-v99h` — pre-change backup before PR #1265 (intro examples), same SHA `353a3d2a35f3df060897aa433dddbe658e7c7ec7` (PR #1264 was still open/unmerged at that point, so main hadn't moved).
+- `backup/2026-11-24-acr-solar-v99i` — stable-state backup at `main` HEAD `395521a4c80f5ee6456b3f2086816001ae57400e`, taken after the user confirmed both PR #1264 and #1265 merged. Recovery: `git checkout backup/2026-11-24-acr-solar-v99i`.
 - (Backups for PR #1257/#1258's pre-change states were created during those rounds on 2026-11-16/11-23 but not logged in a session notes file at the time; not re-derived here since the exact branch names were not preserved in this summary.)
 
 ## Today's commit log (this session's PRs only)
 ```
+395521a Merge pull request #1264 from DssOrit/claude/solar-paint-movies-drawability-2026-11-24
+eebc311 Solar: curate Movies pool for drawability, keep international diversity
+(PR #1265 merge, same main tip onward) Merge pull request #1265 from DssOrit/claude/solar-paint-intro-examples-2026-11-24
+6b3e1ea Solar: add one example per pool to Paint & Guess instructions
+f76e503 Merge pull request #1263 from DssOrit/claude/solar-paint-songs-curation-2026-11-24
+53511cc Solar: curate Songs pool for drawability (50 songs, cut abstract titles)
+18ee7ba Merge pull request #1262 from DssOrit/claude/solar-paint-songs-category-2026-11-24
+2bdc97d Solar: add Songs category to Sip, Paint & Guess
 b30cb89 Merge pull request #1261 from DssOrit/claude/solar-paint-random-playercount-2026-11-24
 51e2d88 Solar: revert Paint & Guess to random draw, make player count easy to find
 248d7be Merge pull request #1260 from DssOrit/claude/solar-paint-turn-order-2026-11-24
