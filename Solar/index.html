@@ -2734,6 +2734,7 @@ function fgPaintNewGame() {
     turnIdx: 0,
     assignments: {},
     revealedNow: false,
+    choosing: false,
     timerSecLeft: 0,
     guessOrder: [],
     guessIdx: 0,
@@ -2788,6 +2789,7 @@ function fgPaintStartRound() {
   FG_PAINT.turnIdx = 0;
   FG_PAINT.assignments = {};
   FG_PAINT.revealedNow = false;
+  FG_PAINT.choosing = false;
   FG_PAINT.phase = 'assign';
   fgPaintSave();
   fgPaintAssignScreen();
@@ -2803,15 +2805,7 @@ function fgPaintAssignScreen() {
   }
   var idx = FG_PAINT.order[FG_PAINT.turnIdx];
   var entityName = fgEntityName(idx);
-  if (!FG_PAINT.revealedNow) {
-    fgPaintSetContent(
-      '<div class="fg-paint-pass">' +
-        '<div style="font-size:13px;color:var(--text3);margin-bottom:6px;">Pass the device to</div>' +
-        '<div class="fg-paint-pass-name">' + entityName + '</div>' +
-        '<button class="btn-primary" onclick="fgPaintReveal()">Tap to Reveal Your Name</button>' +
-      '</div>'
-    );
-  } else {
+  if (FG_PAINT.revealedNow) {
     var assigned = FG_PAINT.assignments[idx];
     fgPaintSetContent(
       '<div class="fg-paint-pass">' +
@@ -2820,20 +2814,43 @@ function fgPaintAssignScreen() {
         '<button class="btn-primary" onclick="fgPaintHideAndPass()">Tap to Hide &amp; Pass</button>' +
       '</div>'
     );
+    return;
   }
+  if (FG_PAINT.choosing) {
+    var avail = (FG_PAINT.pool === 'celeb' ? FG_PAINT.availCeleb : FG_PAINT.availMovie).sort();
+    fgPaintSetContent(
+      '<div style="text-align:center;font-size:13px;color:var(--text3);margin-bottom:10px;">' + entityName + ', pick what you&rsquo;ll paint:</div>' +
+      avail.map(function (n, i) { return '<div class="fg-board-item" onclick="fgPaintChoose(' + i + ')"><span>' + n + '</span></div>'; }).join('')
+    );
+    return;
+  }
+  fgPaintSetContent(
+    '<div class="fg-paint-pass">' +
+      '<div style="font-size:13px;color:var(--text3);margin-bottom:6px;">Pass the device to</div>' +
+      '<div class="fg-paint-pass-name">' + entityName + '</div>' +
+      '<button class="btn-primary" onclick="fgPaintStartChoosing()">Tap to Choose Your ' + (FG_PAINT.pool === 'celeb' ? 'Celebrity' : 'Movie or Show') + '</button>' +
+    '</div>'
+  );
 }
-function fgPaintReveal() {
+function fgPaintStartChoosing() {
+  FG_PAINT.choosing = true;
+  fgPaintSave();
+  fgPaintAssignScreen();
+}
+function fgPaintChoose(poolIndex) {
   var idx = FG_PAINT.order[FG_PAINT.turnIdx];
   var avail = FG_PAINT.pool === 'celeb' ? FG_PAINT.availCeleb : FG_PAINT.availMovie;
-  var picked = avail.pop();
+  var picked = avail.splice(poolIndex, 1)[0];
   FG_PAINT.assignments[idx] = picked;
   FG_PAINT.revealedNow = true;
+  FG_PAINT.choosing = false;
   fgPaintSave();
   fgPaintAssignScreen();
 }
 function fgPaintHideAndPass() {
   FG_PAINT.turnIdx++;
   FG_PAINT.revealedNow = false;
+  FG_PAINT.choosing = false;
   fgPaintSave();
   fgPaintAssignScreen();
 }
